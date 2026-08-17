@@ -68,9 +68,21 @@ Ask:
 
 ### 2. Verify the option space
 
-Pull the 10.2 manifest and grep for what actually exists in the relevant category. Do not
-recommend a class, subclass, race or feat without confirming it's in the list — v9.0.3 purged
-a large batch of subclasses and nearly all race mods.
+**Grep the compiled data files first** — they already did this work and they carry the
+mechanics, not just the names:
+
+| Looking for | Grep this |
+|---|---|
+| Classes, subclasses, progression | `references/listo-rules.md` (Classes section), then the mods index |
+| Races and subraces | `data/listo-10.2-races.md` |
+| Feats and fighting styles | `data/listo-10.2-feats.md` |
+| Items, slots, attunement, economy | `data/listo-10.2-equipment.md` |
+
+Each has a "not present" section listing what the docs still advertise but the list no longer
+ships — check it before recommending anything, because that is where the expensive mistakes
+are. Fall back to `data/listo-10.2-mods.tsv` and the manifest for anything the compiled files
+don't cover. Do not recommend a class, subclass, race or feat without confirming it's in the
+list — v9.0.3 purged a large batch of subclasses and nearly all race mods.
 
 ### 3. Work the decisions in this order
 
@@ -153,11 +165,24 @@ on the sheet. State unverified assumptions explicitly rather than smoothing over
 |---|---|
 | `references/listo-rules.md` | Verified ruleset facts and all build math |
 | `references/research-recipes.md` | How to search the bundled snapshot; how to refresh it |
+| `data/listo-10.2-races.md` | Every race and subrace, with the traits each grants |
+| `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
+| `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
 | `data/listo-10.2-mods.tsv` | 706 mods as `ModID<TAB>Name` — grep this to confirm anything exists |
 | `data/listo-10.2-manifest.json` | Raw manifest; holds which *file variant* was pulled per mod |
 | `data/docs/*.md` | The four Listo doc pages as raw markdown |
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
 | `assets/sheet-template.html` | Character-sheet artifact template, themed |
+
+The three compiled `.md` data files are the **first stop** for "does X exist and what does it
+do". They were built from the mods index, the manifest's file variants, and the mod pages
+themselves, and they record provenance — anything they mark `(unverified)` needs checking
+before a build leans on it. `references/listo-rules.md` owns the **arithmetic and doctrine**,
+plus the classes summary until that gets its own compiled file.
+
+**Classes and subclasses have not been compiled yet** — they are the one category still at
+summary level. Enumerate them from `data/listo-10.2-mods.tsv` rather than trusting the summary
+to be complete.
 
 **Grep the data files, never read them whole** — the manifest is 1.2 MB and the changelog 293 KB.
 

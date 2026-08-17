@@ -1,7 +1,20 @@
 # Listonomicon 10.2 — verified rules and build math
 
-Everything here was checked against the 10.2 manifest (706 Nexus mods, built 8 July 2026) or the
-mod pages themselves. Where something is inferred rather than confirmed, it says so.
+**This file owns the arithmetic and the doctrine.** What *exists* in the list — which classes,
+feats and items ship, and what each one does — lives in the compiled data files. Don't
+duplicate them here, and don't answer "does X exist" from this file.
+
+| Question | File |
+|---|---|
+| Does this class/subclass exist, and what does it do? | the Classes section **below**, then `data/listo-10.2-mods.tsv` |
+| Does this race exist, and what does it grant? | `data/listo-10.2-races.md` |
+| Does this feat exist, and what does it do here? | `data/listo-10.2-feats.md` |
+| Does this item exist, where is it, what does it do? | `data/listo-10.2-equipment.md` |
+| **How do I count feats, dips, saves and stat targets?** | **this file** |
+| How do I search the snapshot / refresh it? | `references/research-recipes.md` |
+
+Everything below was checked against the 10.2 manifest (706 Nexus mods, built 8 July 2026) or
+the mod pages themselves. Where something is inferred rather than confirmed, it says so.
 
 ---
 
@@ -14,24 +27,25 @@ Modifiers change only on **even** scores. 20 and 21 are both +5; 22 is +6; 24 is
 **A single +1 is always wasted.** Any plan to raise an ability is two points or none. This kills
 most "take a half-feat for the casting stat" advice.
 
-Feat ability increases in Listo **bypass the hard cap of 20**. Feats Overhaul reimplements them
-as stacking passives rather than ability selections:
+Feat ability increases in Listo **bypass the hard cap of 20** — Feats Overhaul reimplements them
+as stacking passives rather than ability selections. The plain **ASI feat is the exception** and
+remains capped.
 
-> "any ability score increase you get from feats (except the actual ASI feat …) can now stack
-> with other bonuses to increase your ability above 20"
+> **Unresolved:** whether the uncap reaches **Essential Feats'** half-feats, or only the vanilla
+> feats Feats Overhaul itself rebalances. See the "ability-score cap" section of
+> `data/listo-10.2-feats.md` — Listo pulled the base Essential Feats file, not the ASI optional,
+> and the patch mod that would extend the uncap is not in the list. **Check a sheet in-game
+> before planning a build that needs an Essential Feats half-feat to cross 20.**
 
-The plain **ASI feat is the exception** and remains capped. **Resilient** can be taken multiple
-times. **Enweaved** gives +2 to Int/Wis/Cha but caps at 22 and carries wild magic *and* magic
-allergy — bad on a concentration build.
+Non-feat sources that stack above 20: **Hag's Hair** (+1) and the **Tomes and Manuals** mod
+(+1 each). The **Mirror of Loss** gives +2 to a chosen ability *plus* a separate +1 Charisma, per
+character — whether it exceeds 20 is **unconfirmed**. Acquisition gates for all three are in
+`data/listo-10.2-equipment.md`.
 
-Non-feat sources that stack above 20 (per Listo docs): **Hag's Hair** (+1) and the **Tomes and
-Manuals** mod (+1 each). The **Mirror of Loss** gives +2 to a chosen ability *plus* a separate +1
-Charisma, per character — whether it exceeds 20 is **unconfirmed**.
-
-### Feats
+### Feat cadence and count
 
 Granted at **class** level 3, 6, 9, 12, 15, 18. Fighters, Rogues and Mesmerists also get one at
-class level 11. Mod: Universal Feat Every X Level(s) - MCM.
+class level 11.
 
 Feat count = `floor(classA / 3) + floor(classB / 3)`. The ceiling at character level N is
 `floor(N / 3)`, reached whenever the two remainders mod 3 sum to less than 3.
@@ -67,6 +81,10 @@ unobtainable otherwise, and a respec silently loses them.
 | **Bard 3** | A College, Expertise ×2, three bonus proficiencies |
 | **Rogue 3** | A subclass from Book of Rogues, Expertise, Sneak Attack |
 | **Paragon 1** | Heavy armour, shields, martial weapons, **Con + Cha saves** — must be first or it grants none of it |
+
+A **fighting style** can also be bought without a dip — Weapon Master and Fighting Initiate both
+grant one, and the list adds UA styles. Check `data/listo-10.2-feats.md` before spending levels
+on a style a feat would supply.
 
 ### Level 1 saving throw proficiencies
 
@@ -118,7 +136,8 @@ is a real price, but it is a *price*, not an impossibility. If four distinct sav
 first-class package is worth two feats and a weak Act 1, the +4 is free to go elsewhere.
 
 Above 20 needs **half-feats or items** — the plain ASI feat is capped, so it cannot take you from
-20 to 22.
+20 to 22. **Enweaved** is the only +2 half-feat in the list and caps at 22; its wild-magic
+downside is described in `data/listo-10.2-feats.md`.
 
 Corollary for point buy: if Lone Wolf is taking the primary, buy it to exactly **16** after the
 racial bonus. 17 wastes a point against the cap; less than 16 fails to reach it.
@@ -181,92 +200,24 @@ only. This is the single easiest thing to lose silently.
 - **Merchants: 4× buy, ¼ sell.** Withers is a merchant with 50,000 gold that resets each
   conversation.
 - **Initiative: d10 + Dex + bonuses** (Initiative Variants), MCM-configurable. The docs name
-  Alert as the intended way to reliably go first.
+  Alert as the intended way to reliably go first — and Alert is nerfed to Proficiency Bonus here.
 - **Combat Extender enemy HP** ≈ `Base × (1 + staticBoost + healthPerLevel × playerLevel)`.
   Bosses reach +310% and regular enemies +250% at level 20. Enemies scale with *player* level,
   so there is no out-levelling.
 - **Level cap 20.** Most players reach 15+, completionists 18+; 20 needs the optional encounter
   content.
-- **Attunement (And Rarity Limits):** each attuned item consumes an Action Resource, refunded on
-  unequip. **No rest or combat restriction**, so re-attuning is free and unlimited — treat it as
-  a per-fight loadout. Separate caps for total attuned and for Rare/Very Rare/Legendary counts.
-  The MCM panel browses every item above Common rarity and previews any piece for 30 seconds.
-
----
-
-## Feats that differ from vanilla
-
-| Feat | Listo behaviour |
-|---|---|
-| **Alert** | Proficiency Bonus to initiative (not +5), plus Perception proficiency. The revert patch is **not** in the list |
-| **Tough** | Vanilla +2 HP/level **plus** +1 Con and **+2 to Constitution saves** |
-| **Durable** | +1 Con; in-combat regen of Prof Bonus + Con mod when starting a turn below 60% HP |
-| **Mage Slayer** | **Advantage on saves against all spells**, spell damage reduced by Prof Bonus, enemies within 3m have disadvantage on concentration saves |
-| **GWM / Sharpshooter** | Trade Prof Bonus on the attack roll for Prof Bonus on damage (not −5/+10) |
-| **Tavern Brawler** | Significantly nerfed |
-| **Moderately Armoured** | Medium Armour **and Shields**, +1 Str/Dex, +1 to saves with that ability |
-| **Lightly Armoured** | Light armour only — **grants no shields** |
-| **Medium Armour Master** | Flat +1 AC in medium armour and temp HP = Prof Bonus at combat start (no longer raises the Dex cap) |
-| **Actor** | Expertise in Persuasion, Deception, Intimidation *and* Performance |
-| **Skilled** | +1 to **any** ability |
-| **Ritual Caster** | Listo patch: learn *all* ritual spells from the list |
-| **Deadly Alacrity** | Listo patch **removes its +1 ability score** |
-| **Arcane Acuity** | Capped at 3 stacks, 1 per trigger, combat-only, no pre-stacking — and triggers on **weapon attack rolls**. Invalidates most published Bard guides |
-| **Arcanist / Experimental Alchemy** | **Removed in v9.0.3** despite still being in the docs |
-
-**Essential Feats** adds: Fey Touched, Shadow Touched, Heaven Touched, Hell Touched, Meta Magic
-Adept, Eldritch Adept, Telekinetic, Alchemist, Skilled Expert, Fighting Initiate, Light Armor
-Master, Nimble Fingers, Thief's Apprentice, Deadly Alacrity, War Magic. Nearly all carry +1 to
-Int/Wis/Cha; War Magic and Thief's Apprentice do not.
-
-**Skeleton Crew** (Valkrana's, feat version) spawns a scaling random skeleton ally at the start
-of **every combat**. The only feat that fixes small-party action economy.
-
----
-
-## Classes and subclasses
-
-New classes: **Artificer** (all four), **Mesmerist**, **Paragon** (Lionheart, Nighthawk, Prodigy,
-Regent, Spellblade, Sword Saint), **Inquisitor**, **Bloodhunter**.
-
-- **Paragon** is Charisma-based but has **no spell slots** — martial support, not a caster. Must
-  be taken at level 1 or it loses heavy armour, skills and save proficiencies.
-- **Mesmerist** is Charisma but a **half-caster** — caps at 5th-level spells. Its level 2 gives a
-  bonus to Wisdom saves equal to the Charisma modifier, the best defensive feature on any Cha
-  class here.
-- **Inquisitor** is Wisdom-based (tagged Cleric and Ranger).
-
-**v9.0.3 purged**: Whispers Bard; Frozen Sorcery and Spellfire Sorcery; the Sorcerer King,
-Undead, Fathomless, Genie and Star Warlock patrons; Hedge Mage and Graviturgy Wizard; Blackguard;
-Oath of Zeal/Phoenix/Storm.
-
-**Surviving notable subclasses**: Bard — Eloquence, Dance, Tragedy. Warlock — **The Celestial**
-only, plus Pact of the Shroud and 5R Pact of the Chain. Sorcerer — Aberrant Mind, **Favored
-Soul**, Draconic (Expanded ancestries), Storm, Shadow, Arcane Chaos. Wizard — Book of Wizards,
-Conjuration School Enhanced, School of Death, Hexcraft, Hierophant. Cleric — Circle of the Sea,
-Darkness Domain, Death Domain, Cat's Cleric Changes. Druid — Book of Druids. Rogue — Book of
-Rogues.
-
-Charisma casters **with healing**: Bard, Celestial Warlock, Favored Soul Sorcerer.
-
----
-
-## Races
-
-**v9.0.3 purged nearly all race mods**, including Fantastical Multiverse. Remixed Subraces went
-in v8; Satyr in v7.1.0.
-
-Surviving additions: **Elemental Power (Genasi)** — Fire/Air/Earth/Water, each with Darkvision, a
-resistance, and innate spells at 1/3/5. **Mordenkainen's Tome of Tieflings** — Baalzebul,
-Dispater, Fierna, Glasya, Levistus, Mammon. **Full Roster of Gith (FROG)** + **Followers of
-Zerthimon** — Githyanki and Githzerai as subraces. **Ghastly Ghouls** playable undead + Banshee
-subrace. **Mordenkainen Presents - Lizardfolk**.
-
-- **Sunlight Sensitivity - DND 5E** adds it back to **Drow and Duergar**. Avoid both.
-- **Githzerai** (this version): Mage Hand, Unshackle Mind and Mental Discipline at 1; **Shield**
-  at 3; **Misty Step** and Bestow Knowledge at 5; permanent Detect Thoughts and Insight
-  advantage. **No ability bonuses**, and **no Medium armour or Martial weapon proficiency**.
-- Races grant no ability score bonuses in BG3 — assign +2/+1 freely.
+- **Combat Extender** gives enemies mod spells, classes, feats and magic items — the reason
+  enemy capability tracks the list rather than vanilla.
+- **Absolute Wrath** is optional; Listo's CX config already bakes in curated affixes, so enabling
+  it double-dips.
+- **Illithid Powers Overhaul 2** is optional and strong; Illithid powers become very powerful in
+  Act 3 if the astral tadpole is used.
+- **Attunement:** each attuned item consumes an Action Resource, refunded on unequip, with **no
+  rest or combat restriction** — so re-attuning is free and unlimited. Treat it as a per-fight
+  loadout, not a permanent commitment. Separate caps for total attuned and for
+  Rare/VeryRare/Legendary counts, all **MCM-configurable per difficulty**. Because the caps are
+  a config value, **ask the player what theirs are set to** before planning a kit. Full
+  mechanics in `data/listo-10.2-equipment.md`.
 
 ---
 
@@ -287,42 +238,56 @@ doubled carry; and +4 to two abilities with save proficiency in both.
 
 ---
 
-## Equipment
+## Races — the one rule that affects the math
 
-Caster gear in this list is **robe-shaped**; no mod adds medium armour with caster benefits.
+**Races grant no ability score bonuses in BG3.** The +2/+1 is assigned freely at creation,
+independent of race, so a race never constrains the stat spread — pick it for features.
 
-- **Better End Game Caster Robe** — Robe of Archmage plus circlet, cloak, gloves, boots. Gilded
-  Chest, Illusion section of the Sorcerous Vault (Act 3).
-- **Robe of Vecna ReAwakened** — multi-act chain. Read the Compendium Maleficarum and **fail** the
-  Wisdom save, then cast Extract Divine Undeath Essence on Ketheric's Apostle form (Act 2).
-- **Psychic Armory** — upgradeable set; Sussur Bloom from the Arcane Tower basement.
-- **JWL Discordant Instruments** — converts the Musical Instrument slot into a **Trinket slot**
-  with 100+ items, distributed retroactively. Effectively a free extra magic item slot.
-- **Phalar Aluve - Legendary** — music box in the Shadow-Cursed Lands (Act 2), second in a
-  pickpocket-only part of the Circus (Act 3).
-- **FoeBane** — Druid Grove questline (optional mod); scabbard in Jaheira's basement (Act 3).
-- **Bladesong Garment** — female slim body types only (human/elf/half-elf/tiefling).
-- **Random Equipment Loot** (optional) near-fully randomises distribution — voids all gear
-  planning. Check whether it's on.
+The catalogue is in **`data/listo-10.2-races.md`**. Two entries change build math enough to flag
+here:
 
-### Quest gates worth knowing
-
-- **Potent Robe** (Charisma to cantrip damage) is **Alfira's reward and she must be alive**. Dark
-  Urge kills her in a scripted scene; the only workaround is knocking her out in Act 1.
-- **Hag's Hair** — a DC 20 check gets the hair *and* saves Mayrina; fail and you choose one.
-- **Mirror of Loss** (Cloister of Sombre Embrace, Act 3) — needs the Night Orchid from behind a
-  breakable wall in the Armoury past a passive check, then a Religion check.
+- **Ghastly Ghouls (playable undead)** uses the vanilla `undead` tag: **most healing spells do
+  not work on you**, you are **vulnerable to Radiant**, and **Turn Undead affects you**. In a duo
+  this needs an explicit recovery plan before it is viable.
+- **Githzerai** grants **no Medium armour or Martial weapon proficiency**, unlike vanilla
+  Githyanki — so it does not return a feat the way Githyanki might.
 
 ---
 
-## Other included mods worth remembering
+## Classes and subclasses
 
-- **Multiclass Preferred Casting Ability Fix** — class order no longer hijacks your Spellcasting
-  Stat, so you can multiclass in any order.
-- **Expansion** (mod 279) supplies level 13–20 progression; gallery tags include "Level 20 Cap".
-- **Combat Extender** gives enemies mod spells, classes, feats and magic items.
-- **Absolute Wrath** is optional; Listo's CX config already bakes in curated affixes, so enabling
-  it double-dips.
-- **Degreaser 2.0**, **Gear Revised** (rings/footwear/shields), **Elixirs Revised**, **Healing
-  Potions Hardcore** all rebalance vanilla items — verify vanilla item numbers before relying on
-  them.
+> **No compiled classes file exists yet** — this section is the reference. Unlike races, feats
+> and equipment, classes have not been compiled into a `data/` file, so this list is
+> summary-level. **Verify any specific subclass against `data/listo-10.2-mods.tsv` before
+> recommending it**, and enumerate from the mods index rather than from this section when
+> presenting options.
+
+New classes: **Artificer** (all four subclasses), **Mesmerist**, **Paragon** (Lionheart,
+Nighthawk, Prodigy, Regent, Spellblade, Sword Saint), **Inquisitor**, **Bloodhunter** (mod.io,
+so it does not appear in the Nexus-only TSV).
+
+Facts that feed the tables above:
+
+- **Paragon** is Charisma-based but has **no spell slots** — martial support, not a caster. Must
+  be taken at level 1 or it loses heavy armour, skills and save proficiencies.
+- **Mesmerist** is Charisma but a **half-caster** — caps at 5th-level spells. It is also one of
+  the three classes on the **seven-feat** cadence. Its level 2 gives a bonus to Wisdom saves
+  equal to the Charisma modifier, the best defensive feature on any Cha class here.
+- **Artificer 1** and **Paragon 1** grant nothing from their multiclass nodes — both must be the
+  level 1 class to be worth taking at all.
+- **Inquisitor** is Wisdom-based (tagged Cleric and Ranger).
+- Charisma casters **with healing**: Bard, Celestial Warlock, Favored Soul Sorcerer.
+- **Multiclass Preferred Casting Ability Fix** is in the list — class order no longer hijacks
+  your Spellcasting Stat, so you can multiclass in any order.
+- **Expansion** (mod 279) supplies level 13–20 progression.
+
+**v9.0.3 purged**: Whispers Bard; Frozen Sorcery and Spellfire Sorcery; the Sorcerer King,
+Undead, Fathomless, Genie and Star Warlock patrons; Hedge Mage and Graviturgy Wizard; Blackguard;
+Oath of Zeal/Phoenix/Storm.
+
+**Surviving notable subclasses**: Bard — Eloquence, Dance, Tragedy. Warlock — **The Celestial**
+only, plus Pact of the Shroud and 5R Pact of the Chain. Sorcerer — Aberrant Mind, **Favored
+Soul**, Draconic (Expanded ancestries), Storm, Shadow, Arcane Chaos. Wizard — Book of Wizards,
+Conjuration School Enhanced, School of Death, Hexcraft, Hierophant. Cleric — Circle of the Sea,
+Darkness Domain, Death Domain, Cat's Cleric Changes. Druid — Book of Druids. Rogue — Book of
+Rogues.

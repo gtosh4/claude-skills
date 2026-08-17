@@ -10,10 +10,25 @@ A full capture of **10.2** ships with this skill. Check it before fetching anyth
 
 | Path | What it is |
 |---|---|
+| `data/listo-10.2-races.md` | **Compiled** — races and subraces with their traits |
+| `data/listo-10.2-feats.md` | **Compiled** — feats and fighting styles with mechanics |
+| `data/listo-10.2-equipment.md` | **Compiled** — items, slots, locations, upgrade paths |
 | `data/listo-10.2-mods.tsv` | 706 Nexus mods as `ModID<TAB>Name` — the fast "does X exist" lookup |
 | `data/listo-10.2-manifest.json` | The raw Wabbajack manifest (1.2 MB) |
 | `data/docs/*.md` | The four Listo doc pages, raw markdown |
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
+
+**Start with the three compiled `.md` files.** They already resolve mod name → actual
+mechanics, record which *file variant* Listo pulled, and list what the docs advertise but the
+list no longer ships. Only fall through to the TSV and manifest for things they don't cover.
+
+**The TSV is Nexus-only.** The manifest also carries **8 mod.io archives** and two GitHub
+downloads that never appear in it, so TSV absence proves absence only for Nexus mods. Check
+the URLs before declaring something missing:
+
+```bash
+grep -o -E '"Url":"[^"]{1,120}' "$S/data/listo-10.2-manifest.json" | sed 's/"Url":"//' | sort -u
+```
 
 **Never read the manifest or the changelog whole** — they are 1.2 MB and 293 KB. Grep them.
 
@@ -139,6 +154,46 @@ vs automatic version, main file vs sub-module):
 ```bash
 grep -o -E '"Name":"[^"]*<keyword>[^"]{0,70}' wj/modlist | sort -u
 ```
+
+---
+
+## Rebuilding the compiled data files
+
+When the list moves past 10.2, regenerate `listo-10.2-{races,feats,equipment}.md` this way.
+**Classes and subclasses have not been compiled yet** — building `listo-10.2-classes.md` with
+this same method is the outstanding gap, and the combined subclass packs ("5e Cleric Subclasses
+Combined", "Book of Druids", "Book of Rogues", "Book of Wizards", "(DTO) Otherworldy
+Archetypes") each need opening to enumerate the individual subclasses inside them.
+
+1. **Refresh the snapshot first** (manifest + TSV + docs), using the sections above. Rename the
+   data files to the new version.
+2. **Categorise the TSV.** Dump `cut -f2 mods.tsv | sort` and read all of it — keyword greps
+   miss things, because feats ship inside subclass mods (`ArcaneChaosFeat` lives in *Wild Magic
+   Subclass - Additional Spells*) and equipment ships inside class mods.
+3. **Diff against the old file** to find what was added and removed, rather than re-researching
+   everything:
+   ```bash
+   comm -13 <(cut -f2 old-mods.tsv | sort) <(cut -f2 new-mods.tsv | sort)   # added
+   comm -23 <(cut -f2 old-mods.tsv | sort) <(cut -f2 new-mods.tsv | sort)   # removed
+   ```
+4. **Check the file variant for anything load-bearing.** This is where the real findings are —
+   Listo pulled the *base* Essential Feats (not the ASI optional), the *feat* Skeleton Crew
+   (not the automatic one), the *-3 Attack Roll* Dual Wielding Master, and a
+   `FeatsOverhaul_ListoPatch` that silently changes three feats:
+   ```bash
+   grep -o -E '"Name":"[^"]*<keyword>[^"]{0,70}' data/<manifest>.json | sort -u
+   ```
+5. **Fetch mod pages in parallel batches** of ~12 (backgrounded `curl` plus `wait`), strip with
+   `scripts/strip.sh`, then pull the body — the useful part usually starts after
+   `Collections containing this mod`, and `About this mod` gives the one-line summary:
+   ```bash
+   awk '/Collections containing this mod/{f=1} /VORTEX|Frequently Asked/{f=0} f' mod.txt
+   ```
+6. **Record provenance.** Mark whether each fact came from the manifest (ground truth), a mod
+   page (describes the *current* version, which may be newer than the archive pulled), or the
+   docs (stale). Mark anything unconfirmed `(unverified)` rather than smoothing it over.
+7. **Keep the "not present" sections.** They are the highest-value part of each file — they
+   are what stops a build from being planned around the Arcanist Feat.
 
 ---
 
