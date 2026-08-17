@@ -1,0 +1,4 @@
+# scratch artefacts from research passes
+*.html
+*.txt
+!plugins/**/*.txt
