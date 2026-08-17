@@ -10,6 +10,8 @@ A full capture of **10.2** ships with this skill. Check it before fetching anyth
 
 | Path | What it is |
 |---|---|
+| `data/listo-10.2-classes.md` | **Compiled** — index of 17 classes / 156 subclasses |
+| `data/classes/*.md` | **Compiled** — one file per class, full detail |
 | `data/listo-10.2-races.md` | **Compiled** — races and subraces with their traits |
 | `data/listo-10.2-feats.md` | **Compiled** — feats and fighting styles with mechanics |
 | `data/listo-10.2-equipment.md` | **Compiled** — items, slots, locations, upgrade paths |
@@ -18,9 +20,30 @@ A full capture of **10.2** ships with this skill. Check it before fetching anyth
 | `data/docs/*.md` | The four Listo doc pages, raw markdown |
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
 
-**Start with the three compiled `.md` files.** They already resolve mod name → actual
-mechanics, record which *file variant* Listo pulled, and list what the docs advertise but the
-list no longer ships. Only fall through to the TSV and manifest for things they don't cover.
+**Start with the compiled `.md` files.** They already resolve mod name → actual mechanics,
+record which *file variant* Listo pulled, and list what the docs advertise but the list no longer
+ships. Only fall through to the TSV and manifest for things they don't cover.
+
+> ### ⚠ The `Name` and `Version` fields are stale cached Nexus metadata
+>
+> **Only the archive filename is reliable.** The manifest's per-mod `Name` and `Version` fields
+> are cached from Nexus at some earlier point and are frequently wrong — they describe neither
+> the file pulled nor the mod's current state. Confirmed instances in 10.2:
+>
+> | Mod | Metadata says | Archive actually pulled |
+> |---|---|---|
+> | `279` Expansion | "Expansion (Bladesinger Only)", v0.0.26 | `Expansion-279-1-7-3-6` — the full Level 13-20 mod |
+> | `7859` Hierophant | 1.3.0 | 1.6.0 |
+> | `21822` DTO | 1.1.0.60 | 1.2.0.67 |
+> | Goon's (various) | 1.0.0.1 | 1.0.2.3 |
+>
+> This caused a real misreading: mod `279` looked like two archives (a level-13-20 file *and* a
+> Bladesinger file) when the manifest holds exactly **one**. Always resolve a question by the
+> **archive filename**, and confirm what a pak actually installs via its destination path:
+>
+> ```bash
+> grep -o -E '"Name":"[^"]*<keyword>[^"]{0,70}' data/listo-10.2-manifest.json | sort -u
+> ```
 
 **The TSV is Nexus-only.** The manifest also carries **8 mod.io archives** and two GitHub
 downloads that never appear in it, so TSV absence proves absence only for Nexus mods. Check
@@ -159,11 +182,24 @@ grep -o -E '"Name":"[^"]*<keyword>[^"]{0,70}' wj/modlist | sort -u
 
 ## Rebuilding the compiled data files
 
-When the list moves past 10.2, regenerate `listo-10.2-{races,feats,equipment}.md` this way.
-**Classes and subclasses have not been compiled yet** — building `listo-10.2-classes.md` with
-this same method is the outstanding gap, and the combined subclass packs ("5e Cleric Subclasses
-Combined", "Book of Druids", "Book of Rogues", "Book of Wizards", "(DTO) Otherworldy
-Archetypes") each need opening to enumerate the individual subclasses inside them.
+When the list moves past 10.2, regenerate `listo-10.2-{classes,races,feats,equipment}.md` and
+`data/classes/*.md` this way.
+
+**Classes were compiled by fanning out one research pass per class** (17 of them), each seeded
+with a ModID list scraped from the TSV, then an index written from the results. That shape is
+worth repeating — a single pass over 17 classes and 156 subclasses will truncate.
+
+**The combined packs are the trap.** "5e Barbarian/Cleric/Fighter/Monk/Ranger Subclasses
+Combined", "Book of Druids", "Book of Rogues", "Book of Wizards" and "(DTO) Otherworldy
+Archetypes" each need opening to enumerate what is *inside* them — DTO alone holds 12 subclasses,
+one per vanilla class, and was missed entirely by the previous summary. Several packs document
+their subclasses **only as images**, so expect `(unverified)` on per-level numbers there.
+
+**When a mod page is unusable, go to the source.** Two classes were only documented properly by
+bypassing Nexus: Artificer from the author's GitHub at the tag matching the pulled archive, and
+Blood Hunter by downloading the pak from its mod.io manifest URL and unpacking it (LSPK v18;
+mechanics read from `Progressions.lsx`, `ClassDescriptions.lsx` and `Stats/Generated/Data/*.txt`).
+That is the highest-confidence evidence available and beats any page.
 
 1. **Refresh the snapshot first** (manifest + TSV + docs), using the sections above. Rename the
    data files to the new version.

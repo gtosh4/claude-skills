@@ -6,7 +6,7 @@ duplicate them here, and don't answer "does X exist" from this file.
 
 | Question | File |
 |---|---|
-| Does this class/subclass exist, and what does it do? | the Classes section **below**, then `data/listo-10.2-mods.tsv` |
+| Does this class/subclass exist, and what does it do? | `data/listo-10.2-classes.md` → `data/classes/<class>.md` |
 | Does this race exist, and what does it grant? | `data/listo-10.2-races.md` |
 | Does this feat exist, and what does it do here? | `data/listo-10.2-feats.md` |
 | Does this item exist, where is it, what does it do? | `data/listo-10.2-equipment.md` |
@@ -47,8 +47,20 @@ character — whether it exceeds 20 is **unconfirmed**. Acquisition gates for al
 Granted at **class** level 3, 6, 9, 12, 15, 18. Fighters, Rogues and Mesmerists also get one at
 class level 11.
 
-Feat count = `floor(classA / 3) + floor(classB / 3)`. The ceiling at character level N is
-`floor(N / 3)`, reached whenever the two remainders mod 3 sum to less than 3.
+Feat count = `floor(classA / 3) + floor(classB / 3)`, **plus 1 for each of Fighter, Rogue or
+Mesmerist taken to class level 11 or higher**. The ceiling at character level N is `floor(N / 3)`
+plus those bonuses, reached whenever the two remainders mod 3 sum to less than 3.
+
+> **The bare formula undercounts Fighter, Rogue and Mesmerist by one** at class level 11+. A pure
+> Fighter 20 gets **7 feats, not 6** — `floor(20/3) = 6`, plus the level 11 grant. Do not apply
+> the formula without the correction.
+>
+> **Fighter 11 is the highest-value single level in the list**: Improved Extra Attack *and* the
+> off-cadence feat land together. Rogue 11 is the same shape — Reliable Talent, the 6th Sneak
+> Attack die, and the feat.
+>
+> Note also that `Expansion` grants its own feats at 14/16/19, but `Universal Feat Every X
+> Level(s)` **overrides** them — so the class mod pages' feat tables are all wrong for Listo.
 
 Consequences:
 
@@ -69,18 +81,21 @@ unobtainable otherwise, and a respec silently loses them.
 | Dip | Buys |
 |---|---|
 | **Artificer 1** | **Int + Con saves**, medium armour, shields, Sleight of Hand. The multiclass node grants no saves — must be first |
-| **Fighter 1** | **Str + Con saves**, all armour, shields, Fighting Style, Second Wind |
+| **Fighter 1** | **Str + Con saves**, **all armour including heavy**, shields, Fighting Style, Second Wind — **only as the level 1 class**. The *multiclass* node grants **light + medium + shields only, no heavy armour and no saves** |
 | **Fighter 2** | Action Surge — a third Action alongside Lone Wolf's second |
-| **Warlock 1** | **Wis + Cha saves**, Eldritch Blast, pact slot, patron features |
-| **Warlock 2** | **Agonizing Blast** — beams scale on *character* level, so this is a full damage engine for two levels |
-| **Warlock 3** | Pact boon (Chain = a familiar), 2nd-level pact slots on a short-rest clock |
+| **Fighter 11** | Improved Extra Attack **and an off-cadence feat** — the highest-value single level in the list |
+| **Warlock 1** | **Wis + Cha saves**, Eldritch Blast, pact slot, patron features. Note the multiclass node grants the *same* proficiencies as level 1, so unlike Fighter 1 or Artificer 1 it **frees no armour feat** |
+| **Warlock 2** | **Agonizing Blast** — beams scale on *character* level, so this is a full damage engine for two levels (at 1d8/beam in Listo, not 1d10) |
+| **Warlock 3** | Pact boon (Chain = a familiar), 2nd-level pact slots on a short-rest clock, **and a feat** — the strongest action-economy purchase in the list for a duo. Chain familiars get the **Help** action, Magic Resistance and doubled HP from `18881` |
 | **Warlock 5** | Pact slots to 3rd level, third invocation |
 | **Cleric 1** | **Wis + Cha saves**, a domain, armour depending on domain |
 | **Sorcerer 2** | Font of Magic — convert slots to sorcery points and back |
 | **Sorcerer 3** | Metamagic; Twinned and Quickened are the ones worth levels |
 | **Bard 3** | A College, Expertise ×2, three bonus proficiencies |
 | **Rogue 3** | A subclass from Book of Rogues, Expertise, Sneak Attack |
-| **Paragon 1** | Heavy armour, shields, martial weapons, **Con + Cha saves** — must be first or it grants none of it |
+| **Ranger 3 (Beast Master)** | A full animal companion — **`Expansion` moves Companion's Bond from level 5 to 3**, and adds a Panther with your Proficiency Bonus, all-save proficiency and ASIs. A third body for a feat-neutral dip |
+| **Paragon 1** | Heavy armour, shields, martial weapons, light/medium armour, simple weapons, two skills, **Con + Cha saves**. A late dip loses **only Skills, Saving Throws and Heavy Armour** — shields, martial weapons, medium armour and all class features still arrive |
+| **Paragon 3 (Spellblade)** | Charisma-based melee weapon attacks (Scholar's Armament: CHA for attack *and* damage). A **feat-neutral mid-run dip** for any Charisma character, Hexblade-shaped |
 
 A **fighting style** can also be bought without a dip — Weapon Master and Fighting Initiate both
 grant one, and the list adds UA styles. Check `data/listo-10.2-feats.md` before spending levels
@@ -126,6 +141,7 @@ Sources, and their ceilings:
 | Mirror of Loss | +2 chosen, +1 Cha | Act 3 |
 | Hag's Hair | +1 | Act 1, one per run |
 | Tomes and Manuals | +1 each | — |
+| **Paragon 20 capstone** | **+4 to STR/CHA or DEX/CHA** | **caps at 25** — requires pure Paragon 20 |
 
 **Lone Wolf's +4 is the cheapest route to 20, and the only one available at level 1.** Put it on
 the primary and you hit 20 immediately with every feat still free.
@@ -176,8 +192,13 @@ Full casters unlock a new tier at odd class levels (1, 3, 5, 7, 9, 11, 13, 15, 1
 therefore costs a spell tier at odd character levels and nothing at even ones.
 
 **Cantrip scaling keys off character level, not class level.** Eldritch Blast gains beams at
-character 5, 11 and 17 regardless of how few Warlock levels you have — so two Warlock levels buy
-a fully-scaling damage engine.
+character **5, 10 and 17** — BG3 diverges from tabletop, and the 3rd beam lands at **10, not 11**.
+The 4th beam comes from `Expansion` (`279`). This holds regardless of how few Warlock levels you
+have, so two Warlock levels still buy a fully-scaling damage engine.
+
+**But the beams are weaker here: Listo nerfed Eldritch Blast to 1d8 per beam in v10.0, down from
+1d10**, and Repelling Blast now allows a Strength save. Any damage math taken from outside Listo
+is overstated. See `data/classes/warlock.md`.
 
 ### Respec
 
@@ -256,23 +277,33 @@ here:
 
 ## Classes and subclasses
 
-> **No compiled classes file exists yet** — this section is the reference. Unlike races, feats
-> and equipment, classes have not been compiled into a `data/` file, so this list is
-> summary-level. **Verify any specific subclass against `data/listo-10.2-mods.tsv` before
-> recommending it**, and enumerate from the mods index rather than from this section when
-> presenting options.
+**The catalogue is `data/listo-10.2-classes.md` (index) and `data/classes/<class>.md` (detail)** —
+156 subclasses across 17 classes, each confirmed against the manifest. Enumerate from there, not
+from memory.
 
-New classes: **Artificer** (all four subclasses), **Mesmerist**, **Paragon** (Lionheart,
-Nighthawk, Prodigy, Regent, Spellblade, Sword Saint), **Inquisitor**, **Bloodhunter** (mod.io,
-so it does not appear in the Nexus-only TSV).
+Only the facts that feed the tables above are repeated here:
 
-Facts that feed the tables above:
-
-- **Paragon** is Charisma-based but has **no spell slots** — martial support, not a caster. Must
-  be taken at level 1 or it loses heavy armour, skills and save proficiencies.
-- **Mesmerist** is Charisma but a **half-caster** — caps at 5th-level spells. It is also one of
-  the three classes on the **seven-feat** cadence. Its level 2 gives a bonus to Wisdom saves
-  equal to the Charisma modifier, the best defensive feature on any Cha class here.
+- **Paragon** has **no spell slots** — martial support, not a caster (Spellblade gets cantrips and
+  cantrip-like weapon attacks; Nighthawk has one 1/long-rest spell). It is **Charisma-flavoured
+  but MAD**: outside Spellblade, weapon attacks still use STR/DEX and Charisma only feeds riders.
+  Only **Spellblade** is genuinely single-stat. Taking it at level 1 buys skills, saving throws
+  and heavy armour; a **later dip still grants shields, martial weapons, medium armour and all
+  class features**. Its **level 20 capstone gives +4 to two abilities capping at 25**, reachable
+  only by pure Paragon 20. See `data/classes/paragon.md`.
+- **Mesmerist** is a Charisma **half-caster** drawing from the **Bard** list, gaining a new spell
+  **every level**. It is one of the three classes on the **seven-feat** cadence — note the mod's
+  own page says 4/8/12/16/19, but Listo's `Universal Feat Every X Level(s)` overrides it, so plan
+  against **3/6/9/11/12/15/18**. Its **max spell level is `(unverified)`** — the mod page never
+  states it; 5th is the natural reading of "half-caster" but is not confirmed.
+  Its level 2 **Towering Ego** adds the **Charisma modifier to Wisdom saves** (and half to
+  Intelligence). Three qualifiers the older notes missed: it is **self-only**, it scales with
+  **Charisma rather than class level — so a 2-level dip gets the full effect** — and it **switches
+  off entirely while you are under any harmful mind-affecting condition**, making it purely
+  preventative. See `data/classes/mesmerist.md`.
+- **Mesmerist grants both Dex and Cha saves at level 1** — the two a Charisma build most wants —
+  so Lone Wolf's +4 should go on **Constitution + Wisdom**, yielding four proficiencies covering
+  the entire top of the save-value ordering. It escapes the Charisma trap rather than falling
+  into it.
 - **Artificer 1** and **Paragon 1** grant nothing from their multiclass nodes — both must be the
   level 1 class to be worth taking at all.
 - **Inquisitor** is Wisdom-based (tagged Cleric and Ranger).
@@ -281,13 +312,12 @@ Facts that feed the tables above:
   your Spellcasting Stat, so you can multiclass in any order.
 - **Expansion** (mod 279) supplies level 13–20 progression.
 
-**v9.0.3 purged**: Whispers Bard; Frozen Sorcery and Spellfire Sorcery; the Sorcerer King,
-Undead, Fathomless, Genie and Star Warlock patrons; Hedge Mage and Graviturgy Wizard; Blackguard;
-Oath of Zeal/Phoenix/Storm.
+The v9.0.3 purge list and the surviving-subclass catalogue both live in
+`data/listo-10.2-classes.md`. **Do not plan from a remembered subclass list** — the old summary
+here was wrong in three ways: it missed `(DTO) Otherworldly Archetypes` entirely (12 subclasses,
+one per vanilla class), it listed "Arcane Chaos" as a Sorcerer subclass when it is a level-6
+feature of vanilla Wild Magic, and it named The Celestial as the only surviving added Warlock
+patron when The Psyker also survives.
 
-**Surviving notable subclasses**: Bard — Eloquence, Dance, Tragedy. Warlock — **The Celestial**
-only, plus Pact of the Shroud and 5R Pact of the Chain. Sorcerer — Aberrant Mind, **Favored
-Soul**, Draconic (Expanded ancestries), Storm, Shadow, Arcane Chaos. Wizard — Book of Wizards,
-Conjuration School Enhanced, School of Death, Hexcraft, Hierophant. Cleric — Circle of the Sea,
-Darkness Domain, Death Domain, Cat's Cleric Changes. Druid — Book of Druids. Rogue — Book of
-Rogues.
+**⚠ Inquisitor is probably broken past level 2** in 10.2 — Listo pulled the version *before* the
+fix for exactly that bug, and no patch is in the manifest. See the index.

@@ -308,8 +308,17 @@ must re-equip the weapon after taking the feat. **Bonus Attack** now includes al
 riders (Caustic Ring, GWM: All In) and uses your **spellcasting modifier** instead of STR/DEX
 if your weapon has a casting-ability override (Pact Weapon, **Shillelagh**).
 
-> Shillelagh is buffed and permanent in Listo, so Polearm Master on a WIS caster with a
-> quarterstaff is a genuinely strong line here.
+> **Correction — Shillelagh is NOT permanent.** The Listo docs say it is; the changelog (v9.0.3
+> #70) says otherwise, and v10.0 #99 patched the *bug* that made it look permanent. It is a
+> **level 1 spell, not a cantrip**, and **must be re-cast after every Long Rest**. It uses your
+> **highest** spellcasting modifier, not Wisdom. See `data/classes/druid.md`.
+>
+> **The weapon lists barely overlap.** Shillelagh covers Club, Quarterstaff, Mace, Morningstar,
+> Sickle, Spear, Trident. Polearm Master covers glaives, halberds, pikes, quarterstaves, spears,
+> tridents and javelins. **Glaives, halberds and pikes get no Shillelagh; clubs, maces,
+> morningstars and sickles get no Polearm Master.** The combination only works on a
+> **quarterstaff, spear or trident** — so the spellcasting-modifier interaction is real but
+> narrower than it looks.
 
 ### Resilient
 **+1 to a chosen ability, and proficiency in that ability's saving throws.** Listo makes it
@@ -506,6 +515,10 @@ Eldritch Knight's similar feature.
 
 > The docs single this out for melee-casters, especially **Clerics**, who otherwise get
 > neither Extra Attack nor War Priest charges.
+>
+> **Caveat — that framing no longer holds for every domain.** `Cat's Cleric Changes` (`21257`),
+> written for Listo, gives **War Domain a real Extra Attack at level 6**. So War Magic is the
+> answer for the other 18 domains, not for War. See `data/classes/cleric.md`.
 
 ---
 
@@ -579,7 +592,16 @@ of every combat** — no resource, no cast, no concentration.
 ### Arcane Chaos
 Archive `ArcaneChaosFeat-14228-1-0-0`, shipped as part of `Wild Magic Subclass - Additional
 Spells` (`14228`). A feat delivered by a subclass-spells mod, so it is easy to miss when
-grepping mod names for "feat". Exact effect `(unverified)`.
+grepping mod names for "feat".
+
+Lets you cast **any** spell using **sorcery points**, and **always triggers a wild magic surge**
+when you do. This is **broader than the subclass feature of the same name**, which `14228` grants
+to the vanilla Wild Magic subclass at level 6 — the feat version is not restricted the same way.
+
+> Pairs with Listo's surge model: risk only accrues **in combat**, ramping **+5 percentage points
+> per non-surging cast** (readable in-game as the **`Unstable Magic`** condition). A feat that
+> *guarantees* a surge is therefore a deliberate reset as much as a cost. See
+> `data/classes/sorcerer.md`.
 
 ---
 
@@ -600,8 +622,10 @@ Deliberately not implemented: Blind Fighting, Unarmed Fighting.
 **Close Quarters Shooter, Mariner, and Thrown Weapon Fighting are added to the Swords Bard
 list.** These styles are also added to **Weapon Master's** options.
 
-> **Druidic Warrior is a cheap route to Shillelagh** — which Listo buffs to a permanent effect
-> on a wider weapon range — for anyone who can take a fighting style.
+> **Druidic Warrior is a cheap route to Shillelagh** for anyone who can take a fighting style.
+> But note Shillelagh in Listo is a **level 1 spell requiring a re-cast after every Long Rest**,
+> not a permanent cantrip effect (the docs are wrong; see `data/classes/druid.md`), and whether a
+> feature-granted Shillelagh **costs a spell slot** is `(unverified)`.
 
 ### Protection and Great Weapon Fighting PHB2024 (`18684`)
 - **Protection:** now gives **disadvantage on ALL attack rolls** against the protected target

@@ -73,7 +73,7 @@ mechanics, not just the names:
 
 | Looking for | Grep this |
 |---|---|
-| Classes, subclasses, progression | `references/listo-rules.md` (Classes section), then the mods index |
+| Classes, subclasses, progression | `data/listo-10.2-classes.md`, then `data/classes/<class>.md` |
 | Races and subraces | `data/listo-10.2-races.md` |
 | Feats and fighting styles | `data/listo-10.2-feats.md` |
 | Items, slots, attunement, economy | `data/listo-10.2-equipment.md` |
@@ -165,6 +165,8 @@ on the sheet. State unverified assumptions explicitly rather than smoothing over
 |---|---|
 | `references/listo-rules.md` | Verified ruleset facts and all build math |
 | `references/research-recipes.md` | How to search the bundled snapshot; how to refresh it |
+| `data/listo-10.2-classes.md` | Index of all 17 classes and 156 subclasses; saves, caster tier, cadence |
+| `data/classes/<class>.md` | One file per class — every subclass's mechanics, dip value, gaps |
 | `data/listo-10.2-races.md` | Every race and subrace, with the traits each grants |
 | `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
 | `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
@@ -174,15 +176,15 @@ on the sheet. State unverified assumptions explicitly rather than smoothing over
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
 | `assets/sheet-template.html` | Character-sheet artifact template, themed |
 
-The three compiled `.md` data files are the **first stop** for "does X exist and what does it
-do". They were built from the mods index, the manifest's file variants, and the mod pages
-themselves, and they record provenance — anything they mark `(unverified)` needs checking
-before a build leans on it. `references/listo-rules.md` owns the **arithmetic and doctrine**,
-plus the classes summary until that gets its own compiled file.
+The compiled `.md` data files are the **first stop** for "does X exist and what does it do".
+They were built from the mods index, the manifest's file variants, and the mod pages themselves,
+and they record provenance — anything they mark `(unverified)` needs checking before a build
+leans on it. `references/listo-rules.md` owns the **arithmetic and doctrine** only; it
+deliberately does not enumerate options.
 
-**Classes and subclasses have not been compiled yet** — they are the one category still at
-summary level. Enumerate them from `data/listo-10.2-mods.tsv` rather than trusting the summary
-to be complete.
+**Read the warnings at the top of `data/listo-10.2-classes.md` before recommending a class.**
+One class ships a version with a known level-up-breaking bug, several mods are pinned behind
+their own documentation, and every class mod page's feat table is wrong for Listo.
 
 **Grep the data files, never read them whole** — the manifest is 1.2 MB and the changelog 293 KB.
 
