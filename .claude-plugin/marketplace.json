@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "gtosh4-skills",
+  "description": "Personal Claude Code skills by gtosh4",
+  "owner": {
+    "name": "gtosh4",
+    "email": "gtosh4@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "listo-build",
+      "source": "./plugins/listo-build",
+      "description": "Plan Baldur's Gate 3 character builds for the Listonomicon modlist, verified against the shipped 10.2 manifest."
+    }
+  ]
+}

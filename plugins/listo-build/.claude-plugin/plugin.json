@@ -1,0 +1,8 @@
+{
+  "name": "listo-build",
+  "description": "Plan a Baldur's Gate 3 character build for the Listonomicon modlist, for a two-player Lone Wolf run, and publish it as a character-sheet artifact. Verifies every option against the installed 10.2 manifest rather than the published docs, which are stale.",
+  "version": "1.0.0",
+  "author": {
+    "name": "gtosh4"
+  }
+}

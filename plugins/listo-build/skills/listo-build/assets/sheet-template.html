@@ -1,0 +1,316 @@
+<title>BUILD NAME</title>
+<style>
+  :root {
+    --ink:        #0D1416;
+    --ground:     #E7EBEA;
+    --surface:    #F5F7F6;
+    --surface-2:  #DDE3E2;
+    --text:       #16201F;
+    --text-dim:   #55635F;
+    --text-faint: #7C8A86;
+    --rule:       #C3CCCA;
+    --rule-soft:  #D6DDDB;
+    --brass:      #8A5A18;
+    --brass-bg:   #F0E4D0;
+    --astral:     #2C6E6A;
+    --astral-bg:  #DCE9E7;
+    --rust:       #8C4425;
+    --grid:       rgba(13, 20, 22, .045);
+    --shadow:     0 1px 2px rgba(13,20,22,.06), 0 8px 24px -16px rgba(13,20,22,.28);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:     #0D1416;
+      --surface:    #141D1F;
+      --surface-2:  #1B2628;
+      --text:       #DFE7E5;
+      --text-dim:   #93A3A0;
+      --text-faint: #6C7C79;
+      --rule:       #263335;
+      --rule-soft:  #1D2829;
+      --brass:      #D89B4A;
+      --brass-bg:   #2A2015;
+      --astral:     #5FB5AE;
+      --astral-bg:  #122625;
+      --rust:       #D08258;
+      --grid:       rgba(223, 231, 229, .04);
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:     #0D1416;
+    --surface:    #141D1F;
+    --surface-2:  #1B2628;
+    --text:       #DFE7E5;
+    --text-dim:   #93A3A0;
+    --text-faint: #6C7C79;
+    --rule:       #263335;
+    --rule-soft:  #1D2829;
+    --brass:      #D89B4A;
+    --brass-bg:   #2A2015;
+    --astral:     #5FB5AE;
+    --astral-bg:  #122625;
+    --rust:       #D08258;
+    --grid:       rgba(223, 231, 229, .04);
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--ground);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px, 28px 28px;
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.25rem;
+  }
+
+  .titleblock { border: 1px solid var(--rule); background: var(--surface); box-shadow: var(--shadow); }
+  .titleblock-main {
+    padding: 1.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  .wordmark {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: clamp(1.75rem, 5.5vw, 2.75rem);
+    font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    text-wrap: balance; margin: 0; line-height: 1.1;
+  }
+  .wordmark .dim { color: var(--brass); }
+  .tagline { color: var(--text-dim); max-width: 62ch; margin: 0; }
+  .fields {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    border-top: 1px solid var(--rule);
+  }
+  .field {
+    padding: .8rem clamp(1rem, 3vw, 2rem);
+    border-right: 1px solid var(--rule-soft);
+    display: flex; flex-direction: column; gap: .15rem;
+  }
+  .field:last-child { border-right: 0; }
+  .field-key {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint);
+  }
+  .field-val {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .88rem; color: var(--text); font-variant-numeric: tabular-nums;
+  }
+
+  section { display: flex; flex-direction: column; gap: 1.15rem; }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--brass);
+    border-bottom: 1px solid var(--rule); padding-bottom: .55rem;
+    display: flex; justify-content: space-between; gap: 1rem;
+  }
+  .eyebrow span:last-child { color: var(--text-faint); }
+  h2 {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 1.3rem; font-weight: 600; letter-spacing: .04em; margin: 0; text-wrap: balance;
+  }
+  h3 {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-dim); margin: 0; font-weight: 600;
+  }
+  p { margin: 0; max-width: 66ch; }
+  .prose { display: flex; flex-direction: column; gap: .85rem; }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--astral); font-style: normal; font-weight: 600; }
+
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  th, td { padding: .62rem .9rem; text-align: left; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-faint); font-weight: 600; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+  .mono {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .final { background: var(--brass-bg); color: var(--text); font-weight: 600; }
+  thead th.final { color: var(--brass); }
+  .ability { font-weight: 600; }
+  .dead td { color: var(--text-faint); }
+  .win { color: var(--astral); font-weight: 600; }
+
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+  }
+  .card { background: var(--surface); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .45rem; }
+  .card p { font-size: .92rem; color: var(--text-dim); }
+  .lvl {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--astral);
+  }
+
+  ul.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
+  ul.checks li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .6rem; font-size: .95rem; max-width: 70ch; }
+  ul.checks li::before {
+    content: "▢"; color: var(--brass);
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  .note {
+    border-left: 2px solid var(--rust); background: var(--surface);
+    padding: .85rem 1.1rem; font-size: .93rem; color: var(--text-dim); max-width: 70ch;
+  }
+  .note b { color: var(--rust); font-weight: 600; }
+
+  .ck {
+    border: 1px solid var(--rule); border-left: 3px solid var(--astral);
+    background: var(--surface); padding: 1rem 1.2rem;
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  .ck p { font-size: .93rem; color: var(--text-dim); }
+  .ck-head {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--astral); font-weight: 600;
+  }
+  .stack { display: flex; flex-direction: column; gap: .9rem; }
+
+  .phase {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--brass); background: var(--brass-bg);
+    padding: .3rem .6rem; border: 1px solid var(--rule); align-self: flex-start;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    padding: .12rem .45rem; background: var(--astral-bg); color: var(--astral); border: 1px solid var(--rule);
+  }
+
+  footer {
+    border-top: 1px solid var(--rule); padding-top: 1rem;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+  }
+</style>
+
+<!--
+  Character sheet template. Replace all content below; keep the CSS above unchanged.
+
+  Components available:
+    .titleblock > .titleblock-main (.wordmark, .tagline) + .fields > .field (.field-key/.field-val)
+    section > .eyebrow (two spans: label + right-aligned note) + h2 + content
+    .prose            paragraph stack, max 66ch
+    .scroller > table thead th / td; classes: .num .mono .final .win .ability; tr.dead for empty rows
+    .cards > .card    hairline grid; each card takes .lvl (mono label) + p
+    .ck               astral-bordered callout: .ck-head + p        — decisions
+    p.note            rust-barred callout, use <b> for the lead-in  — warnings
+    .tag              inline astral chip, good for feat names in tables
+    .phase            brass chip, good as a heading above a table
+    ul.checks         checkbox list
+    em                renders as astral bold, not italic — use for emphasis
+    footer            two spans, mono, spread apart
+
+  Keep the sheet to picks and when. Reasoning belongs in conversation.
+  State unverified assumptions explicitly.
+-->
+
+<div class="sheet">
+
+  <header class="titleblock">
+    <div class="titleblock-main">
+      <h1 class="wordmark">NAME <span class="dim">SECOND HALF</span></h1>
+      <p class="tagline">One or two sentences: what this character is, and the single decision that shapes it.</p>
+    </div>
+    <div class="fields">
+      <div class="field"><span class="field-key">Race</span><span class="field-val">—</span></div>
+      <div class="field"><span class="field-key">Split</span><span class="field-val">—</span></div>
+      <div class="field"><span class="field-key">Subclass</span><span class="field-val">—</span></div>
+      <div class="field"><span class="field-key">Ruleset</span><span class="field-val">Listo v10.2</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="eyebrow"><span>How it plays</span><span>Role in the duo</span></div>
+    <h2>One line describing the loop</h2>
+    <div class="prose"><p>What a typical turn looks like.</p></div>
+    <div class="cards">
+      <div class="card"><span class="lvl">Strengths</span><p>—</p></div>
+      <div class="card"><span class="lvl">Weaknesses</span><p>—</p></div>
+      <div class="card"><span class="lvl">In the duo</span><p>—</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow"><span>Ability scores</span><span>27-point buy</span></div>
+    <h2>Headline about the spread</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Ability</th><th class="num">Buy</th><th class="num">Cost</th><th class="num">Tasha's</th><th>Feat</th><th class="num">Other</th><th class="num final">Final</th><th class="num">Mod</th></tr></thead>
+        <tbody>
+          <tr><td class="ability">Strength</td><td class="num mono">8</td><td class="num mono">0</td><td class="num mono">—</td><td class="mono">—</td><td class="num mono">—</td><td class="num mono final">8</td><td class="num mono">−1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><b>Check at creation:</b> what the sheet should read, and what to do if it doesn't.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow"><span>Progression</span><span>Character levels 1–20</span></div>
+    <h2>Which class is taken first, and why it never changes</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th class="num">Char</th><th>Take</th><th>Pick</th><th>Feat</th></tr></thead>
+        <tbody>
+          <tr><td class="num mono">1</td><td class="mono">—</td><td>—</td><td><span class="tag">—</span></td></tr>
+          <tr class="dead"><td class="num mono">2</td><td class="mono">—</td><td>—</td><td class="mono">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ck">
+      <span class="ck-head">Respec checkpoint</span>
+      <p>What to reconsider, and the criterion for deciding.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow"><span>Racial kit</span><span>Source mod</span></div>
+    <h2>What the race gives you</h2>
+    <div class="cards">
+      <div class="card"><span class="lvl">Level 1</span><p>—</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow"><span>Quest rewards</span><span>What gates each one</span></div>
+    <h2>Which of these are skill checks rather than fights</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th class="num">Act</th><th>Reward</th><th>Source</th><th>Gate</th></tr></thead>
+        <tbody><tr><td class="num mono">1</td><td class="mono win">—</td><td>—</td><td>—</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span>Listonomicon v10.2 · Combat Extender</span>
+    <span>Party of 2 · Lone Wolf</span>
+  </footer>
+
+</div>
