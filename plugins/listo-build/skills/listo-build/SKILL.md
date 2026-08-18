@@ -51,24 +51,115 @@ What follows from two characters, regardless of what either of them is:
   `references/listo-rules.md`.
 - Companion quests are solved by **Sit This One Out 2** — see `references/listo-rules.md`.
 
-**Do not assume anything about the other character.** Ask what roles it already covers — damage
-type, healing, control, face, skills — and design into the gaps. The same premises support a
-build alongside a martial, a second caster, or anything else.
+**Do not assume anything about the other character.** Establish what roles it already covers —
+damage type, healing, control, face, skills — and design into the gaps. That opens the interview
+in §1b: **read it off the partner's sheet if one exists**, ask if it doesn't. The same premises
+support a build alongside a martial, a second caster, or anything else.
 
 ## Process
 
-### 1. Establish the remaining constraints
+### 1. Orient, then interview
 
-Ask:
+**This is a conversation, not a form.** The niche decision eliminates more of the option space
+than everything else combined, and it is the one decision the player — not the skill — owns.
+Get it right by *showing them the landscape first*, then asking.
 
-- **What the other character covers.** Roles and gaps only, not a build critique.
-- **Stat lock.** Gear is expensive (4× merchant prices), so most players commit to one primary
-  stat. Establish it early; it eliminates most of the option space.
-- **Damage expectation.** A pure controller in a two-person party gets overrun. Ask directly
-  whether they need to be a damage threat, or whether the other character carries that.
-- **Optional mods.** `data/listo-10.2-mcm.md` lists what the shipped profile enables and
-  disables. Absolute Wrath is **on** by default; Random Equipment Loot is **not installed**;
-  Grit and Glory and Sit This One Out 2 are **off**. Ask only about deviations from that.
+#### 1a. Open with a short orientation
+
+Before the first question, spend **one short paragraph** on what this run actually rewards. Not a
+lecture — the player should be answering within about 150 words. Cover only:
+
+- The duo's structural problem is **action economy**, so anything adding a body is worth more
+  than its numbers.
+- Enemy HP is **+126% / +170% by 20** and scales off *player* level, so fights are long and
+  there is no out-levelling. Damage that ends fights early is worth more than it looks.
+- **Long rests cost 120+ supplies**; short-rest engines refuel for free.
+- Vanilla build knowledge is actively wrong here — name the one or two rebalances that bear on
+  what they seem to want (Arcane Acuity, Eldritch Blast at 1d8, Alert, Tavern Brawler).
+
+The niche table below is **working material, not output**. Mine it for the option descriptions in
+§1b; paste it at the player only if they ask to see the whole landscape at once.
+
+| Niche | What carries it here | The catch |
+|---|---|---|
+| **Action-economy engine** | Warlock 3 Chain familiar (Help, Magic Resistance, doubled HP from `18881`), Ranger 3 Beast Master (Expansion moves Companion's Bond to **3**), Summon Beast 5 / Conjure Animals 9 (`13458`), the **Skeleton Crew feat** | Summons need their own action to set up; a turn spent summoning is a turn not fighting |
+| **Lockdown controller** | Save-or-lose against crowds; area control composes rather than duplicating | Enemy saves climb with **+1 ability point per 6 levels** (bosses and enemies alike), so a static DC decays. Single-target-only CC *falls* further as encounters crowd |
+| **Front-line damage** | Smites, Extra Attack, **Fighter 11** (3 attacks *and* an off-cadence feat) | Long fights mean resource-limited burst runs dry; needs a sustain answer |
+| **Reaction economy** | Lone Wolf's **second reaction**: Rogue's off-turn Sneak Attack, Uncanny Dodge as an interrupt, Riposte, Opportunity Attacks | Reaction effects are worthless if nothing triggers them — it needs a build shaped around being attacked |
+| **Short-rest engine** | Warlock pact slots, Battle Master dice, Monk ki, Second Wind / Action Surge | Usually caps spell tier or damage ceiling relative to a long-rest caster |
+| **Durability anchor** | Lone Wolf already gives **halved damage and +30% HP**; heavy armour + shields stack on top | Being un-killable does not end fights, and the duo cannot afford a passenger |
+| **Skills and face** | Two characters cover **every** check in the campaign; Expertise is worth double | A **threshold** role — the party's first source saturates it. Rarely worth building *around* |
+
+#### 1b. Ask in batches, with `AskUserQuestion`
+
+Use the **`AskUserQuestion` tool**, not prose, for anything with a bounded answer. Batch related
+questions into one call — up to four questions, each with up to four options.
+
+**Batch one — the two questions that eliminate the most space.** Ask these together, before any
+chassis thinking:
+
+1. **What the other character already covers** — `multiSelect: true`, drawn from the niche table.
+   Roles and gaps only, never a critique of their build.
+2. **What this character should own** — the niche, again from the table, narrowed to the four
+   that fit whatever they said about the partner.
+
+> **If the partner already has a sheet, don't ask them to describe it — read it.** Given an
+> artifact URL or a file, **fetch it first**, take the coverage straight off the profile radar
+> (high scores are what's covered; the falling rows and the `gap`-flagged cells are the brief),
+> and turn question 1 into *confirm or correct my read*. It is a faster question and a better
+> one: the player is reacting to specifics rather than generating a summary from memory. State
+> which rows you read as covered so a wrong read is easy to catch.
+
+**Read the negative space.** In a `multiSelect`, what they *didn't* tick carries as much signal
+as what they did — an unticked "healing" means this character has to carry some, whatever niche
+they then pick. Say the derived brief back to them in one sentence before moving on, because it
+is an inference and it may be wrong.
+
+**Batch two — the constraints that shape the chassis.** After the niche is fixed. This is a
+**menu, not a checklist** — ask only what is still genuinely open, since a comparison or an
+earlier answer often settles two of these implicitly. Re-asking a question the conversation has
+already answered reads as not listening.
+
+3. **Stat lock.** Gear is 4× merchant price, so most players commit to one primary stat. Frame
+   the options as actual stat lines, not abstractions. **Check for a stat clash with the
+   partner** — two Charisma builds compete for every Charisma item at 4× prices, which is a real
+   cost and belongs in the option description.
+4. **Damage expectation.** A pure controller in a two-person party gets overrun. Ask directly
+   whether this character must be a damage threat or whether the partner carries it.
+5. **Resource clock tolerance.** Short-rest engine, long-rest nova, or a mix — this decides
+   half the chassis list on its own.
+6. **Melee or ranged**, if the niche hasn't already settled it.
+
+**Batch three — the decisive trade-off.** Once the shortlist exists, ask the *specific* question
+the shortlist turns on, with the real candidates as options. That is where §3b's decisive
+trade-off belongs, and it is far more useful as a question than as a paragraph.
+
+**"I'd like to compare these options" is an answer, not a stall.** The niche question is exactly
+where a player wants the comparison *before* committing, and it is the highest-stakes question
+in the interview. When it comes back, go straight to **§3b** — enumerate the options they were
+offered as real builds, with the act-by-act shape and the costs — then re-ask with the same
+tool. Do not re-pose the original question with the same four options, and do not fall back to
+picking for them.
+
+**Writing good options.** This is where the "more detail" lives:
+
+- **Every option description carries a concrete Listo mechanic**, with levels attached. "Summons
+  as extra bodies" is a label; "Warlock 3 buys a Chain familiar with Help, Magic Resistance and
+  doubled HP, on a short-rest clock" is an option.
+- **State the downside in the description.** An option with no stated cost has not been thought
+  about, and the player cannot choose against something invisible.
+- **Never four flavours of the same answer.** If two options lead to the same chassis, cut one.
+- **No "(Recommended)" on preference questions.** Niche, stat lock and playstyle are the
+  player's call and have no correct answer. Reserve the recommendation for *build* decisions,
+  where §3b's doctrine applies — enumerate, then recommend with the condition that flips it.
+- Always leave room for the free-text answer; the option list is a prompt, not a menu.
+
+#### 1c. Confirm the config only where it deviates
+
+Do **not** interview the player about mod settings — `data/listo-10.2-mcm.md` already has them.
+Absolute Wrath is **on**; Random Equipment Loot is **not installed**; Grit and Glory is **off**;
+Lone Wolf and Sit This One Out 2 are enabled by hand for this run. Ask only whether they have
+changed something away from that.
 
 ### 2. Verify the option space
 
@@ -113,17 +204,30 @@ cannot. A dip is worth proposing when it buys one of:
 
 `references/listo-rules.md` has the dip-size math and the cheap breakpoints table.
 
-### 3b. Present options, not a recommendation
+### 3b. Enumerate, detail, then hand the choice back
 
 When exploring classes or subclasses, **enumerate before narrowing**. Grep the mods index for
 every candidate in scope first — the option space is larger than memory suggests, and v9.0.3
 purged enough that intuition is unreliable in both directions.
 
+> **This section is not pinned to step 3.** Pull it forward whenever the player asks to compare
+> before choosing — most often at the niche question in §1b, where the options are niches rather
+> than chassis. Same structure either way: enumerate, detail, table, dismissed list, decisive
+> trade-off, hand back.
+
 Then present **at least six candidates**, each with:
 
-- **What it is** — the concrete mechanics, with levels attached. Not vibes.
+- **What it is** — the concrete mechanics, **with levels attached**. Name the feature, the level
+  it lands, the resource it costs and the clock it refreshes on. "Good control" is not an entry;
+  "Hypnotic Pattern at 5, one long-rest slot, Wis save against Listo's scaled saves" is.
+- **What it looks like at each act** — the build at character 5, 12 and 18. Two candidates that
+  read identically at level 5 often diverge completely by 12, and that is usually the real
+  choice. Say which act it peaks in.
 - **Strengths** — what it does that the alternatives don't.
-- **Weaknesses** — stated plainly, including the ones that are disqualifying.
+- **Weaknesses** — stated plainly, including the ones that are disqualifying, and including
+  **what it gives up** rather than only what it lacks.
+- **What it needs from the partner** — every candidate has a hole; name it, since the duo has
+  exactly one other body to fill it.
 - **Evaluation** — a verdict sentence saying when this is the right pick.
 
 Follow with a **side-by-side table** across the axes that matter for a duo: damage, control,
@@ -135,6 +239,18 @@ actually covered rather than silently truncated.
 
 Close by naming **the decisive trade-off** — the single axis the choice turns on — and give a
 recommendation with the condition that would flip it.
+
+**Then hand the choice back with `AskUserQuestion`.** Do not narrow six candidates to one on the
+player's behalf. Put the two or three that survive the trade-off in as options, each described
+by the mechanic that distinguishes it, and let them pick. Batch it with whatever secondary
+question the answer will raise anyway — race, dip order, or the stat line — so one call
+advances the whole design.
+
+**Expand on demand, at any depth.** If they ask about one candidate, go deeper on that one
+rather than re-summarising all six: the full progression table, the exact gear that keys off it,
+what the level 1 class costs them, what a respec at 12 could still recover. The compiled data
+files carry that detail — `data/classes/<class>.md` has per-subclass mechanics, dip value and
+gaps for every one of the 156 subclasses.
 
 ### 4. Do the math properly
 
@@ -256,6 +372,13 @@ encounter demands, say so in prose rather than inflating a number.
   is single-class, say *why* the dips were rejected.
 - **Offering two or three options.** Enumerate from the mods index and present at least six with
   real strengths and weaknesses. Narrowing early hides the good answers.
+- **Deciding the niche for them.** Playstyle is the player's call and it eliminates more of the
+  option space than anything else. Show the landscape, then ask — don't infer a niche from one
+  offhand remark and build three steps past it.
+- **Answering in one long monologue.** Chassis, race, stats, feats and gear in a single reply
+  gives the player nothing to steer. Ask at each decision that has a real fork.
+- **Options that are labels.** "More damage" versus "more control" tells the player nothing they
+  didn't already know. Every option names the mechanic, the level and the cost.
 - **Recommending from vanilla knowledge.** Tavern Brawler, Great Weapon Master, Sharpshooter,
   Alert, Tough, Durable and Arcane Acuity all work differently here. Arcane Acuity in particular
   invalidates most published Bard guides.
