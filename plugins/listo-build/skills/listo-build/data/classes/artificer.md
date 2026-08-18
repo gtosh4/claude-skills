@@ -40,7 +40,7 @@ read here is what Listo ships.
 | **Slot progression** | 2 L1 @1 · 3 @3 · 4 @4 · 2 L2 @5 · 3 L2 @7 · 2 L3 @9 · 3 L3 @11 · 1 L4 @13 · 2 L4 @15 · 3 L4 + 1 L5 @17 · 2 L5 @19 → **4 / 3 / 3 / 3 / 2** at level 20 |
 | **Cantrips** | 2 @1, +1 @10, +1 @14, +1 @18 (5 total), **plus** Magical Tinkering's 3 always-prepared |
 | **Resource cadence** | Infusion Slots replenish on **long rest** (`ReplenishType "Rest"`). Most infusions are also `OncePerRest`. Elixirs and Arcane Jolt are long-rest. The Right Tool for the Job and the Homunculus are **short rest** |
-| **ASI/feat levels in the base mod** | 4, 8, 12, 16, 19 — **overridden by Listo's universal feat cadence** (3/6/9/12/15/18); see Feats below |
+| **ASI/feat levels in the base mod** | 4, 8, 12, 16, 19 — **overridden by Listo's universal feat cadence** (3/6/9/12/13/15/18); see Feats below |
 | **Key breakpoints** | **1** (saves + armour + Firearms), **2** (Infusions), **3** (subclass), **5** (L2 slots; Extra Attack for Armorer/Battle Smith), **6** (SoH Expertise, 3rd infusion slot), **7** (Flash of Genius), **10** (Replicate Magic Item unlocks; +1 infusions become +2), **11** (Spell-Storing Item), **20** (Soul of Artifice) |
 | **Dip value** | **Top tier at 1.** Good at 2 (Infusions). Weak at 3 (subclass features are back-loaded) |
 
@@ -92,7 +92,7 @@ party — and Artificer is one of very few level-1 classes that hands you both a
 Cross-references:
 - `listo-10.2-feats.md` already prices this out: **Moderately Armoured** (medium armour + shields)
   requires **Lightly Armoured** first, so shields cost a character with no armour proficiency
-  **two of their six feats**. An Artificer 1 opener returns both. The feats file names
+  **two of their seven feats**. An Artificer 1 opener returns both. The feats file names
   "Fighter 1, Artificer 1, or Paragon 1" as the three classes that do this.
 - Unlike Fighter 1, Artificer 1 also brings **Int + Con saves** (Fighter gives Str + Con),
   **Sleight of Hand**, **Firearms proficiency**, half-caster slot progression that keeps
@@ -407,8 +407,9 @@ firearms-vs-bows range trade, see the **"Firearms vs bows"** section of
 ## Feats
 
 Listo replaces the mod's own ASI levels (4/8/12/16/19) with `Universal Feat Every X Level(s) - MCM`
-(`13193`): **feats at 3, 6, 9, 12, 15, 18** for all classes, with a seventh at **11** for
-**Fighter, Rogue and Mesmerist only**. Artificer gets the standard six. Because the cadence keys off
+(`13193`): **feats at 3, 6, 9, 12, 13, 15, 18** for all classes, with a seventh at **11** for
+**Fighter and Rogue only** — Mesmerist is named in the docs but its grant is gated behind
+`enableAdvancedSettings`, set to `false` in the install. Artificer gets the standard seven. Because the cadence keys off
 **class level**, a 3-level Artificer dip is **feat-neutral**. See `listo-10.2-feats.md` for the full
 cadence and the ability-score-cap removal.
 

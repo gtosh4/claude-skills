@@ -51,8 +51,8 @@ here is inferred from 5e. Anything not stated on the page is marked `(unverified
 ### Feat cadence — the mod page is wrong for Listo
 
 The Paragon page lists feats at **4, 8, 12, 16, 19** (vanilla cadence). Listo overrides this
-globally with `Universal Feat Every X Level(s) - MCM` (`13193`): **feats at 3, 6, 9, 12, 15, 18
-for all classes**, with an extra at 11 for **Fighter, Rogue and Mesmerist only** — Paragon is
+globally with `Universal Feat Every X Level(s) - MCM` (`13193`): **feats at 3, 6, 9, 12, 13, 15, 18
+for all classes**, with an extra at 11 for **Fighter and Rogue only** — Paragon is
 **not** on that list, so a Paragon character gets **six** feats, not seven. See
 `data/listo-10.2-feats.md`. `(unverified whether the class's own 4/8/12/16/19 feat entries are
 removed by the universal mod or stack on top of it — check the level-up screen at 4)`.
@@ -329,7 +329,7 @@ two Blade Skills and **2 short-rest Willpower Dice**. Against `data/listo-10.2-f
 zero armour proficiency — out of six.** That is a third to a half of the character's entire feat
 budget recovered by a single level, on top of two save proficiencies that no later level can buy.
 
-**Paragon 3 as a mid-run dip — feat-neutral and still worth it.** Listo's 3/6/9/12/15/18 cadence
+**Paragon 3 as a mid-run dip — feat-neutral and still worth it.** Listo's 3/6/9/12/13/15/18 cadence
 keys off class level, so a 3-level block costs no feat. Paragon 3 taken *after* level 1 still
 delivers **Fighting Style** (with the UA styles), **Actions Speak Louder**, a full **Heroic
 Title**, **shields and martial weapons**, and 2 Willpower Dice — losing only heavy armour, the
@@ -389,7 +389,7 @@ level 1 class *and* it wants to be all 20 levels.
   effects keyed to vanilla Help (including raising a downed ally, and any item or feat that keys
   off Help) is **unverified** and is the most load-bearing unknown in this file for a duo.
 - **Interaction with `Universal Feat Every X Level(s)`** — the mod's own 4/8/12/16/19 feat entries
-  versus Listo's 3/6/9/12/15/18 cadence is `(unverified)`. If they stack, Paragon quietly becomes
+  versus Listo's 3/6/9/12/13/15/18 cadence is `(unverified)`. If they stack, Paragon quietly becomes
   the most feat-rich class in the list; if they do not, it gets the standard six.
 - **`DART` support** (`17561`) means the class has dialogue tags wired up — flavour reactivity,
   no mechanical effect on a build.

@@ -9,7 +9,7 @@ Rogue 5, so a Rogue can spend damage on Prone/Poison/Disarm/reposition every sin
 fixes the off-turn cases, so Sneak Attack fires on reactions — which matters a great deal when
 Lone Wolf hands you a second reaction. And **Book of Rogues** (`19717`) adds five full 5e
 subclasses that are featured to level 17, next to the four vanilla ones and a tenth from
-`(DTO) Otherworldy Archetypes`. Rogue is also on the **seven-feat cadence** (a feat at 11 that
+`(DTO) Otherworldy Archetypes`. Rogue is also on the **eight-feat cadence** (a feat at 11 that
 most classes don't get). The docs' Rogue section is **stale in one concrete way**: it advertises
 `Second-Story Work Dexterity Jump`, which is **not in the 10.2 list**.
 
@@ -32,7 +32,7 @@ marked `(unverified)`.
 | **Expertise** | **2 skills at level 1, 2 more at level 6** (4 total). Skills only — not tools |
 | **Multiclass entry** | Light armour + **1** skill. No saves, no Expertise-at-1 bonus skills. Rogue-as-dip is much weaker than Rogue-as-first-class |
 | **Resource cadence** | Sneak Attack: **once on your turn plus once off-turn** on a reaction attack (Cunning Strike rework), refreshing every round — **no rest clock**. Everything else is at-will (Cunning Action) or a subclass short/long-rest ability. **Rogue is nearly rest-free**, which is worth real money when a long rest costs 120+ supplies |
-| **Feats** | **3, 6, 9, 11, 12, 15, 18** — seven, see below |
+| **Feats** | **3, 6, 9, 11, 12, 13, 15, 18** — eight, see below |
 | **Level breakpoints** | **1** Expertise ×2 + Sneak Attack + Dex/Int saves · **2** Cunning Action (Dash/Disengage/Hide) · **3** subclass + Listo feat · **5** Uncanny Dodge + **Cunning Strike** · **6** Expertise ×2 + feat · **7** Evasion · **9** subclass feature + feat · **11** Reliable Talent + **feat** · **13/17** subclass features (all packs) · **14** Blindsense · **15** Slippery Mind (Wis save proficiency) + feat · **18** Elusive + feat · **20** Stroke of Luck |
 | **Dip value** | **3 levels** for a subclass + Cunning Action + 2d6 Sneak Attack, feat-neutral. **5 levels** if you want Cunning Strike. **1 level** is a bad dip unless it's your first class |
 
@@ -40,17 +40,19 @@ marked `(unverified)`.
 
 ## Feat cadence
 
-**Rogue is one of only three classes on the seven-feat cadence.**
+**Rogue is one of only two classes on the eight-feat cadence.**
 
-- All classes: feats at **3, 6, 9, 12, 15, 18**
-- **Fighter, Rogue, Mesmerist**: additionally at **11** — **seven feats** at level 20
+- All classes: feats at **3, 6, 9, 12, 13, 15, 18** — seven
+- **Fighter and Rogue**: additionally at **11** — **eight feats** at level 20. Mesmerist is
+  named in the docs but its grant is gated behind `enableAdvancedSettings`, which the install
+  sets to `false` — see `data/listo-10.2-mcm.md`
 
 Delivered by `Universal Feat Every X Level(s) - MCM` (`13193`) — see `data/listo-10.2-feats.md`.
 The cadence keys off **class level**, so the extra feat only exists if you take **Rogue to 11**,
 and a 3-level Rogue dip still collects its own level-3 feat.
 
 Note what this does to the class's shape: vanilla Rogue's feats sit at 4/8/10/12, Listo's at
-3/6/9/11/12. **Level 11 is now the single biggest Rogue level in the game** — Reliable Talent,
+3/6/9/11/12/13. **Level 11 is now the single biggest Rogue level in the game** — Reliable Talent,
 the 6th Sneak Attack die, and a feat all at once. Any plan that stops Rogue at 9 or 10 is
 leaving the class's best level on the table.
 
@@ -148,8 +150,8 @@ at 14, **Slippery Mind** at 15, **Elusive** at 18, **Stroke of Luck** at 20.
   base roll → 10, +100 bonus), plus a **toggle** that auto-succeeds your next ability check.
   Recharges on a **short rest**. The author calls his own implementation lacklustre.
 - **Steady Aim** is an **optional** Expansion feature at level 3 (bonus action, advantage on your
-  next attack, speed 0 for the turn). Whether Listo enables it in the Expansion config is
-  **(unverified)** — check MCM in-game.
+  next attack, speed 0 for the turn). **Listo turns it off** — `optional_features.Rogue: false`
+  in the installed `MCM/Expansion/settings.json`. Do not plan around it.
 
 Expansion also adds **13th/17th-level features to Arcane Trickster, Assassin and Thief only**
 (detailed under each subclass below). **Swashbuckler gets nothing at 13–20 from Expansion** — it

@@ -37,7 +37,7 @@ baselines come from bg3.wiki. Anything not read directly is marked `(unverified)
 | **Proficiencies** | Simple weapons, Shortswords. No armour, no shields (exception: **Way of the Friar** grants shield proficiency and lets you keep Unarmoured Defence with one equipped). Skills: choose 2 of History, Insight, Religion, Acrobatics, Stealth, Athletics. |
 | **Resource** | **Ki Points**, **recharged on a short rest**. BG3 grants Ki = monk level + 1 (2 at L1 → 13 at L12; L13–20 values `(unverified)`). |
 | **Martial Arts die** | **1d6 at 1, 1d8 at 5, 1d10 at 11, 1d12 at 17** — PHB2024 scaling, imposed on *all* Monks by `Warrior of the Elements` (`18406`). Vanilla was 1d4 / 1d6 (L4) / 1d8 (L9). |
-| **Feat levels** | **3, 6, 9, 12, 15, 18** (class level), from `Universal Feat Every X Level(s)` — see `data/listo-10.2-feats.md`. Not the vanilla 4/8/12. |
+| **Feat levels** | **3, 6, 9, 12, 13, 15, 18** (class level), from `Universal Feat Every X Level(s)` — see `data/listo-10.2-feats.md`. Not the vanilla 4/8/12. |
 | **Breakpoints** | **1** Unarmoured Defence + Martial Arts + Flurry of Blows · **2** Unarmoured Movement, Patient Defence, Step of the Wind, **Uncanny Metabolism** (Listo addition) · **3** subclass + Deflect Missiles · **5** Extra Attack + Stunning Strike · **6** Ki-Empowered Strikes (unarmed counts as magical) + subclass feature · **7** Evasion + Stillness of Mind · **9/11** subclass features · **14** Diamond Soul · **18** Empty Body · **20** Perfect Self |
 | **Dip value** | High at **1** (free 10+DEX+WIS AC on any unarmoured character, plus a bonus-action unarmed strike). High at **3** (feat-neutral, full subclass, Deflect Missiles). Low at 2. |
 
@@ -50,10 +50,10 @@ Archive pulled: `Monk 5e Adjustments-1411-3-4-2-1769760109.zip` — the **main f
 installed as `mods\Monk 5e Adjustments\PAK_FILES\Monk 5e Adjustments.pak`. This is the current
 Nexus version. Note: the author's own guidance is to use the **"No Tasha"** variant when
 `Expansion` is also loaded, because both add Tasha's optional features. **Listo pulled the main
-file anyway.** Whether that duplicates Ki-Fueled Attack / Quickened Healing / Focused Aim, or
-whether Listo disabled Expansion's Monk optional features via MCM, is **`(unverified)`** — the
-`Expansion\settings.json` in `[CUST] Listonomicon Mod Settings` is an inlined 1,398-byte file
-whose contents are not in the manifest.
+file anyway** — and **disabled Expansion's Monk optional features instead**:
+`optional_features.Monk: false` in the installed `MCM/Expansion/settings.json`. That resolves
+the duplication worry: Ki-Fueled Attack, Quickened Healing and Focused Aim come from
+`Monk 5e Adjustments` only, not from both. See `data/listo-10.2-mcm.md`.
 
 **Save DC change — the important one.** Stunning Strike, Open Hand Technique (Topple / Push) and
 Intoxicating Strike all use the **Ki Save DC = 8 + Proficiency Bonus + WIS** instead of the
@@ -110,8 +110,9 @@ Monk progression it adds:
   resting".
 - **18** Empty Body. Unarmoured Movement increase.
 - **20** Perfect Self
-- Optional (Tasha's, MCM-gated): Dedicated Weapon (2), Ki-Fueled Attack (3), Quickened Healing
-  (4), Focused Aim (5).
+- Optional (Tasha's): Dedicated Weapon (2), Ki-Fueled Attack (3), Quickened Healing (4),
+  Focused Aim (5). **Expansion's copies are OFF** (`optional_features.Monk: false`) — these
+  arrive from `Monk 5e Adjustments` instead.
 - Subclass capstones: **Open Hand → Quivering Palm (17)**, **Shadow → Opportunist (17)**,
   **Four Elements → Disciple of the Elements (13–20)**.
 - It also removed "the limitation preventing Monks from making more than one bonus action
@@ -420,7 +421,7 @@ at 1 for STR + CON — you only get one set.
   the better half of the save table for avoiding hard control.
 - **Monk 2** — Unarmoured Movement, Patient Defence, Step of the Wind, and **Uncanny Metabolism**
   from `18406`. Rarely worth stopping here.
-- **Monk 3** — the standard dip. **Feat-neutral** under Listo's 3/6/9/12/15/18 cadence, gets you a
+- **Monk 3** — the standard dip. **Feat-neutral** under Listo's 3/6/9/12/13/15/18 cadence, gets you a
   full subclass entry, and Deflect Missiles. The best 3-level payloads for a duo are **Way of the
   Friar** (per-turn temp HP for both characters, shield proficiency, free teleport to your
   partner) and **Way of Mercy** (free healing folded into Flurry).

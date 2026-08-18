@@ -242,9 +242,16 @@ feature from Expansion** — it is the one vanilla bloodline that stops at 11.
 
 `Expansion` also exposes an MCM toggle, **"Sorcerer Subclasses 14th Level Feature"**, which moves
 the level-11 subclass feature (Draconic Wings / Controlled Chaos / Storm's Fury / Shadow Walk)
-back to level 14 as tabletop has it. **Default is disabled.** Listo ships a configured
-`BG3MCM/Profiles/Default/Expansion/settings.json`, but its contents are not readable from the
-manifest — `(unverified whether Listo turned this on; assume off, confirm at level 11)`.
+back to level 14 as tabletop has it. **The mod default is disabled.**
+
+**The installed profile sets `misc.Sorcerer11thSubclass: true`** — a non-default value, so Listo
+changed something here. The key name is ambiguous: read as "subclass feature at 11", the feature
+stays at **11**; read as the toggle's internal name, it moves to **14**. `(unverified — confirm
+at level 11.)` This is the one Expansion setting the install does not settle; everything else in
+`MCM/Expansion/settings.json` is unambiguous and recorded in `data/listo-10.2-mcm.md`.
+
+Note also **`optional_features.Sorcerer: false`** — Expansion's Sorcerer optional features are
+off.
 
 ### `Multiclass Preferred Casting Ability Fix` (`10209`)
 
@@ -255,7 +262,7 @@ Tempest Cleric 1 lightning dip works as intended here.
 
 ### Feats and stat caps
 
-- Feats at **3, 6, 9, 12, 15, 18** (`13193`). A 3-level Sorcerer dip costs no feats.
+- Feats at **3, 6, 9, 12, 13, 15, 18** (`13193`). A 3-level Sorcerer dip costs no feats.
 - **`Feats Overhaul` (`15044`) removes the ability-score cap of 20 on feat-granted increases** —
   a Sorcerer can push Charisma past 20 on half-feats alone. See `data/listo-10.2-feats.md`, which
   also flags an unresolved question about whether the uncap reaches Essential Feats' half-feats.
@@ -607,9 +614,9 @@ Grep the **manifest**, not the TSV, for these three:
   static replacement.**
 - **Whether ILWMS's ramp applies to `Enweaved`-granted wild magic**, or only to the Wild Magic
   Sorcerer passive. ILWMS says "only for Sorcerer"; Enweaved grants the condition to anyone.
-- **Whether Listo enabled `Expansion`'s "Sorcerer Subclasses 14th Level Feature" MCM toggle**
-  (default off). If on, the level-11 subclass feature moves to 14. The settings JSON is in the
-  manifest but its contents are not readable from it.
+- **Whether `misc.Sorcerer11thSubclass: true` means the subclass feature sits at 11 or at 14.**
+  The value is read from the install and is non-default; only the key's meaning is unclear.
+  Confirm at level 11.
 - **`Expansion`'s Magical Guidance (optional, L5) and Sorcerous Restoration (L20)** — present per
   the feature list; exact BG3 implementations and numbers not read.
 - **Whether `Shadow Magic Expanded`'s Umbral Form and `Expansion`'s Umbral Form conflict,

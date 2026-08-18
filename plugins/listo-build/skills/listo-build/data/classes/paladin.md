@@ -25,7 +25,7 @@ dangerous option in this file.
 | **Channel Oath** | **1 charge**, restores on **short rest**. Each oath grants a level 1 option and (usually) more at level 3. |
 | **Lay on Hands** | **3 charges** at level 1, **+1 at level 4**, **+1 at level 10** (5 total). Restores on **long rest**. |
 | **Divine Sense** | Advantage on attack rolls vs celestials/fiends/undead. **Short rest**. |
-| **Feats (Listo cadence)** | **3, 6, 9, 12, 15, 18** — six total, keyed off *class* level. See `listo-10.2-feats.md`. |
+| **Feats (Listo cadence)** | **3, 6, 9, 12, 13, 15, 18** — seven total, keyed off *class* level. See `listo-10.2-feats.md`. |
 | **Level breakpoints** | **1** oath + Channel Oath + Lay on Hands + Divine Sense + heavy armour/saves · **2** spellcasting + Divine Smite · **3** oath features + oath spells (+ Listo feat) · **5** Extra Attack · **6** **Aura of Protection** (+CHA to saves, you and allies) · **7** oath aura · **9/13/17** oath spells · **10** Aura of Courage (frightened immunity) · **11** Improved Divine Smite · **14** Cleansing Touch (from `Expansion`) · **15** oath feature · **18** aura radius upgrade · **20** oath capstone |
 | **Dip value** | **Very high at 1** (heavy armour + Wis/Cha saves — *only* if it is your level 1 class), **high at 2** (Divine Smite on any slot from any class), **high at 6** (Aura of Protection is a party-wide save buff). See "Dip value" below. |
 
@@ -88,15 +88,15 @@ additions from this mod:
 
 - **Cleansing Touch** at 14th level.
 - **Harness Divine Power** (optional, 2nd) and **Martial Versatility** (optional, 4th) — these
-  are Tasha's *optional* features gated behind an MCM toggle. Listo ships an
-  `Expansion/settings.json` in its custom mod-settings archive, but the manifest records only the
-  file path, not its contents, so **whether these two are enabled in Listo is (unverified)**.
+  are Tasha's *optional* features gated behind an MCM toggle. **Listo turns them OFF**:
+  `optional_features.Paladin: false` in the installed `MCM/Expansion/settings.json`. Neither is
+  available — resolved, see `data/listo-10.2-mcm.md`.
 - Per-oath 13th/17th oath spells plus 15th and 20th level features (listed under each oath below).
 - The **v1.7.3.7** fix "added inability to use the 18th level Paladin's Aura of spells if you're
   already under their effects" is **not** in Listo's build (it pulled 1.7.3.6), so that stacking
   quirk is presumably still live at 18.
 - `Expansion`'s own feat schedule is irrelevant here — Listo overrides feat cadence globally with
-  `Universal Feat Every X Level(s) - MCM` (`13193`) to **3/6/9/12/15/18**. See
+  `Universal Feat Every X Level(s) - MCM` (`13193`) to **3/6/9/12/13/15/18**. See
   `listo-10.2-feats.md`.
 
 **Aura radius — every paladin, every oath.** Listo changelog (v6.1.0, item 22): *"All Paladins in
@@ -419,7 +419,7 @@ Whether Oath of Illumination uses it is **(unverified)**. Do not count on a free
   irreversible choice — see the respec trap section.
 - **Paladin 2** is the classic dip: **Divine Smite**, which converts *any* spell slot from *any*
   class into burst weapon damage, plus half-caster spellcasting and Lay on Hands. Under Listo's
-  feat cadence (3/6/9/12/15/18, keyed to class level) a **3-level** dip is feat-neutral — you
+  feat cadence (3/6/9/12/13/15/18, keyed to class level) a **3-level** dip is feat-neutral — you
   collect the dip class's own level 3 feat — so **Paladin 3** (oath features, oath spells, second
   Channel Oath option) is usually the better-shaped dip than Paladin 2.
 - **Paladin 6** buys **Aura of Protection**: +CHA modifier to saving throws for you *and* your

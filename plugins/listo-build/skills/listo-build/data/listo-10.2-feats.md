@@ -22,15 +22,33 @@ version is stated so you can discount accordingly. Anything not verified is mark
 
 ## Feat cadence
 
-From the docs, and unchanged in 10.2:
+**Read out of the installed `FeatsUni.json`, not from the docs** — the docs version was wrong
+in two ways. See `data/listo-10.2-mcm.md` for the raw config.
 
-- **All classes:** feats at **3, 6, 9, 12, 15, 18**
-- **Fighter, Rogue, Mesmerist:** additionally at **11** — seven feats total
+- **All classes:** feats at **3, 6, 9, 12, 13, 15, 18** — **seven feats**
+- **Fighter and Rogue:** additionally at **11** — eight feats
+
+The live values are `featFrequency: 3`, `alwaysGrantFeatAtLevels: {"13": true}`,
+`fighterfeat: 11`, `roguefeat: 11`, `multiclassFeatAtLevel1: false`.
+
+Two corrections this forces:
+
+- **The level 13 feat is universal.** Everyone gets seven, not six.
+- **`enableAdvancedSettings` is `false`**, so the `advancedCustomClasses` block that would have
+  given **Mesmerist and Artificer** an extra feat at 11 **does not apply**. Only Fighter and
+  Rogue get the 11. Mesmerist is not on a special cadence.
+- `multiclassFeatAtLevel1: false` — a dip grants no feat for its own level 1.
 
 Delivered by `Universal Feat Every X Level(s) - MCM` (`13193`, archive
-`Feat Every x Level(s)-13193-5-0-3-1`). Because the cadence keys off **class level**, a
-3-level dip is feat-neutral — you collect the dip class's own level-3 feat. This is the
-arithmetic behind the skill's "assume multiclassing by default" rule.
+`Feat Every x Level(s)-13193-5-0-3-1`). It is now the **only** feat source: Expansion's own
+selectors are set to `"None"` in `MCM/Expansion/settings.json`, so its native 14/16/19 feats do
+not fire. Because the cadence keys off **class level**, a 3-level dip is feat-neutral — you
+collect the dip class's own level-3 feat. This is the arithmetic behind the skill's "assume
+multiclassing by default" rule.
+
+> A third config copy, `MCM/FeatsUni/FeatsUni.json`, holds `alwaysGrantFeatAtLevels {"20": true}`
+> and nothing else. Two of three files agree on 13; whether **20** also grants a feat is
+> `(unverified)` — check the level-up screen.
 
 `(Beta) FeatMaker - MCM` (`23113`) is an authoring tool, not a feat source.
 
@@ -227,7 +245,7 @@ Grants **heavy armour proficiency**, **+1 Strength or Constitution** (vanilla: S
 heavy armour, before it does anything. Reduces **all** damage taken by your **Proficiency
 Bonus, capped at 5** (vanilla: flat 3, and non-magical only). **+1 Strength or Constitution.**
 
-> Stacking the two armour feats costs two of your six or seven feats. A heavy-armour class at
+> Stacking the two armour feats costs two of your seven or eight feats. A heavy-armour class at
 > level 1 collapses that to one.
 
 ### Lightly Armoured

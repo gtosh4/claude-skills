@@ -44,30 +44,37 @@ character — whether it exceeds 20 is **unconfirmed**. Acquisition gates for al
 
 ### Feat cadence and count
 
-Granted at **class** level 3, 6, 9, 12, 15, 18. Fighters, Rogues and Mesmerists also get one at
+Granted at **class** level 3, 6, 9, 12, 13, 15, 18. Fighters and Rogues also get one at
 class level 11.
 
-Feat count = `floor(classA / 3) + floor(classB / 3)`, **plus 1 for each of Fighter, Rogue or
-Mesmerist taken to class level 11 or higher**. The ceiling at character level N is `floor(N / 3)`
-plus those bonuses, reached whenever the two remainders mod 3 sum to less than 3.
+Feat count = `floor(classA / 3) + floor(classB / 3)`, **plus 1 for each class taken to level 13
+or higher**, **plus 1 for each of Fighter or Rogue taken to class level 11 or higher**. The
+ceiling at character level N is `floor(N / 3)` plus those bonuses, reached whenever the two
+remainders mod 3 sum to less than 3.
 
-> **The bare formula undercounts Fighter, Rogue and Mesmerist by one** at class level 11+. A pure
-> Fighter 20 gets **7 feats, not 6** — `floor(20/3) = 6`, plus the level 11 grant. Do not apply
-> the formula without the correction.
+> **The level 13 grant is the one most plans miss, and it rewards lopsided splits.** Like the
+> rest of the cadence it keys off *class* level, so a **17/3** build collects it and a **10/10**
+> build does not. `(The class-level reading follows from how `FeatsUni` applies every other
+> level in the list; a level-up screen would confirm it.)`
+
+> **The bare formula undercounts Fighter and Rogue by one** at class level 11+. A pure Fighter 20
+> gets **8 feats, not 6** — `floor(20/3) = 6`, plus the level 11 grant, plus the level 13 grant.
+> Do not apply the formula without both corrections.
 >
 > **Fighter 11 is the highest-value single level in the list**: Improved Extra Attack *and* the
 > off-cadence feat land together. Rogue 11 is the same shape — Reliable Talent, the 6th Sneak
 > Attack die, and the feat.
 >
 > Note also that `Expansion` grants its own feats at 14/16/19, but `Universal Feat Every X
-> Level(s)` **overrides** them — so the class mod pages' feat tables are all wrong for Listo.
+> Level(s)` **overrides** them — **confirmed**, `feats.BaseClassFeats: "None"` in the installed
+> `MCM/Expansion/settings.json`. The class mod pages' feat tables are all wrong for Listo.
 
 Consequences:
 
 - **3-level dips are feat-neutral.** You get the dip class's own level 3 feat.
 - **1- and 2-level dips cost a feat outright.**
 - Place a dip as a contiguous 3-level block starting right after the main class crosses a
-  multiple of 3, and feats still land on 3/6/9/12/15/18.
+  multiple of 3, and feats still land on 3/6/9/12/13/15/18.
 
 ### Cheap dip breakpoints
 
@@ -214,17 +221,30 @@ only. This is the single easiest thing to lose silently.
 
 ## Economy and difficulty
 
-- **Long rest: 120 camp supplies**, rising with camp population and act. Supernatural members
-  (Aylin, Withers) cost nothing; Astarion is minimal; hirelings very little. Camp size, not
-  active party size, drives the cost — so a small party pays full price for half the refuel.
+- **Long rest: 120 camp supplies**, rising with camp population and act. Resolved multipliers
+  (`Dynamic Camp Supply Cost`): active party member **1.0**, idle follower **0.30**, hireling
+  and pet **0.25**, children 0.45; Aylin, Mizora, Tara and the Oathbreaker Knight are overridden
+  to **0**. Act multipliers 1.075 / 1.175 / 1.15, rounded to the nearest ten. Camp size drives
+  the cost, but an idle body costs under a third of an active one — **recruiting companions is
+  not the trap the older note made it**.
 - **Short rests are unchanged** — two per long rest. Listo's own docs advise leaning on them.
 - **Merchants: 4× buy, ¼ sell.** Withers is a merchant with 50,000 gold that resets each
   conversation.
-- **Initiative: d10 + Dex + bonuses** (Initiative Variants), MCM-configurable. The docs name
-  Alert as the intended way to reliably go first — and Alert is nerfed to Proficiency Bonus here.
-- **Combat Extender enemy HP** ≈ `Base × (1 + staticBoost + healthPerLevel × playerLevel)`.
-  Bosses reach +310% and regular enemies +250% at level 20. Enemies scale with *player* level,
-  so there is no out-levelling.
+- **Initiative: d10 + Dex + bonuses** — `InitiativeDie: 10` confirmed in the installed config.
+  The docs name Alert as the intended way to reliably go first — and Alert is nerfed to
+  Proficiency Bonus here.
+- **Surprise:** `Sensible Ambushing` gives a flat **Wisdom save, DC 15**, applying to both
+  sides. One more reason Wisdom outranks the other saves.
+- **Combat Extender enemy HP** = `Base × (1 + staticBoost + healthPerLevel × playerLevel)`.
+  Live values: bosses `0.10 + 0.08/level` → **+170% at 20**; enemies `0.06 + 0.06/level` →
+  **+126% at 20**; **allies `0.12 + 0.011/level` → +34%**. Enemies scale with *player* level,
+  so there is no out-levelling. The older "+310%/+250%" figure came from a superseded config.
+- **Combat Extender's other live scaling:** bosses +1 AC per 9 levels and +1 spell save DC per
+  7; enemies +1 AC per 11 and +1 DC per 11; **allies +1 AC static and +1 per 4 levels**;
+  attack/save rolls +1 per 20 levels for everyone; **no extra actions and no flat damage boost
+  in the normal config**. Enemy lethality comes from kit, not from a damage multiplier.
+- **CX is configured by file, not by MCM** — `Use_MCM_Settings` is `false`. Difficulty changes
+  are a rename of `CombatExtender.json` to the EASY or HARD variant.
 - **Level cap 20.** Most players reach 15+, completionists 18+; 20 needs the optional encounter
   content.
 - **Combat Extender** gives enemies mod spells, classes, feats and magic items — the reason
@@ -235,10 +255,11 @@ only. This is the single easiest thing to lose silently.
   Act 3 if the astral tadpole is used.
 - **Attunement:** each attuned item consumes an Action Resource, refunded on unequip, with **no
   rest or combat restriction** — so re-attuning is free and unlimited. Treat it as a per-fight
-  loadout, not a permanent commitment. Separate caps for total attuned and for
-  Rare/VeryRare/Legendary counts, all **MCM-configurable per difficulty**. Because the caps are
-  a config value, **ask the player what theirs are set to** before planning a kit. Full
-  mechanics in `data/listo-10.2-equipment.md`.
+  loadout, not a permanent commitment. **Resolved caps: 5 attuned total; 3 Legendary, 5
+  VeryRare, 6 Rare, 13 Uncommon** — identical across all five difficulty entries, so difficulty
+  does not change them. Items at **Legendary or above auto-require attunement**. Plan against
+  five attuned pieces with at most three Legendary. A `relaxed config.json` (6 total, 4
+  Legendary) ships but is not live. Full mechanics in `data/listo-10.2-equipment.md`.
 
 ---
 
@@ -248,14 +269,25 @@ only. This is the single easiest thing to lose silently.
 Hand-add **Lone Wolf Feat - SE**; the author recommends load order "somewhere in the middle,
 below MCM."
 
+> **In the shipped 10.2 profile the mod is present but `-` disabled**, at the very top of
+> `modlist.txt` — enabling it in MO2 is a manual step. It is also the *only* mod in the profile
+> with no `BG3MCM/Profiles/Default` entry, so its own defaults stand unless the player edits MCM
+> in game.
+>
+> **For this run it is enabled, in non-feat mode** — the MCM feat requirement is off, so Lone
+> Wolf is **always on from level 1 and costs no feat**. Every feat in the cadence below is free
+> for the build.
+
 Buffs: extra Action, Bonus Action and Reaction; +30% max HP; **halved damage from all sources**;
 doubled carry; and +4 to two abilities with save proficiency in both.
 
-- MCM (v2.3.0.0+) can **disable the feat requirement**, making it always-on from level 1.
-- **Unverified:** whether the ability bonus and save proficiencies still apply in that mode, and
-  whether the +4 caps at 20. Both are visible on the sheet at character creation — check there.
-- **Sit This One Out 2 is bundled**, and Lone Wolf has an explicit exception for it: companions
-  toggled to sit out **don't count toward the party cap of 2**. This solves companion quests.
+- MCM (v2.3.0.0+) **disables the feat requirement** — this run uses that mode, so all buffs
+  apply from level 1 with no feat spent.
+- **Still unverified:** whether the +4 caps at 20. Visible on the sheet at character creation —
+  check there.
+- **Sit This One Out 2 ships disabled** (`-OPTIONAL_Sit This One Out 2` in `modlist.txt`) and is
+  **enabled for this run**. Lone Wolf has an explicit exception for it: companions toggled to
+  sit out **don't count toward the party cap of 2**. This solves companion quests.
 
 ---
 
@@ -291,9 +323,10 @@ Only the facts that feed the tables above are repeated here:
   class features**. Its **level 20 capstone gives +4 to two abilities capping at 25**, reachable
   only by pure Paragon 20. See `data/classes/paragon.md`.
 - **Mesmerist** is a Charisma **half-caster** drawing from the **Bard** list, gaining a new spell
-  **every level**. It is one of the three classes on the **seven-feat** cadence — note the mod's
-  own page says 4/8/12/16/19, but Listo's `Universal Feat Every X Level(s)` overrides it, so plan
-  against **3/6/9/11/12/15/18**. Its **max spell level is `(unverified)`** — the mod page never
+  **every level**. It is on the **standard** cadence — the docs claim it gets the level 11 feat,
+  but the installed config gates that behind `enableAdvancedSettings: false`, so it does not.
+  The mod's own page says 4/8/12/16/19; Listo's `Universal Feat Every X Level(s)` overrides that
+  too, so plan against **3/6/9/12/13/15/18**. Its **max spell level is `(unverified)`** — the mod page never
   states it; 5th is the natural reading of "half-caster" but is not confirmed.
   Its level 2 **Towering Ego** adds the **Charisma modifier to Wisdom saves** (and half to
   Intelligence). Three qualifiers the older notes missed: it is **self-only**, it scales with

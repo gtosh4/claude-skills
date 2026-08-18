@@ -85,9 +85,9 @@ long rest.
 - Note on implementation: you gain a **second "Bardic Inspiration" spell entry at 13th level**
   that replaces the old one — this is intentional, not a bug.
 - **Magical Inspiration** is offered as an **optional 2nd-level feature** (a creature holding your
-  Inspiration die can spend it to add the roll to the damage or healing of a spell it casts). It
-  is an MCM/script-extender toggle in Expansion's Bard config. **Whether Listo enables it by
-  default is unverified** — check the MCM in-game.
+  Inspiration die can spend it to add the roll to the damage or healing of a spell it casts).
+  **Listo enables it** — `optional_features.Bard: true` in the installed
+  `MCM/Expansion/settings.json`. Plan around it. See `data/listo-10.2-mcm.md`.
 - Per-subclass 14th-level features are listed under each College below.
 
 ### Automatic Magical Secrets Extender (`20247`)
@@ -427,7 +427,6 @@ Wolf's +4 with Charisma wastes one of the two grants. See `references/listo-rule
 
 ## Unverified / needs in-game confirmation
 
-- Whether **Expansion's optional Magical Inspiration (level 2)** is toggled on in Listo's MCM.
 - **Eloquence's Silver Tongue** — the mod page's own Known Issues say it "is not working properly".
 - **College of Dance's Tandem Footwork (L6), Improved Tandem Footwork (L10) and Leading Evasion
   (L14)** — the mod page documents these only as images; exact numbers unread.

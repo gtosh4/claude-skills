@@ -29,7 +29,7 @@ v10.0 and are wrong about Shillelagh** — see below. Anything not read is marke
 | **Hit points** | 8 + CON at 1, 5 + CON per level |
 | **Skills (pick 2)** | Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, Survival |
 | **Resource cadence** | Spell slots: **Long Rest**. Wild Shape charges: **2, Short Rest** (Moon: 2 per Short Rest, bonus action). Stars' Star Maps/Cosmic Omens: Long Rest — **Star Druid Tweaks moves Cosmic Omens to Short Rest**. Shillelagh, Summon Beast, Conjure Animals, Speak with Animals, Longstrider: cast once, **lasts until Long Rest**. |
-| **Feats** | 3, 6, 9, 12, 15, 18 (Listo-wide; see `listo-10.2-feats.md`) |
+| **Feats** | 3, 6, 9, 12, 13, 15, 18 (Listo-wide; see `listo-10.2-feats.md`) |
 | **Key breakpoints** | **1** Int+Wis saves, Shillelagh, Goodberry, Speak with Animals · **2** Wild Shape + circle + Find Familiar · **3** Summon Beast, Flock of Familiars · **5** Conjure Animals, Wild Strike/Extra Attack · **6** circle tier-2 + Wild Shape CR bump · **9** Moon CR3 forms · **10** Nature's Ward + circle capstone-ish |
 | **Dip value** | **Very high at 1 and 2.** See the Dip section. |
 | **Level 13–20** | Delivered by the `Expansion Level 13-20` pak (`Expansion.pak`, not a Nexus mod so not in the TSV). Modded circles advertise level 14 features and are built for it; **exact vanilla-circle progression at 13–20 is (unverified)**. |
@@ -391,7 +391,7 @@ Eleven circles: four vanilla (Land, Moon, Spores, Stars), seven modded.
 ## Dip value
 
 Only your **level 1** class grants saving throw proficiencies, so a Druid *dip* never gives you
-Int + Wis saves — that requires starting Druid. A 3-level dip is feat-neutral under Listo's 3/6/9/12/15/18
+Int + Wis saves — that requires starting Druid. A 3-level dip is feat-neutral under Listo's 3/6/9/12/13/15/18
 cadence.
 
 - **Druid 1 (as a dip):** Light + Medium armour and Shields, **Shillelagh** (level 1 spell — you must

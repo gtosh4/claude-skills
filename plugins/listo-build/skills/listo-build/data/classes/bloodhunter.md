@@ -314,7 +314,7 @@ All four tabletop Orders are implemented, chosen at level 3, with features at **
 
 ## Dip value
 
-Blood Hunter is an unusually good dip, and Listo's feat cadence (3/6/9/12/15/18, keyed to *class*
+Blood Hunter is an unusually good dip, and Listo's feat cadence (3/6/9/12/13/15/18, keyed to *class*
 level — see `listo-10.2-feats.md`) makes a 3-level dip **feat-neutral**.
 
 - **1 level** — Light + Medium armour, **Shields**, **Martial weapons**, 1 skill, Hunter's Bane, and
@@ -352,7 +352,7 @@ Read out of the shipped pak; all of these are real defects in the version Listo 
    tabletop level-14 Blood Hunter feature) is defined in `Passive.txt` and has an icon, but **no
    progression node in the entire mod grants it**. It is unobtainable. Do not plan around it.
 2. **Base-class levels 11 and 15 are empty.** Only the Order gives anything at those levels.
-3. **Native ASI levels are 4/8/12/16/19**, which is the vanilla cadence, not Listo's 3/6/9/12/15/18.
+3. **Native ASI levels are 4/8/12/16/19**, which is the vanilla cadence, not Listo's 3/6/9/12/13/15/18.
    Listo's cadence comes from `Universal Feat Every X Level(s) - MCM` (`13193`), whose manifest
    description explicitly claims it "should work for every class and subclass, custom/modded or
    vanilla." Whether it *replaces* or *stacks with* the mod's native entries in 10.2 is

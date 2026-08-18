@@ -35,7 +35,7 @@ they matter. Anything not read from a source is marked `(unverified)`.
 | **Spell slots** | Full caster. Expansion adds a **7th-level slot at 13, 8th at 15, 9th at 17, a 5th at 18, a 6th at 19, a 7th at 20** |
 | **Arcane Recovery** | Charges = **ceil(wizard level / 2)**; spend an Action out of combat to buy back slots (2 charges → L2 slot, 3 → L3, 4 → L4, 5 → L5; **nothing above 5th**). Refreshes on **long rest only**. Expansion adds a charge at **13, 15, 17 and 19** (→ 10 at level 19) |
 | **Key breakpoints** | **2** school; **5** L3 slots (Fireball/Counterspell/Haste/Animate Dead); **6** school feature; **10** school capstone; **11** L6 slots; **13-17** L7/8/9 slots via Expansion; **18 Spell Mastery**; **20 Signature Spells** |
-| **Feats** | 3, 6, 9, 12, 15, 18 (see `listo-10.2-feats.md` — cadence is class-level based, so a 3-level dip is feat-neutral) |
+| **Feats** | 3, 6, 9, 12, 13, 15, 18 (see `listo-10.2-feats.md` — cadence is class-level based, so a 3-level dip is feat-neutral) |
 | **Dip value** | **Low-to-moderate.** No proficiencies on multiclass in; the good stuff (Spell Mastery, Signature Spells, ward/summon scaling) is all deep. The exception is **Wizard 2 → Bladesinging** for light armour + Bladesong, see *Dip value* below |
 
 ---
@@ -90,14 +90,15 @@ Wizard class progression 13-20, read from `Progressions.lsx`:
   Transference, **Lightning Bolt**, Minute Meteors, Nondetection, Protection from Energy,
   Remove Curse, Sleet Storm, **Slow**, Speak with Dead, Spirit Shroud, Stinking Cloud, Summon
   Shadowspawn, Thunder Step, Vampiric Touch.
-- **Cantrip Formulas (optional feature, MCM default ON).** Swap one known Wizard cantrip for
-  another on level-up.
-- **MCM note.** Expansion's shipped defaults are: Wizard optional features **on**, *Expansion's
-  Bladesinger* **off**, *Song of Victory at 12th* **off**. But Listo ships its own
-  `SE_CONFIG\BG3MCM\Profiles\Default\Expansion\settings.json`, whose values are **not readable
-  from the manifest** — `(unverified)`. **Check MCM in game before relying on any of these,
-  including the ASI-at-16/19 flags**, which sit alongside Listo's own feat cadence from
-  `Universal Feat Every X Level(s)` (3/6/9/12/15/18 — see `listo-10.2-feats.md`).
+- **Cantrip Formulas (optional feature).** Swap one known Wizard cantrip for another on level-up.
+  **Listo turns this OFF** — `optional_features.Wizard: false`. The mod's own default is on, so
+  this is a deliberate Listo change and every guide written against the mod is wrong here. **Do
+  not plan a cantrip swap.**
+- **MCM note — resolved.** Listo's `MCM/Expansion/settings.json` reads:
+  Wizard optional features **off**, `ExpansionBladesinger` **off**, `WizardBladesinger` **off**,
+  Epic Boons **off**, and Expansion's own feats set to `"None"` — so the ASI-at-16/19 flags do
+  **not** fire and Listo's cadence from `Universal Feat Every X Level(s)`
+  (3/6/9/12/13/15/18) is the only feat source. Full dump in `data/listo-10.2-mcm.md`.
 
 ### `Goon's Wizard Overhaul` (`17659`)
 **Archive pulled:** `Goon's Wizard Overhaul-17659-1-0-2-3-1768157025.zip` (**main file only** —
@@ -182,9 +183,9 @@ at level 2 (halved scroll-copy cost for that school) in addition to what is list
   subtract 5 damage per slot level. **L11/13/15/17 (Expansion)** Song of Defence scales to
   6th/7th/8th/9th-level slots. **L14 (Expansion)** *Song of Victory* — **+Intelligence modifier
   to weapon damage while Bladesong is active** (`SongOfVictory` boost, `Passive_Expansion.txt`).
-- **MCM switches (Expansion defaults, Listo's profile unverified):** *Expansion's Bladesinger*
-  (**off** — replaces Larian's flat AC bonus with Expansion's original Intelligence-scaled
-  version) and *Song of Victory at 12th instead of 14th* (**off**).
+- **MCM switches — resolved from the install:** *Expansion's Bladesinger* is **off** and
+  *WizardBladesinger* is **off**, so Larian's flat AC bonus stands rather than Expansion's
+  Intelligence-scaled version. Song of Victory stays at **14**.
 - **Duo relevance:** the answer to "a Wizard in a robe is the squishiest thing in the list".
   **+4 AC and +4 to Con saves** from a class feature, stacked on light armour, is the largest
   single concentration-protection package available to a full caster — and it comes with Extra
@@ -447,7 +448,7 @@ at level 2 (halved scroll-copy cost for that school) in addition to what is list
   the listed weapons.
 - **Wizard 2 → Abjuration** is much weaker as a dip than it looks: Arcane Ward resets to
   *wizard level* and caps at *2× wizard level*, so at Wizard 2 it is a 4-point shield.
-- **Wizard 3** is feat-neutral (feats key off class level, 3/6/9/12/15/18) but buys only
+- **Wizard 3** is feat-neutral (feats key off class level, 3/6/9/12/13/15/18) but buys only
   2nd-level slots.
 
 **Dipping *out of* Wizard.** Expensive. You give up caster level 1-for-1, and Listo's Wizard
@@ -493,12 +494,9 @@ at level 1 is what buys the Int/Wis pair.
   are **absent from the author's public GitHub source** for the current build (no entry in
   `Progressions.lsx` or `Passive_Expansion.txt`). Either the repo lags the released paks or the
   features were dropped. **Treat as probable but unconfirmed.**
-- **Listo's Expansion MCM profile.** Listo ships
-  `SE_CONFIG\BG3MCM\Profiles\Default\Expansion\settings.json`, whose contents are not readable
-  from the manifest. That file governs Cantrip Formulas, the Expansion-Bladesinger swap, Song
-  of Victory's level, **Epic Boons at 20**, and Expansion's own extra-feat settings — so the
-  ASI flags at 16/19 in Expansion's progression table may or may not be live alongside Listo's
-  3/6/9/12/15/18 cadence.
+- ~~Listo's Expansion MCM profile.~~ **Resolved** — read out of the install and recorded in
+  `data/listo-10.2-mcm.md`. Cantrip Formulas off, both Bladesinger swaps off, Song of Victory at
+  14, Epic Boons off, Expansion feats `"None"`.
 - **School of Bombardment's entire feature set** (see above).
 - **Book of Wizards' per-level tables** for War Magic and Order of Scribes (images only).
 - **Whether scroll transcription cost is modified** by any Listo patch — the 50 gp/level

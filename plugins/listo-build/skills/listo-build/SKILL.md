@@ -23,14 +23,20 @@ Feat is the canonical example. Anything load-bearing gets checked against the ma
 Every build planned with this skill is for the **same run**: two players, Lone Wolf active, level
 cap 20. Treat these as given rather than questions.
 
+**Lone Wolf runs in non-feat mode** — the MCM feat requirement is off, so all its buffs apply
+from level 1 and **it costs no feat**. All seven feats (3/6/9/12/13/15/18) go to the build.
+Lone Wolf Feat and Sit This One Out 2 both ship `-` disabled in the MO2 profile and are enabled
+by hand for this run; see `data/listo-10.2-mcm.md` for the rest of the shipped on/off state.
+
 What follows from two characters, regardless of what either of them is:
 
 - **Action economy is the structural problem.** Two bodies against encounters tuned for five.
   Anything that adds a third body — summons, familiars, Skeleton Crew — is worth more here than
   its raw numbers suggest.
 - **Rest economy is worse than it looks.** Long rest cost keys off *camp population*, not active
-  party, so recruiting companions means paying a full party's 120+ supplies to refuel two
-  characters. Short-rest resources are correspondingly more valuable.
+  party — but an idle companion costs **0.3×** an active member and a hireling 0.25×, so
+  recruiting is a third as expensive as the older note claimed. Short-rest resources are still
+  worth more. Resolved multipliers in `data/listo-10.2-mcm.md`.
 - **Losing either character usually ends the fight.** There is no third body to pick anyone up.
   Weight survivability and hard-CC resistance above what a normal party would.
 - **Two characters cover every skill check in the campaign.** Expertise and skill proficiencies
@@ -60,11 +66,9 @@ Ask:
   stat. Establish it early; it eliminates most of the option space.
 - **Damage expectation.** A pure controller in a two-person party gets overrun. Ask directly
   whether they need to be a damage threat, or whether the other character carries that.
-- **Lone Wolf MCM config.** Is the feat requirement disabled? Does the ability bonus still apply?
-  This decides whether +4 and save proficiencies exist at all, and it is visible on the sheet at
-  character creation.
-- **Optional mods.** Absolute Wrath, Random Equipment Loot, extra encounters. Random Equipment
-  Loot in particular voids all gear planning.
+- **Optional mods.** `data/listo-10.2-mcm.md` lists what the shipped profile enables and
+  disables. Absolute Wrath is **on** by default; Random Equipment Loot is **not installed**;
+  Grit and Glory and Sit This One Out 2 are **off**. Ask only about deviations from that.
 
 ### 2. Verify the option space
 
@@ -77,6 +81,7 @@ mechanics, not just the names:
 | Races and subraces | `data/listo-10.2-races.md` |
 | Feats and fighting styles | `data/listo-10.2-feats.md` |
 | Items, slots, attunement, economy | `data/listo-10.2-equipment.md` |
+| Any "is this toggle on?" question | `data/listo-10.2-mcm.md` — resolved from the install |
 
 Each has a "not present" section listing what the docs still advertise but the list no longer
 ships — check it before recommending anything, because that is where the expensive mistakes
@@ -183,11 +188,16 @@ turns out to be, or two sheets from one run can't be read against each other.
 | **0** | Absent. |
 
 **Every score is relative to that act's own encounters, and scores are expected to fall.**
-Combat Extender scales enemies off *player* level — bosses reach +310% HP and regular enemies
-+250% by 20 — so there is no out-levelling and no absolute yardstick. A feature that does not
-scale therefore loses ground: the Eldritch Cannon's 20 HP and flat 2d8 are excellent at
-character 3 and nearly irrelevant by Act 2, and that decline belongs in the numbers. Read a flat
-row as *keeps pace*, not as *stopped growing*, and a falling row as the build being outrun.
+Combat Extender scales enemies off *player* level — **bosses reach +170% HP and regular enemies
++126% by 20**, with bosses also gaining +1 AC per 9 levels and +1 spell save DC per 7 — so there
+is no out-levelling and no absolute yardstick. A feature that does not scale therefore loses
+ground: the Eldritch Cannon's 20 HP and flat 2d8 are excellent at character 3 and nearly
+irrelevant by Act 2, and that decline belongs in the numbers. Read a flat row as *keeps pace*,
+not as *stopped growing*, and a falling row as the build being outrun.
+
+**Summons are the exception.** CX buffs the `Allies` category too — +34% HP by 20 and **+1 AC
+static plus +1 per 4 levels** — so a summon decays far more slowly than a flat-statted feature.
+Don't score Economy down as hard as the rest. Numbers in `data/listo-10.2-mcm.md`.
 
 **Score each act separately.** A build that peaks at 20 and a build that peaks at 8 are different
 builds, and one polygon cannot say so. Acts map to character levels roughly:
@@ -198,10 +208,11 @@ builds, and one polygon cannot say so. Acts map to character levels roughly:
 | II | 11–15 |
 | III | 16–20 |
 
-> These bands are an **estimate**, not a verified figure. The only per-act level numbers in the
-> docs are boss-scaling caps from the v3.0/v3.2.1 changelog, long superseded, and the XP curve now
-> comes from Expansion 13-20 and is MCM-editable. Level cap is 20; most players reach 15+ and 20
-> needs the optional encounter content. Label the bands as approximate on the sheet.
+> These bands are an **estimate**, but the installed CX config supports them: boss level is
+> capped at **10 in Act I** and **16 in Act II** (binding from player level 14), while Act III
+> bosses are always player level **+4**. Level cap is 20 (`Expansion.Levels.MaxLevel`); most
+> players reach 15+ and 20 needs the optional encounter content. Label the bands as approximate
+> on the sheet.
 
 What each axis measures, and its **kind** — which decides whether a second source of it is worth
 anything to the party:
@@ -267,6 +278,7 @@ encounter demands, say so in prose rather than inflating a number.
 | `data/listo-10.2-races.md` | Every race and subrace, with the traits each grants |
 | `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
 | `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
+| `data/listo-10.2-mcm.md` | **Resolved MCM and SE_CONFIG values** read out of an installed copy — Expansion toggles, feat cadence, CX scaling, attunement caps, what ships disabled |
 | `data/listo-10.2-mods.tsv` | 706 mods as `ModID<TAB>Name` — grep this to confirm anything exists |
 | `data/listo-10.2-manifest.json` | Raw manifest; holds which *file variant* was pulled per mod |
 | `data/docs/*.md` | The four Listo doc pages as raw markdown |
@@ -285,6 +297,7 @@ their own documentation, and every class mod page's feat table is wrong for List
 
 **Grep the data files, never read them whole** — the manifest is 1.2 MB and the changelog 293 KB.
 
-Everything here is a snapshot of Listonomicon **10.2**, built 8 July 2026. If the installed list
-has moved, refresh the snapshot before trusting any of it — `references/research-recipes.md` has
-the commands.
+Everything here is a snapshot of Listonomicon **10.2**, built 8 July 2026, and **checked against
+an installed copy on 17 August 2026** (`Version = 10.2` in `Listonomicon.compiler_settings`) —
+that pass produced `data/listo-10.2-mcm.md`. If the installed list moves past 10.2, refresh both
+before trusting any of it — `references/research-recipes.md` has the commands.

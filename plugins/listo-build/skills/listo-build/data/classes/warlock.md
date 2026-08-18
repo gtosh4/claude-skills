@@ -6,7 +6,7 @@ three classes that grant **Wisdom + Charisma** saves at level 1 (Cleric and Pala
 others), and it hands you Eldritch
 Blast; Warlock 2 adds **Agonizing Blast**, at which point you own a ranged cantrip that gains
 beams at character level 5, 10 and 17 no matter how few Warlock levels you ever take. Warlock 3
-adds a pact boon and a **feat** (Listo's cadence is class levels 3/6/9/12/15/18, so a 3-level
+adds a pact boon and a **feat** (Listo's cadence is class levels 3/6/9/12/13/15/18, so a 3-level
 dip is feat-neutral) — and it is the only class whose spell slots come back on a **short rest**,
 which in a run where a long rest costs 120+ camp supplies is the resource cadence that matters.
 Listo has not left the class alone: **Eldritch Blast is 1d8 per beam here, not 1d10**, Repelling

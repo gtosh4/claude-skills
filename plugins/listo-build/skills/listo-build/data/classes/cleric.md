@@ -39,7 +39,7 @@ grep -i "Duo:" "$S/data/classes/cleric.md"                 # duo relevance only
 | **Resource cadence** | Spell slots: **long rest**. Channel Divinity: **short rest** (1 charge at L2, 2 at L6, 3 at L18). Most modded domain features: **long rest**, usually Wis-modifier uses |
 | **Level breakpoints** | **1** domain + saves + armour. **2** Channel Divinity + Turn Undead. **5** Destroy Undead + level-3 spells. **6** second CD charge + domain feature (War: Extra Attack). **8** Divine Strike / Potent Spellcasting. **10** Divine Intervention (once per playthrough). **14** Divine Strike → 2d8. **17** domain capstone. **18** third CD charge. **20** Divine Intervention returns, **once per long rest** |
 | **Dip value** | **Very high at 1** for a heavy-armour domain; **1 or 2** for Channel Divinity; **3** is feat-neutral but buys little unless you want a level-3 domain spell pair |
-| **Feats** | 3, 6, 9, 12, 15, 18 (Listo cadence — see `listo-10.2-feats.md`), *not* the vanilla 4/8/12 |
+| **Feats** | 3, 6, 9, 12, 13, 15, 18 (Listo cadence — see `listo-10.2-feats.md`), *not* the vanilla 4/8/12 |
 
 ---
 
@@ -88,8 +88,8 @@ Written **specifically for Listonomicon**. Two lines, both large:
   rest** (BG3's level-10 version is once per playthrough — Sunder the Heretical / Arm Thy Servant
   / Opulent Revival).
 - **Divine Strike 14th-level upgrade** implemented for Tempest, Trickery and War.
-- **Optional, MCM-toggled** (default enabled; the player can turn each off in Mod Configuration
-  Menu — **ask them what they run**):
+- **Optional features — Listo leaves them ON** (`optional_features.Cleric: true` in the
+  installed `MCM/Expansion/settings.json`; the player can still turn each off in MCM):
   - **Harness Divine Power** (L2): bonus action, spend a Channel Divinity charge to **regain one
     spell slot** of level ≤ half proficiency bonus. Uses: 1 at L2, 2 at L6, 3 at L18, per long rest.
   - **Cantrip Versatility**: swap a cantrip at ASI levels.

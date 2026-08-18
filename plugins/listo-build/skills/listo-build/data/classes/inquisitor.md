@@ -38,7 +38,7 @@ Judgment magnitude, initiative, healing, capstone — keys off Wisdom modifier.
 | **Resource cadence** | **Judgment charges restore on SHORT REST** (2 at L1, then +1 at 5/10/15/20 → 6 max). Also restored by Potion of Angelic Slumber, Potion of Angelic Reprieve, Illithid Restoration Pods, and Divine Intervention: Opulent Revival. Spell slots are long-rest. Supreme Judgment (L18) is 1/long rest. |
 | **Key breakpoints** | **1** Judgment + saves + martial/shield + deity weapon · **2** spellcasting, Monster Lore, WIS to initiative · **3** subclass + permanent Detect Thoughts · **5** Extra Attack + Sanctified Slayer · **6** Hallowed Blade (Radiant/Necrotic conversion) · **11** two Judgments at once |
 | **Dip value** | **High at 1 and 2**, very high at 3. Best Wisdom-save opener in the list that also brings martial weapons and shields. |
-| **Feats** | The class's *native* feat levels are 4/8/12/16/19, but Listo overrides feat cadence globally to **3/6/9/12/15/18** via `Universal Feat Every X Level(s) - MCM` (`13193`) — see `listo-10.2-feats.md`. Whether that mod's selectors land cleanly on a modded class (and whether the class's own 4/8/12/16/19 selectors survive alongside them, which would be extra feats) is `(unverified — check the level-up screen in-game)`. |
+| **Feats** | The class's *native* feat levels are 4/8/12/16/19, but Listo overrides feat cadence globally to **3/6/9/12/13/15/18** via `Universal Feat Every X Level(s) - MCM` (`13193`) — see `listo-10.2-feats.md`. Whether that mod's selectors land cleanly on a modded class (and whether the class's own 4/8/12/16/19 selectors survive alongside them, which would be extra feats) is `(unverified — check the level-up screen in-game)`. |
 
 ## Class tagging
 
@@ -285,7 +285,7 @@ and going first is worth more in a two-character party than in a four-character 
 opens here (2× 1st, Hunter's Mark / Shield of Faith / Divine Favour). Monster Lore's damage die
 stays 1d8 on a dip, but the passive half-WIS to proficient INT skills does not care about level.
 
-**Level 3 — feat-neutral and adds a subclass.** Listo's 3/6/9/12/15/18 cadence means three levels
+**Level 3 — feat-neutral and adds a subclass.** Listo's 3/6/9/12/13/15/18 cadence means three levels
 cost you no feats, and level 3 gives **permanent Detect Thoughts** (Interrogative Mind) plus a
 full subclass feature — Vengeance's Expertise + double-WIS on an INT skill is a genuine
 skill-monkey package, and Zeal's fast healing + delayed damage pool is a real defensive layer on

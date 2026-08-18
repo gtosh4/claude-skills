@@ -45,22 +45,29 @@ do not fill gaps from 5e or from Pathfinder tabletop.**
 
 ## Feat cadence
 
-**Confirmed.** Mesmerist is on the **seven-feat cadence**: **3, 6, 9, 11, 12, 15, 18**.
+**Corrected against the install.** Mesmerist is on the **standard cadence**: **3, 6, 9, 12, 13,
+15, 18** — seven feats, the same as every other class. **It does not get the level 11 feat.**
 
-Stated twice in the Listo docs:
+The docs say twice that it does:
 
 - `data/docs/4-SpellsFeatsClassesItems.md` — "all classes get a feat at 3, 6, 9, 12, 15, and 18;
   **Fighters, Mesmerists, and Rogues** get a feat at 3, 6, 9, **11**, 12, 15, and 18."
 - `data/docs/1-Home.md` — "Fighters, Mesmerists, and Rogues get an additional feat at level 11."
 
-Consistent with `data/classes/../listo-10.2-feats.md` § *Feat cadence*, which already records
-Fighter/Rogue/Mesmerist as the three seven-feat classes. See that file for what the feats
-actually do and for the removed ability-score cap.
+**The installed config contradicts both.** `FeatsUni.json` grants the level 11 feat through
+`fighterfeat: 11` and `roguefeat: 11` only. Mesmerist's grant lives in the
+`advancedCustomClasses` block, which is gated behind `enableAdvancedSettings` — set to
+**`false`**. Artificer is in the same block and equally unaffected. See
+`data/listo-10.2-mcm.md`.
+
+> `(unverified)` only in the sense that a level-up screen would settle it definitively. The
+> config is unambiguous; the docs are the stale side here, as they are on the universal level
+> 13 feat they never mention.
 
 **Note the conflict, and that Listo wins.** The mod's own page says "Ability Score Improvement:
 At levels 4, 8, and 12 (and 16 and 19), gain a feat" — a five-feat, level-4-cadence class in
 isolation. Listo's `Universal Feat Every X Level(s) - MCM` (`13193`) overrides this. Plan
-against **3/6/9/11/12/15/18**, not the mod page's numbers. Because the cadence keys off *class
+against **3/6/9/12/13/15/18**, not the mod page's numbers. Because the cadence keys off *class
 level*, a 3-level Mesmerist dip is feat-neutral.
 
 ---
@@ -396,7 +403,7 @@ difficulty mods. Treat power estimates as provisional.
 
 ### Cross-references
 
-- **Feats** — `listo-10.2-feats.md`. Seven-feat cadence at 3/6/9/11/12/15/18; the level-20
+- **Feats** — `listo-10.2-feats.md`. Seven-feat cadence at 3/6/9/12/13/15/18; the level-20
   ability-score cap is removed for feat increases.
 - **Equipment** — `listo-10.2-equipment.md`. **Psychic Armory** (`14476`) is the
   Mesmerist-synergy gear breadtrail Listo added alongside the class (changelog: "a gear and

@@ -107,8 +107,9 @@ pulled an older archive that is called out explicitly. Marked `(unverified)` whe
 - **Optional (Tasha's) features, configurable in MCM:** **Primal Knowledge** (an extra Barbarian
   skill proficiency at 3rd *and* 10th level) and **Instinctive Pounce** (7th — move half your
   speed as part of the Bonus Action you spend to Rage). Primal Knowledge at 3rd level requires
-  Improved UI, which Listo ships (`ImpUI_P8_Fork`). **Whether Listo enables these in its shipped
-  MCM config is `(unverified)`** — check in-game under Expansion's Barbarian settings.
+  Improved UI, which Listo ships (`ImpUI_P8_Fork`). **Listo enables them** —
+  `optional_features.Barbarian: true` in the installed `MCM/Expansion/settings.json`. Both are
+  live; plan around them.
 - Base-subclass 14th-level capstones supplied by Expansion: **Berserker → Retaliation**
   (reaction melee attack when damaged by a creature within 5 ft), **Giant → Demiurgic Colossus**
   (reach +10 ft, choose Large *or* Huge, Mighty Impel works on Large creatures, Elemental Cleaver

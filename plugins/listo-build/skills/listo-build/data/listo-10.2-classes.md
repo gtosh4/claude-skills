@@ -39,8 +39,10 @@ dangerous.
 
 `Universal Feat Every X Level(s)` (`13193`) overrides every class mod's own cadence. Paragon's
 page says 4/8/12/16/19; Mesmerist's says the same; `Expansion` grants its own at 14/16/19; Blood
-Hunter has native ASIs at 4/8/12/16/19. **All are overridden.** Plan against **3/6/9/12/15/18**,
-plus **11** for Fighter, Rogue and Mesmerist. Whether any of them *stack* rather than replace is
+Hunter has native ASIs at 4/8/12/16/19. **All are overridden.** Plan against **3/6/9/12/13/15/18**,
+plus **11** for Fighter and Rogue only — the docs also name Mesmerist, but that grant is gated
+behind `enableAdvancedSettings`, which the install sets to `false` (`data/listo-10.2-mcm.md`).
+Whether any of them *stack* rather than replace is
 `(unverified)` and worth one in-game check.
 
 ### ⚠ Archive versions lag mod pages, sometimes deliberately

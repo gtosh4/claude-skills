@@ -47,12 +47,14 @@ third, fourth and fifth actors in the game.
   spells at 13/17 (Arcane Eye, Insect Plague) + **Swarming Dispersal** (15).
 - Expansion also grants feats at 16 and 19 by default, but Listo overrides feat cadence to
   every 3 class levels — see `data/listo-10.2-feats.md`.
-- **Epic Boons at 20** are an Expansion MCM option; whether Listo enables them is
-  **(unverified)**.
+- **Epic Boons at 20 are OFF.** `boons.BaseClassEpicBoons` and `boons.CustomClassEpicBoons` are
+  both `false` in the installed `MCM/Expansion/settings.json` — resolved, no longer a question.
+  This holds for **every** class, not just Ranger.
 
-**Tasha's optional features — on by default, MCM-configurable per class.** The mod author
-implemented them as *additional options inside the existing selection lists*, not as forced
-replacements:
+**Tasha's optional features — Listo leaves them ON for Ranger** (`optional_features.Ranger:
+true`), along with Barbarian, Bard, Cleric and Druid. They are off for Fighter, Monk, Paladin,
+Rogue, Sorcerer, Warlock and Wizard. The mod author implemented them as *additional options
+inside the existing selection lists*, not as forced replacements:
 - **Favored Foe** (level 1, appears among the Favoured Enemy options): on hit you may mark the
   target for 1 minute; **it uses your concentration**. First hit each turn on the marked
   creature deals **+1d4**, rising to **1d6 at 6** and **1d8 at 14**. Uses = **proficiency
@@ -426,7 +428,7 @@ means for a Ranger:
 
 - Every subclass above is confirmed present via the 10.2 Nexus mod list, the Wabbajack manifest,
   or (for the four base-game conclaves) the `Expansion` progression table that extends them.
-- Marked **(unverified)**: whether Listo enables Expansion's **Epic Boons** at 20; which
+- Marked **(unverified)**: which
   fighting styles from `UA Fighting Styles` are actually offered to Rangers; whether the
   Stealth-disadvantage rider on Hunter's Mark works in the 1.0.0 archive Listo pulled.
 - Sources: mod pages and implementation articles for `15037` (articles 1298/1300/1301/1303/1577),

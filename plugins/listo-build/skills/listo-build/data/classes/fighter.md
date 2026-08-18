@@ -6,7 +6,7 @@ with levels 13–20 supplied by **Expansion** (`279`): a second Action Surge cha
 second and third Indomitable at 13 and 17, and a **fourth attack at 20**. Argelia's
 `Fighter - OneDnD - PHB2024 Changes` is **not** in the list, so there is no PHB2024 rework of
 Second Wind or Tactical Mind. What Listo does instead is bolt on **fourteen** subclasses and
-rebuild Eldritch Knight almost from the ground up. Combined with the seven-feat cadence and
+rebuild Eldritch Knight almost from the ground up. Combined with the eight-feat cadence and
 Action Surge stacking on Lone Wolf's bonus Action, Fighter is the strongest *primary* martial in
 the list and the single most-recommended *dip*.
 
@@ -36,29 +36,31 @@ its `.pak` destination in the 10.2 manifest, not just its presence in the downlo
 
 ## Feat cadence
 
-**Fighter is one of only three classes on the seven-feat cadence.**
+**Fighter is one of only two classes on the eight-feat cadence.**
 
-> Feats land at Fighter level **3, 6, 9, 11, 12, 15, 18** — seven feats over 20 levels.
-> Every other class gets six (3, 6, 9, 12, 15, 18). The exceptions are **Fighter, Rogue and
-> Mesmerist**, which all get the extra one at **11**.
+> Feats land at Fighter level **3, 6, 9, 11, 12, 13, 15, 18** — eight feats over 20 levels.
+> Every other class gets seven (3, 6, 9, 12, 13, 15, 18). The exceptions are **Fighter and
+> Rogue**, which get the extra one at **11**.
 
 Source: `Universal Feat Every X Level` (installed, confirmed in the manifest), which replaced the
 older `Feat Every X Levels`. Listo's changelog states it explicitly: *"It also restores the
 advantage of Fighters and Rogues: They gain a unique, extra feat at level 11 each (ignore what
-the book says). So every class gets 3, 6, 9, 12, 15, 18; rogues and fighters get 3, 6, 9, 11, 12,
-15, and 18."* The docs' FAQ repeats it and adds Mesmerist.
+the book says)."* The docs' FAQ repeats it and adds Mesmerist — **but the installed
+`FeatsUni.json` sets `enableAdvancedSettings: false`, so the Mesmerist entry never applies.
+Fighter and Rogue only.** The universal 13 is also live and the docs miss it; see
+`data/listo-10.2-mcm.md`.
 
 Consequences for planning:
 
 - **Fighter 11 is the highest-value single level in the list for a feat-hungry build.** It pays
   Improved Extra Attack (3 attacks) *and* an off-cadence feat in the same level-up.
-- Expansion's own extra feats at **14, 16 and 19** are overridden by the MCM mod and do **not**
-  apply. A pure Fighter 20 gets **seven** feats, not ten.
-- The standard feat arithmetic in `references/listo-rules.md` (`floor(classA/3) + floor(classB/3)`)
-  **undercounts Fighter by one** at Fighter level 11 or higher. A Fighter 11 / X 9 build has
-  `3 + 3 = 6` by the formula but actually gets **7**.
+- Expansion's own extra feats at **14, 16 and 19** do **not** apply — **confirmed**, not guessed:
+  `MCM/Expansion/settings.json` sets `feats.BaseClassFeats: "None"`. A pure Fighter 20 gets
+  **eight** feats, not eleven.
+- The standard feat arithmetic in `references/listo-rules.md` **undercounts Fighter by one** at
+  Fighter level 11 or higher, on top of the universal level 13 grant.
 - Because the bonus feat sits at 11 and not on a multiple of 3, a **Fighter 11 base + 9-level
-  second class** is feat-optimal: 7 feats at character level 20 versus 6 for most pairings.
+  second class** is feat-optimal.
 
 Cross-reference `data/listo-10.2-feats.md` for what to spend them on. The Fighter-relevant ones
 documented there and *not* restated here: **Martial Adept** (2 superiority dice, short-rest
@@ -78,9 +80,9 @@ Very little touches the base chassis. What does:
     by making base Action Surge per-turn with a hidden short-rest resource.
   - **Indomitable, 13th and 17th-level parts** — 2 uses at 13, 3 at 17, long rest.
   - **Extra Attack, 20th-level part** — the fourth attack.
-  - **Martial Versatility (optional, 4/8/12/16/19)** — swap a fighting style. Script-Extender
-    driven and toggleable in the Fighter config; whether Listo leaves it **enabled** is
-    `(unverified)` — the MCM profile is an inline file in the manifest and cannot be read.
+  - **Martial Versatility (optional, 4/8/12/16/19)** — swap a fighting style. **Listo turns it
+    off**: `MCM/Expansion/settings.json` has `optional_features.Fighter: false`. Resolved from
+    the install — see `data/listo-10.2-mcm.md`.
 - **Feat cadence** replaced as described above.
 - **UA Fighting Styles (`19693`)** and **Protection and Great Weapon Fighting PHB2024 (`18684`)**
   widen and rebalance the level 1 Fighting Style pick. Both are already documented in
@@ -550,9 +552,12 @@ Confirmed **absent** from the 10.2 manifest — do not recommend, and correct th
   (its changelog lists a *"tweak for Polearm Clout for compatibility"* at v2.2). **Cahoot's Feats
   Overhaul must load AFTER it**, or Feats Overhaul's Polearm Master rework — reach on versatile
   polearms, damage riders on the bonus attack, spellcasting-modifier override — loses the conflict.
-  Listo ships both `Cahoots Feats Overhaul` and `Cahoots Feats Overhaul Listo Patch`; the actual
-  ordering lives in an inline `modlist.txt` that cannot be read from the manifest, so the
-  **direction of the requirement is reported, not confirmed from the mod page.** `(unverified)`
+  Listo ships both `Cahoots Feats Overhaul` and `Cahoots Feats Overhaul Listo Patch`. The MO2
+  profile is now readable: the **Listo Patch sits near the top of `modlist.txt` (highest
+  priority)**, while base `Cahoots Feats Overhaul` sits *below* the Eldritch Knight War Magic
+  mods. Whether that satisfies the requirement, or whether the in-game pak order in
+  `modsettings.lsx` is what actually decides it, is still `(unverified)` — but the ordering is
+  no longer unreadable. See `data/listo-10.2-mcm.md` for how to check.
 - **Essential Feats' War Magic feat does not stack with Eldritch Knight's War Magic.** Stated
   directly in the Listo docs.
 - **Expansion's Improved War Magic (18) and the OneDnD Improved War Magic (12) are separate
@@ -563,8 +568,8 @@ Confirmed **absent** from the 10.2 manifest — do not recommend, and correct th
   per its author. Listo keeps the Consolidated mods in their own separator with Battle Master
   manoeuvres, Arcane Archer shots and Bard flourishes **enabled by default** and the basic-weapon
   and common-action ones disabled — which satisfies this trivially.
-- **Listo ships an MCM profile for `OneDnD_WarMagic`** (`BG3MCM/Profiles/Default/OneDnD_WarMagic/
-  settings.json`). Its contents are an inline file in the manifest and cannot be inspected;
-  assume War Magic behaviour may be tuned away from the mod page's defaults. `(unverified)`
+- **Listo's `OneDnD_WarMagic` MCM profile — resolved.** It holds exactly two keys:
+  `improvedExtraAttackFix: true` and `debugToggle: false`. Nothing else is tuned, so the mod
+  page's defaults stand.
 - **Champion, Expansion, load order:** the Champion mod must load *after* Expansion for Superior
   Critical (15) and Survivor (18) to resolve. Assume Listo does this; not independently verified.

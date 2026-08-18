@@ -41,9 +41,20 @@ The reason you cannot simply wear everything you find.
   or above the configured rarity threshold **auto-require attunement**.
 - MCM/IMGUI interface; requires ImpUI for the resource icons.
 
-> **Ask the player what their thresholds are set to before planning gear.** The whole plan
-> turns on how many Legendary/VeryRare pieces they can wear at once, and it is a config value,
-> not a fixed rule. This is the gear-planning equivalent of the Lone Wolf MCM question.
+**Listo's shipped caps, read out of `Attunement/config.json` — identical across all five
+difficulty entries, so difficulty does not change them:**
+
+| Total attuned | Legendary | VeryRare | Rare | Uncommon |
+|---|---|---|---|---|
+| **5** | 3 | 5 | 6 | 13 |
+
+Per-rarity slot sub-caps: Legendary 2 Armor / 2 Weapons / 2 Accessories; VeryRare 3/3/3;
+Rare 4/4/4; Uncommon 6/5/5. `attunementRarityThreshold` is **Legendary**, so items at Legendary
+or above auto-require attunement — plus 413 explicit item overrides and 946 rarity overrides.
+
+> **Plan against five attuned items, at most three Legendary.** A `relaxed config.json` (6 total,
+> 4 Legendary) also ships but is not the live file — only ask the player if they swapped it in.
+> Full dump in `data/listo-10.2-mcm.md`.
 
 ### The economy — from docs page 4
 
