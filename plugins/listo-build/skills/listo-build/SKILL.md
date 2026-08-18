@@ -115,6 +115,23 @@ as what they did — an unticked "healing" means this character has to carry som
 they then pick. Say the derived brief back to them in one sentence before moving on, because it
 is an inference and it may be wrong.
 
+**On a partner's threshold axes, the score converts straight into a requirement.** Sustain and
+Skills saturate at the party's first real source, so the partner's number tells you exactly how
+much this build owes:
+
+| Partner scores | What this build must do |
+|---|---|
+| **5** | **Solos it.** Build nothing here — every point spent is wasted. |
+| **4** | **Optional.** A second source is a luxury. Take it only if it falls out of the chassis for free; never spend a feat or a level on it. |
+| **≤ 3** | **Must be covered, non-trivially.** Real levels or a real feat, not a token gesture. A 3 is not "mostly fine" — on a threshold axis it means the party has no reliable answer. |
+
+**Score it per act, not overall.** A partner at Sustain 3/4/4 needs genuine help in Act I and
+almost none afterwards, which argues for an early dip rather than a late investment.
+
+This mapping is **threshold-only**. Additive axes always want more regardless of the partner's
+number, and personal axes cannot be delegated at all — a partner's Saves score does nothing for
+you. The kind labels are in §5a.
+
 **Batch two — the constraints that shape the chassis.** After the niche is fixed. This is a
 **menu, not a checklist** — ask only what is still genuinely open, since a comparison or an
 earlier answer often settles two of these implicitly. Re-asking a question the conversation has
@@ -353,6 +370,18 @@ anything to the party:
 
 **So the column never totals, and two sheets are never compared by summed score.** Read the shape
 and read the low axes; that is what the chart is for.
+
+**A threshold score is a statement about the whole party, so score it that way.** On a threshold
+axis the number says what the *other* character still owes, and the bands are sharp:
+
+| Score | What the partner owes on this axis |
+|---|---|
+| **5** | Nothing. This build solos the axis. |
+| **4** | Optional — worth taking only if it falls out of their chassis free. |
+| **≤ 3** | A real investment: levels or a feat. **3 is not "mostly fine"** on a threshold axis. |
+
+Score with that reading in mind, because it is how the paired sheet will be read — see §1b.
+It does not apply to additive or personal axes.
 
 **A 4 across the board is a failed evaluation, not a great build.** If nothing scores 1 or 0, look
 harder. Then say in one sentence, under the table, what the lowest axis that matters is and what
