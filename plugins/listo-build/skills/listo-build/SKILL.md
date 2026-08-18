@@ -142,6 +142,22 @@ Publish an artifact using `assets/sheet-template.html`. Keep it to **picks and w
 select at each level, the stat spread, the gear targets. Reasoning belongs in conversation, not
 on the sheet. State unverified assumptions explicitly rather than smoothing over them.
 
+**Set `data-class` on the `.sheet` element to the build's primary class** — the one with the
+highest class level. A 9/3 Sorcerer/Warlock is `data-class="sorcerer"`. This themes the sheet
+for that class. One of:
+
+```
+barbarian bard cleric druid fighter monk paladin ranger rogue sorcerer
+warlock wizard artificer mesmerist paragon inquisitor bloodhunter
+```
+
+Omit the attribute for the neutral default. Do not hand-edit the palette — the themes vary by
+hue alone over a shared chassis so that two sheets from the same run look like a matched pair,
+and picking colours by hand breaks that.
+
+> Both characters in a run get their own sheet. If the two builds share a primary class, they
+> will theme identically — that is correct, not a bug. Distinguish them by name in the wordmark.
+
 ## Pitfalls that have bitten before
 
 - **Proposing single-class builds by default.** A 3-level dip is free in feat terms. If the answer

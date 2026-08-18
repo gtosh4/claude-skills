@@ -55,6 +55,78 @@
     --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
   }
 
+  /* ══════════════════════════════════════════════════════════════════════
+     CLASS THEMES
+
+     Set data-class on .sheet to the build's PRIMARY class — the one with the
+     highest class level. A 9/3 Sorcerer/Warlock is data-class="sorcerer".
+
+       <div class="sheet" data-class="sorcerer">
+
+     Omit it and you get the neutral brass/teal default.
+
+     How it works: the neutral chassis (ground, surfaces, text, rules, grid)
+     is IDENTICAL in every theme. Only the three accent ROLES move, and they
+     move by hue alone — lightness and chroma are shared, so no theme reads
+     louder or dimmer than another. That is what keeps 17 variants looking
+     like one family instead of 17 stylesheets.
+
+       --h1  structure   wordmark, eyebrows, table finals, checkboxes
+       --h2  highlight   emphasis, level markers, wins, callout spine
+       --h3  caution     notes and warnings  (kept warm in every theme, so
+                         "this is a warning" reads the same everywhere)
+       --cmul  chroma multiplier — the only intensity knob. Austere classes
+               sit below 1, showy ones above.
+
+     Gated behind @supports so anything without oklch() keeps the default
+     palette rather than losing colour entirely.
+     ══════════════════════════════════════════════════════════════════════ */
+
+  @supports (color: oklch(50% .1 90)) {
+    :root {
+      --h1: 70; --h2: 188; --h3: 45; --cmul: 1;
+
+      --al: 45.5%; --ac: .085;    /* accent      — light mode */
+      --abl: 92%;  --abc: .030;   /* accent wash — light mode */
+
+      --brass:     oklch(var(--al)  calc(var(--ac)  * var(--cmul)) var(--h1));
+      --brass-bg:  oklch(var(--abl) calc(var(--abc) * var(--cmul)) var(--h1));
+      --astral:    oklch(var(--al)  calc(var(--ac)  * var(--cmul)) var(--h2));
+      --astral-bg: oklch(var(--abl) calc(var(--abc) * var(--cmul)) var(--h2));
+      --rust:      oklch(calc(var(--al) - 1.5%) calc(var(--ac) * var(--cmul) * 1.12) var(--h3));
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --al: 72.5%; --ac: .090;
+        --abl: 23%;  --abc: .028;
+      }
+    }
+    :root[data-theme="dark"] {
+      --al: 72.5%; --ac: .090;
+      --abl: 23%;  --abc: .028;
+    }
+
+    /* ── the seventeen ─────────────────────────────────────────────────── */
+    /*                                        h1    h2   h3   chroma        */
+    :root:has([data-class="barbarian"])  { --h1:  45; --h2:  25; --h3: 20; --cmul: 1.15; }
+    :root:has([data-class="bard"])       { --h1: 330; --h2: 290; --h3: 35; --cmul: 1.05; }
+    :root:has([data-class="cleric"])     { --h1:  88; --h2: 205; --h3: 30; --cmul:  .90; }
+    :root:has([data-class="druid"])      { --h1: 130; --h2: 160; --h3: 45; --cmul:  .95; }
+    :root:has([data-class="fighter"])    { --h1:  70; --h2: 240; --h3: 25; --cmul:  .85; }
+    :root:has([data-class="monk"])       { --h1:  55; --h2: 175; --h3: 30; --cmul:  .90; }
+    :root:has([data-class="paladin"])    { --h1:  95; --h2: 250; --h3: 25; --cmul: 1.05; }
+    :root:has([data-class="ranger"])     { --h1: 145; --h2: 100; --h3: 40; --cmul:  .90; }
+    :root:has([data-class="rogue"])      { --h1: 280; --h2: 200; --h3: 18; --cmul:  .95; }
+    :root:has([data-class="sorcerer"])   { --h1: 350; --h2: 300; --h3: 35; --cmul: 1.20; }
+    :root:has([data-class="warlock"])    { --h1: 305; --h2: 150; --h3: 20; --cmul: 1.10; }
+    :root:has([data-class="wizard"])     { --h1: 265; --h2: 215; --h3: 30; --cmul: 1.00; }
+    :root:has([data-class="artificer"])  { --h1:  60; --h2: 195; --h3: 25; --cmul:  .95; }
+    :root:has([data-class="mesmerist"])  { --h1: 318; --h2: 262; --h3: 35; --cmul: 1.10; }
+    :root:has([data-class="paragon"])    { --h1:  80; --h2: 245; --h3: 25; --cmul: 1.00; }
+    :root:has([data-class="inquisitor"]) { --h1:  62; --h2:  15; --h3: 12; --cmul:  .85; }
+    :root:has([data-class="bloodhunter"]){ --h1:  18; --h2: 348; --h3: 28; --cmul: 1.15; }
+  }
+
   body {
     margin: 0;
     background-color: var(--ground);
@@ -231,7 +303,11 @@
   State unverified assumptions explicitly.
 -->
 
-<div class="sheet">
+<!-- data-class = the build's PRIMARY class (highest class level). One of:
+     barbarian bard cleric druid fighter monk paladin ranger rogue sorcerer
+     warlock wizard artificer mesmerist paragon inquisitor bloodhunter
+     Omit the attribute for the neutral default. -->
+<div class="sheet" data-class="sorcerer">
 
   <header class="titleblock">
     <div class="titleblock-main">
