@@ -158,6 +158,45 @@ and picking colours by hand breaks that.
 > Both characters in a run get their own sheet. If the two builds share a primary class, they
 > will theme identically — that is correct, not a bug. Distinguish them by name in the wordmark.
 
+### 5a. Score the profile radar
+
+The sheet opens with an eight-axis radar. Fill `data-scores` on `<figure class="profile">`, and
+`data-partner` too when the other character's build is known — omit that attribute entirely if
+it isn't, and the second series drops out cleanly. **Keep the table rows in sync with the
+numbers**; the table is the accessible view, not decoration.
+
+Axis order is fixed: **damage, control, durability, saves, sustain, economy, skills, cadence.**
+
+**Score 0–4 against what a two-person Lone Wolf party needs — not against vanilla.** Lone Wolf's
+halved damage and +30% HP make absolute scales misleading, and a four-person party's
+expectations are the wrong yardstick throughout.
+
+| | Anchor |
+|---|---|
+| **4** | Covers this axis alone. The partner never has to think about it. |
+| **3** | Strong. Needs no help in normal fights. |
+| **2** | Adequate, but leans on the partner or on consumables. |
+| **1** | Thin. A real liability if the partner also scores low. |
+| **0** | Absent. |
+
+What each axis measures:
+
+| Axis | Scores high when… |
+|---|---|
+| **Damage** | it kills things fast enough that fights end before resources do |
+| **Control** | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves |
+| **Durability** | it survives incoming HP damage: AC, HP, resistances, damage reduction |
+| **Saves** | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
+| **Sustain** | it recovers between and during fights: heals, self-healing, Durable's full-HP short rests, temp HP. Not just heal *spells* |
+| **Economy** | it adds bodies, actions or reactions — summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
+| **Skills** | it covers out-of-combat checks: expertise, proficiencies, face skills. Two characters must cover the whole campaign |
+| **Cadence** | its resources refresh on **short** rests. Long-rest-only classes score low here, because long rests cost 120+ supplies scaling with camp population |
+
+**A 4 across the board is a failed evaluation, not a great build.** The chart earns its place by
+showing the shape — where this character is strong and what it hands to the partner. If nothing
+scores 1 or 0, look harder. Then say in one sentence, under the table, what the lowest axis is
+and who covers it. That sentence is the entire point of the chart.
+
 ## Pitfalls that have bitten before
 
 - **Proposing single-class builds by default.** A 3-level dip is free in feat terms. If the answer
