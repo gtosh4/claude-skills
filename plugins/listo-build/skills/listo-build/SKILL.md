@@ -168,18 +168,26 @@ table is the accessible view and the only thing that survives if the script does
 Axis order is fixed: **single-target, aoe, durability, economy, control, sustain, skills,
 saves, cadence.**
 
-**Score 0–4 against what a party needs — a general sense, not a named partner's sheet.** Two-player
+**Score 0–5 against what a party needs — a general sense, not a named partner's sheet.** Two-player
 Lone Wolf is the *environment* (halved damage, +30% HP, few bodies), so a four-person party's
 expectations are the wrong yardstick. But the score must not depend on who the other character
 turns out to be, or two sheets from one run can't be read against each other.
 
 | | Anchor |
 |---|---|
+| **5** | Surplus. Exceeds what the act's encounters demand — this axis wins fights by itself. |
 | **4** | Covers this axis alone. Nobody else has to think about it. |
-| **3** | Strong. Needs no help in normal fights. |
+| **3** | Strong. Keeps pace with the act's encounters unaided. |
 | **2** | Adequate, but leans on a partner or on consumables. |
 | **1** | Thin. A real liability if nobody else covers it. |
 | **0** | Absent. |
+
+**Every score is relative to that act's own encounters, and scores are expected to fall.**
+Combat Extender scales enemies off *player* level — bosses reach +310% HP and regular enemies
++250% by 20 — so there is no out-levelling and no absolute yardstick. A feature that does not
+scale therefore loses ground: the Eldritch Cannon's 20 HP and flat 2d8 are excellent at
+character 3 and nearly irrelevant by Act 2, and that decline belongs in the numbers. Read a flat
+row as *keeps pace*, not as *stopped growing*, and a falling row as the build being outrun.
 
 **Score each act separately.** A build that peaks at 20 and a build that peaks at 8 are different
 builds, and one polygon cannot say so. Acts map to character levels roughly:
@@ -204,7 +212,7 @@ anything to the party:
 | **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
 | **Durability** | additive | it survives incoming HP damage: AC, HP, resistances, damage reduction |
 | **Economy** | additive | it adds bodies, actions or reactions — summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
-| **Control** | threshold | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves |
+| **Control** | additive | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. Additive because two locked-down enemies are twice as good as one, and area control composes with single-target rather than duplicating it. A build with only single-target CC should *fall* as encounters get more crowded |
 | **Sustain** | threshold | it recovers between and during fights: heals, self-healing, Durable's full-HP short rests, temp HP. Not just heal *spells* |
 | **Skills** | threshold | it covers out-of-combat checks: expertise, proficiencies, face skills |
 | **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
@@ -223,10 +231,13 @@ and read the low axes; that is what the chart is for.
 harder. Then say in one sentence, under the table, what the lowest axis that matters is and what
 covers it.
 
-**Beware the ceiling.** 4 means "as much as a party needs", so everything above it is clipped —
-two builds both scoring Control 4 can differ by Hold Monster versus Hold Monster plus Wall of
-Force plus Dominate Monster. When a build's real advantage is headroom past 4, the chart cannot
-show it; say so in prose instead of inflating a number.
+**5 is rare and it is earned.** Reserve it for an axis that ends fights on its own at that point in
+the campaign — nine attacks a round with smites, or a Dominate Monster that removes the boss from
+its own encounter. Threshold axes reach it least often, and that is information rather than a
+defect: you cannot over-invest in Skills the way you can in damage.
+
+**The ceiling still exists at 5.** When a build's real advantage is headroom past what any
+encounter demands, say so in prose rather than inflating a number.
 
 ## Pitfalls that have bitten before
 
