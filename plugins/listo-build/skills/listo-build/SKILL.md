@@ -82,7 +82,7 @@ The niche table below is **working material, not output**. Mine it for the optio
 
 | Niche | What carries it here | The catch |
 |---|---|---|
-| **Action-economy engine** | Warlock 3 Chain familiar (Help, Magic Resistance, doubled HP from `18881`), Ranger 3 Beast Master (Expansion moves Companion's Bond to **3**), Summon Beast 5 / Conjure Animals 9 (`13458`), the **Skeleton Crew feat** | Summons need their own action to set up; a turn spent summoning is a turn not fighting |
+| **Action-economy engine** | **Not only summons.** Bodies: Warlock 3 Chain familiar (Help, Magic Resistance, doubled HP from `18881`), Ranger 3 Beast Master (Expansion moves Companion's Bond to **3**), Summon Beast 5 / Conjure Animals 9 (`13458`), the **Skeleton Crew feat**. Extra actions: **Haste** — the strongest action-economy spell in the list for a duo — **Action Surge** (2 charges from 17), and **Quickened**, the only general exemption from Listo's rule that a bonus-action spell blocks a levelled cast. **Twinned Haste covers 100% of a two-person party for one Metamagic pick** | Summons cost a turn to set up. Haste is **concentration** — it competes with your control spell — and Lethargy costs the target a turn if it drops |
 | **Lockdown controller** | Save-or-lose against crowds; area control composes rather than duplicating | Enemy saves climb with **+1 ability point per 6 levels** (bosses and enemies alike), so a static DC decays. Single-target-only CC *falls* further as encounters crowd |
 | **Front-line damage** | Smites, Extra Attack, **Fighter 11** (3 attacks *and* an off-cadence feat) | Long fights mean resource-limited burst runs dry; needs a sustain answer |
 | **Reaction economy** | Lone Wolf's **second reaction**: Rogue's off-turn Sneak Attack, Uncanny Dodge as an interrupt, Riposte, Opportunity Attacks | Reaction effects are worthless if nothing triggers them — it needs a build shaped around being attacked |
@@ -361,7 +361,7 @@ anything to the party:
 | **Single-target** | additive | it kills one priority enemy fast enough that the fight ends before resources do |
 | **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
 | **Durability** | additive | it survives incoming HP damage. **Effective HP, however it is bought:** AC, hit dice, resistances, damage reduction — *and self-healing*. Durable's full-HP short rests, temp HP on yourself, Second Wind and Lay on Hands spent on yourself all belong here |
-| **Actions** | additive | **action economy, not gold** — it adds bodies, actions or reactions: summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
+| **Actions** | additive | **action economy, not gold, and not just minions** — anything that raises the number of meaningful things the party does per round. Four routes, all scored here: **extra bodies** (summons, familiars, companions, Skeleton Crew), **extra actions on your turn** (Haste, Action Surge, Quickened), **off-turn actions** (Lone Wolf's second reaction, Riposte, off-turn Sneak Attack, interrupts), and **actions handed to your partner** (Twinned Haste, Commander's Strike). **The duo's structural problem, so weight it heavily** |
 | **Control** | additive | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. Additive because two locked-down enemies are twice as good as one, and area control composes with single-target rather than duplicating it. A build with only single-target CC should *fall* as encounters get more crowded |
 | **Sustain** | threshold | it recovers **the other character**: heals aimed outward, raising a downed partner, Greater Restoration and condition removal, temp HP granted to someone else. Not just heal *spells* — but it must be delegatable, or it is Durability |
 | **Skills** | threshold | it covers out-of-combat checks: expertise, proficiencies, face skills |
@@ -373,6 +373,20 @@ anything to the party:
   lockdown; a second is worth far less than the number suggests.
 - **Personal** cannot be delegated at all. A partner's Wisdom save does not stop *you* being Held,
   and their short-rest engine does not refill *your* slots.
+
+**Actions is not a summons axis.** A build with no minions at all can score high on it — a
+Fighter with Action Surge and a Riposte reaction, or a Sorcerer with Haste and Quickened, is
+adding actions per round exactly as a summoner is. If a score here only ever moves when
+something is summoned, the axis is being read wrong. Two riders:
+
+- **A multiplier scores on the axis of what it multiplies.** Metamagic is the common case:
+  Twinned **Haste** is Actions, Twinned **Hold Person** is Control, Twinned **Death Ward** is
+  Durability. Scoring the Metamagic itself on Actions regardless of payload double-counts it
+  against the axis the spell already scored on.
+- **Discount for concentration.** Haste competes with your control spell, and only one of them
+  can be up. An action source that costs concentration in a build that also wants concentration
+  for CC is worth materially less than the same effect on a partner or a summon — and if it
+  drops, **Lethargy** costs that character their next turn, which out of two bodies is dear.
 
 **Sustain splits by who it targets, and the split decides the axis.** Self-healing is not
 delegatable, so scoring it on a threshold axis prices it wrong — a partner's Durable does
