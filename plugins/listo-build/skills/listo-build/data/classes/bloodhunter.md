@@ -39,9 +39,9 @@
 |---|---|
 | **Class name (internal)** | `BloodHunter`, UUID `742e494e-b0aa-45a8-9123-ae0ea274c9e4` |
 | **Primary ability** | **Dexterity** (`PrimaryAbility=2`) |
-| **Spellcasting / DC ability** | **Intelligence** (`SpellCastingAbility=4`) — for *all* Orders, including Profane Soul |
+| **Spellcasting / DC ability** | **Intelligence** (`SpellCastingAbility=4`) — for *all* Orders, including Profane Soul. **"Blood Hunter (Wisdom Variant Patch)" (mod.io) switches this to Wisdom; it is not in the pack** — see "The Wisdom variant" below |
 | **Hit die** | **d10** (`BaseHp 10`, `HpPerLevel 6`) |
-| **Saves at level 1** | **Intelligence + Dexterity**. No Constitution save. Granted **only** on the level-1 class entry — a Blood Hunter *dip* grants no saves. |
+| **Saves at level 1** | **Intelligence + Dexterity**. No Constitution save — **bridge it with Lone Wolf's +4 (which grants proficiency in both boosted abilities) or with Resilient (Constitution)**; see the note below. Granted **only** on the level-1 class entry — a Blood Hunter *dip* grants no saves. |
 | **Armour** | Light, Medium, **Shields**. No heavy. |
 | **Weapons** | Simple **and Martial**. |
 | **Skills** | 3 (1 if multiclassing in) from: Acrobatics, Arcana, Athletics, History, Insight, Investigation, Religion, Survival |
@@ -113,6 +113,82 @@ Mechanically (`Spell_Shout.txt` / `Status_BOOST.txt`):
 **The recurring HP cost is amplified Blood Curses, not the Rite.** Every Blood Curse has an
 Amplified variant costing an extra `ESSENCE_SACRIFICE` (one hemocraft die of self Necrotic) on top
 of the Blood Maledict charge.
+
+### The Wisdom variant — a companion mod, not in the pack
+
+**As installed, Hemocraft is Intelligence** (`SpellCastingAbility=4`) for all four Orders. The
+companion mod that changes this is **"Blood Hunter (Wisdom Variant Patch)"** by **LemonSoup**
+(the base class's author), mod.io slug `blood-hunter-wisdom`,
+`https://mod.io/g/baldursgate3/m/blood-hunter-wisdom`.
+
+**CONFIRMED by unpacking the patch pak** (`BloodHunterWisdom_b8850a6f-…pak`, `meta.lsx` version
+**1.0.0.0**). It is a small, surgical mod — 12 files, of which three carry mechanics:
+
+| File | What it does |
+|---|---|
+| `ClassDescriptions.lsx` | Sets `SpellCastingAbility` to **5 (Wisdom)** on **all five** entries — the base class *and* Ghostslayer, Lycan, Mutant and **Profane Soul**. `PrimaryAbility` stays **2 (Dexterity)**, so attack rolls are unchanged |
+| `Progressions.lsx` | Overrides the level 1 row. Saving throws become **`ProficiencyBonus(SavingThrow,Wisdom)` + `Dexterity`** — the class now grants **Wis + Dex, not Int + Dex**. Skills stay at 3 picks; Blood Maledict and Vital Essence are untouched |
+| `Status_BOOST.txt` / `Spell_Shout.txt` | The Mutant's **Sagacity** mutagen now raises **Wisdom** (+3, +4 at Mutagencraft 11, +5 at 18) instead of Intelligence, with its own icon |
+
+**Profane Soul's pact casting follows Wisdom** — that was the load-bearing unknown, and the
+ClassDescription entry settles it. A Brand of the Sapping Scar build can be planned on Wisdom.
+
+> **Packaging oddity worth knowing before install:** the patch's `meta.lsx` carries the author's
+> template values — `Name` and `Folder` both read **`DiceSet_01`**, and it declares dependencies
+> on `DiceSet_01`, `DiceSet_02` and `DiceSet_03`. The pak's actual file paths are correct
+> (`BloodHunterWisdom_b8850a6f-…`), so the content loads, but a mod manager may report bogus
+> missing dependencies or a confusing mod name. Load it **after** the base Blood Hunter mod.
+
+**It is not in the 10.2 pack.** The profile carries exactly one Blood Hunter pak
+(`[ModIO] Bloodhunter`, `d2026.5.17.0`) and no patch or variant beside it. Adding the companion
+is a manual step, and **any build planned on Wisdom must say so on the sheet and be treated as
+blocked until the mod is installed** — the same rule as an updated Inquisitor.
+
+Both variants are worth planning; they are different builds, not a reskin.
+
+| | **Intelligence** (as shipped) | **Wisdom** (with the patch) |
+|---|---|---|
+| Class saves at level 1 | Int + Dex | **Wis + Dex** — the patch swaps Intelligence out |
+| Stats wanted | DEX attack · **INT** DCs · CON | DEX attack · **WIS** DCs · CON |
+| Best Lone Wolf pair | DEX + CON. Saves: Int, Dex (class) + Con — **3 distinct**, Dex duplicated, and **INT is left to point buy**, so Blood Maledict DCs lag all campaign | **WIS + CON**. Saves: Wis, Dex (class) + Con — **3 distinct**, Wisdom duplicated, but the **DC stat is at 20 from level 1** |
+| Four distinct saves instead | Not reachable without a feat | **CON + CHA** on Lone Wolf gives Wis, Dex, Con, Cha — four disjoint — but Wisdom then comes from point buy and the DCs lag. Usually worse than taking WIS + CON and buying the fourth save with **Resilient** |
+| Save quality | Misses Wisdom, the save that carries Hold and Dominate | **Wisdom is proficient from level 1 by the class itself** |
+| The catch | Three stats, one of which only feeds DCs | DEX still has to fund attack rolls and AC out of point buy |
+
+> **Correction worth stating plainly:** before the pak was unpacked, the obvious-looking plan was
+> Lone Wolf on **WIS + CON** beside a class granting **Int + Dex**, for four disjoint saves. The
+> patch moves the class's own grant to Wisdom, so that pair now **duplicates** it. Three distinct
+> saves plus one Resilient is the real shape.
+
+**If Wisdom is chosen, re-pick the dip — the old answer stops being right.** On the Intelligence
+build the dip is filling gaps (Fighter 3 for a subclass and Action Surge, say). On the Wisdom
+build, **Wisdom is suddenly worth AC**:
+
+- **Monk 1–3** is the standout. Unarmoured Defence is **10 + DEX + WIS**, so both of the
+  build's primaries pay twice; ki lands on the **short-rest clock the class already runs on**;
+  and Monk 3 buys a Way plus Deflect Missiles for a feat-neutral three levels. **Way of the
+  Kensei** is the natural pick — it makes a chosen weapon a monk weapon and adds Agile Parry's
+  +2 AC, and the weapon is what carries Crimson Rite.
+- `(Verify in game: whether Crimson Rite applies to a Kensei weapon and to unarmed strikes.
+  Rite binds to a weapon, so the Kensei route is the safe assumption and unarmed is not.)`
+- Monk grants **no armour and no shields**, which is fine here — Unarmoured Defence replaces
+  both — but it costs the armour and shield **item slots**, which matters more with Absolute
+  Wrath on. Weigh that against the roughly equal AC.
+- **Profane Soul's pact spells follow Wisdom** under the patch — confirmed in the pak, not
+  assumed. Brand of the Sapping Scar and the pact spell DC both key off it.
+
+### The missing Constitution save is a price, not a veto
+
+The class grants Int + Dex and no Con, which reads badly on a d10 frontliner that wants
+concentration-free but hit-heavy turns. Two cheap fixes exist and either one closes it:
+
+- **Lone Wolf's +4 on Constitution** — it grants save proficiency in both boosted abilities, so
+  Con arrives free at level 1 alongside the score. Pair it with Dexterity and the character has
+  Dex (class *and* Lone Wolf, one wasted), Int, Con — three distinct, with the primary at 20.
+- **Resilient (Constitution)** — one feat, repeatable, and a half-feat that stacks above 20.
+
+Spend one of the two and Blood Hunter is a normal frontliner with the best rest cadence in the
+list. Spend neither and it is a d10 body that fails the save that matters most.
 
 ### Duo assessment (2 players, Lone Wolf, cap 20)
 

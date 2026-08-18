@@ -229,12 +229,19 @@
      The pair value is COMPUTED, never authored, and the rule depends on
      the axis kind:
 
-       additive   min(5, A + B)   the two stack; 5 already means surplus,
-                                  so the cap loses nothing
-       threshold  max(A, B)       the party needs one source; a second
-                                  source adds little
-       personal   min(A, B)       cannot be delegated, so the pair's real
-                                  exposure is the WEAKER character
+       additive       min(5, A + B)  the two stack; 5 already means surplus
+       threshold      max(A, B)      the party needs one source; a second
+                                     source adds little
+       complementary  min(5, max + floor(min / 2))
+                                     stacks only where the two do not overlap.
+                                     SKILLS is the axis of this kind: only one
+                                     character rolls any given check, so depth
+                                     saturates, but the campaign gates content
+                                     behind many different skills, so breadth
+                                     does not. Score each half on the coverage
+                                     it ADDS to the pair
+       personal       min(A, B)      cannot be delegated, so the pair's real
+                                     exposure is the WEAKER character
 
      That last rule is the whole reason a pair chart is worth drawing: two
      characters with Saves 4 and Saves 1 are a party with a Saves problem,
@@ -628,7 +635,7 @@
     <figure class="profile" style="margin:0"
             data-names="NAME A,NAME B"
             data-axes="Single,AoE,Durab.,Actions,Control,Sustain,Skills,Saves,Cadence"
-            data-kinds="additive,additive,additive,additive,additive,threshold,threshold,personal,personal"
+            data-kinds="additive,additive,additive,additive,additive,threshold,complementary,personal,personal"
             data-bands="1–10,11–15,16–20"
             data-a1="2,1,3,2,1,1,2,3,4" data-b1="1,1,1,2,2,3,3,2,3"
             data-a2="2,1,3,3,1,1,2,3,4" data-b2="2,2,1,2,3,3,3,2,3"
@@ -688,7 +695,7 @@
                 <td class="sc a2"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
                 <td class="sc a3"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
                 <td>— B carries it; if B is down, nobody heals</td></tr>
-              <tr><td>Skills</td><td class="kind">Threshold</td>
+              <tr><td>Skills</td><td class="kind">Complementary</td>
                 <td class="sc a1"><span class="va">2</span> <span class="vb">3</span> <b class="pv"></b></td>
                 <td class="sc a2"><span class="va">2</span> <span class="vb">3</span> <b class="pv"></b></td>
                 <td class="sc a3"><span class="va">2</span> <span class="vb">3</span> <b class="pv"></b></td>
@@ -710,6 +717,8 @@
           Each cell reads <span class="va">A</span> <span class="vb">B</span> <b class="pv">pair</b>.
           <strong>Additive</strong> axes sum (capped at 5 — 5 is already surplus).
           <strong>Threshold</strong> axes take the higher of the two; the party needs one source.
+          <strong>Complementary</strong> axes — Skills — take the higher plus half the lower, because
+          coverage stacks only where the two characters' proficiencies differ.
           <strong>Personal</strong> axes take the <em>lower</em> — they cannot be delegated, so the
           pair is exposed at its weaker half.
         </p>
@@ -947,6 +956,11 @@
   function combine(kind, a, b) {
     if (kind === "threshold") return Math.max(a, b);
     if (kind === "personal") return Math.min(a, b);
+    /* complementary: the stronger half's coverage stands in full, the weaker half
+       is credited at half, because some of it duplicates ground already covered. */
+    if (kind === "complementary") {
+      return Math.min(MAX, Math.max(a, b) + Math.floor(Math.min(a, b) / 2));
+    }
     return Math.min(MAX, a + b);
   }
 

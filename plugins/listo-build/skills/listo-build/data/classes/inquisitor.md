@@ -305,6 +305,24 @@ over CHA builds generally.
 
 ## Not present / known issues
 
+- **CONFIRMED IN THE INSTALLED PAK: the level 3 progression references a subclass that does not
+  exist.** Unpacked `PFInquisitor.pak` from the live install (18 Aug 2026). `meta.lsx` reports
+  `Version64` = **2.2.0.0**, so the installed build is 2.2.0 regardless of the filename. The base
+  class progression node for **Level 3** lists **four** `SubClass` objects:
+
+  | GUID | Resolves to |
+  |---|---|
+  | `4dc44aca-29ec-4fe5-8d34-bc58c8d7c269` | TacticsInquisitor |
+  | `81e4c08b-ce20-4c3f-bad4-959966432f1c` | VengeanceInquisitor |
+  | `e115216d-f6f8-4034-bca5-e06cd1e95dfe` | ZealInquisitor |
+  | **`040e41b0-e197-4856-a7c3-f7093ae85f0b`** | **nothing — no ClassDescription anywhere** |
+
+  That GUID occurs **exactly once in the whole pak**, in the reference itself, and in **none** of
+  the 2,541 other sub-6 MB paks in the installed modlist — so no Listo patch or other mod defines
+  it. **Level 3 is the first level that builds the subclass list**, which is precisely the level
+  the upstream bug report names. Treat the dangling reference as the mechanical cause until
+  someone levels an Inquisitor past 2 in game and proves otherwise.
+
 - **Listo 10.2 ships version 2.2.0, and 2.2.0 appears to contain a level-up-breaking bug.**
   The 2.2.1 changelog reads: *"Fixed a critical error preventing anyone from leveling up past 2
   (how did no one report this for 72 days)."* The dating lines up exactly: the archive filename's

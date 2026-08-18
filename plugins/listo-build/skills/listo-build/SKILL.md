@@ -28,6 +28,14 @@ from level 1 and **it costs no feat**. All seven feats (3/6/9/12/13/15/18) go to
 Lone Wolf Feat and Sit This One Out 2 both ship `-` disabled in the MO2 profile and are enabled
 by hand for this run; see `data/listo-10.2-mcm.md` for the rest of the shipped on/off state.
 
+**Absolute Wrath is enabled for this run.** Listo's own docs warn that it double-dips with
+Combat Extender's curated affixes; it is on regardless, so **plan against enemies carrying
+random affixes on top of the CX ones** — stacked resistances and damage reduction, and death
+explosions that disarm. Two consequences for every build: **damage types that are rarely
+resisted (Force, and Radiant in Act 2) are worth more than their raw numbers**, and a weapon
+that cannot be disarmed, or a character who does not depend on one, is worth more than usual.
+Carry resistance-stripping or elixirs for the rest.
+
 What follows from two characters, regardless of what either of them is:
 
 - **Action economy is the structural problem.** Two bodies against encounters tuned for five.
@@ -88,7 +96,7 @@ The niche table below is **working material, not output**. Mine it for the optio
 | **Reaction economy** | Lone Wolf's **second reaction**: Rogue's off-turn Sneak Attack, Uncanny Dodge as an interrupt, Riposte, Opportunity Attacks | Reaction effects are worthless if nothing triggers them — it needs a build shaped around being attacked |
 | **Short-rest engine** | Warlock pact slots, Battle Master dice, Monk ki, Second Wind / Action Surge | Usually caps spell tier or damage ceiling relative to a long-rest caster |
 | **Durability anchor** | Lone Wolf already gives **halved damage and +30% HP**; heavy armour + shields stack on top. **Self-healing counts here too** — `Durable` refunds full HP on *every* short rest plus in-combat regen below 60%, which is effective HP on the cheap clock | Being un-killable does not end fights, and the duo cannot afford a passenger |
-| **Skills and face** | Two characters cover **every** check in the campaign; Expertise is worth double | A **threshold** role — the party's first source saturates it. Rarely worth building *around* |
+| **Skills and face** | Two characters cover **every** check in the campaign; Expertise is worth double | A **complementary** role — depth saturates at one source, but breadth does not: two characters with different proficiencies cover more gates than one. Rarely worth building *around*, always worth dividing |
 
 #### 1b. Ask in batches, with `AskUserQuestion`
 
@@ -115,7 +123,7 @@ as what they did — an unticked "healing" means this character has to carry som
 they then pick. Say the derived brief back to them in one sentence before moving on, because it
 is an inference and it may be wrong.
 
-**On a partner's threshold axes, the score converts straight into a requirement.** Sustain and
+**On a partner's threshold and complementary axes, the score converts straight into a requirement.** Sustain and
 Skills saturate at the party's first real source, so the partner's number tells you exactly how
 much this build owes:
 
@@ -128,7 +136,7 @@ much this build owes:
 **Score it per act, not overall.** A partner at Sustain 3/4/4 needs genuine help in Act I and
 almost none afterwards, which argues for an early dip rather than a late investment.
 
-This mapping is **threshold-only**. Additive axes always want more regardless of the partner's
+This mapping applies to **threshold and complementary** axes. Additive axes always want more regardless of the partner's
 number, and personal axes cannot be delegated at all — a partner's Saves score does nothing for
 you. The kind labels are in §5a.
 
@@ -286,6 +294,14 @@ Publish an artifact using `assets/sheet-template.html`. Keep it to **picks and w
 select at each level, the stat spread, the gear targets. Reasoning belongs in conversation, not
 on the sheet. State unverified assumptions explicitly rather than smoothing over them.
 
+**A build that needs a mod change is blocked until the change is made, and the sheet has to say
+so.** Two exist in this install: **Inquisitor** requires updating its pak to 2.2.1 (the shipped
+2.2.0 cannot level past 2), and a **Wisdom-based Blood Hunter** requires the mod.io companion mod
+that switches Hemocraft off Intelligence. Name the file, say what replaces it, and mark the build
+blocked — never present either as if it works out of the box. And when a mod change moves a
+build's primary stat, **re-derive the dip**: a Wisdom Blood Hunter wants Monk's Unarmoured Defence
+in a way an Intelligence one never did.
+
 **Set `data-class` on the `.sheet` element to the build's primary class** — the one with the
 highest class level. A 9/3 Sorcerer/Warlock is `data-class="sorcerer"`. This themes the sheet
 for that class. One of:
@@ -390,15 +406,34 @@ anything to the party:
 | **Actions** | additive | **action economy, not gold, and not just minions** — anything that raises the number of meaningful things the party does per round. Four routes, all scored here: **extra bodies** (summons, familiars, companions, Skeleton Crew), **extra actions on your turn** (Haste, Action Surge, Quickened), **off-turn actions** (Lone Wolf's second reaction, Riposte, off-turn Sneak Attack, interrupts), and **actions handed to your partner** (Twinned Haste, Commander's Strike). **The duo's structural problem, so weight it heavily** |
 | **Control** | additive | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. Additive because two locked-down enemies are twice as good as one, and area control composes with single-target rather than duplicating it. A build with only single-target CC should *fall* as encounters get more crowded |
 | **Sustain** | threshold | it recovers **the other character**: heals aimed outward, raising a downed partner, Greater Restoration and condition removal, temp HP granted to someone else. Not just heal *spells* — but it must be delegatable, or it is Durability |
-| **Skills** | threshold | it covers out-of-combat checks: expertise, proficiencies, face skills |
+| **Skills** | **complementary** | it covers out-of-combat checks: expertise, proficiencies, face skills. **Not threshold** — see below, because two characters with different proficiencies cover more of the campaign than either does alone |
 | **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
 | **Cadence** | personal | its resources refresh on **short** rests. Long-rest-only classes score low, because long rests cost 120+ supplies scaling with camp population |
 
 - **Additive** stacks across the party — more is always more.
-- **Threshold** saturates at the party's first source. The campaign needs one face and one
-  lockdown; a second is worth far less than the number suggests.
+- **Threshold** saturates at the party's first source. The campaign needs one healer; a second is
+  worth far less than the number suggests.
+- **Complementary** stacks *only where the two do not overlap*. **Skills is the one axis of this
+  kind, and calling it threshold prices it wrong.** Depth does saturate — only one character rolls
+  any given check, so a second Persuasion expert adds almost nothing — but **breadth does not**.
+  A Rogue with Stealth, Sleight of Hand and Perception beside a Cleric with Religion, Insight and
+  Medicine covers more of the campaign's gates than either could alone, and the campaign gates
+  content behind *many different* skills.
 - **Personal** cannot be delegated at all. A partner's Wisdom save does not stop *you* being Held,
   and their short-rest engine does not refill *your* slots.
+
+**How a complementary axis combines on a pair sheet:** `min(5, higher + floor(lower / 2))`. The
+stronger character's coverage stands in full; the weaker one is credited at half, because some of
+its proficiencies duplicate ground already covered and some do not. Two characters at 3 and 3
+reach **4**, not 5 and not 3 — which is the honest answer for a pair that split the skill list
+between them.
+
+**Consequence for planning: the skill map can be divided.** Do not assume one character has to buy
+the whole axis. Give the Intelligence character the knowledge gates (Arcana, History, Religion,
+Investigation — Religion is the Mirror of Loss gate), give the Dexterity character the physical
+ones (Stealth, Sleight of Hand — the Circus pickpocket gate — and Perception), and put the face
+skills wherever the Charisma is. **Overlap is the only waste**, so when scoring each half, score
+the coverage it *adds*, not the coverage it has.
 
 **Actions is not a summons axis.** A build with no minions at all can score high on it — a
 Fighter with Action Surge and a Riposte reaction, or a Sorcerer with Haste and Quickened, is

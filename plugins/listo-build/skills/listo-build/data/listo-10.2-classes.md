@@ -26,14 +26,30 @@ the class file.
 
 ## Read this before recommending anything
 
-### ⚠ Inquisitor is probably broken
+### ⚠ Inquisitor is broken past level 2 — confirmed in the installed pak
 
-Listo pulled `Inquisitor-18318-**2-2-0**`. Nexus is on **2.2.1**, whose sole changelog entry is
-*"Fixed a critical error preventing anyone from leveling up past 2."* Dating corroborates: the
-archive resolves to 28 May 2026, 2.2.1 shipped 8 Aug 2026, and the author's stated 72-day gap
-matches exactly. **No patch exists in the manifest.** Treat the class as unusable past level 2
-until tested in-game. It passes every "does it exist" check, which is exactly why it is
-dangerous.
+Listo pulled `Inquisitor-18318-**2-2-0**`, and `meta.lsx` inside the installed pak reports
+`Version64` = **2.2.0.0**, so the version is not in doubt. **The defect is visible in the data:**
+the base class's **Level 3** progression node lists four `SubClass` objects, and one of them —
+`040e41b0-e197-4856-a7c3-f7093ae85f0b` — **matches no ClassDescription anywhere**. It appears
+exactly once in the whole pak (the reference itself) and in none of the 2,541 other sub-6 MB paks
+in the installed modlist, so nothing patches it. Level 3 is the first level that builds the
+subclass list, which is exactly where the upstream 2.2.1 changelog says levelling broke
+(*"Fixed a critical error preventing anyone from leveling up past 2"*; 2.2.0 uploaded 28 May 2026,
+2.2.1 on 8 Aug — the author's stated 72-day gap, to the day).
+
+**Treat the class as unusable past level 2 _on the shipped install_.** It passes every "does it
+exist" check, which is exactly why it is dangerous.
+
+**Updating is a legitimate option, and the class is worth it.** The fix is to download 2.2.1 and
+drop its pak over `mods/Inquisitor Class/PAK_FILES/PFInquisitor.pak` — a single-pak mod with no
+Listo patch and no dependants, so the swap is low-risk and reversible. Inquisitor is the best
+Wisdom-save opener in the list that also brings martial weapons, shields and **short-rest
+Judgment charges**, which is exactly the resource profile a 120-supply long rest rewards.
+
+> **If a build picks Inquisitor, say on the sheet that it requires updating the mod**, name the
+> file being replaced, and mark the build as blocked until the swap is done. Never plan an
+> Inquisitor against the shipped 2.2.0.
 
 ### ⚠ Mod pages' feat tables are all wrong for Listo
 
@@ -80,8 +96,8 @@ from both the index and the manifest**. Verify before repeating a doc claim.
 | **[Artificer](classes/artificer.md)** | 4 | Int + Con | Half | 6 | **Open 1** — the multiclass node grants far less. Firearms framework |
 | **[Mesmerist](classes/mesmerist.md)** | 3 | Dex + Cha | Half | **7** | **Dip 2** — Towering Ego scales on CHA, not class level |
 | **[Paragon](classes/paragon.md)** | 6 | Con + Cha | None | 6 | **Open 1** for saves/skills/heavy armour; a late dip still gives the rest |
-| **[Inquisitor](classes/inquisitor.md)** | 3 | **Wis + Str** | Half | 6 | ⚠ **likely broken past level 2** |
-| **[Blood Hunter](classes/bloodhunter.md)** | 4 | Int + Dex | — * | 6 | Everything on short rest. **No CON save.** mod.io, not Nexus |
+| **[Inquisitor](classes/inquisitor.md)** | 3 | **Wis + Str** | Half | 6 | ⚠ **broken past level 2 as shipped** — dangling subclass GUID at level 3. **Viable if you update the mod to 2.2.1** |
+| **[Blood Hunter](classes/bloodhunter.md)** | 4 | Int + Dex | — * | 6 | Everything on short rest. **No CON save — bridge it with Lone Wolf or Resilient.** INT-based as shipped; **"Blood Hunter (Wisdom Variant Patch)"** on mod.io switches Hemocraft to WIS (not installed). mod.io, not Nexus |
 
 \* Profane Soul only: short-rest INT pact slots, capped at spell level 4.
 
@@ -107,8 +123,11 @@ Charisma alongside any of them wastes a grant. **Mesmerist escapes it** by grant
 the two a Charisma build most wants — leaving the +4 free for **Con + Wis** and yielding four
 proficiencies across the top of the ordering.
 
-**Blood Hunter grants no Constitution save**, unusually for a d10 martial — relevant given
-concentration and the duo's low tolerance for losing a character.
+**Blood Hunter grants no Constitution save**, unusually for a d10 martial. **This is a cost, not
+a disqualification** — Lone Wolf's +4 grants save proficiency in both boosted abilities, so
+putting one on Constitution supplies it for free, and **Resilient (Constitution)** buys it for a
+feat and is repeatable. A Blood Hunter that spends either is a normal frontliner; one that spends
+neither is a d10 body with no concentration save, which is the version worth avoiding.
 
 ---
 

@@ -479,6 +479,10 @@ Confirm these before planning specifics:
 - **Spelljammer** — the Act 3 ship arc; the **ship manifest/deed sold by Popper in the circus**
   is very expensive, so it's a gold sink to plan for. `Features from DnD 5E Spelljammer`
   (`13195`) adds backgrounds, goals, spells, items, and a bestiary.
-- **Absolute Wrath**, extra-encounter mods — change the difficulty gear is measured against.
+- **Absolute Wrath — ENABLED for this run**, so it is not a question to ask. Enemies carry
+  random affixes on top of Combat Extender's curated ones: layered resistances, damage
+  reduction, and death explosions that **disarm**. Weight rarely-resisted damage (Force, then
+  Radiant in Act 2), a resistance-strip or a second damage type, and weapons that cannot be
+  disarmed. Extra-encounter mods change the difficulty gear is measured against in the same way.
 - **Illithid Powers Overhaul 2** (`5105`) — officially optional for being strong; makes
   Illithid powers very powerful in Act 3.

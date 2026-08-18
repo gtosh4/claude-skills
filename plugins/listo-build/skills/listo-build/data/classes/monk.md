@@ -41,6 +41,19 @@ baselines come from bg3.wiki. Anything not read directly is marked `(unverified)
 | **Breakpoints** | **1** Unarmoured Defence + Martial Arts + Flurry of Blows · **2** Unarmoured Movement, Patient Defence, Step of the Wind, **Uncanny Metabolism** (Listo addition) · **3** subclass + Deflect Missiles · **5** Extra Attack + Stunning Strike · **6** Ki-Empowered Strikes (unarmed counts as magical) + subclass feature · **7** Evasion + Stillness of Mind · **9/11** subclass features · **14** Diamond Soul · **18** Empty Body · **20** Perfect Self |
 | **Dip value** | High at **1** (free 10+DEX+WIS AC on any unarmoured character, plus a bonus-action unarmed strike). High at **3** (feat-neutral, full subclass, Deflect Missiles). Low at 2. |
 
+> **The "Monk is too MAD for a duo" objection does not survive Lone Wolf.** The class wants
+> WIS + DEX + CON, but **Lone Wolf's +4 covers two of those three at level 1** — put it on
+> WIS + DEX and point buy only has to fund Constitution. **Unarmoured Defence then replaces
+> armour *and* shield**: 10 + DEX + WIS with both at 20 is **AC 20**, the same number a Paladin
+> reaches in plate with a shield, and it needs no proficiency and no gold at 4× prices. At **14,
+> Diamond Soul grants proficiency in every saving throw** (Expansion), which retires the
+> save-planning problem outright.
+>
+> The real cost is **item slots, not stats**: no armour and no shield means no armour affixes,
+> no shield affixes, and one fewer place to hang a magic effect — which bites harder here than
+> in vanilla because Absolute Wrath is on and enemy kit is loaded. Weigh that, not the stat
+> spread. (Way of the Friar is the exception: shield proficiency *and* Unarmoured Defence.)
+
 ---
 
 ## Class changes from vanilla

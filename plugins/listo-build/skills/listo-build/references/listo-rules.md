@@ -241,7 +241,20 @@ to clear the thresholds.
 > Wisdom (Hold, Dominate, Fear, Hypnotic Pattern) > Constitution (concentration) ≈ Dexterity (AoE)
 > > Charisma (Banishment) > Strength > Intelligence
 
-**Ceiling:** four distinct saves, two from each source, and only if the pairs are disjoint.
+**Ceiling:** four distinct saves, two from each source, and only if the pairs are disjoint —
+**plus one per Resilient**, which is repeatable, and every save at once on a **Monk 14**
+(Diamond Soul).
+
+**Two objections this arithmetic retires:**
+
+- **"That class is too MAD for a duo."** Lone Wolf's +4 covers **two abilities**, so a
+  three-stat class only has to fund the third from point buy. A Monk on WIS + DEX buys only
+  Constitution, and **Unarmoured Defence (10 + DEX + WIS) reaches AC 20** without armour,
+  shield, proficiency or gold. Price the *item slots* it gives up instead — that is the real
+  cost, and it is larger with Absolute Wrath on.
+- **"That class is missing a key save."** A missing save costs either the Lone Wolf pair
+  (free, but it spends one of the two) or **one Resilient** (a half-feat that also stacks above
+  20). Blood Hunter's absent Constitution save is the standard example: one purchase closes it.
 
 **The Charisma trap:** seven classes grant Charisma at level 1 (Bard, Cleric, Paladin, Sorcerer,
 Warlock, Paragon, Mesmerist). Give Lone Wolf's +4 to Charisma alongside any of them and one grant
@@ -316,8 +329,21 @@ only. This is the single easiest thing to lose silently.
   content.
 - **Combat Extender** gives enemies mod spells, classes, feats and magic items — the reason
   enemy capability tracks the list rather than vanilla.
-- **Absolute Wrath** is optional; Listo's CX config already bakes in curated affixes, so enabling
-  it double-dips.
+- **Absolute Wrath is ON for this run** (`OPTIONAL_Absolute Wrath` enabled in the profile —
+  `data/listo-10.2-mcm.md`). It is nominally optional, and Listo's own docs warn it double-dips
+  with Combat Extender's curated affixes, but the installed profile enables it anyway. Build
+  consequences, which apply to every plan this skill produces:
+  - **Enemy gear is more loaded than the base CX config implies** — random affixes stack on top
+    of the curated ones. Expect layered resistances and damage reduction on ordinary enemies,
+    not just bosses.
+  - **Damage types that are rarely resisted gain value.** Force first, then Radiant in Act 2.
+    A build locked to one commonly-resisted type needs its own answer — a resistance strip
+    (Paragon Nighthawk, Circle of Stormchasers at 10, School of Death at 6), Elemental Adept,
+    or a second weapon.
+  - **Death explosions can disarm.** Weapons that cannot be disarmed — Paragon's Scholar's
+    Armament, unarmed, spell attacks — dodge a failure mode that costs a martial its whole turn.
+  - Weigh **elixirs and consumables** higher than the 4× merchant multiplier suggests; they are
+    the cheap answer to an affix you did not plan for.
 - **Illithid Powers Overhaul 2** is optional and strong; Illithid powers become very powerful in
   Act 3 if the astral tadpole is used.
 - **Attunement:** each attuned item consumes an Action Resource, refunded on unequip, with **no
