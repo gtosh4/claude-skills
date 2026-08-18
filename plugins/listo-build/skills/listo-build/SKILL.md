@@ -87,7 +87,7 @@ The niche table below is **working material, not output**. Mine it for the optio
 | **Front-line damage** | Smites, Extra Attack, **Fighter 11** (3 attacks *and* an off-cadence feat) | Long fights mean resource-limited burst runs dry; needs a sustain answer |
 | **Reaction economy** | Lone Wolf's **second reaction**: Rogue's off-turn Sneak Attack, Uncanny Dodge as an interrupt, Riposte, Opportunity Attacks | Reaction effects are worthless if nothing triggers them — it needs a build shaped around being attacked |
 | **Short-rest engine** | Warlock pact slots, Battle Master dice, Monk ki, Second Wind / Action Surge | Usually caps spell tier or damage ceiling relative to a long-rest caster |
-| **Durability anchor** | Lone Wolf already gives **halved damage and +30% HP**; heavy armour + shields stack on top | Being un-killable does not end fights, and the duo cannot afford a passenger |
+| **Durability anchor** | Lone Wolf already gives **halved damage and +30% HP**; heavy armour + shields stack on top. **Self-healing counts here too** — `Durable` refunds full HP on *every* short rest plus in-combat regen below 60%, which is effective HP on the cheap clock | Being un-killable does not end fights, and the duo cannot afford a passenger |
 | **Skills and face** | Two characters cover **every** check in the campaign; Expertise is worth double | A **threshold** role — the party's first source saturates it. Rarely worth building *around* |
 
 #### 1b. Ask in batches, with `AskUserQuestion`
@@ -354,10 +354,10 @@ anything to the party:
 |---|---|---|
 | **Single-target** | additive | it kills one priority enemy fast enough that the fight ends before resources do |
 | **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
-| **Durability** | additive | it survives incoming HP damage: AC, HP, resistances, damage reduction |
+| **Durability** | additive | it survives incoming HP damage. **Effective HP, however it is bought:** AC, hit dice, resistances, damage reduction — *and self-healing*. Durable's full-HP short rests, temp HP on yourself, Second Wind and Lay on Hands spent on yourself all belong here |
 | **Economy** | additive | it adds bodies, actions or reactions — summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
 | **Control** | additive | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. Additive because two locked-down enemies are twice as good as one, and area control composes with single-target rather than duplicating it. A build with only single-target CC should *fall* as encounters get more crowded |
-| **Sustain** | threshold | it recovers between and during fights: heals, self-healing, Durable's full-HP short rests, temp HP. Not just heal *spells* |
+| **Sustain** | threshold | it recovers **the other character**: heals aimed outward, raising a downed partner, Greater Restoration and condition removal, temp HP granted to someone else. Not just heal *spells* — but it must be delegatable, or it is Durability |
 | **Skills** | threshold | it covers out-of-combat checks: expertise, proficiencies, face skills |
 | **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
 | **Cadence** | personal | its resources refresh on **short** rests. Long-rest-only classes score low, because long rests cost 120+ supplies scaling with camp population |
@@ -367,6 +367,24 @@ anything to the party:
   lockdown; a second is worth far less than the number suggests.
 - **Personal** cannot be delegated at all. A partner's Wisdom save does not stop *you* being Held,
   and their short-rest engine does not refill *your* slots.
+
+**Sustain splits by who it targets, and the split decides the axis.** Self-healing is not
+delegatable, so scoring it on a threshold axis prices it wrong — a partner's Durable does
+nothing for your hit points. Route it by target:
+
+| Recovery aimed at | Axis | Why |
+|---|---|---|
+| **Yourself** — Durable's full-HP short rests, Second Wind, Fiendish Vigor, self-cast Lay on Hands, temp HP on yourself | **Durability** | It is effective HP bought a different way. Additive, and it makes you harder to remove |
+| **The other character** — Healing Word, raising a downed partner, Greater Restoration, Aid, temp HP granted outward | **Sustain** | Genuinely delegatable, so genuinely threshold |
+
+**Count each feature once.** A build with heavy self-healing scores it on Durability and takes
+no Sustain credit for it — putting it in both inflates the polygon and breaks the pairing read,
+because a partner would see Sustain 4 and correctly conclude they owe nothing, while in fact
+nobody can heal them.
+
+> A build that keeps *itself* up but cannot heal its partner should read **high Durability, low
+> Sustain**. That is the shape of a self-sufficient martial, and it is exactly the information
+> the paired sheet needs.
 
 **So the column never totals, and two sheets are never compared by summed score.** Read the shape
 and read the low axes; that is what the chart is for.
