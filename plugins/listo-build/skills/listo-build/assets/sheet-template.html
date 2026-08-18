@@ -183,16 +183,27 @@
   }
 
   /* ── profile radar ────────────────────────────────────────────────────
-     Eight axes, scored 0–4 against what a two-person Lone Wolf party needs.
-     Emphasis form: this build carries the theme accent; the partner is a
-     de-emphasised dashed outline, so identity is never colour-alone.
-     Accent contrast measured 6.5–7.3:1 on both surfaces across all 17
-     themes; partner outline 3.3:1 light / 3.9:1 dark.
-     The table below the chart is the accessible view and is always present,
-     so the data survives even if the script does not run.
+     Nine axes, scored 0–4 against WHAT A PARTY NEEDS — not against a named
+     partner, and not against vanilla.
+
+     Three acts, one chart, tabs to switch. One series per view, so there is
+     no legend: the selected tab names it. Accent contrast measured 6.5–7.3:1
+     on both surfaces across all 17 themes.
+
+     Axes come in three kinds, and the table says which:
+       additive   stacks across the party — more is always more
+       threshold  the party needs one source; a second adds little
+       personal   cannot be delegated; a partner's score does not help you
+     So the column does not total. Never sum it, and never compare totals
+     between two sheets.
+
+     The table is the accessible view and shows all three acts at once, so
+     the data survives if the script does not run — in which case the chart
+     hides itself rather than rendering as an empty box.
      ──────────────────────────────────────────────────────────────────── */
-  .profile { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+  .profile { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
   @media (max-width: 44rem) { .profile { grid-template-columns: 1fr; } }
+  .profile:not(.ready) .radar { display: none; }
 
   .radar { border: 1px solid var(--rule); background: var(--surface); padding: .75rem; }
   .radar svg { display: block; width: 100%; height: auto; }
@@ -204,17 +215,26 @@
     font-size: 9px; letter-spacing: .1em; text-transform: uppercase; fill: var(--text-faint);
   }
   .r-build   { fill: var(--brass); fill-opacity: .16; stroke: var(--brass); stroke-width: 2; stroke-linejoin: round; }
-  .r-partner { fill: none; stroke: var(--text-faint); stroke-width: 2; stroke-dasharray: 4 3; stroke-linejoin: round; }
   .r-dot     { fill: var(--brass); stroke: var(--surface); stroke-width: 2; }
 
-  .r-legend { display: flex; flex-wrap: wrap; gap: 1rem; padding: .55rem .25rem 0; }
-  .r-key {
-    display: flex; align-items: center; gap: .4rem;
-    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-    font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim);
+  .r-tabs {
+    display: flex; gap: 1px; margin-bottom: .75rem;
+    background: var(--rule); border: 1px solid var(--rule);
   }
-  .r-swatch { width: 1.1rem; height: 0; border-top: 2px solid var(--brass); }
-  .r-swatch.partner { border-top: 2px dashed var(--text-faint); }
+  .r-tab {
+    flex: 1; appearance: none; cursor: pointer; border: 0;
+    background: var(--surface); color: var(--text-dim); padding: .42rem .3rem;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .64rem; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .r-tab[aria-selected="true"] { background: var(--brass-bg); color: var(--brass); font-weight: 600; }
+  .r-tab:focus-visible { outline: 2px solid var(--astral); outline-offset: -2px; }
+  .r-tab[disabled] { cursor: default; color: var(--text-faint); opacity: .5; }
+  .r-band {
+    margin: 0; padding-top: .5rem; text-align: center;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint);
+  }
 
   .r-table { border: 1px solid var(--rule); background: var(--surface); overflow-x: auto; }
   .r-table table { border-collapse: collapse; width: 100%; font-size: .82rem; }
@@ -230,6 +250,13 @@
     font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
   }
   .r-table td.gap { color: var(--rust); font-weight: 600; }
+  .r-table td.kind {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-faint); white-space: nowrap;
+  }
+  .r-table td.sc.on { background: var(--brass-bg); font-weight: 600; }
+  .r-table thead th.on { color: var(--brass); }
   .r-note { font-size: .82rem; color: var(--text-dim); padding: .5rem .25rem 0; }
 
   section { display: flex; flex-direction: column; gap: 1.15rem; }
@@ -341,6 +368,7 @@
     .prose            paragraph stack, max 66ch
     .scroller > table thead th / td; classes: .num .mono .final .win .ability; tr.dead for empty rows
     .cards > .card    hairline grid; each card takes .lvl (mono label) + p
+    figure.profile    the act-tabbed capability radar — see its own comment below
     .ck               astral-bordered callout: .ck-head + p        — decisions
     p.note            rust-barred callout, use <b> for the lead-in  — warnings
     .tag              inline astral chip, good for feat names in tables
@@ -373,90 +401,83 @@
   </header>
 
   <!-- ══ PROFILE RADAR ══════════════════════════════════════════════════
-       Edit ONLY the two data attributes on <figure>. Scores are 0–4 in
-       fixed axis order:
+       Edit ONLY the data attributes on <figure>, then keep the table rows
+       in sync. Scores are 0–4 in fixed axis order:
 
-         damage, control, durability, saves, sustain, economy, skills, cadence
+         single, aoe, durability, economy, control, sustain, skills,
+         saves, cadence
 
-       data-scores   this build (required)
-       data-partner  the other character (optional — delete the attribute
-                     entirely if their build is unknown, and the legend row
-                     and Gap column drop out on their own)
+       data-act1/2/3  one score set per act (act 1 required; drop an
+                      attribute and its tab disables itself)
+       data-bands     the character-level band each act covers
+       data-axes      the on-chart labels, same order
 
-       Score against what a TWO-PERSON LONE WOLF party needs, not vanilla:
-         4  covers this axis alone; the partner never has to think about it
+       Score against WHAT A PARTY NEEDS — a general sense, not a specific
+       partner's sheet. Two-player Lone Wolf is the environment (halved
+       damage, +30% HP, few bodies), never a four-person yardstick:
+         4  covers this axis alone; nobody else has to think about it
          3  strong; needs no help in normal fights
-         2  adequate, but leans on the partner or on consumables
-         1  thin; a real liability if the partner also scores low
+         2  adequate, but leans on a partner or on consumables
+         1  thin; a real liability if nobody else covers it
          0  absent
 
-       The rubric per axis is in SKILL.md. Keep the table rows in sync with
-       the numbers — the table is the accessible view, not decoration.
+       Score each act separately. A build that peaks at 20 and a build that
+       peaks at 8 are different builds, and one polygon cannot say so.
+
+       THE COLUMN DOES NOT TOTAL. Additive axes stack, threshold axes
+       saturate at the party's first source, personal axes cannot be
+       delegated at all. Rubric per axis is in SKILL.md.
        ═══════════════════════════════════════════════════════════════════ -->
   <section>
-    <div class="eyebrow"><span>Profile</span><span>0–4 vs what a duo needs</span></div>
+    <div class="eyebrow"><span>Profile</span><span>0–4 vs what a party needs</span></div>
     <h2>One line naming the shape — what it does, what it cannot</h2>
 
-    <figure class="profile" data-scores="4,3,2,1,2,3,3,4" data-partner="2,2,4,3,3,1,2,2" style="margin:0">
+    <figure class="profile" style="margin:0"
+            data-axes="Single,AoE,Durab.,Economy,Control,Sustain,Skills,Saves,Cadence"
+            data-bands="1–10,11–15,16–20"
+            data-act1="2,1,2,3,2,2,3,1,4"
+            data-act2="3,3,2,3,3,2,3,1,4"
+            data-act3="3,4,2,4,4,2,3,2,4">
 
       <div class="radar">
-        <svg viewBox="0 0 268 232" role="img" aria-labelledby="radar-title">
-          <title id="radar-title">Capability profile across eight axes, scored 0 to 4</title>
-
-          <polygon class="r-ring" points="130,96.5 143.8,102.2 149.5,116 143.8,129.8 130,135.5 116.2,129.8 110.5,116 116.2,102.2"/>
-          <polygon class="r-ring" points="130,77 157.6,88.4 169,116 157.6,143.6 130,155 102.4,143.6 91,116 102.4,88.4"/>
-          <polygon class="r-ring" points="130,57.5 171.4,74.6 188.5,116 171.4,157.4 130,174.5 88.6,157.4 71.5,116 88.6,74.6"/>
-          <polygon class="r-ring outer" points="130,38 185.2,60.9 208,116 185.2,171.2 130,194 74.8,171.2 52,116 74.8,60.9"/>
-
-          <line class="r-spoke" x1="130" y1="116" x2="130"   y2="38"/>
-          <line class="r-spoke" x1="130" y1="116" x2="185.2" y2="60.9"/>
-          <line class="r-spoke" x1="130" y1="116" x2="208"   y2="116"/>
-          <line class="r-spoke" x1="130" y1="116" x2="185.2" y2="171.2"/>
-          <line class="r-spoke" x1="130" y1="116" x2="130"   y2="194"/>
-          <line class="r-spoke" x1="130" y1="116" x2="74.8"  y2="171.2"/>
-          <line class="r-spoke" x1="130" y1="116" x2="52"    y2="116"/>
-          <line class="r-spoke" x1="130" y1="116" x2="74.8"  y2="60.9"/>
-
-          <polygon class="r-partner" points=""/>
-          <polygon class="r-build"   points=""/>
-          <g class="r-dots"></g>
-
-          <text class="r-label" x="130" y="24"  text-anchor="middle">Damage</text>
-          <text class="r-label" x="196" y="50"  text-anchor="start">Control</text>
-          <text class="r-label" x="218" y="119" text-anchor="start">Durab.</text>
-          <text class="r-label" x="196" y="186" text-anchor="start">Saves</text>
-          <text class="r-label" x="130" y="212" text-anchor="middle">Sustain</text>
-          <text class="r-label" x="64"  y="186" text-anchor="end">Economy</text>
-          <text class="r-label" x="42"  y="119" text-anchor="end">Skills</text>
-          <text class="r-label" x="64"  y="50"  text-anchor="end">Cadence</text>
-        </svg>
-
-        <div class="r-legend">
-          <span class="r-key"><span class="r-swatch"></span>This build</span>
-          <span class="r-key partner-key"><span class="r-swatch partner"></span>Partner</span>
+        <div class="r-tabs" role="tablist" aria-label="Act">
+          <button class="r-tab" type="button" role="tab" data-act="1">Act I</button>
+          <button class="r-tab" type="button" role="tab" data-act="2">Act II</button>
+          <button class="r-tab" type="button" role="tab" data-act="3">Act III</button>
         </div>
+        <p class="r-band"></p>
       </div>
 
       <div>
         <div class="r-table">
           <table>
             <thead>
-              <tr><th>Axis</th><th class="sc">Build</th><th class="sc partner-col">Partner</th><th>Reads as</th></tr>
+              <tr>
+                <th>Axis</th><th>Kind</th>
+                <th class="sc a1">I</th><th class="sc a2">II</th><th class="sc a3">III</th>
+                <th>Reads as</th>
+              </tr>
             </thead>
             <tbody>
-              <tr><td>Damage</td><td class="sc">4</td><td class="sc partner-col">2</td><td>Carries the kill speed</td></tr>
-              <tr><td>Control</td><td class="sc">3</td><td class="sc partner-col">2</td><td>Reliable single-target lock</td></tr>
-              <tr><td>Durability</td><td class="sc">2</td><td class="sc partner-col">4</td><td>Robe-shaped; stays at range</td></tr>
-              <tr><td>Saves</td><td class="sc gap">1</td><td class="sc partner-col">3</td><td>Hard CC is the way this dies</td></tr>
-              <tr><td>Sustain</td><td class="sc">2</td><td class="sc partner-col">3</td><td>No self-heal worth the action</td></tr>
-              <tr><td>Action economy</td><td class="sc">3</td><td class="sc partner-col">1</td><td>Summons cover the third body</td></tr>
-              <tr><td>Skills &amp; utility</td><td class="sc">3</td><td class="sc partner-col">2</td><td>Two expertises, face-capable</td></tr>
-              <tr><td>Resource cadence</td><td class="sc">4</td><td class="sc partner-col">2</td><td>Short-rest engine; rests cheap</td></tr>
+              <tr><td>Single-target</td><td class="kind">Additive</td><td class="sc a1">2</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
+              <tr><td>AoE</td><td class="kind">Additive</td><td class="sc a1">1</td><td class="sc a2">3</td><td class="sc a3">4</td><td>—</td></tr>
+              <tr><td>Durability</td><td class="kind">Additive</td><td class="sc gap a1">2</td><td class="sc gap a2">2</td><td class="sc gap a3">2</td><td>—</td></tr>
+              <tr><td>Economy</td><td class="kind">Additive</td><td class="sc a1">3</td><td class="sc a2">3</td><td class="sc a3">4</td><td>—</td></tr>
+              <tr><td>Control</td><td class="kind">Threshold</td><td class="sc a1">2</td><td class="sc a2">3</td><td class="sc a3">4</td><td>—</td></tr>
+              <tr><td>Sustain</td><td class="kind">Threshold</td><td class="sc a1">2</td><td class="sc a2">2</td><td class="sc a3">2</td><td>—</td></tr>
+              <tr><td>Skills</td><td class="kind">Threshold</td><td class="sc a1">3</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
+              <tr><td>Saves</td><td class="kind">Personal</td><td class="sc gap a1">1</td><td class="sc gap a2">1</td><td class="sc a3">2</td><td>—</td></tr>
+              <tr><td>Cadence</td><td class="kind">Personal</td><td class="sc a1">4</td><td class="sc a2">4</td><td class="sc a3">4</td><td>—</td></tr>
             </tbody>
           </table>
         </div>
         <p class="r-note">
-          Name the <strong>lowest axis</strong> in one sentence and say who covers it —
+          <strong>Additive</strong> stacks across the party. <strong>Threshold</strong> saturates —
+          the party needs one source and a second adds little. <strong>Personal</strong> cannot be
+          handed to anyone. <strong>So this column does not total.</strong>
+        </p>
+        <p class="r-note">
+          Name the <strong>lowest axis that matters</strong> in one sentence and say what covers it —
           that is the only thing this chart is for.
         </p>
       </div>
@@ -533,60 +554,141 @@
 </div>
 
 <script>
-/* Draws the profile radar from the data attributes on <figure class="profile">.
-   Nothing else needs editing. If this never runs, the table still carries every
-   value — the chart is the summary, the table is the record. */
-(function () {
-  var U = [[0,-1],[0.7071,-0.7071],[1,0],[0.7071,0.7071],
-           [0,1],[-0.7071,0.7071],[-1,0],[-0.7071,-0.7071]];
-  var CX = 130, CY = 116, STEP = 19.5, NS = "http://www.w3.org/2000/svg";
+/* Builds the profile radar from the data attributes on <figure class="profile">
+   and wires the act tabs. Geometry is derived from the axis count, so adding or
+   removing an axis needs no coordinate edits.
 
-  function at(i, s) {
-    var v = Math.max(0, Math.min(4, isFinite(s) ? s : 0));
-    return [CX + U[i][0] * STEP * v, CY + U[i][1] * STEP * v];
+   If this never runs, the chart stays hidden (.profile:not(.ready) .radar) and
+   the table still carries every act — the chart is the summary, the table is
+   the record. */
+(function () {
+  var CX = 130, CY = 100, STEP = 16, LR = 76, NS = "http://www.w3.org/2000/svg";
+  var ROMAN = ["I", "II", "III"];
+
+  function el(name, attrs) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
   }
-  function poly(scores) {
-    return scores.map(function (s, i) {
-      var p = at(i, s);
+  function nums(attr) {
+    if (!attr) return null;
+    var a = attr.split(",").map(function (n) { return parseFloat(n.trim()); });
+    return a.every(function (n) { return isFinite(n); }) ? a : null;
+  }
+  function at(u, v) {
+    v = Math.max(0, Math.min(4, isFinite(v) ? v : 0));
+    return [CX + u[0] * STEP * v, CY + u[1] * STEP * v];
+  }
+  function poly(U, get) {
+    return U.map(function (u, i) {
+      var p = at(u, get(i));
       return p[0].toFixed(1) + "," + p[1].toFixed(1);
     }).join(" ");
   }
-  function parse(attr) {
-    if (!attr) return null;
-    var a = attr.split(",").map(function (n) { return parseFloat(n.trim()); });
-    return (a.length === 8 && a.every(isFinite)) ? a : null;
-  }
 
   Array.prototype.forEach.call(document.querySelectorAll(".profile"), function (fig) {
-    var build   = parse(fig.getAttribute("data-scores"));
-    var partner = parse(fig.getAttribute("data-partner"));
-    if (!build) return;
+    var axes = (fig.getAttribute("data-axes") || "").split(",")
+      .map(function (s) { return s.trim(); }).filter(Boolean);
+    var acts = [1, 2, 3].map(function (n) {
+      var s = nums(fig.getAttribute("data-act" + n));
+      return (s && s.length === axes.length) ? s : null;
+    });
+    var bands = (fig.getAttribute("data-bands") || "").split(",")
+      .map(function (s) { return s.trim(); });
+    var box = fig.querySelector(".radar");
+    if (axes.length < 3 || !box || !acts.some(Boolean)) return;
 
-    fig.querySelector(".r-build").setAttribute("points", poly(build));
+    var U = axes.map(function (_, i) {
+      var a = (-90 + i * 360 / axes.length) * Math.PI / 180;
+      return [Math.cos(a), Math.sin(a)];
+    });
 
-    var pEl = fig.querySelector(".r-partner");
-    if (partner) {
-      pEl.setAttribute("points", poly(partner));
-    } else {
-      /* No partner data — drop the series, its legend key and its table column
-         so the sheet reads as a single-series chart rather than a broken one. */
-      if (pEl) pEl.remove();
-      Array.prototype.forEach.call(
-        fig.querySelectorAll(".partner-key, .partner-col"),
-        function (el) { el.remove(); }
-      );
+    var svg = el("svg", { viewBox: "0 0 260 200", role: "img" });
+    var caption = el("title", {});
+    svg.appendChild(caption);
+
+    [1, 2, 3, 4].forEach(function (v) {
+      svg.appendChild(el("polygon", {
+        "class": "r-ring" + (v === 4 ? " outer" : ""),
+        points: poly(U, function () { return v; })
+      }));
+    });
+    U.forEach(function (u) {
+      var p = at(u, 4);
+      svg.appendChild(el("line", {
+        "class": "r-spoke", x1: CX, y1: CY, x2: p[0].toFixed(1), y2: p[1].toFixed(1)
+      }));
+    });
+
+    var shape = el("polygon", { "class": "r-build", points: "" });
+    var dots = el("g", {});
+    svg.appendChild(shape);
+    svg.appendChild(dots);
+
+    U.forEach(function (u, i) {
+      var t = el("text", {
+        "class": "r-label",
+        x: (CX + u[0] * LR).toFixed(1),
+        y: (CY + u[1] * LR + (u[1] < -0.5 ? -1 : u[1] > 0.5 ? 7 : 3)).toFixed(1),
+        "text-anchor": u[0] > 0.2 ? "start" : u[0] < -0.2 ? "end" : "middle"
+      });
+      t.textContent = axes[i];
+      svg.appendChild(t);
+    });
+
+    var band = fig.querySelector(".r-band");
+    box.insertBefore(svg, band || null);
+
+    var tabs = Array.prototype.slice.call(fig.querySelectorAll(".r-tab"));
+
+    function show(n) {
+      var s = acts[n - 1];
+      if (!s) return;
+
+      shape.setAttribute("points", poly(U, function (i) { return s[i]; }));
+      while (dots.firstChild) dots.removeChild(dots.firstChild);
+      U.forEach(function (u, i) {
+        var p = at(u, s[i]);
+        dots.appendChild(el("circle", {
+          "class": "r-dot", r: 3.8, cx: p[0].toFixed(1), cy: p[1].toFixed(1)
+        }));
+      });
+
+      caption.textContent = "Act " + ROMAN[n - 1] + " profile, scored 0 to 4: " +
+        axes.map(function (a, i) { return a + " " + s[i]; }).join(", ");
+      if (band) {
+        band.textContent = "Act " + ROMAN[n - 1] +
+          (bands[n - 1] ? " · char " + bands[n - 1] + " · approximate" : "");
+      }
+
+      tabs.forEach(function (b) {
+        var on = b.getAttribute("data-act") === String(n);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+      Array.prototype.forEach.call(fig.querySelectorAll(".a1, .a2, .a3"), function (c) {
+        c.classList.toggle("on", c.classList.contains("a" + n));
+      });
     }
 
-    var g = fig.querySelector(".r-dots");
-    if (g) build.forEach(function (s, i) {
-      var p = at(i, s);
-      var c = document.createElementNS(NS, "circle");
-      c.setAttribute("cx", p[0].toFixed(1));
-      c.setAttribute("cy", p[1].toFixed(1));
-      c.setAttribute("r", 4);
-      c.setAttribute("class", "r-dot");
-      g.appendChild(c);
+    tabs.forEach(function (b, i) {
+      var n = parseInt(b.getAttribute("data-act"), 10);
+      if (!acts[n - 1]) { b.disabled = true; return; }
+      b.addEventListener("click", function () { show(n); });
+      b.addEventListener("keydown", function (e) {
+        var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var k = i;
+        do { k = ((k + d) % tabs.length + tabs.length) % tabs.length; }
+        while (tabs[k].disabled && k !== i);
+        tabs[k].focus();
+        show(parseInt(tabs[k].getAttribute("data-act"), 10));
+      });
     });
+
+    show(acts[2] ? 3 : acts[1] ? 2 : 1);
+    fig.classList.add("ready");
   });
 })();
 </script>

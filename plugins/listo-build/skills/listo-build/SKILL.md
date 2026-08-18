@@ -160,42 +160,73 @@ and picking colours by hand breaks that.
 
 ### 5a. Score the profile radar
 
-The sheet opens with an eight-axis radar. Fill `data-scores` on `<figure class="profile">`, and
-`data-partner` too when the other character's build is known — omit that attribute entirely if
-it isn't, and the second series drops out cleanly. **Keep the table rows in sync with the
-numbers**; the table is the accessible view, not decoration.
+The sheet opens with a nine-axis radar, tabbed by act. On `<figure class="profile">` fill
+`data-act1`, `data-act2` and `data-act3` — one score set per act — plus `data-bands` for the
+character-level range each act covers. **Keep the table rows in sync with the numbers**; the
+table is the accessible view and the only thing that survives if the script doesn't run.
 
-Axis order is fixed: **damage, control, durability, saves, sustain, economy, skills, cadence.**
+Axis order is fixed: **single-target, aoe, durability, economy, control, sustain, skills,
+saves, cadence.**
 
-**Score 0–4 against what a two-person Lone Wolf party needs — not against vanilla.** Lone Wolf's
-halved damage and +30% HP make absolute scales misleading, and a four-person party's
-expectations are the wrong yardstick throughout.
+**Score 0–4 against what a party needs — a general sense, not a named partner's sheet.** Two-player
+Lone Wolf is the *environment* (halved damage, +30% HP, few bodies), so a four-person party's
+expectations are the wrong yardstick. But the score must not depend on who the other character
+turns out to be, or two sheets from one run can't be read against each other.
 
 | | Anchor |
 |---|---|
-| **4** | Covers this axis alone. The partner never has to think about it. |
+| **4** | Covers this axis alone. Nobody else has to think about it. |
 | **3** | Strong. Needs no help in normal fights. |
-| **2** | Adequate, but leans on the partner or on consumables. |
-| **1** | Thin. A real liability if the partner also scores low. |
+| **2** | Adequate, but leans on a partner or on consumables. |
+| **1** | Thin. A real liability if nobody else covers it. |
 | **0** | Absent. |
 
-What each axis measures:
+**Score each act separately.** A build that peaks at 20 and a build that peaks at 8 are different
+builds, and one polygon cannot say so. Acts map to character levels roughly:
 
-| Axis | Scores high when… |
+| Act | Char levels |
 |---|---|
-| **Damage** | it kills things fast enough that fights end before resources do |
-| **Control** | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves |
-| **Durability** | it survives incoming HP damage: AC, HP, resistances, damage reduction |
-| **Saves** | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
-| **Sustain** | it recovers between and during fights: heals, self-healing, Durable's full-HP short rests, temp HP. Not just heal *spells* |
-| **Economy** | it adds bodies, actions or reactions — summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
-| **Skills** | it covers out-of-combat checks: expertise, proficiencies, face skills. Two characters must cover the whole campaign |
-| **Cadence** | its resources refresh on **short** rests. Long-rest-only classes score low here, because long rests cost 120+ supplies scaling with camp population |
+| I | 1–10 |
+| II | 11–15 |
+| III | 16–20 |
 
-**A 4 across the board is a failed evaluation, not a great build.** The chart earns its place by
-showing the shape — where this character is strong and what it hands to the partner. If nothing
-scores 1 or 0, look harder. Then say in one sentence, under the table, what the lowest axis is
-and who covers it. That sentence is the entire point of the chart.
+> These bands are an **estimate**, not a verified figure. The only per-act level numbers in the
+> docs are boss-scaling caps from the v3.0/v3.2.1 changelog, long superseded, and the XP curve now
+> comes from Expansion 13-20 and is MCM-editable. Level cap is 20; most players reach 15+ and 20
+> needs the optional encounter content. Label the bands as approximate on the sheet.
+
+What each axis measures, and its **kind** — which decides whether a second source of it is worth
+anything to the party:
+
+| Axis | Kind | Scores high when… |
+|---|---|---|
+| **Single-target** | additive | it kills one priority enemy fast enough that the fight ends before resources do |
+| **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
+| **Durability** | additive | it survives incoming HP damage: AC, HP, resistances, damage reduction |
+| **Economy** | additive | it adds bodies, actions or reactions — summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
+| **Control** | threshold | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves |
+| **Sustain** | threshold | it recovers between and during fights: heals, self-healing, Durable's full-HP short rests, temp HP. Not just heal *spells* |
+| **Skills** | threshold | it covers out-of-combat checks: expertise, proficiencies, face skills |
+| **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
+| **Cadence** | personal | its resources refresh on **short** rests. Long-rest-only classes score low, because long rests cost 120+ supplies scaling with camp population |
+
+- **Additive** stacks across the party — more is always more.
+- **Threshold** saturates at the party's first source. The campaign needs one face and one
+  lockdown; a second is worth far less than the number suggests.
+- **Personal** cannot be delegated at all. A partner's Wisdom save does not stop *you* being Held,
+  and their short-rest engine does not refill *your* slots.
+
+**So the column never totals, and two sheets are never compared by summed score.** Read the shape
+and read the low axes; that is what the chart is for.
+
+**A 4 across the board is a failed evaluation, not a great build.** If nothing scores 1 or 0, look
+harder. Then say in one sentence, under the table, what the lowest axis that matters is and what
+covers it.
+
+**Beware the ceiling.** 4 means "as much as a party needs", so everything above it is clipped —
+two builds both scoring Control 4 can differ by Hold Monster versus Hold Monster plus Wall of
+Force plus Dominate Monster. When a build's real advantage is headroom past 4, the chart cannot
+show it; say so in prose instead of inflating a number.
 
 ## Pitfalls that have bitten before
 
