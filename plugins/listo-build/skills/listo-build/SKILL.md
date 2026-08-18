@@ -303,8 +303,14 @@ The sheet opens with a nine-axis radar, tabbed by act. On `<figure class="profil
 character-level range each act covers. **Keep the table rows in sync with the numbers**; the
 table is the accessible view and the only thing that survives if the script doesn't run.
 
-Axis order is fixed: **single-target, aoe, durability, economy, control, sustain, skills,
+Axis order is fixed: **single-target, aoe, durability, actions, control, sustain, skills,
 saves, cadence.**
+
+**"Actions" is *action* economy** — bodies, actions and reactions per round. It has nothing to do
+with gold. Listo's 4× merchant prices and 120-supply long rests are real constraints and belong
+in the gear and cadence prose, but they are **never scored on this chart**. Label the axis
+`Actions` on the chart and **Action economy** in the table; never the bare word "Economy", which
+in a modlist this expensive reads as money.
 
 **Score 0–5 against what a party needs — a general sense, not a named partner's sheet.** Two-player
 Lone Wolf is the *environment* (halved damage, +30% HP, few bodies), so a four-person party's
@@ -330,7 +336,7 @@ not as *stopped growing*, and a falling row as the build being outrun.
 
 **Summons are the exception.** CX buffs the `Allies` category too — +34% HP by 20 and **+1 AC
 static plus +1 per 4 levels** — so a summon decays far more slowly than a flat-statted feature.
-Don't score Economy down as hard as the rest. Numbers in `data/listo-10.2-mcm.md`.
+Don't score Actions down as hard as the rest. Numbers in `data/listo-10.2-mcm.md`.
 
 **Score each act separately.** A build that peaks at 20 and a build that peaks at 8 are different
 builds, and one polygon cannot say so. Acts map to character levels roughly:
@@ -355,7 +361,7 @@ anything to the party:
 | **Single-target** | additive | it kills one priority enemy fast enough that the fight ends before resources do |
 | **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
 | **Durability** | additive | it survives incoming HP damage. **Effective HP, however it is bought:** AC, hit dice, resistances, damage reduction — *and self-healing*. Durable's full-HP short rests, temp HP on yourself, Second Wind and Lay on Hands spent on yourself all belong here |
-| **Economy** | additive | it adds bodies, actions or reactions — summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
+| **Actions** | additive | **action economy, not gold** — it adds bodies, actions or reactions: summons, familiars, Skeleton Crew, Action Surge, extra reactions. **The duo's structural problem, so weight it heavily** |
 | **Control** | additive | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. Additive because two locked-down enemies are twice as good as one, and area control composes with single-target rather than duplicating it. A build with only single-target CC should *fall* as encounters get more crowded |
 | **Sustain** | threshold | it recovers **the other character**: heals aimed outward, raising a downed partner, Greater Restoration and condition removal, temp HP granted to someone else. Not just heal *spells* — but it must be delegatable, or it is Durability |
 | **Skills** | threshold | it covers out-of-combat checks: expertise, proficiencies, face skills |
