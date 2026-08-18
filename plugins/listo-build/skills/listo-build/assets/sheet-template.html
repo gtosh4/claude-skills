@@ -141,8 +141,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Sized for a 1080p window: 72rem ≈ 1152px of sheet inside a 1920px
+     viewport. Prose still caps at 66ch, so the extra width lands on the
+     tables and the profile radar. */
   .sheet {
-    max-width: 60rem;
+    max-width: 72rem;
     margin: 0 auto;
     padding: clamp(1.25rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 5rem;
     display: flex;
@@ -206,8 +209,12 @@
      the data survives if the script does not run — in which case the chart
      hides itself rather than rendering as an empty box.
      ──────────────────────────────────────────────────────────────────── */
-  .profile { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
-  @media (max-width: 44rem) { .profile { grid-template-columns: 1fr; } }
+  .profile { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 1fr); gap: 1.75rem; align-items: start; }
+  /* min-width:0 on the items, or the score table's intrinsic width pushes the
+     whole page into a horizontal scroll on a phone. The table scrolls inside
+     its own .r-table box instead. */
+  .profile > * { min-width: 0; }
+  @media (max-width: 52rem) { .profile { grid-template-columns: minmax(0, 1fr); } }
   .profile:not(.ready) .radar { display: none; }
 
   .radar { border: 1px solid var(--rule); background: var(--surface); padding: .75rem; }
@@ -244,6 +251,8 @@
   .r-table { border: 1px solid var(--rule); background: var(--surface); overflow-x: auto; }
   .r-table table { border-collapse: collapse; width: 100%; font-size: .82rem; }
   .r-table th, .r-table td { padding: .4rem .7rem; text-align: left; border-bottom: 1px solid var(--rule-soft); }
+  .r-table td:last-child, .r-table th:last-child { min-width: 13rem; }
+  .r-table td:first-child { white-space: nowrap; }
   .r-table thead th {
     font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint);

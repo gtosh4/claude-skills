@@ -204,9 +204,15 @@ the next. Doing stats before feats produces wasted points, because half-feats co
 
 ### 3a. Assume multiclassing by default
 
-**The default shape in Listo is a primary class plus a 3-level dip, not a single class.** Feats
-key off class level, so a 3-level dip is feat-neutral — you get the dip class's own level 3 feat.
+**The default shape in Listo is a primary class plus a dip, not a single class.** Feats key off
+class level, so a 3-level dip is feat-neutral — you get the dip class's own level 3 feat.
 Single-class is a legitimate answer, but it is a *conclusion*, never the starting assumption.
+
+**Do not stop at 17/3.** A 6-level dip is *also* feat-neutral (14/6 = 17/3 = 7 feats), a 2-level
+dip is free next to clean blocks (18/2, 15/3/2), and three classes are fine as long as one still
+reaches 13. What a bigger dip costs is **primary class levels, not feats** — price those against
+what the levels buy. The split table, the exchange rate, and the list of levels that outbid a
+feat are in `references/listo-rules.md` § "Splits" and § "What a class level has to beat".
 
 Generate candidates as **(primary subclass × dip)** pairs where the dip fills a gap the primary
 cannot. A dip is worth proposing when it buys one of:
@@ -295,6 +301,26 @@ and picking colours by hand breaks that.
 
 > Both characters in a run get their own sheet. If the two builds share a primary class, they
 > will theme identically — that is correct, not a bug. Distinguish them by name in the wordmark.
+
+**When both characters are being planned together, publish one pair sheet instead** — use
+`assets/pair-template.html`. It is the same chassis with the duo-specific structure:
+
+- **One radar with three series** — character A, character B, and a *computed* pair value. The
+  combining rule follows the axis kind: additive sums (capped at 5), threshold takes the higher,
+  **personal takes the lower**, because a save gap on one character is a party-level gap. Author
+  A and B only; never hand-write a pair number.
+- **Per-character panes** for ability spread, saves-with-source, and racial kit. Set
+  `data-who="a"` / `"b"` — A takes the structure accent, B the highlight accent.
+- **A combined "How it plays"** — A's loop, B's loop, then the shared loop. If the third pass is
+  just both characters doing their own thing, the pairing is not a pairing.
+- **One progression table.** XP is shared, so the levels are shared; both characters' picks sit
+  in grouped columns against a single character-level row.
+- **Per-character equipment plus a contested table.** Every unique item is assigned to exactly
+  one character, with the benefit to the winner and what the loser gives up stated in the row.
+  Hag's Hair is one per *run*; the Mirror of Loss is per character.
+- **One combined quest-reward table**, with an owner chip per reward.
+
+Theme a pair sheet **once**, on the pair's lead class (highest class level across both).
 
 ### 5a. Score the profile radar
 
@@ -474,6 +500,7 @@ encounter demands, say so in prose rather than inflating a number.
 | `data/docs/*.md` | The four Listo doc pages as raw markdown |
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
 | `assets/sheet-template.html` | Character-sheet artifact template, themed |
+| `assets/pair-template.html` | Two-character sheet — overlaid radar, shared progression, contested-item table |
 
 The compiled `.md` data files are the **first stop** for "does X exist and what does it do".
 They were built from the mods index, the manifest's file variants, and the mod pages themselves,

@@ -1,0 +1,1104 @@
+<title>PAIR NAME</title>
+<style>
+  :root {
+    --ink:        #0D1416;
+    --ground:     #E7EBEA;
+    --surface:    #F5F7F6;
+    --surface-2:  #DDE3E2;
+    --text:       #16201F;
+    --text-dim:   #55635F;
+    --text-faint: #7C8A86;
+    --rule:       #C3CCCA;
+    --rule-soft:  #D6DDDB;
+    --brass:      #8A5A18;
+    --brass-bg:   #F0E4D0;
+    --astral:     #2C6E6A;
+    --astral-bg:  #DCE9E7;
+    --rust:       #8C4425;
+    --grid:       rgba(13, 20, 22, .045);
+    --shadow:     0 1px 2px rgba(13,20,22,.06), 0 8px 24px -16px rgba(13,20,22,.28);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:     #0D1416;
+      --surface:    #141D1F;
+      --surface-2:  #1B2628;
+      --text:       #DFE7E5;
+      --text-dim:   #93A3A0;
+      --text-faint: #6C7C79;
+      --rule:       #263335;
+      --rule-soft:  #1D2829;
+      --brass:      #D89B4A;
+      --brass-bg:   #2A2015;
+      --astral:     #5FB5AE;
+      --astral-bg:  #122625;
+      --rust:       #D08258;
+      --grid:       rgba(223, 231, 229, .04);
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:     #0D1416;
+    --surface:    #141D1F;
+    --surface-2:  #1B2628;
+    --text:       #DFE7E5;
+    --text-dim:   #93A3A0;
+    --text-faint: #6C7C79;
+    --rule:       #263335;
+    --rule-soft:  #1D2829;
+    --brass:      #D89B4A;
+    --brass-bg:   #2A2015;
+    --astral:     #5FB5AE;
+    --astral-bg:  #122625;
+    --rust:       #D08258;
+    --grid:       rgba(223, 231, 229, .04);
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     CLASS THEMES — identical chassis to the single-character sheet.
+
+     A PAIR SHEET IS THEMED ONCE, not twice. Set data-class on .sheet to the
+     pair's *lead* class — the highest class level across both characters,
+     tie-broken by whichever character the pair is named for.
+
+       <div class="sheet" data-class="paladin">
+
+     The two characters are then told apart by ROLE COLOUR, not by theme:
+
+       character A  --brass   (accent role 1)
+       character B  --astral  (accent role 2)
+       the pair     --rust    (caution role, used dashed on the radar)
+
+     That is the whole reason the chassis reserves three accent roles. Do not
+     add a fourth colour, and do not hand-pick hues per character — the themes
+     vary by hue alone over a shared chassis so every sheet from one run reads
+     as a matched set.
+
+       --h1  structure   wordmark, eyebrows, table finals, character A
+       --h2  highlight   emphasis, level markers, character B
+       --h3  caution     notes, warnings, the combined pair series
+       --cmul  chroma multiplier — the only intensity knob
+     ══════════════════════════════════════════════════════════════════════ */
+
+  @supports (color: oklch(50% .1 90)) {
+    :root {
+      --h1: 70; --h2: 188; --h3: 45; --cmul: 1;
+
+      --al: 45.5%; --ac: .085;    /* accent      — light mode */
+      --abl: 92%;  --abc: .030;   /* accent wash — light mode */
+
+      --brass:     oklch(var(--al)  calc(var(--ac)  * var(--cmul)) var(--h1));
+      --brass-bg:  oklch(var(--abl) calc(var(--abc) * var(--cmul)) var(--h1));
+      --astral:    oklch(var(--al)  calc(var(--ac)  * var(--cmul)) var(--h2));
+      --astral-bg: oklch(var(--abl) calc(var(--abc) * var(--cmul)) var(--h2));
+      --rust:      oklch(calc(var(--al) - 1.5%) calc(var(--ac) * var(--cmul) * 1.12) var(--h3));
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --al: 72.5%; --ac: .090;
+        --abl: 23%;  --abc: .028;
+      }
+    }
+    :root[data-theme="dark"] {
+      --al: 72.5%; --ac: .090;
+      --abl: 23%;  --abc: .028;
+    }
+
+    /* ── the seventeen ─────────────────────────────────────────────────── */
+    /*                                        h1    h2   h3   chroma        */
+    :root:has([data-class="barbarian"])  { --h1:  45; --h2:  25; --h3: 20; --cmul: 1.15; }
+    :root:has([data-class="bard"])       { --h1: 330; --h2: 290; --h3: 35; --cmul: 1.05; }
+    :root:has([data-class="cleric"])     { --h1:  88; --h2: 205; --h3: 30; --cmul:  .90; }
+    :root:has([data-class="druid"])      { --h1: 130; --h2: 160; --h3: 45; --cmul:  .95; }
+    :root:has([data-class="fighter"])    { --h1:  70; --h2: 240; --h3: 25; --cmul:  .85; }
+    :root:has([data-class="monk"])       { --h1:  55; --h2: 175; --h3: 30; --cmul:  .90; }
+    :root:has([data-class="paladin"])    { --h1:  95; --h2: 250; --h3: 25; --cmul: 1.05; }
+    :root:has([data-class="ranger"])     { --h1: 145; --h2: 100; --h3: 40; --cmul:  .90; }
+    :root:has([data-class="rogue"])      { --h1: 280; --h2: 200; --h3: 18; --cmul:  .95; }
+    :root:has([data-class="sorcerer"])   { --h1: 350; --h2: 300; --h3: 35; --cmul: 1.20; }
+    :root:has([data-class="warlock"])    { --h1: 305; --h2: 150; --h3: 20; --cmul: 1.10; }
+    :root:has([data-class="wizard"])     { --h1: 265; --h2: 215; --h3: 30; --cmul: 1.00; }
+    :root:has([data-class="artificer"])  { --h1:  60; --h2: 195; --h3: 25; --cmul:  .95; }
+    :root:has([data-class="mesmerist"])  { --h1: 318; --h2: 262; --h3: 35; --cmul: 1.10; }
+    :root:has([data-class="paragon"])    { --h1:  80; --h2: 245; --h3: 25; --cmul: 1.00; }
+    :root:has([data-class="inquisitor"]) { --h1:  62; --h2:  15; --h3: 12; --cmul:  .85; }
+    :root:has([data-class="bloodhunter"]){ --h1:  18; --h2: 348; --h3: 28; --cmul: 1.15; }
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--ground);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px, 28px 28px;
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sized for a 1080p window: 84rem ≈ 1344px of sheet inside a 1920px
+     viewport. Prose still caps at 66ch, so the extra width goes to the
+     tables and the profile radar, which are the parts that were crowded. */
+  .sheet {
+    max-width: 84rem;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.25rem;
+  }
+
+  .titleblock { border: 1px solid var(--rule); background: var(--surface); box-shadow: var(--shadow); }
+  .titleblock-main {
+    padding: 1.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  .wordmark {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: clamp(1.75rem, 5.5vw, 2.75rem);
+    font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    text-wrap: balance; margin: 0; line-height: 1.1;
+  }
+  .wordmark .dim { color: var(--brass); }
+  .wordmark .amp { color: var(--text-faint); }
+  .tagline { color: var(--text-dim); max-width: 62ch; margin: 0; }
+  .fields {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    border-top: 1px solid var(--rule);
+  }
+  .field {
+    padding: .8rem clamp(1rem, 3vw, 2rem);
+    border-right: 1px solid var(--rule-soft);
+    display: flex; flex-direction: column; gap: .15rem;
+  }
+  .field:last-child { border-right: 0; }
+  .field-key {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint);
+  }
+  .field-val {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .88rem; color: var(--text); font-variant-numeric: tabular-nums;
+  }
+
+  /* ── two-pane layout ──────────────────────────────────────────────────
+     The pair sheet's workhorse. Any per-character content — ability
+     scores, racial kit, equipment — goes in a .duo of exactly two .pane
+     elements, A first, B second. Panes stack on narrow screens.
+     ──────────────────────────────────────────────────────────────────── */
+  .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px;
+         background: var(--rule); border: 1px solid var(--rule); }
+  @media (max-width: 52rem) { .duo { grid-template-columns: 1fr; } }
+  .pane { background: var(--surface); display: flex; flex-direction: column; }
+  .pane-head {
+    padding: .9rem 1.1rem; border-bottom: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: .1rem;
+  }
+  .pane-name {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .95rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .pane-sub { font-size: .82rem; color: var(--text-dim); }
+  .pane-body { padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .9rem; }
+  .pane-body table { font-size: .86rem; }
+  .pane-body th, .pane-body td { padding: .38rem .5rem; }
+  .pane-body th:first-child, .pane-body td:first-child { padding-left: 0; }
+  /* Character A takes the structure accent, B the highlight accent.
+     Set data-who="a" / data-who="b" on each .pane. */
+  .pane[data-who="a"] .pane-name { color: var(--brass); }
+  .pane[data-who="b"] .pane-name { color: var(--astral); }
+  .pane[data-who="a"] .pane-head { box-shadow: inset 3px 0 0 var(--brass); }
+  .pane[data-who="b"] .pane-head { box-shadow: inset 3px 0 0 var(--astral); }
+
+  .kit { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .45rem; }
+  .kit li { font-size: .88rem; color: var(--text-dim); }
+  .kit li b { color: var(--text); font-weight: 600; }
+
+  /* ── pair profile radar ───────────────────────────────────────────────
+     Same nine axes and same 0–5 rubric as the single-character sheet, but
+     THREE series are drawn at once:
+
+       A     solid, brass fill
+       B     solid, astral fill
+       PAIR  dashed rust outline, no fill — the combined party score
+
+     The pair value is COMPUTED, never authored, and the rule depends on
+     the axis kind:
+
+       additive   min(5, A + B)   the two stack; 5 already means surplus,
+                                  so the cap loses nothing
+       threshold  max(A, B)       the party needs one source; a second
+                                  source adds little
+       personal   min(A, B)       cannot be delegated, so the pair's real
+                                  exposure is the WEAKER character
+
+     That last rule is the whole reason a pair chart is worth drawing: two
+     characters with Saves 4 and Saves 1 are a party with a Saves problem,
+     and averaging would hide it.
+
+     Set data-kinds in the same order as data-axes. Anything unrecognised
+     is treated as additive.
+     ──────────────────────────────────────────────────────────────────── */
+  /* The pair table carries three numbers per act instead of one, so it gets
+     the wider half — the chart is fixed at a legible width and the table
+     takes the remainder. */
+  .profile { display: grid; grid-template-columns: minmax(0, 26rem) minmax(0, 1fr); gap: 1.75rem; align-items: start; }
+  /* min-width:0 on the items, or the score table's intrinsic width pushes the
+     whole page into a horizontal scroll on a phone. The table scrolls inside
+     its own .r-table box instead. */
+  .profile > * { min-width: 0; }
+  @media (max-width: 60rem) { .profile { grid-template-columns: minmax(0, 1fr); } }
+  .profile:not(.ready) .radar { display: none; }
+
+  .radar { border: 1px solid var(--rule); background: var(--surface); padding: .75rem; }
+  .radar svg { display: block; width: 100%; height: auto; }
+  .r-ring   { fill: none; stroke: var(--rule-soft); stroke-width: 1; }
+  .r-ring.outer { stroke: var(--rule); }
+  .r-spoke  { stroke: var(--rule-soft); stroke-width: 1; }
+  .r-label {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 9px; letter-spacing: .1em; text-transform: uppercase; fill: var(--text-faint);
+  }
+  .r-a    { fill: var(--brass);  fill-opacity: .13; stroke: var(--brass);  stroke-width: 2; stroke-linejoin: round; }
+  .r-b    { fill: var(--astral); fill-opacity: .13; stroke: var(--astral); stroke-width: 2; stroke-linejoin: round; }
+  .r-pair { fill: none; stroke: var(--rust); stroke-width: 1.6; stroke-dasharray: 5 3; stroke-linejoin: round; }
+  .r-dot-a { fill: var(--brass);  stroke: var(--surface); stroke-width: 2; }
+  .r-dot-b { fill: var(--astral); stroke: var(--surface); stroke-width: 2; }
+
+  .r-legend {
+    display: flex; flex-wrap: wrap; gap: .1rem 1rem; padding-top: .55rem;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint);
+  }
+  .r-legend span { display: inline-flex; align-items: center; gap: .35rem; }
+  .r-legend i { width: 14px; height: 0; border-top: 2px solid currentColor; display: inline-block; }
+  .r-legend .lg-a { color: var(--brass); }
+  .r-legend .lg-b { color: var(--astral); }
+  .r-legend .lg-p { color: var(--rust); }
+  .r-legend .lg-p i { border-top-style: dashed; }
+
+  .r-tabs {
+    display: flex; gap: 1px; margin-bottom: .75rem;
+    background: var(--rule); border: 1px solid var(--rule);
+  }
+  .r-tab {
+    flex: 1; appearance: none; cursor: pointer; border: 0;
+    background: var(--surface); color: var(--text-dim); padding: .42rem .3rem;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .64rem; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .r-tab[aria-selected="true"] { background: var(--brass-bg); color: var(--brass); font-weight: 600; }
+  .r-tab:focus-visible { outline: 2px solid var(--astral); outline-offset: -2px; }
+  .r-tab[disabled] { cursor: default; color: var(--text-faint); opacity: .5; }
+  .r-band {
+    margin: 0; padding-top: .5rem; text-align: center;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint);
+  }
+
+  .r-table { border: 1px solid var(--rule); background: var(--surface); overflow-x: auto; }
+  .r-table table { border-collapse: collapse; width: 100%; font-size: .82rem; }
+  .r-table th, .r-table td { padding: .42rem .7rem; text-align: left; border-bottom: 1px solid var(--rule-soft); }
+  .r-table td:last-child, .r-table th:last-child { min-width: 13rem; }
+  .r-table td:first-child { white-space: nowrap; }
+  .r-table thead th {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint);
+    font-weight: 600; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  .r-table tbody tr:last-child td { border-bottom: 0; }
+  .r-table td.sc {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
+  }
+  .r-table td.sc .va { color: var(--brass); font-weight: 600; }
+  .r-table td.sc .vb { color: var(--astral); font-weight: 600; }
+  .r-table td.sc .pv { color: var(--rust); font-weight: 600; }
+  .r-table td.sc .pv::before { content: "→ "; color: var(--text-faint); font-weight: 400; }
+  .r-table td.gap { color: var(--rust); font-weight: 600; }
+  .r-table td.kind {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-faint); white-space: nowrap;
+  }
+  .r-table td.sc.on { background: var(--brass-bg); }
+  .r-table thead th.on { color: var(--brass); }
+  .r-note { font-size: .82rem; color: var(--text-dim); padding: .5rem .25rem 0; }
+
+  section { display: flex; flex-direction: column; gap: 1.15rem; }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--brass);
+    border-bottom: 1px solid var(--rule); padding-bottom: .55rem;
+    display: flex; justify-content: space-between; gap: 1rem;
+  }
+  .eyebrow span:last-child { color: var(--text-faint); }
+  h2 {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 1.3rem; font-weight: 600; letter-spacing: .04em; margin: 0; text-wrap: balance;
+  }
+  h3 {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-dim); margin: 0; font-weight: 600;
+  }
+  p { margin: 0; max-width: 66ch; }
+  .prose { display: flex; flex-direction: column; gap: .85rem; }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--astral); font-style: normal; font-weight: 600; }
+
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  th, td { padding: .62rem .9rem; text-align: left; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-faint); font-weight: 600; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+  .mono {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .final { background: var(--brass-bg); color: var(--text); font-weight: 600; }
+  thead th.final { color: var(--brass); }
+  .ability { font-weight: 600; }
+  .dead td { color: var(--text-faint); }
+  .win { color: var(--astral); font-weight: 600; }
+
+  /* Shared progression table: one row per CHARACTER level, both characters
+     side by side. Grouped column headers carry the character accents, and a
+     vertical hairline separates the two halves so the eye does not slide
+     between them. Put class="split" on the first cell of B's group. */
+  th.grp-a { color: var(--brass); text-align: left; }
+  th.grp-b { color: var(--astral); text-align: left; }
+  td.split, th.split { border-left: 1px solid var(--rule); }
+  tr.milestone td { background: var(--brass-bg); }
+
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+  }
+  .card { background: var(--surface); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .45rem; }
+  .card p { font-size: .92rem; color: var(--text-dim); }
+  .lvl {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--astral);
+  }
+  .card[data-who="a"] .lvl { color: var(--brass); }
+  .card[data-who="b"] .lvl { color: var(--astral); }
+  .card[data-who="pair"] .lvl { color: var(--rust); }
+
+  ul.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
+  ul.checks li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .6rem; font-size: .95rem; max-width: 70ch; }
+  ul.checks li::before {
+    content: "▢"; color: var(--brass);
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  .note {
+    border-left: 2px solid var(--rust); background: var(--surface);
+    padding: .85rem 1.1rem; font-size: .93rem; color: var(--text-dim); max-width: 70ch;
+  }
+  .note b { color: var(--rust); font-weight: 600; }
+
+  .ck {
+    border: 1px solid var(--rule); border-left: 3px solid var(--astral);
+    background: var(--surface); padding: 1rem 1.2rem;
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  .ck p { font-size: .93rem; color: var(--text-dim); }
+  .ck-head {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--astral); font-weight: 600;
+  }
+  .stack { display: flex; flex-direction: column; gap: .9rem; }
+
+  .phase {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--brass); background: var(--brass-bg);
+    padding: .3rem .6rem; border: 1px solid var(--rule); align-self: flex-start;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    padding: .12rem .45rem; background: var(--astral-bg); color: var(--astral); border: 1px solid var(--rule);
+  }
+  /* Ownership chip for the equipment and quest tables — says which character
+     an item ends up on. Never leave a unique item unassigned. */
+  .who {
+    display: inline-block;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+    padding: .1rem .45rem; border: 1px solid var(--rule);
+  }
+  .who[data-who="a"] { background: var(--brass-bg); color: var(--brass); }
+  .who[data-who="b"] { background: var(--astral-bg); color: var(--astral); }
+  .who[data-who="either"] { color: var(--text-faint); }
+
+  footer {
+    border-top: 1px solid var(--rule); padding-top: 1rem;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+  }
+</style>
+
+<!--
+  PAIR sheet template — two characters, one run, one document.
+  Replace all content below; keep the CSS above unchanged.
+
+  Use this instead of sheet-template.html whenever both characters are being
+  planned together. Use sheet-template.html when only one half is being
+  planned and the partner is fixed or unknown.
+
+  Components, over and above the single-character set:
+    .duo > .pane[data-who]     two-pane per-character block (A left, B right)
+      .pane-head (.pane-name, .pane-sub) + .pane-body
+    .kit                        bulleted racial/feature list inside a pane
+    figure.profile              THREE-series radar: A, B, and computed pair
+    th.grp-a / th.grp-b         grouped headers on the shared progression table
+    td.split                    hairline before character B's columns
+    tr.milestone                highlights a level where the pair's plan pivots
+    .card[data-who]             recolours a card's label to A, B or pair
+    .who[data-who]              ownership chip — which character carries an item
+
+  Sheet order is fixed, because each section answers the previous one's
+  question:
+    1  Roster        who they are, what they roll, what their race gives
+    2  Profile       what the pair covers, and where the hole is
+    3  How it plays  each character's loop, then the combined loop
+    4  Progression   ONE table — XP is shared, so the levels are shared
+    5  Equipment     per character, with every unique item assigned
+    6  Quest rewards combined, with an owner per reward
+
+  Keep the sheet to picks and when. Reasoning belongs in conversation.
+  State unverified assumptions explicitly.
+-->
+
+<!-- data-class = the PAIR's lead class (highest class level across both
+     characters). One of:
+     barbarian bard cleric druid fighter monk paladin ranger rogue sorcerer
+     warlock wizard artificer mesmerist paragon inquisitor bloodhunter
+     Omit the attribute for the neutral default. -->
+<div class="sheet" data-class="paladin">
+
+  <header class="titleblock">
+    <div class="titleblock-main">
+      <h1 class="wordmark">NAME A <span class="amp">&amp;</span> <span class="dim">NAME B</span></h1>
+      <p class="tagline">One or two sentences: what this pair is, and the single decision that shapes both halves.</p>
+    </div>
+    <div class="fields">
+      <div class="field"><span class="field-key">Party</span><span class="field-val">2 · Lone Wolf</span></div>
+      <div class="field"><span class="field-key">A — Split</span><span class="field-val">—</span></div>
+      <div class="field"><span class="field-key">B — Split</span><span class="field-val">—</span></div>
+      <div class="field"><span class="field-key">Ruleset</span><span class="field-val">Listo v10.2</span></div>
+    </div>
+  </header>
+
+  <!-- ══ 1 · ROSTER ═══════════════════════════════════════════════════════
+       Per-character cards. Each pane carries: the split and subclass, the
+       race and what it grants, the ability spread, and the four saving
+       throws with where each one came from.
+
+       Saves are per character — they do NOT pool across the pair — so state
+       both sets in full and never justify one character's gap with the
+       other's coverage.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>Roster</span><span>27-point buy · Lone Wolf +4 ×2</span></div>
+    <h2>One line on how the two spreads differ, and why</h2>
+
+    <div class="duo">
+
+      <div class="pane" data-who="a">
+        <div class="pane-head">
+          <span class="pane-name">NAME A</span>
+          <span class="pane-sub">Class 17 / Dip 3 · Subclass · <b>Race</b></span>
+        </div>
+        <div class="pane-body">
+          <table>
+            <thead><tr><th>Ability</th><th class="num">Buy</th><th class="num">LW</th><th class="num">Feat</th><th class="num">Other</th><th class="num final">Final</th><th class="num">Mod</th></tr></thead>
+            <tbody>
+              <tr><td class="ability">STR</td><td class="num mono">8</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">8</td><td class="num mono">−1</td></tr>
+              <tr><td class="ability">DEX</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">CON</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">INT</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">WIS</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">CHA</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+            </tbody>
+          </table>
+          <h3>Saves</h3>
+          <ul class="kit">
+            <li><b>From level-1 class</b> — X, Y. Lost on any respec that re-picks the first class.</li>
+            <li><b>From Lone Wolf +4</b> — Z, W.</li>
+          </ul>
+          <h3>Race — NAME</h3>
+          <ul class="kit">
+            <li><b>Trait</b> — what it does, at what level.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pane" data-who="b">
+        <div class="pane-head">
+          <span class="pane-name">NAME B</span>
+          <span class="pane-sub">Class 17 / Dip 3 · Subclass · <b>Race</b></span>
+        </div>
+        <div class="pane-body">
+          <table>
+            <thead><tr><th>Ability</th><th class="num">Buy</th><th class="num">LW</th><th class="num">Feat</th><th class="num">Other</th><th class="num final">Final</th><th class="num">Mod</th></tr></thead>
+            <tbody>
+              <tr><td class="ability">STR</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">DEX</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">CON</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">INT</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">WIS</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+              <tr><td class="ability">CHA</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono final">—</td><td class="num mono">—</td></tr>
+            </tbody>
+          </table>
+          <h3>Saves</h3>
+          <ul class="kit">
+            <li><b>From level-1 class</b> — X, Y.</li>
+            <li><b>From Lone Wolf +4</b> — Z, W.</li>
+          </ul>
+          <h3>Race — NAME</h3>
+          <ul class="kit">
+            <li><b>Trait</b> — what it does, at what level.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <p class="note"><b>Check at creation:</b> what both sheets should read, and what to do if they don't.</p>
+  </section>
+
+  <!-- ══ 2 · PROFILE RADAR ════════════════════════════════════════════════
+       Edit ONLY the data attributes on <figure>, then keep the table rows in
+       sync. Scores are 0–5 per character, in fixed axis order:
+
+         single, aoe, durability, actions, control, sustain, skills,
+         saves, cadence
+
+       data-names   "A,B" — used in the legend and the chart caption
+       data-axes    on-chart labels, in order
+       data-kinds   additive | threshold | personal, same order
+       data-a1/2/3  character A's scores, one set per act
+       data-b1/2/3  character B's scores, one set per act
+       data-bands   the character-level band each act covers
+
+       The pair series is computed (additive → sum capped at 5, threshold →
+       max, personal → min) and written into the table's .pv spans. Author
+       A and B only; never hand-write a pair number.
+
+       "ACTIONS" IS ACTION ECONOMY — bodies, actions and reactions per round.
+       Nothing to do with gold, merchant prices or camp supplies, and it is
+       not a summons axis: extra bodies, extra actions on your turn, off-turn
+       actions, and actions handed to your PARTNER all score here. In a pair
+       sheet that last route is worth checking twice — Help, Distract,
+       Commander's Strike, Tag Team and Twinned Haste all score on the giver's
+       sheet, and the receiver should not double-count them.
+
+       SUSTAIN IS OUTWARD-FACING ONLY. Recovery aimed at yourself is
+       DURABILITY. On a pair sheet the two Sustain scores answer one
+       question: if the healer goes down, can the other character get them up?
+
+       Score each act separately, RELATIVE TO THAT ACT'S ENCOUNTERS. Combat
+       Extender scales enemies off player level, so a static feature's score
+       is meant to FALL.
+         5  surplus; exceeds what this act demands
+         4  covers this axis alone; nobody else has to think about it
+         3  strong; keeps pace with the act's encounters unaided
+         2  adequate, but leans on a partner or on consumables
+         1  thin; a real liability if nobody else covers it
+         0  absent
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>Profile</span><span>0–5 each · pair value computed</span></div>
+    <h2>One line naming the pair's shape — what it covers, what it does not</h2>
+
+    <figure class="profile" style="margin:0"
+            data-names="NAME A,NAME B"
+            data-axes="Single,AoE,Durab.,Actions,Control,Sustain,Skills,Saves,Cadence"
+            data-kinds="additive,additive,additive,additive,additive,threshold,threshold,personal,personal"
+            data-bands="1–10,11–15,16–20"
+            data-a1="2,1,3,2,1,1,2,3,4" data-b1="1,1,1,2,2,3,3,2,3"
+            data-a2="2,1,3,3,1,1,2,3,4" data-b2="2,2,1,2,3,3,3,2,3"
+            data-a3="3,1,3,3,1,1,2,3,4" data-b3="2,3,1,2,3,3,3,2,3">
+
+      <div class="radar">
+        <div class="r-tabs" role="tablist" aria-label="Act">
+          <button class="r-tab" type="button" role="tab" data-act="1">Act I</button>
+          <button class="r-tab" type="button" role="tab" data-act="2">Act II</button>
+          <button class="r-tab" type="button" role="tab" data-act="3">Act III</button>
+        </div>
+        <p class="r-band"></p>
+        <p class="r-legend"></p>
+      </div>
+
+      <div>
+        <div class="r-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Axis</th><th>Kind</th>
+                <th class="sc a1">I</th><th class="sc a2">II</th><th class="sc a3">III</th>
+                <th>Reads as</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row order MUST match data-axes order — the script writes the
+                   pair value into each row's .pv span by position.
+                   Cell pattern: A score, B score, then an empty .pv. -->
+              <tr><td>Single-target</td><td class="kind">Additive</td>
+                <td class="sc a1"><span class="va">2</span> <span class="vb">1</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">2</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">3</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td>—</td></tr>
+              <tr><td>AoE</td><td class="kind">Additive</td>
+                <td class="sc a1"><span class="va">1</span> <span class="vb">1</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">1</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td>— B carries every crowd; A never scores here</td></tr>
+              <tr><td>Durability</td><td class="kind">Additive</td>
+                <td class="sc a1"><span class="va">3</span> <span class="vb">1</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">3</span> <span class="vb">1</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">3</span> <span class="vb">1</span> <b class="pv"></b></td>
+                <td>—</td></tr>
+              <tr><td>Action economy</td><td class="kind">Additive</td>
+                <td class="sc a1"><span class="va">2</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">3</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">3</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td>—</td></tr>
+              <tr><td>Control</td><td class="kind">Additive</td>
+                <td class="sc a1"><span class="va">1</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td>—</td></tr>
+              <tr><td>Sustain</td><td class="kind">Threshold</td>
+                <td class="sc a1"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">1</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td>— B carries it; if B is down, nobody heals</td></tr>
+              <tr><td>Skills</td><td class="kind">Threshold</td>
+                <td class="sc a1"><span class="va">2</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">2</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">2</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td>—</td></tr>
+              <tr><td>Saves</td><td class="kind">Personal</td>
+                <td class="sc a1"><span class="va">3</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">3</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">3</span> <span class="vb">2</span> <b class="pv"></b></td>
+                <td>— the pair reads at B's number, not the average</td></tr>
+              <tr><td>Cadence</td><td class="kind">Personal</td>
+                <td class="sc a1"><span class="va">4</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a2"><span class="va">4</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td class="sc a3"><span class="va">4</span> <span class="vb">3</span> <b class="pv"></b></td>
+                <td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="r-note">
+          Each cell reads <span class="va">A</span> <span class="vb">B</span> <b class="pv">pair</b>.
+          <strong>Additive</strong> axes sum (capped at 5 — 5 is already surplus).
+          <strong>Threshold</strong> axes take the higher of the two; the party needs one source.
+          <strong>Personal</strong> axes take the <em>lower</em> — they cannot be delegated, so the
+          pair is exposed at its weaker half.
+        </p>
+        <p class="r-note">
+          Name the <strong>lowest pair value that matters</strong> in one sentence and say which
+          character is expected to fix it, at which level — that is the only thing this chart is for.
+        </p>
+      </div>
+    </figure>
+  </section>
+
+  <!-- ══ 3 · HOW IT PLAYS ═════════════════════════════════════════════════
+       Three passes: A's turn, B's turn, then the combined loop. The third is
+       the one that justifies the pair — name the specific interactions and
+       the level each one comes online. If the "together" pass is just both
+       characters doing their own thing, the pairing is not a pairing.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>How it plays</span><span>Two loops, then the shared one</span></div>
+    <h2>One line describing the combined loop</h2>
+
+    <div class="prose">
+      <p>What a round looks like with both characters acting, including the opening turn.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card" data-who="a"><span class="lvl">NAME A — the turn</span><p>Action, bonus action, reactions. Both of each, from Lone Wolf.</p></div>
+      <div class="card" data-who="b"><span class="lvl">NAME B — the turn</span><p>—</p></div>
+      <div class="card" data-who="pair"><span class="lvl">Together</span><p>The interaction neither half has alone.</p></div>
+    </div>
+
+    <div class="stack">
+      <div class="ck">
+        <span class="ck-head">Combo — name it</span>
+        <p>Trigger, effect, and the character level it comes online. One combo per callout.</p>
+      </div>
+      <p class="note"><b>Failure mode:</b> the situation that breaks the loop, and which character's resource answers it.</p>
+    </div>
+  </section>
+
+  <!-- ══ 4 · PROGRESSION ══════════════════════════════════════════════════
+       ONE table. XP is shared in BG3, so both characters level together and a
+       split plan is a lie. Rows are CHARACTER level 1–20; each half of the
+       table gives that character's class level, pick and feat.
+
+       Rules this table has to respect:
+         · Saving throws come from the LEVEL 1 class only, on both sides.
+         · Feats land at CLASS level 3/6/9/12/13/15/18, plus 11 for Fighter
+           and Rogue. Two characters on different splits get feats on
+           different character levels — that is expected, not an error.
+         · Mark with tr.milestone the levels where the PAIR's plan pivots
+           (an aura coming online, a pet arriving, the dip starting).
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>Progression</span><span>Shared XP · character levels 1–20</span></div>
+    <h2>Which class each character opens with, and why neither ever changes</h2>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr>
+            <th class="num" rowspan="2">Lvl</th>
+            <th class="grp-a" colspan="3">NAME A</th>
+            <th class="grp-b split" colspan="3">NAME B</th>
+          </tr>
+          <tr>
+            <th>Take</th><th>Pick</th><th>Feat</th>
+            <th class="split">Take</th><th>Pick</th><th>Feat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="milestone">
+            <td class="num mono">1</td>
+            <td class="mono">Class 1</td><td>Saves, skills, features</td><td class="mono">—</td>
+            <td class="mono split">Class 1</td><td>Saves, skills, features</td><td class="mono">—</td>
+          </tr>
+          <tr>
+            <td class="num mono">2</td>
+            <td class="mono">Class 2</td><td>—</td><td class="mono">—</td>
+            <td class="mono split">Class 2</td><td>—</td><td class="mono">—</td>
+          </tr>
+          <tr>
+            <td class="num mono">3</td>
+            <td class="mono">Class 3</td><td>Subclass</td><td><span class="tag">Feat</span></td>
+            <td class="mono split">Class 3</td><td>Subclass</td><td><span class="tag">Feat</span></td>
+          </tr>
+          <tr class="dead">
+            <td class="num mono">4</td>
+            <td class="mono">—</td><td>—</td><td class="mono">—</td>
+            <td class="mono split">—</td><td>—</td><td class="mono">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ck">
+      <span class="ck-head">Respec checkpoint</span>
+      <p>What to reconsider once a specific item lands, on which character, and the criterion for deciding. Withers re-picks the level 1 class — restate both save packages when rebuilding either half.</p>
+    </div>
+  </section>
+
+  <!-- ══ 5 · EQUIPMENT ════════════════════════════════════════════════════
+       Per character by slot, then the contested table.
+
+       THE CONTESTED TABLE IS THE POINT OF A PAIR SHEET. Every unique item
+       goes to exactly one character. For each one, state the benefit to the
+       winner and what the loser gives up — an item that is 20% better on A
+       and load-bearing for B belongs to B.
+
+       Also price the run's genuinely one-per-run resources here: Hag's Hair
+       is a single +1 for the whole party, and the Mirror of Loss is per
+       character. Attunement is 5 items each, at most 3 Legendary, and
+       re-attuning is free — so plan loadouts per fight, not per character.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>Equipment</span><span>4× buy · ¼ sell · 5 attuned each</span></div>
+    <h2>One line on how the two kits avoid competing</h2>
+
+    <div class="duo">
+      <div class="pane" data-who="a">
+        <div class="pane-head"><span class="pane-name">NAME A</span><span class="pane-sub">Target kit by act</span></div>
+        <div class="pane-body">
+          <table>
+            <thead><tr><th>Slot</th><th>Target</th><th class="num">Act</th></tr></thead>
+            <tbody>
+              <tr><td>Weapon</td><td class="win">—</td><td class="num mono">1</td></tr>
+              <tr><td>Armour</td><td>—</td><td class="num mono">—</td></tr>
+              <tr><td>Trinket</td><td>—</td><td class="num mono">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="pane" data-who="b">
+        <div class="pane-head"><span class="pane-name">NAME B</span><span class="pane-sub">Target kit by act</span></div>
+        <div class="pane-body">
+          <table>
+            <thead><tr><th>Slot</th><th>Target</th><th class="num">Act</th></tr></thead>
+            <tbody>
+              <tr><td>Weapon</td><td>—</td><td class="num mono">—</td></tr>
+              <tr><td>Armour</td><td>—</td><td class="num mono">—</td></tr>
+              <tr><td>Trinket</td><td>—</td><td class="num mono">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">Contested — one owner each</div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th class="num">Act</th><th>Item</th><th>Goes to</th><th>Why</th><th>What the other gives up</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="num mono">1</td><td class="mono win">Hag's Hair</td>
+            <td><span class="who" data-who="a">NAME A</span></td>
+            <td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="num mono">3</td><td class="mono">Mirror of Loss</td>
+            <td><span class="who" data-who="either">Both</span></td>
+            <td>Per character, so it is not contested.</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><b>Unverified:</b> anything whose location, effect or cap has not been confirmed against the 10.2 manifest.</p>
+  </section>
+
+  <!-- ══ 6 · QUEST REWARDS ════════════════════════════════════════════════
+       Combined, with an owner per reward. Say which are skill checks rather
+       than fights — with two characters covering every check in the campaign,
+       the ones gated on a proficiency the pair does not have are simply lost.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>Quest rewards</span><span>What gates each one</span></div>
+    <h2>Which of these are skill checks rather than fights</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th class="num">Act</th><th>Reward</th><th>Source</th><th>Gate</th><th>Goes to</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="num mono">1</td><td class="mono win">—</td><td>—</td><td>—</td>
+            <td><span class="who" data-who="b">NAME B</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span>Listonomicon v10.2 · Combat Extender</span>
+    <span>Party of 2 · Lone Wolf · shared XP</span>
+  </footer>
+
+</div>
+
+<script>
+/* Builds the pair profile radar from the data attributes on
+   <figure class="profile">, wires the act tabs, and writes the computed pair
+   value into each table row's .pv span.
+
+   Three series per act: A, B, and the pair. The pair is never authored —
+   it is derived from data-kinds:
+
+     additive   min(5, a + b)
+     threshold  max(a, b)
+     personal   min(a, b)
+
+   If this never runs, the chart stays hidden (.profile:not(.ready) .radar),
+   the .pv spans stay empty, and the table still carries both characters'
+   numbers for all three acts — the chart is the summary, the table is the
+   record. */
+(function () {
+  var CX = 130, CY = 100, STEP = 12.8, MAX = 5, LR = 76, NS = "http://www.w3.org/2000/svg";
+  var ROMAN = ["I", "II", "III"];
+
+  function el(name, attrs) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function nums(attr) {
+    if (!attr) return null;
+    var a = attr.split(",").map(function (n) { return parseFloat(n.trim()); });
+    return a.every(function (n) { return isFinite(n); }) ? a : null;
+  }
+  function at(u, v) {
+    v = Math.max(0, Math.min(MAX, isFinite(v) ? v : 0));
+    return [CX + u[0] * STEP * v, CY + u[1] * STEP * v];
+  }
+  function poly(U, get) {
+    return U.map(function (u, i) {
+      var p = at(u, get(i));
+      return p[0].toFixed(1) + "," + p[1].toFixed(1);
+    }).join(" ");
+  }
+  function combine(kind, a, b) {
+    if (kind === "threshold") return Math.max(a, b);
+    if (kind === "personal") return Math.min(a, b);
+    return Math.min(MAX, a + b);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".profile"), function (fig) {
+    var axes = (fig.getAttribute("data-axes") || "").split(",")
+      .map(function (s) { return s.trim(); }).filter(Boolean);
+    var kinds = (fig.getAttribute("data-kinds") || "").split(",")
+      .map(function (s) { return s.trim().toLowerCase(); });
+    var names = (fig.getAttribute("data-names") || "A,B").split(",")
+      .map(function (s) { return s.trim(); });
+    var bands = (fig.getAttribute("data-bands") || "").split(",")
+      .map(function (s) { return s.trim(); });
+
+    function set(prefix) {
+      return [1, 2, 3].map(function (n) {
+        var s = nums(fig.getAttribute("data-" + prefix + n));
+        return (s && s.length === axes.length) ? s : null;
+      });
+    }
+    var A = set("a"), B = set("b");
+    var box = fig.querySelector(".radar");
+    if (axes.length < 3 || !box) return;
+
+    var acts = [0, 1, 2].map(function (i) {
+      if (!A[i] || !B[i]) return null;
+      return {
+        a: A[i], b: B[i],
+        p: axes.map(function (_, k) { return combine(kinds[k], A[i][k], B[i][k]); })
+      };
+    });
+    if (!acts.some(Boolean)) return;
+
+    var U = axes.map(function (_, i) {
+      var a = (-90 + i * 360 / axes.length) * Math.PI / 180;
+      return [Math.cos(a), Math.sin(a)];
+    });
+
+    var svg = el("svg", { viewBox: "0 0 260 200", role: "img" });
+    var caption = el("title", {});
+    svg.appendChild(caption);
+
+    [1, 2, 3, 4, 5].forEach(function (v) {
+      svg.appendChild(el("polygon", {
+        "class": "r-ring" + (v === MAX ? " outer" : ""),
+        points: poly(U, function () { return v; })
+      }));
+    });
+    U.forEach(function (u) {
+      var p = at(u, MAX);
+      svg.appendChild(el("line", {
+        "class": "r-spoke", x1: CX, y1: CY, x2: p[0].toFixed(1), y2: p[1].toFixed(1)
+      }));
+    });
+
+    var shapeA = el("polygon", { "class": "r-a", points: "" });
+    var shapeB = el("polygon", { "class": "r-b", points: "" });
+    var shapeP = el("polygon", { "class": "r-pair", points: "" });
+    var dots = el("g", {});
+    svg.appendChild(shapeA);
+    svg.appendChild(shapeB);
+    svg.appendChild(shapeP);   /* pair drawn last so the dashed edge stays readable */
+    svg.appendChild(dots);
+
+    U.forEach(function (u, i) {
+      var t = el("text", {
+        "class": "r-label",
+        x: (CX + u[0] * LR).toFixed(1),
+        y: (CY + u[1] * LR + (u[1] < -0.5 ? -1 : u[1] > 0.5 ? 7 : 3)).toFixed(1),
+        "text-anchor": u[0] > 0.2 ? "start" : u[0] < -0.2 ? "end" : "middle"
+      });
+      t.textContent = axes[i];
+      svg.appendChild(t);
+    });
+
+    var band = fig.querySelector(".r-band");
+    box.insertBefore(svg, band || null);
+
+    var legend = fig.querySelector(".r-legend");
+    if (legend) {
+      legend.innerHTML =
+        '<span class="lg-a"><i></i>' + names[0] + '</span>' +
+        '<span class="lg-b"><i></i>' + (names[1] || "B") + '</span>' +
+        '<span class="lg-p"><i></i>Pair</span>';
+    }
+
+    var rows = Array.prototype.slice.call(fig.querySelectorAll(".r-table tbody tr"));
+    var tabs = Array.prototype.slice.call(fig.querySelectorAll(".r-tab"));
+
+    function show(n) {
+      var s = acts[n - 1];
+      if (!s) return;
+
+      shapeA.setAttribute("points", poly(U, function (i) { return s.a[i]; }));
+      shapeB.setAttribute("points", poly(U, function (i) { return s.b[i]; }));
+      shapeP.setAttribute("points", poly(U, function (i) { return s.p[i]; }));
+
+      while (dots.firstChild) dots.removeChild(dots.firstChild);
+      U.forEach(function (u, i) {
+        var pa = at(u, s.a[i]), pb = at(u, s.b[i]);
+        dots.appendChild(el("circle", { "class": "r-dot-a", r: 3.4, cx: pa[0].toFixed(1), cy: pa[1].toFixed(1) }));
+        dots.appendChild(el("circle", { "class": "r-dot-b", r: 3.4, cx: pb[0].toFixed(1), cy: pb[1].toFixed(1) }));
+      });
+
+      caption.textContent = "Act " + ROMAN[n - 1] + " pair profile, scored 0 to 5: " +
+        axes.map(function (ax, i) {
+          return ax + " — " + names[0] + " " + s.a[i] + ", " + (names[1] || "B") + " " + s.b[i] +
+                 ", pair " + s.p[i];
+        }).join("; ");
+
+      if (band) {
+        band.textContent = "Act " + ROMAN[n - 1] +
+          (bands[n - 1] ? " · char " + bands[n - 1] + " · approximate" : "");
+      }
+
+      rows.forEach(function (tr, i) {
+        Array.prototype.forEach.call(tr.querySelectorAll("td.sc"), function (td) {
+          var pv = td.querySelector(".pv");
+          if (!pv) return;
+          var act = td.classList.contains("a1") ? 1 : td.classList.contains("a2") ? 2 : 3;
+          var src = acts[act - 1];
+          pv.textContent = (src && i < axes.length) ? src.p[i] : "";
+        });
+      });
+
+      tabs.forEach(function (b) {
+        var on = b.getAttribute("data-act") === String(n);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+      Array.prototype.forEach.call(fig.querySelectorAll(".a1, .a2, .a3"), function (c) {
+        c.classList.toggle("on", c.classList.contains("a" + n));
+      });
+    }
+
+    tabs.forEach(function (b, i) {
+      var n = parseInt(b.getAttribute("data-act"), 10);
+      if (!acts[n - 1]) { b.disabled = true; return; }
+      b.addEventListener("click", function () { show(n); });
+      b.addEventListener("keydown", function (e) {
+        var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var k = i;
+        do { k = ((k + d) % tabs.length + tabs.length) % tabs.length; }
+        while (tabs[k].disabled && k !== i);
+        tabs[k].focus();
+        show(parseInt(tabs[k].getAttribute("data-act"), 10));
+      });
+    });
+
+    show(acts[2] ? 3 : acts[1] ? 2 : 1);
+    fig.classList.add("ready");
+  });
+})();
+</script>

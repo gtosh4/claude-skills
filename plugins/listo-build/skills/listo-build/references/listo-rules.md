@@ -72,9 +72,76 @@ remainders mod 3 sum to less than 3.
 Consequences:
 
 - **3-level dips are feat-neutral.** You get the dip class's own level 3 feat.
-- **1- and 2-level dips cost a feat outright.**
-- Place a dip as a contiguous 3-level block starting right after the main class crosses a
-  multiple of 3, and feats still land on 3/6/9/12/13/15/18.
+- **A 2-level dip is also free when every other block is a multiple of three** — 18/2 and
+  15/3/2 both reach the ceiling. It only costs a feat when it leaves ragged remainders.
+- Place a dip as a contiguous block starting right after the main class crosses a multiple of
+  three, and feats still land on 3/6/9/12/13/15/18.
+
+### Splits: which shapes are feat-neutral
+
+**"17/3 or nothing" is wrong.** Two independent conditions decide the count, and most splits
+satisfy both:
+
+1. **Remainders mod 3 must sum to less than 3**, or a level is wasted.
+2. **One class must reach 13**, or the universal level-13 grant never fires.
+
+Fighter and Rogue add a third: **class level 11**.
+
+| Split at character 20 | Feats | Why |
+|---|---:|---|
+| 20 · 17/3 · 16/4 · 15/5 · 14/6 · 13/7 | 7 | remainders clean, primary ≥13 |
+| 18/2 · 15/3/2 · 14/3/3 · 16/3/1 · 13/6/1 | 7 | a 2- or 1-level dip absorbed by clean blocks |
+| **Fighter or Rogue** 17/3 · 14/6 · 11/9 | **8** | the class-11 grant on top |
+| Ranger 9 / **Rogue 11** | 7 | Rogue 11 substitutes for the 13 grant |
+| 12/6/2 · 12/5/3 · 11/6/3 | **6** | nothing reaches 13 |
+| 17/2/1 · 16/2/2 · 14/4/2 | **6** | remainders waste a level |
+
+Mid-run the same rules bite harder, because the 13 grant is a large share of a small number:
+at character 15, a 15/0 has 6 feats and a 12/3 has 5.
+
+**So a 6-level dip does not cost a feat. It costs three levels of the primary class.** Price
+those explicitly rather than assuming:
+
+| Primary at 17 → 14 | What is actually lost |
+|---|---|
+| Full caster | **8th- and 9th-level slots.** The most expensive trade on the list |
+| Warlock | Mystic Arcanum 8th and 9th; pact slot level is already maxed |
+| Half-caster | One slot tier at most — cheap |
+| Fighter | The second Action Surge (17) — cheap |
+| Any class 13 → 12 | The three levels *plus* the universal 13 feat. Never stop at 12 |
+
+### What a class level has to beat
+
+A feat is the unit of account. Compare the marginal levels against what a feat buys — an ability
+pair, Sentinel, Mage Slayer, an armour proficiency, a fighting style — and remember the levels
+also cost whatever the primary would have gained.
+
+**The test: a class level beats a feat when it changes what the _pair_ can do** — an aura, a
+third body, a resource on a different clock, or an action handed to the other character. A feat
+wins when it is the last thing between the build and a threshold: 22 primary, heavy armour,
+shields, a style.
+
+Levels that clear that bar:
+
+| Buy | Why it outbids a feat |
+|---|---|
+| **Paladin 6** | Aura of Protection — **+CHA mod to every save on both characters** at 9m, plus Extra Attack, Divine Smite on any class's slots, short-rest Channel Oath. Nothing a feat grants is close in a duo |
+| **Fighter 11** | Improved Extra Attack **and** an off-cadence feat — it *pays* a feat rather than costing one |
+| **Rogue 11** | Reliable Talent, 6th Sneak die, off-cadence feat |
+| **Cleric 6** | Domain tier 2. Peace's Protective Bond (reaction: take the hit aimed at your partner) and War's Extra Attack are both duo-defining |
+| **Warlock 5** | 3rd-level pact slots and a third invocation, all on the short-rest clock |
+| **Paragon 2** | Actions Speak Louder — Help and Distract become bonus actions, so Lone Wolf's second bonus action becomes a second Advantage handout |
+| **Ranger 3 / Druid 2** | A permanent third body for two or three levels |
+
+Levels that do **not**: Sorcerer 6, Bard 6, Wizard 6, Warlock 6, and most subclass tier-2
+features — a passive rider worth less than Sentinel, bought with three primary levels.
+
+Two placement rules that survive all of the above:
+
+- **Saving-throw proficiencies come only from the level 1 class**, so a dip that is being taken
+  *for* its saves must go first, whatever the rest of the plan says.
+- **Auras do not stack.** If one character has Aura of Protection, a second Paladin 6 on the
+  other character buys nothing — the commonest way a pair wastes six levels.
 
 ### Cheap dip breakpoints
 
