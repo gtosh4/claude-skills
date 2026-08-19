@@ -25,7 +25,7 @@ CLASSES = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                        "listo-build", "data", "classes")
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
                                 "listo-build", "scripts"))
-from scoring import KEYS                                    # noqa: E402
+from scoring import KEYS, SAV_IDX                           # noqa: E402
 
 # The niche vocabulary is listo-build SKILL.md §1a's table. Closed, like every
 # other enum in this format.
@@ -68,7 +68,10 @@ def parse_split(text):
              "not the seed — write each class once with its total, joined by `/`")
     out = collections.OrderedDict()
     for seg in text.split("/"):
-        seg = re.sub(r"\([^)]*\)", "", seg).strip().strip(",")
+        # The parenthetical is the subclass and always trails the level, so strip from the first
+        # `(` to the end of the segment rather than matching balanced pairs — subclass names in
+        # this list nest their own brackets (`Zeal (Hazoret)`, `Wild Magic (vanilla)`).
+        seg = re.sub(r"\(.*$", "", seg).strip().strip(",")
         if not seg:
             continue
         m = _SEG.match(seg)
@@ -149,14 +152,21 @@ def ranges(cls):
 
 
 REFS = os.path.join(os.path.dirname(os.path.dirname(HERE)), "listo-build", "references")
+DATA = os.path.dirname(CLASSES)
 
 # Two stages, two dependency sets. Seeding is a judgement about a subclass under the sweep
 # brief's rules; scoring is a judgement about a build under the rubric's rules. They go stale
 # independently — editing axis-rubrics.md must not force a re-sweep, and editing the brief must
 # not force a re-score. Add a file here when a new document starts governing one of them.
 DEPS = {
+    "base":  [os.path.join(ASSETS, "base-brief.md"),
+              os.path.join(DATA, "listo-10.2-spells.md"),
+              os.path.join(REFS, "axis-rubrics.md"),
+              os.path.join(REFS, "scoring-model.md"),
+              os.path.join(REFS, "gates.md")],
     "seed":  [os.path.join(ASSETS, "sweep-brief.md")],
-    "score": [os.path.join(REFS, "axis-rubrics.md"),
+    "score": [os.path.join(ASSETS, "scoring-brief.md"),
+              os.path.join(REFS, "axis-rubrics.md"),
               os.path.join(REFS, "scoring-model.md"),
               os.path.join(REFS, "gates.md")],
 }
@@ -272,6 +282,76 @@ def keys(inv):
     return [f"{cls}/{sub}" for cls, subs in inv.items() for sub in subs]
 
 
+# ── tier 1: subclass base profiles ───────────────────────────────────────────
+# A base profile is the subclass at all twenty levels with no multiclassing, scored coarsely on
+# the ten axes in Act II. It is the zero-dip reference point every split of that subclass is
+# measured against — not a recommendation to play it mono.
+#
+# Grants are recorded apart from `scores` because they do not add, they union: only the level-1
+# class gives saving throws and the good armour, so composition has to know which class was first.
+ABILITIES = ("str", "dex", "con", "int", "wis", "cha")
+ARMOUR = (None, "light", "medium", "heavy")
+BASE_DEPS = "base"
+
+
+def load_bases(path):
+    """Validate a tier-1 bases file and return `{key: record}`."""
+    with open(path) as fh:
+        d = json.load(fh)
+    bases = d.get("bases")
+    load_bases.doc = d
+    _require(isinstance(bases, dict), f"{path}: no `bases` object")
+    for k, b in bases.items():
+        v = b.get("verdict")
+        _require(v in VERDICTS, f"{k}: unknown verdict {v!r} — expected one of {VERDICTS}")
+        if v == "dupe":
+            _require(b.get("dupe_of") in bases, f"{k}: dupe_of {b.get('dupe_of')!r} is not a key")
+        if v != "candidate":
+            _require(b.get("why"), f"{k}: verdict {v!r} needs a `why`")
+            continue
+        sc = b.get("scores")
+        _require(isinstance(sc, list) and len(sc) == len(KEYS),
+                 f"{k}: `scores` must be {len(KEYS)} values, got {sc!r}")
+        _require(sc[SAV_IDX] is None,
+                 f"{k}: scores[{SAV_IDX}] must be null — saves are derived from `prof`, never authored")
+        for i, x in enumerate(sc):
+            if i == SAV_IDX:
+                continue
+            _require(isinstance(x, int) and 0 <= x <= 5,
+                     f"{k}: {KEYS[i]} is {x!r}, expected an integer 0-5")
+        prof = b.get("prof")
+        _require(isinstance(prof, list), f"{k}: `prof` must be a list")
+        for a in prof:
+            _require(a in ABILITIES, f"{k}: unknown ability {a!r} — expected one of {ABILITIES}")
+        _require(len(set(prof)) == len(prof), f"{k}: duplicate ability in prof {prof!r}")
+        _require(b.get("armour", "MISSING") in ARMOUR,
+                 f"{k}: armour {b.get('armour')!r} — expected one of {ARMOUR}")
+        _require(isinstance(b.get("shield"), bool), f"{k}: `shield` must be true or false")
+        _require(b.get("primary") in ABILITIES,
+                 f"{k}: primary {b.get('primary')!r} — expected one of {ABILITIES}")
+        _require(isinstance(b.get("concentration"), bool),
+                 f"{k}: `concentration` must be true or false")
+        _require(b.get("why"), f"{k}: candidate needs a `why`")
+        for f in ("chassis", "split", "niche", "peak", "peak_axis", "breadth"):
+            _require(f not in b,
+                     f"{k}: `{f}` is not a tier-1 field. Splits, names and niches are decided "
+                     "after enumeration, not here")
+    return bases
+
+
+def audit_bases(inv, bases):
+    """Which base profiles need redoing. Same cache contract as the seeds, one stage."""
+    src = {cls: digests(cls) for cls in inv}
+    want = {f"{cls}/{sub}": src[cls].get(sub) for cls, subs in inv.items() for sub in subs}
+    dep = deps_hash(BASE_DEPS)
+    return dict(
+        unseeded=sorted(k for k in want if k not in bases),
+        stale=sorted(k for k in bases if k not in want),
+        drifted=sorted(k for k, h in want.items() if k in bases and bases[k].get("src") != h),
+        rules=sorted(k for k in bases if k in want and bases[k].get("base_deps") != dep),
+        want=want)
+
+
 # ── the seeds file ───────────────────────────────────────────────────────────
 def load(path):
     with open(path) as fh:
@@ -290,13 +370,21 @@ def load(path):
             for niche, bd in b.items():
                 w = f"{k}:{niche}"
                 _require(niche in NICHES, f"{w}: unknown niche — expected one of {NICHES}")
-                for f in ("chassis", "split", "peak", "peak_axis", "why"):
+                for f in ("chassis", "split", "peak", "peak_axis", "breadth", "why"):
                     _require(bd.get(f) is not None, f"{w}: build missing `{f}`")
                 check_split(bd["split"], w)
                 _require(bd["peak_axis"] in KEYS,
                          f"{w}: unknown peak_axis {bd['peak_axis']!r} — expected one of {tuple(KEYS)}")
                 _require(isinstance(bd["peak"], int) and 0 <= bd["peak"] <= 5,
                          f"{w}: peak is {bd['peak']!r}, expected an integer 0-5")
+                # `peak` is a maximum, and a maximum cannot see what a dip buys — a wide body and a
+                # narrow one with the same best axis are indistinguishable to it. `breadth` counts
+                # the axes at 3 or better, so the two are separable at promotion time.
+                _require(isinstance(bd["breadth"], int) and 0 <= bd["breadth"] <= len(KEYS),
+                         f"{w}: breadth is {bd['breadth']!r}, expected an integer 0-{len(KEYS)}")
+                _require(bd["breadth"] == 0 or bd["peak"] >= 3,
+                         f"{w}: breadth {bd['breadth']} claims an axis at 3+, but peak is "
+                         f"{bd['peak']} — the highest axis cannot be below the ones counted under it")
             splits = collections.Counter(bd["split"] for bd in b.values())
             same = [x for x, c in splits.items() if c > 1]
             _require(not same, f"{k}: builds must differ in the split, not only the label: " + "; ".join(same))
@@ -344,7 +432,10 @@ def promote(seeds, limit=ROSTER_LIMIT):
         # Thorough: every viable build is scored, and the cut is made later against pair scores.
         return {a: "viable" for a in cand}, cand
 
-    best = lambda group: min(group, key=lambda a: (-cand[a]["peak"], a))
+    # Rank on peak first, then breadth: a maximum cannot separate a wide body from a narrow one
+    # that happens to share its best axis, and breadth is exactly what a multiclass split buys.
+    rank = lambda a: (-cand[a]["peak"], -cand[a]["breadth"], a)
+    best = lambda group: min(group, key=rank)
     reasons = {}
 
     # Floors are guaranteed slots, not fallbacks: every class and every niche gets its honest
@@ -363,8 +454,7 @@ def promote(seeds, limit=ROSTER_LIMIT):
               f"the roster is the floors alone", file=sys.stderr)
         return reasons, cand
 
-    rest = sorted((a for a in cand if a not in reasons),
-                  key=lambda a: (-cand[a]["peak"], a))
+    rest = sorted((a for a in cand if a not in reasons), key=rank)
     for a in rest[:limit - len(reasons)]:
         if cand[a]["peak"] >= BAR:
             reasons[a] = "bar"
@@ -372,6 +462,70 @@ def promote(seeds, limit=ROSTER_LIMIT):
 
 
 # ── output ───────────────────────────────────────────────────────────────────
+SPELLS = os.path.join(os.path.dirname(CLASSES), "listo-10.2-spells.md")
+
+
+def spell_ranges():
+    """`(framing_span, {class: span})` over listo-10.2-spells.md.
+
+    Spell access is the single biggest thing the mods change for a caster — Wizard's level-1 pick
+    pool is 45 against vanilla's 23 — so a subclass cannot be scored on aoe or control without it.
+    One `### heading` can cover several classes ("Mesmerist, Inquisitor, Paragon, ..."), so a
+    class is matched by name anywhere in the heading rather than by position.
+    """
+    lines = open(SPELLS).read().split("\n")
+    heads = [(i, l[4:].strip()) for i, l in enumerate(lines) if l.startswith("### ")]
+    sec2 = [i for i, l in enumerate(lines) if l.startswith("## ")]
+    framing = None
+    for i in sec2:
+        if "how spell access is wired" in lines[i].lower():
+            nxt = next((j for j in sec2 if j > i + 3), len(lines))
+            framing = (i + 1, nxt)
+    _require(framing, "listo-10.2-spells.md: no `## How spell access is wired` section")
+    out = {}
+    for cls in inventory():
+        want = cls.replace("bloodhunter", "blood hunter")
+        for n, (i, text) in enumerate(heads):
+            if want in text.lower():
+                end = heads[n + 1][0] if n + 1 < len(heads) else len(lines)
+                out.setdefault(cls, (i + 1, end))
+    return framing, out
+
+
+def base_assignments(inv, n, bases=None):
+    """N tier-1 agent assignments. No shared dip read set: tier 1 chooses no splits."""
+    todo = set(keys(inv))
+    if bases is not None:
+        rep = audit_bases(inv, bases)
+        todo = set(rep["unseeded"]) | set(rep["drifted"]) | set(rep["rules"])
+    out = []
+    for i, group in enumerate(batches({c: s for c, s in inv.items()
+                                       if any(f"{c}/{x}" in todo for x in s)} or inv, n), 1):
+        lines, total = [], 0
+        for cls in group:
+            spans, cost = ranges(cls)
+            total += cost
+            picked = [x for x in inv[cls] if f"{cls}/{x}" in todo]
+            if not picked:
+                continue
+            r = "  ".join(f"{k} {v[0]}-{v[1]}" for k, v in spans.items())
+            lines.append(f"Read ONLY these ranges of listo-build/data/classes/{cls}.md: {r}")
+            lines.append(f"Profile these {len(picked)} keys, verbatim:")
+            lines += [f"  {cls}/{x}" for x in picked]
+            lines.append("")
+        fr, sp = spell_ranges()
+        lines.append("Spell access — read these too; the mods change caster lists enormously:")
+        lines.append(f"  listo-build/data/listo-10.2-spells.md  how-access-works {fr[0]}-{fr[1]}")
+        for cls in group:
+            if cls in sp:
+                lines.append(f"  listo-build/data/listo-10.2-spells.md  {cls} {sp[cls][0]}-{sp[cls][1]}")
+        lines.append("")
+        n_keys = sum(1 for cls in group for x in inv[cls] if f"{cls}/{x}" in todo)
+        out.append(f"## tier-1 agent {i}/{n} — {', '.join(group)} "
+                   f"({n_keys} subclasses, ~{total} tok of class text)\n\n" + "\n".join(lines))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--list", action="store_true", help="print the subclass inventory")
@@ -386,10 +540,50 @@ def main():
                     help="with --assign: re-sweep everything, not only what is stale")
     ap.add_argument("--stamp", action="store_true",
                     help="record current source and brief hashes on every seed (run after merging a sweep)")
-    ap.add_argument("--scored", metavar="ADDR,ADDR",
-                    help="with --stamp: mark these build addresses scored under the current rubric")
+    ap.add_argument("--scored", metavar="ADDR,ADDR|@FILE|all",
+                    help="with --stamp: mark these build addresses scored under the current rubric. "
+                         "Subclass headings contain commas, so pass `@path` to read one address per "
+                         "line, or `all` for the whole promoted roster")
     ap.add_argument("--seeds", default=os.path.join(ASSETS, "chassis-seeds.json"))
+    ap.add_argument("--bases", action="store_true",
+                    help="operate on the tier-1 base profiles in assets/subclass-bases.json "
+                         "rather than the legacy sweep seeds")
+    ap.add_argument("--bases-file", default=os.path.join(ASSETS, "subclass-bases.json"))
     a = ap.parse_args()
+
+    if a.bases:
+        inv = inventory()
+        have = (load_bases(a.bases_file)
+                if os.path.exists(a.bases_file) else {})
+        if a.assign:
+            for blk in base_assignments(inv, a.assign, None if a.all else have):
+                print(blk)
+            return
+        rep = audit_bases(inv, have)
+        if a.stamp:
+            src, dep = {c: digests(c) for c in inv}, deps_hash(BASE_DEPS)
+            for k, b in have.items():
+                cls, sub = k.split("/", 1)
+                if sub in src.get(cls, {}):
+                    b["src"], b["base_deps"] = src[cls][sub], dep
+            doc = load_bases.doc
+            with open(a.bases_file, "w") as fh:
+                json.dump(doc, fh, indent=2, ensure_ascii=False)
+                fh.write("\n")
+            print(f"stamped {len(have)} base profiles", file=sys.stderr)
+            return
+        n_cand = sum(1 for b in have.values() if b["verdict"] == "candidate")
+        print(f"{len(have)} base profiles, {len(rep['want'])} subclasses; {n_cand} candidate")
+        bad = False
+        for label in ("unseeded", "stale", "drifted", "rules"):
+            if rep[label]:
+                bad = True
+                print(f"{label} ({len(rep[label])}): " + ", ".join(rep[label][:8])
+                      + (" ..." if len(rep[label]) > 8 else ""), file=sys.stderr)
+        print("base profiles cover every subclass and are current" if not bad
+              else "the tier-1 pass is not current", file=sys.stderr)
+        sys.exit(1 if bad else 0)
+
     if not (a.list or a.check or a.promote or a.assign or a.stamp):
         ap.error("pick one of --list, --check, --promote, --assign, --stamp")
 
@@ -456,7 +650,16 @@ def main():
                     sd["src"], sd["seed_deps"] = rep["want"][k], now
             if a.scored:
                 score_h, cand = deps_hash("score"), builds(seeds)
-                for addr in a.scored.split(","):
+                # A build address ends in `:<niche>` but *starts* with a subclass heading, and
+                # several of those carry commas. So a comma-joined list cannot address every
+                # build in the inventory; `@file` and `all` can.
+                if a.scored == "all":
+                    addrs = sorted(promote(seeds)[1])
+                elif a.scored.startswith("@"):
+                    addrs = [l.strip() for l in open(a.scored[1:]) if l.strip()]
+                else:
+                    addrs = a.scored.split(",")
+                for addr in addrs:
                     _require(addr in cand, f"--scored: {addr!r} is not a build address")
                     k, niche = addr.rsplit(":", 1)
                     seeds[k]["builds"][niche]["score_deps"] = score_h
@@ -464,7 +667,7 @@ def main():
                 json.dump(doc, fh, indent=2, ensure_ascii=False)
                 fh.write("\n")
             print(f"stamped {len(seeds)} seeds"
-                  + (f", {len(a.scored.split(','))} builds scored" if a.scored else ""),
+                  + (f", {len(addrs)} builds scored" if a.scored else ""),
                   file=sys.stderr)
             return
 

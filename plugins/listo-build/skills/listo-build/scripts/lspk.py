@@ -19,10 +19,16 @@ What to read for what:
   Stats/Generated/Data/Status_BOOST.txt  what a status actually does, and StackId
   Stats/Generated/Data/Spell_*.txt     Shape, Range, SpellRoll, Cooldown, UseCosts
 
-Requires the lz4 package. Base-game paks are NOT under the mods root, so
-vanilla features cannot be confirmed this way.
+Requires the lz4 package, and zstandard for the paks that use compression
+method 3 (Spell List Customization Framework is one). Base-game paks are NOT
+under the mods root, so vanilla features cannot be confirmed this way.
 """
 import struct, lz4.block, zlib, sys, io
+
+try:
+    import zstandard
+except ImportError:
+    zstandard = None
 
 HDR = struct.Struct("<4sIQIBB16sH")   # magic, version, listOffset, listSize, flags, prio, md5, numParts
 ENT = struct.Struct("<256sIHBBII")    # name, off1, off2, part, flags, sizeOnDisk, uncompressed
@@ -32,6 +38,10 @@ def _decomp(buf, flags, usize):
     if m == 0: return buf
     if m == 1: return zlib.decompress(buf)
     if m == 2: return lz4.block.decompress(buf, uncompressed_size=usize)
+    if m == 3:
+        if zstandard is None:
+            raise RuntimeError("entry is zstd-compressed; pip install zstandard")
+        return zstandard.ZstdDecompressor().decompress(buf, max_output_size=usize)
     raise ValueError("method %d" % m)
 
 class Pak:

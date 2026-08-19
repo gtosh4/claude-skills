@@ -291,6 +291,12 @@ full subclass feature — Vengeance's Expertise + double-WIS on an INT skill is 
 skill-monkey package, and Zeal's fast healing + delayed damage pool is a real defensive layer on
 a martial chassis.
 
+**The multiclass node is undocumented.** The mod never addresses multiclassing, so what an
+Inquisitor taken at level 2+ actually grants — martial weapons, medium armour and shields, or a
+stripped node like Cleric's and Bard's — is `(unverified)`, as is multiclass spell-slot stacking.
+Only the saves are certain to be level-1-locked. Check the character sheet before committing a
+mid-run dip. See the unverified list at the end of this file.
+
 **Beyond 3**, take it as a main class or not at all: Extra Attack at 5, Hallowed Blade at 6, and
 Second Judgment at 11 are what make the class, and Monster Lore's dice scale only with Inquisitor
 level.

@@ -23,6 +23,7 @@ Every string is emitted as HTML, so inline `<b>`, `<em>` and `<code>` work.
 | Idle-body flags, holes, chips | flag under 3.0 in a fight type worth ≥40% of the act; hole is any pair axis ≤2 |
 | The whole field table | **every chassis with every other**, ranked — `C(n,2)` unordered pairs |
 | Which pairings become entries | each chassis's **best** partner, ranked, capped at `entry_limit`; a pairing that two chassis both name is kept once |
+| Which pairings the field table lists | the **whole frontier**, always, then the highest-scoring dominated pairings up to `field_limit`; the number omitted is stated |
 | Every number in a variation line | from the pairing itself — you write only the clause after it |
 | Roster order | by the best score that chassis reaches anywhere |
 | Order within a pairing | higher delivered damage first, then higher total axis value, then the id alphabetically — see `scoring-model.md` §10 |
@@ -41,13 +42,14 @@ because they do not exist until render time.
   "lede":    "One paragraph on what the ledger is for.",
   "facts":   ["26 chassis", "level cap 20"],   // mono chips under the standfirst
   "entry_limit": 12,                        // chassis beyond this fall out, and are named
+  "field_limit": 500,                       // field-table rows; the frontier is always kept
   "footer":  "Provenance line.",
 
   "chassis": {
     "Bombard": {                            // key is the id; used for anchors
       "display": "Bombard",                 // optional; shown instead of the key
       "reach":   "hybrid",                  // ranged | hybrid | mobile | static
-      "split":   "Blood Hunter 14 / Wizard 6",
+      "split":   "Blood Hunter 14 (Order of the Profane Soul) / Wizard 6 (Evocation)",
       "meta":    "Int 22 · 7 feats",
       "note":    "Prose. What the chassis is and what it gives up.",
       "concentration": false,               // does this body's plan ride a concentration spell?
@@ -117,13 +119,37 @@ dex` pick is two entries, not four. Grants are the **level-1 class** (two, and o
 class), **Lone Wolf's two picks**, each **Resilient**, **Slippery Mind** (Rogue 15, adds `wis`),
 and **Diamond Soul** (Monk 14, adds all six).
 
-`boosters` — numeric or advantage effects that apply across saves without granting proficiency:
+`boosters` — numeric or advantage effects that apply across saves without granting proficiency.
+Three tiers: **blanket** buys the rung the table trades a proficiency for; **partial** covers only
+part of the save set or costs a resource, and **two partials count as one blanket**; the third tier
+is documented but buys no rung on its own.
 
-| id | what | scope |
-|---|---|---|
-| `brutish-durability` | Fighter 7 — +1d6 to every save, unconditional, no resource | self |
-| `war-caster` | advantage on concentration saves only | self |
-| `aura-of-protection` | Paladin 6 — +Cha modifier to every save | **pair** |
+Advantage against *spells and magical effects* counts as blanket — in this list almost every save
+that decides a fight comes off one, so the condition is nearly always met.
+
+| id | what | scope | tier |
+|---|---|---|---|
+| `brutish-durability` | Fighter 7 — +1d6 to every save, unconditional, no resource | self | blanket |
+| `aura-of-protection` | Paladin 6 — +Cha modifier to every save | **pair** | blanket |
+| `emboldening-bond` | Cleric Peace — +1d4 to every save, on both bodies | **pair** | blanket |
+| `friars-blessing` | Way of the Friar — +1d4 to every save, on both bonded bodies | **pair** | blanket |
+| `lunar-champion` | Oath of the Moon 20 — +Cha to all saves in an aura | **pair** | blanket |
+| `heroic-warrior` | Champion — a free reroll on a failed save, every turn | self | blanket |
+| `magic-resistance` | Paragon 9 — advantage on saves vs spells and magical effects | self | blanket |
+| `spell-resistance` | Wizard Abjuration 14 — advantage on saves vs spells | self | blanket |
+| `magic-awareness` | Wildsurge — proficiency bonus to **both** bodies' saves vs spells | **pair** | blanket |
+| `rage-of-ginnungagap` | advantage on all saves vs spells while raging | self | blanket |
+| `dark-augmentation` | Blood Hunter 2 — +Int modifier to Str, Dex and Con saves | self | partial |
+| `towering-ego` | Mesmerist 2 — +Cha to Wis saves, +half Cha to Int saves | self | partial |
+| `frost-rune` | Rune Knight — +2 to Str and Con saves | self | partial |
+| `fanatical-focus` | Zealot — one reroll on a failed save per Rage | self | partial |
+| `gift-of-will` | Trickster — +Cha and half level to the **partner's** Wisdom saves | **pair** | partial |
+| `flash-of-genius` | Artificer 7 — +Int to an ally's save, costs a reaction | **pair** | partial |
+| `war-caster` | advantage on concentration saves only | self | no rung |
+
+`war-caster` stays a legal id because it is worth recording; its value is already priced by
+`concentration` and the rung-3 cap. It is keyed to the **effect**, not the feat — Way of the
+Friar's Guardian of Light grants the same thing and takes the same id.
 
 `concentration` (chassis-level, not per act) — `true` if the body's plan rides a concentration
 spell. It reorders the ability weighting: **Con outranks Wis when true**, since a broken
@@ -170,15 +196,18 @@ if you cannot point at the line that applies the effect, it is not implemented, 
 id is how you find that out at render time instead of after publishing.
 
 **A deliberate drop must be distinguishable from an unrecognised one.** The only sanctioned drop
-in this format is a second `aura-of-protection` in one pairing, below. It warns by name and says
+in this format is a repeated pair-scope booster in one pairing, below. It warns by name and says
 what it dropped and why. Nothing else silently discards an authored value.
 
-### `aura-of-protection` is a pair effect
+### Pair-scope boosters raise both bodies
 
-Aura raises **both** bodies, so it cannot be scored inside one body's value. The combiner applies
-it to each side *before* taking the `min` for the Personal axis. **Auras do not stack** — a second
-`aura-of-protection` in the same pairing is ignored, and the renderer warns rather than double-
-counting it. This is the commonest way a pair wastes six levels.
+A `pair` booster cannot be scored inside one body's value: it applies to both, so the combiner
+applies it to each side *before* taking the `min` for the Personal axis.
+
+**Non-stacking is per effect, not per scope.** An Aura of Protection and an Emboldening Bond are
+different sources and both apply. Two Auras of Protection are one Aura — the second is ignored, the
+renderer warns by name, and the levels that bought it are wasted. That is the commonest way a pair
+throws away six levels, and it is now checked for every pair-scope id rather than only for Aura.
 
 ## Errors the renderer raises rather than papering over
 

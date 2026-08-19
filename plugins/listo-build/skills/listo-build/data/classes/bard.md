@@ -401,6 +401,21 @@ anything covers the campaign; two non-Bards will have holes.
 Wolf's +4 with Charisma wastes one of the two grants. See `references/listo-rules.md`
 § "The Charisma trap".
 
+**Against dipping out.** Bard is one of the worst classes in the list to leave, because
+`Automatic Magical Secrets Extender` (`20247`) turns **Magical Secrets at 10, 14 and 18** into six
+picks drawn from *every* list the modlist installs — `5e Spells` (`125`), the Artificer, Mesmerist,
+Paragon and Inquisitor lists, `Conjure Animals and Summon Beast Spells` (`13458`) — which the class
+file above calls the single largest power delta between a Listo Bard and a vanilla one. Losing
+levels also costs full-caster slot progression 1-for-1. The stopping points that matter:
+**5** (Font of Inspiration moves Inspiration to the **short-rest** clock and the die to d8 — the
+level that makes Inspiration a real resource in a 120-supply-long-rest run), **6** (Countercharm:
+you and your partner get Advantage on Charmed and Frightened saves, plus the 2nd College feature),
+**10** (d10, Expertise ×2, Magical Secrets ×2), **14** (Magical Secrets ×2 + the 14th College
+feature), **15** (d12, from `Expansion`), **18** (Magical Secrets ×2) and **20** (Superior
+Inspiration: regain a use on initiative when empty). Note also that Listo leaves Expansion's
+optional **Magical Inspiration** on at level 2, so an Inspiration die held by your partner can be
+spent on spell damage or healing — see `data/listo-10.2-mcm.md`.
+
 ## Not present
 
 - **College of Whispers** — **confirmed removed.** Changelog: added in an earlier version

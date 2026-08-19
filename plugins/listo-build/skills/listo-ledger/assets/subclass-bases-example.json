@@ -1,0 +1,39 @@
+{
+  "provenance": "Worked rows, not a pass. Copy to subclass-bases.json and fill until `seed_index.py --bases` is clean. Keys are `<class file>/<### heading verbatim>` — take them from `--list`, never retype them. A base profile is the subclass at ALL TWENTY levels with no multiclassing, scored in Act II: the zero-dip reference point, not a recommendation. `src` and `base_deps` are cache stamps written by `--bases --stamp`.",
+  "bases": {
+    "cleric/Life": {
+      "verdict": "candidate",
+      "scores": [2, 2, 3, 2, 2, 2, 5, 1, null, 2],
+      "prof": ["wis", "cha"],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The rescue ceiling of the list; nothing else on its table clears competent."
+    },
+    "fighter/Battle Master": {
+      "verdict": "candidate",
+      "scores": [4, 1, 4, 4, 3, 0, 0, 1, null, 5],
+      "prof": ["str", "con"],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Three attacks at 11 with superiority dice on the short-rest clock; no outward answer at all.",
+      "uncertain": ["Whether Listo's manoeuvre list matches the 2024 rules is not stated in the class file."]
+    },
+    "cleric/Dream": {
+      "verdict": "dupe",
+      "dupe_of": "cleric/Life",
+      "why": "The domain changes the flavour of the healing, not the shape of the body."
+    },
+    "inquisitor/Zeal Inquisition": {
+      "verdict": "none",
+      "why": "Subclasses are chosen at level 3 and the shipped install has a dangling subclass GUID there; the mod needs updating to 2.2.1."
+    },
+    "cleric/Heavy armour / martial weapon table (the dip-planning summary)": {
+      "verdict": "not-a-subclass",
+      "why": "A planning table that sits inside the Domains section, so it parses as a heading."
+    }
+  }
+}

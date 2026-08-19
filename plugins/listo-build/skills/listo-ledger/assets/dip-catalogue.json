@@ -1,0 +1,131 @@
+{
+  "provenance": "What each class contributes to a split, as parts. Transcribed from each class file's `## Dip value` section plus its subclass table. WORKED EXAMPLE ONLY — Rogue and Fighter are populated so the shape can be checked; the other fifteen classes are not yet written. Composition feeds the split *filter*, never a published number: see SKILL.md.",
+
+  "schema": {
+    "id": "`<class>/<levels>` for the class-generic part, `<class>/<levels>/<subclass>` for a subclass-specific one. A build takes the generic part AND at most one subclass part at the same level.",
+    "as_first": "Applies only when this class is the character's LEVEL 1 class. Exactly one class in a split is first. Saving throws and the good armour come from here and nowhere else.",
+    "as_dip": "Applies when the class is entered after level 1. Same levels, much less: no saving throws, reduced armour, one skill instead of four.",
+    "grants": "SET-VALUED, never summed. `prof` unions into the save set and is then scored by derive_saves(); `armour` takes the best category across all parts; `shield` is a boolean OR; `skills` and `expertise` sum but feed the skl rubric rather than an axis directly.",
+    "deltas": "The genuinely additive part, in axis rungs. Summed across parts, then clamped to 0-5. These are FILTER-GRADE estimates.",
+    "requires": "Condition on the rest of the build, or null. `{\"primary\": \"cha\"}` means the part is worth its deltas only on a Charisma body; otherwise deltas are halved.",
+    "conflicts": "Tags this part competes for. Two parts sharing a tag do not stack — the larger delta applies and the smaller is dropped. `bonus-action-attack` is capped by Lone Wolf's two Bonus Actions; `extra-attack` never stacks.",
+    "exit": "What the class gives up by stopping at N levels instead of 20. Keyed by the level stopped at. Applied to the PRIMARY class only, since a dip never had those levels to lose."
+  },
+
+  "conflict_tags": {
+    "extra-attack": "Extra Attack does not stack from two sources.",
+    "bonus-action-attack": "Lone Wolf grants two Bonus Actions; a third source has nowhere to go.",
+    "expertise": "Expertise on the same skill twice is wasted; the skl rubric saturates.",
+    "heavy-armour": "Proficiency is binary.",
+    "sneak-attack": "One Sneak Attack per turn regardless of source."
+  },
+
+  "parts": {
+    "rogue/1": {
+      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
+                              "skills": 4, "expertise": 2},
+                   "deltas": {"skl": 2}},
+      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
+                              "skills": 1, "expertise": 0},
+                   "deltas": {}},
+      "requires": null, "conflicts": ["expertise"],
+      "note": "The Expertise argument is about Rogue 1, not the dip. Multiclassing *into* Rogue grants light armour and one skill, no Expertise."
+    },
+    "rogue/2": {
+      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
+                              "skills": 4, "expertise": 2},
+                   "deltas": {"skl": 2, "act": 1}},
+      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
+                              "skills": 1, "expertise": 0},
+                   "deltas": {"act": 1}},
+      "requires": null, "conflicts": [],
+      "note": "Cunning Action: Dash / Disengage / Hide as a Bonus Action."
+    },
+    "rogue/3": {
+      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
+                              "skills": 4, "expertise": 2},
+                   "deltas": {"skl": 2, "act": 1, "st": 1}},
+      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
+                              "skills": 1, "expertise": 0},
+                   "deltas": {"act": 1, "st": 1}},
+      "requires": null, "conflicts": ["sneak-attack"],
+      "note": "The standard Rogue dip: Cunning Action plus a subclass. Sneak Attack 2d6."
+    },
+    "rogue/3/Thief": {
+      "deltas": {"act": 1}, "requires": null, "conflicts": ["bonus-action-attack"],
+      "note": "A second Bonus Action, on top of Lone Wolf's extra one. The strongest three-level dip in the list."
+    },
+    "rogue/3/Assassin": {
+      "deltas": {"st": 1}, "requires": null, "conflicts": [],
+      "note": "Action and Bonus Action restored at the start of combat; guaranteed crits on the surprised."
+    },
+    "rogue/3/Swashbuckler": {
+      "deltas": {"st": 1}, "requires": null, "conflicts": ["sneak-attack"],
+      "note": "Sneak Attack with no advantage and no adjacent ally required."
+    },
+    "rogue/3/Inquisitive": {
+      "deltas": {"st": 1, "skl": 1}, "requires": null, "conflicts": ["sneak-attack"],
+      "note": "Insightful Fighting as a repeatable Sneak Attack enabler."
+    },
+    "rogue/5": {
+      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
+                              "skills": 4, "expertise": 2},
+                   "deltas": {"skl": 2, "act": 1, "st": 1, "dur": 1, "ctrl_s": 1}},
+      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
+                              "skills": 1, "expertise": 0},
+                   "deltas": {"act": 1, "st": 1, "dur": 1, "ctrl_s": 1}},
+      "requires": null, "conflicts": ["sneak-attack"],
+      "note": "Extends the dip to Uncanny Dodge and Cunning Strike."
+    },
+    "rogue/9": {
+      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
+                              "skills": 4, "expertise": 4},
+                   "deltas": {"skl": 3, "act": 1, "st": 2, "dur": 2, "ctrl_s": 1, "end": 1}},
+      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
+                              "skills": 1, "expertise": 2},
+                   "deltas": {"act": 1, "st": 2, "dur": 2, "ctrl_s": 1, "end": 1}},
+      "requires": null, "conflicts": ["sneak-attack"],
+      "note": "Sneak Attack 5d6, Evasion at 7, second Expertise pair at 6, subclass feature at 9. At-will damage, so endurance rises."
+    },
+
+    "fighter/1": {
+      "as_first": {"grants": {"prof": ["str", "con"], "armour": "heavy", "shield": true,
+                              "skills": 2, "expertise": 0},
+                   "deltas": {"dur": 2, "end": 1}},
+      "as_dip":   {"grants": {"prof": [], "armour": "heavy", "shield": true,
+                              "skills": 0, "expertise": 0},
+                   "deltas": {"dur": 2, "end": 1}},
+      "requires": null, "conflicts": ["heavy-armour"],
+      "note": "Heavy armour and shields even as a dip; Second Wind. Str+Con saves only when first."
+    },
+    "fighter/2": {
+      "as_first": {"grants": {"prof": ["str", "con"], "armour": "heavy", "shield": true,
+                              "skills": 2, "expertise": 0},
+                   "deltas": {"dur": 2, "end": 1, "act": 2}},
+      "as_dip":   {"grants": {"prof": [], "armour": "heavy", "shield": true,
+                              "skills": 0, "expertise": 0},
+                   "deltas": {"dur": 2, "end": 1, "act": 2}},
+      "requires": null, "conflicts": ["heavy-armour"],
+      "note": "Action Surge. The single best two levels for action economy in the list."
+    },
+    "fighter/11": {
+      "as_first": {"grants": {"prof": ["str", "con"], "armour": "heavy", "shield": true,
+                              "skills": 2, "expertise": 0},
+                   "deltas": {"dur": 2, "end": 2, "act": 2, "st": 3}},
+      "as_dip":   {"grants": {"prof": [], "armour": "heavy", "shield": true,
+                              "skills": 0, "expertise": 0},
+                   "deltas": {"dur": 2, "end": 2, "act": 2, "st": 3}},
+      "requires": null, "conflicts": ["heavy-armour", "extra-attack"],
+      "note": "Improved Extra Attack — three attacks per Action, six per round under Lone Wolf — plus the off-cadence feat at 11."
+    },
+    "fighter/11/Battle Master": {
+      "deltas": {"ctrl_s": 1, "st": 1}, "requires": null, "conflicts": [],
+      "note": "Superiority dice on the short-rest clock; manoeuvres carry riders and control."
+    },
+
+    "exit": {
+      "fighter": {"17": {"st": -1}, "14": {"st": -1, "end": -1}, "11": {"st": -1, "end": -1}},
+      "rogue":   {"17": {"skl": -1}, "14": {"skl": -1, "st": -1}, "11": {"skl": -2, "st": -1}}
+    }
+  }
+}

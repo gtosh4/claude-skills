@@ -87,9 +87,14 @@ across 157 subclasses and would throw most of it away. So a build carries exactl
   and therefore matters, but it is the pair sheet's decision, and a seed asserting it would be
   claiming precision the sweep does not have.
 - **`peak` / `peak_axis`** — the highest rung this body reaches on any axis, **in Act II**, and
-  which axis. Act II because it is the richest band. The number exists to rank for promotion and
-  is then discarded — the ledger re-scores every promoted chassis from scratch against
-  `listo-build/references/axis-rubrics.md`.
+  which axis. Act II because it is the richest band.
+- **`breadth`** — how many of the ten axes reach 3 or better, also in Act II. It exists because
+  `peak` is a maximum, and a maximum cannot see what a multiclass split buys: Fighter 20 and
+  Fighter 11 / Rogue 9 share a `peak` of 5 on `st`, and the dip's gain lands on `act` and `skl`,
+  which the maximum discards. Asking for `peak` alone returned a roster three-quarters mono-class.
+
+  Both numbers exist to rank for promotion and are then discarded — the ledger re-scores every
+  promoted chassis from scratch against `listo-build/references/axis-rubrics.md`.
 - **No role.** A build is not typed carry-or-support: the ledger pairs every chassis with every
   other, so whether a body reads as the damage half of a duo depends on the partner, which a seed
   does not know. The `niche` it sits under — from `listo-build` §1a — already says what it does
@@ -127,7 +132,7 @@ large the roster grows.
 |---|---|
 | **class floor** | every class's best build, whatever its peak |
 | **niche floor** | every niche's best build, likewise |
-| **bar** | `peak >= 4`, filling whatever the limit leaves |
+| **bar** | `peak >= 4`, filling whatever the limit leaves; ties break on `breadth` |
 
 Floors are **guaranteed slots, not fallbacks**. Rationing on the bar alone would rebuild exactly
 the roster that retired the correlation figures — a shortlist selected for being good at
@@ -207,7 +212,7 @@ claim is load-bearing.
 `caveats.excluded.items`. Paste it. That is what the sweep buys: a reader can see what was
 considered and dropped, so the roster's bias is on the page rather than in your head.
 
-Then score the promoted seeds normally. The seed's `peak` has no standing from that point on.
+Then score the promoted seeds normally. The seed's `peak` and `breadth` have no standing from that point on.
 
 ### The seeds file is a cache, and it knows when it is stale
 

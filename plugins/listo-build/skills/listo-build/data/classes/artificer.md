@@ -50,9 +50,9 @@ dialogue checks** — the mod's own `ClassDescriptions.lsx` carries the Wizard t
 
 ---
 
-## Dip value — why Artificer 1 is a premium opener
+## Dip value
 
-The mod ships **two separate level-1 progression nodes** for the same class. Which one you get
+**Artificer 1 is a premium opener.** The mod ships **two separate level-1 progression nodes** for the same class. Which one you get
 depends entirely on whether Artificer is your **first** class. Verbatim from `Progressions.lsx`:
 
 **Level-1 node (Artificer is your starting class):**
@@ -110,6 +110,24 @@ mod's own README states this **works only with core-game spellcasters** — pair
 *modded* caster class may lose the rounding-up. `(unverified against Listo's modded classes.)`
 The README also notes the extra slots **do not appear on the level-up screen**; they show up once
 you return to the field.
+
+**Artificer 3 is the weak stopping point.** It is feat-neutral under Listo's 3/6/9/12/13/15/18
+cadence, but all four subclasses are back-loaded — Armorer and Battle Smith want **5** (Extra
+Attack), Alchemist and Artillerist want 6+. The level-3 base feature, The Right Tool for the Job,
+is a short-rest thieves' tools/shovel conjure. Take the free feat and stop at 2, or commit.
+
+**Against dipping out.** The class's real payoffs sit past any dip's repayment window:
+**6** (3rd infusion slot, 6 infusions known, Sleight of Hand **Expertise**), **7**
+(**Flash of Genius** — a *reaction* adding your Int modifier to a check or save made by you **or
+your partner**, which Lone Wolf's extra reaction lets you spend twice a round), **10**
+(Replicate Magic Item, and Magic Item Adept's +1 damage), **11** (**Spell-Storing Item** — Int-mod
+scrolls per long rest that you can hand to the other character, letting a martial cast Heat Metal
+or Web), **14** (Magic Item Savant: another +1 and **all class/race item requirements ignored**),
+**18** (6 infusion slots, 12 known, +2 damage), and **20** (Soul of Artifice: +1 to *all* saves
+plus a reaction to drop to 1 HP instead of 0). The +1/+1/+2 damage line stacks to **+4** and keys
+off holding a magical weapon, which your own Enhanced Weapon infusion supplies — so it is free
+once you are deep. Half-caster slots also mean an Artificer/full-caster split loses slot levels
+1-for-1 above the 0.5 modifier.
 
 ---
 

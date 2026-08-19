@@ -339,6 +339,10 @@ saves and the skills. Two specific cases:
   main-hand weapon to **Charisma attack and damage**, which turns any Charisma caster into a
   functional melee threat without a second stat. Effectively a Hexblade-shaped dip that no other
   class in the list provides.
+  **What Spellblade 3 does *not* buy:** Arcane Surge (6), Magic Resistance (9), **Will Over Weave
+  (13)** and Beloved By Mana (17). The slot-free Counterspell is the feature most often attached
+  to this dip by mistake — it is ten levels past it. A 3-level dip gets two Focuses, Scholar's
+  Armament and Arcana expertise, and nothing else on the subclass table.
 - **Lionheart 3** on a support character buys the Banner suite outright (though Banner Charges
   stay on the long-rest clock until Paragon **6**, which is the level that makes them worth it —
   a 6-level commitment, not a dip).
@@ -351,8 +355,7 @@ Legend (+4 to two stats, cap 25)**. With this run's level cap at exactly 20, tha
 reachable **only by pure Paragon 20**, and it is the single largest stat source in the file —
 larger than Lone Wolf's +4, and it **breaks the 20 ceiling that Lone Wolf and the ASI feat both
 stop at** (compare the source table in `references/listo-rules.md`). Any dip out of Paragon
-costs that capstone. Treat Paragon as **all-or-nothing in both directions**: it wants to be your
-level 1 class *and* it wants to be all 20 levels.
+costs that capstone.
 
 ---
 

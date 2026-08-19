@@ -23,6 +23,64 @@ Consequence: **act scores are not comparable across acts.** A 4 in Act I is not 
 Act III — both mean "near the best available then". Summing the three acts averages a chassis's
 standing across the run, which is the intended reading.
 
+### The ladder is the shape; the act table is the threshold
+
+Each axis below carries two things, and they do different jobs:
+
+- the **0–5 ladder** — what *kind* of capability each rung is. Act-invariant.
+- the **act table** — what that kind of capability has to *be* in each act to hold the rung. This
+  is where the act-relativity actually lives, and it is anchored for **every rung from 2 up**.
+
+Rungs **0 and 1 are act-invariant by construction** — you either have nothing, or you have an
+incidental. Nothing about "no armour proficiency" or "an incidental rider" changes between acts,
+so those two rungs carry no act row.
+
+**A chassis that acquires a capability and never improves it slides down.** That is not a defect;
+it is the direct consequence of "a 5 means as good as a body can be at *this point* in the run".
+Score against the act's row, not against what the chassis was worth when it got the feature.
+
+The floor moves too. A martial with no spell list scores 0–1 on both control axes in all three
+acts regardless of how far the caster bar rises, so **tightening the upper rungs adds resolution
+in the caster band without compressing the martial band.** The two problems are separable.
+
+### What actually drifts, and what does not
+
+Derived from `CombatExtender.json` (numbers in `data/listo-10.2-mcm.md`), read at the end of each
+act band — character 8 / 15 / 20:
+
+| | end of I | end of II | end of III |
+|---|---|---|---|
+| Enemy HP multiplier | ×1.54 | ×1.96 | **×2.26** |
+| Boss HP multiplier | ×1.74 | ×2.30 | **×2.70** |
+| Enemy AC / boss AC | +0 / +0 | +1 / +1 | +1 / +2 |
+| Enemy ability points | +1 | +2 | +3 |
+| Boss spell save DC (*their* offence) | +1 | +2 | +2 |
+| Our proficiency bonus | +3 | +5 | +6 |
+| Our spell save DC | ≈16 | ≈18 | ≈20 |
+
+- **Fixed-magnitude effects decay.** A flat 1d6 rider holds about **two-thirds** of its relative
+  value from the end of Act I to the end of Act III (1.54⁄2.26 against ordinary enemies,
+  1.74⁄2.70 against bosses). That is a one-rung slide for a body whose contribution is purely flat,
+  and it is the main reason a chassis can fall between acts.
+- **Scale-invariant effects hold.** Advantage and Disadvantage, Lone Wolf's halving, proportional
+  resistance, and attack counts — which ride weapon dice, stat and gear — do not decay.
+- The clearest worked case is the **Eldritch Cannon**: 20 HP and a flat 2d8 is excellent at
+  character 3 and close to irrelevant by Act II. Read a flat row as *keeps pace*, not as *stopped
+  growing*, and a falling row as the build being outrun.
+- **Summons decay slowest of all.** Allies scale +34% HP and **+1 AC static plus +1 per 4 levels**,
+  so a summon set holds its rung where a flat-statted feature loses one.
+
+> **⚠ Correction — save-DC control does *not* decay, and the old note saying it did was a
+> misreading.** `Spell save DC: bosses +1 per 7 levels` is the DC of spells **the enemy casts**;
+> it is their offence and belongs on §9 Saves. What resists *our* control is the enemy's saving
+> throw, which rises only through `Ability points +1 per 6` and the flat `+1 per 20` on save rolls
+> — roughly **+2 to +3** across the whole run, against **+4** on our own DC (proficiency +3, primary
+> stat +1). A pure save-DC controller therefore **holds its rung**, and may gain slightly.
+>
+> Rungs 4–5 on both control axes still sit above rung 2, but on the **concentration** argument
+> alone — a duo holds exactly two slots — which is derived and sufficient. Do not restore the
+> decay justification.
+
 | band | characters | feats | full-caster tier | what newly lands |
 |---|---|---|---|---|
 | **I** | **3–8** | **2** | 4th | Extra Attack (class 5), Action Surge (Fighter 2), Fireball / Haste (caster 5), Aura of Protection (Pal 6), Expertise ×2 (Bard/Rogue 3), Twilight Sanctuary (Cleric 2), Brutish Durability (Fighter 7) |
@@ -71,8 +129,11 @@ Damage into one priority target per round, with both Lone Wolf Actions spent on 
 | **4** | The above plus a third attack source every round, or a repeatable burst channel. |
 | **5** | The act's maximum attack count, with a rider on every hit **and** a bonus-action attack. |
 
-| ceiling | I | II | III |
+| rung | I (char 3–8) | II (9–15) | III (16–20) |
 |---|---|---|---|
+| **2 =** | Extra Attack (class 5) — 2 per Action, 4 per round. A body still on one attack per Action by act's end is rung 0–1 | 2 per Action, no rider. Improved Extra Attack exists now, so this is merely par | 2 per Action with no rider **and** no attuned weapon falls to **1**; par is 3 per Action, or 2 with Legendary attunement |
+| **3 =** | Extra Attack + a per-hit rider — Crimson Rite, Divine Smite, Hex, Hunter's Mark, Sneak Attack | The same, but a **flat** rider (1d4/1d6) is now worth two-thirds of its Act I value; a rider that scales with level or dice count (Sneak Attack, Improved Divine Smite at Paladin 11) holds the rung, a flat one slips | 3 per Action with a scaling rider, or 2 per Action with a scaling rider **plus** one damage feat |
+| **4 =** | Rung 3 plus a third attack source — Action Surge (Fighter 2), a Thief bonus action, a bonus-action strike | Rung 3 plus Improved Extra Attack (Fighter 11) **or** a repeatable burst channel — Eldritch Smite, Consuming Fervor | Rung 3 plus a 9th-tier burst, or Concentrated Blast / Psionic Overload at IMR 4–5 |
 | **5 =** | Extra Attack (class 5) + rider (Crimson Rite, Divine Smite, Hex, Sneak Attack) + a bonus-action strike (War Priest, Martial Arts, Priest of Zeal) | **Improved Extra Attack (Fighter 11)** — 3 per Action, 6 per round — + rider + bonus-action strike | The Act II ceiling plus a damage feat (Great Weapon Master, Sharpshooter, Savage Attacker) and attuned gear |
 
 > Eldritch Blast is **1d8 per beam here, not 1d10** (v10.0 nerf); beams at character 5/10/17, 4th
@@ -97,8 +158,11 @@ enemy HP at 20** — repeatability outranks per-cast size, increasingly so as th
 | **4** | A repeatable AoE **plus** a burst, a maximised burst, or two AoE damage types. |
 | **5** | The act's best repeatable AoE delivered twice a round, plus a second damage type or a maximised burst. |
 
-| ceiling | I | II | III |
+| rung | I (4th tier) | II (8th tier) | III (9th tier) |
 |---|---|---|---|
+| **2 =** | One Fireball / Shatter / Ice Knife per fight out of long-rest slots | A single 3rd-tier AoE is now background — par is a 4th–5th tier cast (Ice Storm, Cone of Cold) once per fight | 6th-tier and up once per fight (Chain Lightning, Sunburst, Freezing Sphere); a lone Fireball is rung **1** |
+| **3 =** | A **repeatable** source — Breath of the Dragon (Monk 3, replaces one attack), a cleave routine, Consuming Fervor's maximised Fireball ×2 per short rest (Cleric 6) | Eldritch Cone (Warlock 9) or Spirit Guardians as moving denial. ⚠ **Eldritch Cone stops scaling at character 10** and so slides to rung 2 in Act III | An at-will weapon AoE (Volley / Whirlwind), or Cull the Weak's overkill spread at IMR 4–5 |
+| **4 =** | Repeatable **plus** a slot burst, or two damage types against early resistances | Repeatable plus a 5th–6th tier burst, or a maximised burst on a short-rest clock | The at-will engine plus a 9th-tier burst, **or** the engine plus a second damage type |
 | **5 =** | Fireball/Shatter from slots **plus** a repeatable source — Breath of the Dragon (Monk 3, replaces one attack, costs no bonus action) | **Volley/Whirlwind** (Ranger 11 — at-will full weapon damage to every target, no save, no resource) ×2 rounds, or Eldritch Cone (Warlock 9), plus Consuming Fervor's maximised Fireball ×2 per short rest | The Act II at-will engine **plus** a 9th-tier burst and a second damage type against layered resistances |
 
 > **Eldritch Cone / Line does not scale past character 10.** `Zone_EldritchCone` reads
@@ -132,8 +196,11 @@ is Rescue. Never score the same feature in both.
 | **4** | Rung 3 plus one flat-reduction or damage-halving source. |
 | **5** | Rung 3 plus everything the act's feat budget can stack on top. |
 
-| ceiling | I | II | III |
+| rung | I (2 feats) | II (5–6 feats) | III (7–8 feats, 5 attuned) |
 |---|---|---|---|
+| **2 =** | Medium armour + shield (AC 17–18), or a robe with Mage Armour **plus** Shield cast most rounds — only if the slot budget supports it | The same, but enemy AC/attack scaling has begun; par now includes **one magic AC source** on top | Medium + shield with no magic AC and no attunement falls to **1**; par is medium/heavy + shield + an attuned defensive item |
+| **3 =** | Heavy armour + shield (AC 19–20) — reachable only if the level-1 class grants heavy armour proficiency | Heavy + shield **plus** a magic AC source or a resistance | Heavy + shield + attuned defensive gear, or rung 4's mitigation without the armour |
+| **4 =** | Rung 3 + **Heavy Armour Master** — one feat, which is half the Act I budget. Class equivalents: Lycan Resilient Hide, Uncanny Dodge, Evasion | Rung 3 + **Shield Master**'s passive Block, or Evasion, or Eldritch Ward at IMR 2+ (flat `IMR` off AoE, ranged and spells) | Rung 3 + two mitigation layers, at least one **proportional** — flat-only mitigation sits a rung below its raw numbers by Act III |
 | **5 =** | Heavy armour + shield + **Heavy Armour Master** (all damage −PB, cap 5) — one feat, and only if the level-1 class grants heavy armour. Brutish Durability (Fighter 7) also lands here | + **Shield Master** (Block is a **passive** here: halves damage on a failed Dex save, plus flat −1) and **Tough** → flat −6 after Lone Wolf's halving, plus Evasion-grade AoE mitigation | + Legendary attunement defensive gear (5 attuned, 3 Legendary) |
 
 > **Shield lasts until the start of your next turn**, so it is a once-per-round +5 and **Lone Wolf's
@@ -171,8 +238,11 @@ already matches a four-body party's economy. This axis measures surplus, not suf
 | **4** | The above plus a third Action, or a multi-body summon set. |
 | **5** | An Action handed to the **other** body, or the act's largest body count, on top of own extra attacks. |
 
-| ceiling | I | II | III |
+| rung | I | II | III |
 |---|---|---|---|
+| **2 =** | Extra Attack (class 5), or one permanent extra body — Find Familiar, Beast Tamer's short-rest familiar, Pact of the Chain | The same. A familiar still counts because **allies scale too** (+34% HP, +1 AC per 4 levels) | 2 per Action or a single familiar is now par at best; a body with neither falls to **1** |
+| **3 =** | Multiattack + a recurring bonus-action attack (Martial Arts, War Priest, Priest of Zeal, Thief), or a real third body — Conjure Animals at Druid 5, **non-concentration until long rest** via `13458` | The same, plus a maintained summon set with `Automated Summons` (`10922`) handing turns to the AI | A summon set **plus** a bonus-action attack engine |
+| **4 =** | Rung 3 plus a third Action — **Action Surge** (Fighter 2) | Rung 3 plus Action Surge, or a multi-body summon set | Rung 3 plus Action Surge (two charges at Fighter 17), or **Astral Stillness** free casts every `10 − IMR` stacks |
 | **5 =** | **Haste** on the partner (caster 5) + Extra Attack + Action Surge; or a summon set — Conjure Animals at Druid 5, made **non-concentration, until long rest** by `13458`, with `Automated Summons` (`10922`) handing their turns to the AI | Improved Extra Attack (Fighter 11) + Haste on the partner + a maintained summon set | + uncapped undead (`Animate Dead++` removes the cap, moves free Animate Dead to 5, extends Undead Thralls to every undead owned) and 9th-tier summons |
 
 > **Priest of Zeal** charges scale with Wisdom — six at Wis 22 — and `PriestOfZealActionPoint` is
@@ -196,10 +266,18 @@ so it carries the same crowd-versus-boss split damage already has. Score both.
 slots between them — which is why control that spends no slot is worth a full rung more than
 control that does.
 
-> Combat Extender gives bosses **+1 spell save DC per 7 levels** and enemies +1 per 11, so save-DC
-> control decays across the run while Disadvantage-on-saves does not. That gap is why rungs 4–5 sit
-> above rung 2 on both ladders, and why a pure save-DC controller **loses a rung between Act II and
-> Act III**.
+> **Rungs 4–5 sit above rung 2 on the concentration argument alone**, and that is enough: the pair
+> holds two slots between them, so control that spends none is strictly additional where control
+> that spends one is substitutional.
+>
+> An earlier version of this note also claimed save-DC control decays across the run. **It does
+> not** — see the correction under "What actually drifts". Enemy saving throws rise ~+2 to +3 while
+> our DC rises +4. Disadvantage-on-saves is still better than a DC, but because it stacks with the
+> DC rather than because the DC rots.
+>
+> **The pool a caster picks from, by act** (`data/listo-10.2-spells.md`): Wizard 176 / 242 / 260,
+> Sorcerer 138 / 182 / 192, Bard 85 / 105 / 122 — plus Magical Secrets at 280 (Bard 10), 376 (14)
+> and **415** (18). Ranger 40 / 58 / 68. A chassis with no list scores 0–1 here in every act.
 
 ## 5. Control (single)
 
@@ -211,12 +289,15 @@ Removing **one** enemy's turn — the boss answer.
 | **1** | An incidental rider — Prone from a shove, Repelling Blast (**which now allows a Strength save**). |
 | **2** | One single-target concentration control spell off long-rest slots. |
 | **3** | That **plus** a repeatable non-concentration rider. |
-| **4** | Single-target control that costs no concentration and does not decay as enemy saves scale. |
+| **4** | Single-target control that **costs no concentration**, so it never competes with the partner's one slot. |
 | **5** | The above plus slot-free hard control on a short-rest clock. |
 
-| ceiling | I | II | III |
+| rung | I (4th tier) | II (8th tier) | III (9th tier) |
 |---|---|---|---|
-| **5 =** | Hold Person (caster 3) / Command **plus** a repeatable rider — Cunning Strike (Prone/Poison/Disarm every turn), Wrath of the Storm | **Brand of the Sapping Scar** (ProfaneSoul 11 — blanket Disadvantage on the branded creature's saves, free interrupt, no concentration) or Vengeance's Divine Scourge, **plus Chains of Carceri** (`Invocations Expanded`, Warlock 12 — Hold Monster, once per short rest, no slot) | + 9th-tier single-target control off the new slot (Power Word Kill, Dominate Monster) and riders from Legendary attunement gear |
+| **2 =** | Hold Person / Command / Ensnaring Strike off long-rest slots | The 2nd-tier version is background now; par is 5th–8th tier — Hold Monster, Dominate Person, Feeblemind | 6th–9th tier off long-rest slots — Dominate Monster, Power Word Kill. Hold Person alone is rung **1** |
+| **3 =** | Rung 2 **plus** a repeatable non-concentration rider — Cunning Strike (Rogue 5), Wrath of the Storm, Mind Sliver's save penalty | Rung 2 plus Hypnotic Stare (Mesmerist 2 — permanent −1 to one enemy's saves, bonus action, no resource) or Vengeance's Divine Scourge | Rung 2 plus a rider from Legendary attunement gear, or illithid Ability Drain |
+| **4 =** | Single-target control costing **no concentration** — Command, Hypnotic Stare, a Prone routine that lands every turn | **Brand of the Sapping Scar** (ProfaneSoul 11 — blanket Disadvantage on the branded creature's saves, free interrupt, no concentration) | **Psionic Dominance** (Dominate Person, no concentration) at IMR 4–5, or Blade of Disaster |
+| **5 =** | Hold Person (caster 3) / Command **plus** a repeatable rider — Cunning Strike (Prone/Poison/Disarm every turn), Wrath of the Storm | Brand of the Sapping Scar or Divine Scourge, **plus Chains of Carceri** (`Invocations Expanded`, Warlock 12 — Hold Monster, once per short rest, no slot) | **Time Stop** — every enemy loses every action point for its duration, the purest effect on this axis — or Power Word Kill / Dominate Monster off the 9th slot, **plus** a no-concentration rider |
 
 > **Brand of the Sapping Scar is single-target, not area** — `Brand_Castigation` marks one creature.
 > Its value is that the Disadvantage is blanket *across that creature's saves* and costs no
@@ -233,12 +314,15 @@ punish you for lacking.
 | **1** | An incidental multi-target effect — difficult terrain, a surface left behind. |
 | **2** | One area control spell off long-rest slots. |
 | **3** | Repeatable area control, or an area spell **plus** a non-concentration rider. |
-| **4** | Area control that costs no concentration, or that does not decay as enemy saves scale. |
+| **4** | Area control that **costs no concentration**, so it never competes with the partner's one slot. |
 | **5** | Slot-free repeatable area control on a short-rest clock. |
 
-| ceiling | I | II | III |
+| rung | I (4th tier) | II (8th tier) | III (9th tier) |
 |---|---|---|---|
-| **5 =** | Hypnotic Pattern / Web / Grease (caster 5) plus a surface or shove routine | Evard's Black Tentacles, Sleet Storm, Spirit Guardians as area denial, on a repeatable clock | + 9th-tier area control off the new slot |
+| **2 =** | Hypnotic Pattern / Web / Sleep off long-rest slots | Par is 4th–5th tier — Evard's Black Tentacles, Sleet Storm, Confusion. A lone Web is background | 6th–9th tier — Weird, Psychic Scream, Prismatic Wall, Maze, Incendiary Cloud. Web alone is rung **1** |
+| **3 =** | Repeatable area control, or an area spell **plus** a surface or shove routine | Spirit Guardians as moving denial on a repeatable clock, or an area spell plus a non-concentration rider | An area spell plus Black Hole (IMR 4–5: pull, Prone, guaranteed Dazed 2) |
+| **4 =** | Area control costing **no concentration** — Grease and other persistent surfaces, Repelling Blast, a shove routine that lands every turn | Mind Flayer's Insanity stacks or Repulsor at IMR 2–3, or an area effect that runs off a short-rest charge rather than concentration | Black Hole, or 9th-tier area control that resolves on cast rather than holding |
+| **5 =** | Hypnotic Pattern / Web / Grease (caster 5) plus a surface or shove routine | Evard's Black Tentacles, Sleet Storm, Spirit Guardians as area denial, on a repeatable clock | 9th-tier area control off the new slot **plus** a no-concentration layer under it |
 
 > A chassis carrying only single-target hard control **should fall on this axis as encounters
 > crowd**. `data/docs/3-GameBalance.md` — More Enemies in Basic Fights, Encounters Overhaul and
@@ -270,9 +354,12 @@ Four things count, and they are not equal in a duo:
 | **4** | **Prevention** on the partner, or a no-action aura that temp-HPs them every round. |
 | **5** | Prevention **and** restoration **and** no-action outward healing, on clocks the act can rescue. |
 
-| ceiling | I | II | III |
+| rung | I | II | III |
 |---|---|---|---|
-| **5 =** | **Twilight Sanctuary** (Cleric 2 — 9m sphere, 1d6 + Cleric level temp HP to everyone ending turn inside, **or** end one charm/fright; one Channel Divinity, short-rest refresh) + Revivify (caster 5) + **Death Ward** (4th, caster 7) | + **Greater Restoration** (5th, caster 9) and **Flurry of Healing and Harm** (Way of Mercy 11 — every Flurry strike carries a free Hands of Healing outward; Lone Wolf's second bonus action buys two Flurries a round) | + 9th-tier restoration off the new slot, Mass Heal, and Legendary gear |
+| **2 =** | Healing Word / Cure Wounds aimed outward off long-rest slots | Mass Healing Word or Aura of Vitality — but Aura of Vitality **holds concentration**, so it competes with §5/§6 | 6th-tier and up outward, or a lower-tier heal upcast; a bare Cure Wounds is rung **1** |
+| **3 =** | **Revivify** (full caster 5, Artificer 5, Paladin 5) or Lesser Restoration; or repeatable outward healing on a short-rest clock | **Greater Restoration** (5th, caster 9); **Revivify now reaches the Ranger** at spell level 3 (class 9), which removes the "one of us must be Cleric/Paladin/Bard" constraint on pair composition | 9th-tier restoration, Mass Heal, or Legendary rescue gear |
+| **4 =** | **Prevention** — Death Ward (4th, caster 7) — or a no-action aura that temp-HPs the partner every round: **Twilight Sanctuary** (Cleric 2), Peace's Emboldening Bond | Rung 4 plus **Flurry of Healing and Harm** (Way of Mercy 11 — every Flurry strike carries a free Hands of Healing outward; Lone Wolf's second bonus action buys two Flurries a round) | Prevention that survives the act's damage, plus a no-action outward source, on a short-rest clock |
+| **5 =** | **Twilight Sanctuary** + Revivify (caster 5) + **Death Ward** (4th, caster 7) | + **Greater Restoration** (5th, caster 9) and **Flurry of Healing and Harm** | + 9th-tier restoration off the new slot, Mass Heal, and Legendary gear |
 
 > **Damage redirection is worth far less in a duo than its reputation.** Warding Bond and
 > Protective Bond are strong in a four-party because they move damage onto a **spare** body. You
@@ -307,9 +394,12 @@ they buy usually lands on another axis. Do not restate a gate's numbers here.
 | **4** | Expertise ×2, Guidance, and all but one of the act's named gates cleared. |
 | **5** | Every named gate in that act cleared. |
 
-| ceiling | I | II | III |
+| rung | I | II | III |
 |---|---|---|---|
 | **skill gates** | **Hag's Hair, DC 20** — **Deception or Intimidation**, one per run | **Potion of Everlasting Vigour** — pickpocket Araj (Sleight of Hand); plus passive Perception for hidden content | **Mirror of Loss, Religion DC 25**, and the **pickpocket-only** second Phalar Aluve music box in the Circus (Sleight of Hand) |
+| **2 =** | Expertise ×1, or five-plus skills behind a 16+ ability | The same plus Guidance at will — a broad list with no Expertise is now rung 1 | The same; with no answer to a DC 25 a body **cannot exceed 2**, however many proficiencies it holds |
+| **3 =** | Expertise ×2 (Bard/Rogue 3) + Guidance | + **Reliable Talent** (Rogue 11) or Lore's Peerless Skill — floor-raising, not just bonus-raising | + **Elevated Mind** (illithid: Expertise *and* proficiency in every skill of one ability, re-selectable) |
+| **4 =** | Expertise ×2 + Guidance + **Hag's Hair cleared** on the host body | + a Sleight of Hand body for Araj and passive Perception in the 20s | All but one of the act's named gates — typically the Mirror or the Circus box |
 | **5 =** | Expertise ×2 (Bard/Rogue 3) + Guidance + a check that clears DC 20 | + a Sleight of Hand body + passive Perception in the 20s | + an Intelligence skill that clears DC 25, or Forbidden Knowledge spent to bypass it |
 
 > **Persuasion does not open Hag's Hair** — the check is Deception or Intimidation, and Fighters
@@ -339,9 +429,15 @@ body that holds concentration**, since a broken concentration is a lost body one
 | **4** | Four or more disjoint saves covering **all three** of Wis / Con / Dex, or a blanket booster. |
 | **5** | The act's best available blanket coverage on top of a disjoint four. |
 
-| ceiling | I | II | III |
+Enemy DCs are the one thing that genuinely climbs — **boss spell save DC +1 / +2 / +2** across the
+acts — so this is the axis where standing still costs the most.
+
+| rung | I (boss DC +1) | II (+2) | III (+2, and 9th-tier effects) |
 |---|---|---|---|
-| **5 =** | Four disjoint (level-1 class pair + Lone Wolf's two) covering Wis/Con/Dex **plus Aura of Protection** (Paladin 6: +Cha mod to every save **on both characters**, 9m) or Brutish Durability (Fighter 7: +1d6 to **every** save, unconditional, no resource) | **Diamond Soul** (Monk 14 — all six proficient) or Slippery Mind (Rogue 15) on top of a disjoint four | Diamond Soul or a disjoint four **and** a partner's Aura, plus Legendary save gear from the 5-item attunement budget |
+| **2 =** | Three disjoint proficient saves including one of Wis / Con / Dex | The same, but three disjoint with **no booster** is thin against the act's DCs | Three disjoint alone falls to **1**; par is four disjoint or three plus a booster |
+| **3 =** | Four disjoint covering two of Wis / Con / Dex | Four disjoint covering two, **plus** a booster or a save-relevant item | Four disjoint covering all three, without a blanket source |
+| **4 =** | All three of Wis / Con / Dex covered, **or** a blanket booster — Aura of Protection (Paladin 6), Brutish Durability (Fighter 7) | **Diamond Soul** (Monk 14 — all six proficient) or Slippery Mind (Rogue 15) | Psychic Fortress at IMR 4–5 (+IMR to Int/Wis/Cha saves) on top of a disjoint four |
+| **5 =** | Four disjoint (level-1 class pair + Lone Wolf's two) covering Wis/Con/Dex **plus Aura of Protection** or Brutish Durability | Diamond Soul or Slippery Mind on top of a disjoint four | Diamond Soul or a disjoint four **and** a partner's Aura, plus Legendary save gear from the 5-item attunement budget |
 
 > Sources are the **level 1 class only** (two saves, lost silently on respec) and **Lone Wolf's two
 > picks**, plus Resilient, which is repeatable. They must be **disjoint** to count — Blood Hunter's
@@ -359,17 +455,32 @@ How many hard fights the body's resource budget covers per long-rest cycle. **Tw
 long rest**, so a short-rest pool is spent **three times** per cycle — the initial fill plus two
 refreshes, not indefinitely.
 
-This is the most act-stable axis: a clock is a clock at every level, so the rungs move least.
+This axis drifts least — a clock is a clock at every level — but it does **not** hold still, and the
+previous version of this ladder named class levels as rungs (Warlock 11, Paladin 17, Monk 14),
+which put every rung above 1 out of reach in Act I and left the axis unable to discriminate there
+at all. The ladder below is stated in **shapes**; the class levels moved into the act table where
+they belong.
 
 | | |
 |---|---|
-| **0** | Long-rest slots only, 4–5 per hard fight, no at-will fallback — roughly two fights. |
-| **1** | Warlock 3 / 5 / 7: 2 pact slots × 3 = **6 units** per cycle. |
-| **2** | Warlock 11+: 3 pact slots × 3 = **9**; or Bard 15 ≈ **18 slots** at 4–5 per fight. |
-| **3** | Paladin 17 ≈ **15 slots**, Cleric 18 ≈ **21** — four to five fights. |
-| **4** | Monk 14: 14 ki × 3 = **42** at 8–10 per hard fight, **plus** ki healing between fights. |
+| **0** | Long-rest resources only, spent by the second hard fight, no at-will fallback. |
+| **1** | Long-rest resources that stretch to about three fights, still no short-rest pool. |
+| **2** | A **small short-rest pool** on top of slots — refilled twice, so spent three times per cycle. |
+| **3** | A large short-rest pool, **or** a long-rest pool covering four to five fights, plus out-of-combat healing. |
+| **4** | A short-rest pool that covers a hard fight **on its own**, refilled twice. |
 | **5** | **Unbounded** — the damage is at-will with no clock: Rogue Sneak Attack, Champion / Battle Master Fighter, Blood Hunter Crimson Rite. |
 
+| rung | I (char 3–8) | II (9–15) | III (16–20) |
+|---|---|---|---|
+| **2 =** | Warlock 3–5 (2 pact × 3 = **6 units**), Battle Master's 4 dice × 3 = **12**, or Second Wind + Action Surge | Warlock 11 (3 pact × 3 = **9**); a full caster's ≈14–16 slots is now only rung 1–2 | Paladin 17 ≈ **15 slots**; a full caster's long-rest table alone no longer clears rung 2 |
+| **3 =** | Monk 5–8 (6–9 ki × 3 = **18–27**), or slots **plus** Song of Rest (Bard 2) | Bard 15 ≈ **18 slots**, or a short-rest pool plus out-of-combat healing | Cleric 18 ≈ **21 slots** — four to five fights |
+| **4 =** | A short-rest pool large enough that one fight does not empty it — Monk 8's ki, Ki-fuelled healing between fights | **Monk 14**: 14 ki × 3 = **42** at 8–10 per hard fight, plus ki healing | **Monk 20**: 21 ki × 3 = **63**; or a short-rest engine plus Illithid charges *not* leaned on |
+| **5 =** | At-will damage with no clock — **act-invariant, and that is the point**: it is why martials own this axis in every act | The same | The same |
+
+> **Illithid charges cut against this axis.** `2.5 + 0.5 × powers` per long rest, only half back on
+> a short rest — a chassis that funds its tempo from charges is buying Act III damage with Act III
+> rests. Score the drop.
+>
 > **Hit points force more long rests than slots do.** Count out-of-combat healing in this budget:
 > ki healing and Song of Rest raise Endurance; a pool that only refreshes on a long rest does not.
 >
@@ -428,11 +539,21 @@ Astral Stillness discounting every cast by 1, it becomes a genuine repeatable en
 1. **Fix the level order first.** Act scores come from where a feature actually lands in the
    levelling ladder, not from the final build. A chassis that defers its Cleric block scores its
    Act I on what it has at character 7, whatever it ends up as.
-2. Score each body against the act's own ceiling row, ignoring its partner entirely.
+2. Score each body against **that act's row in the axis table**, ignoring its partner entirely.
+   Rungs 0–1 have no act row; every rung from 2 up does, and a capability that was rung 3 in Act I
+   is often rung 2 in Act III without anything having changed about the chassis.
 3. **Check the budget.** Total the feats and levels the 4s and 5s imply against that act's
    allowance — **2 feats in Act I, 5–6 by Act II, 7–8 by Act III**. If they exceed it, or leave the
    primary below 20-by-6 / 22-by-18, lower a score rather than hand-wave it. Act I is the binding
    band: two feats cannot buy two 5s.
-4. Watch the axes that **lose** a rung across acts: pure save-DC control (enemy DCs climb),
-   Eldritch Cone AoE (stops scaling at character 10), and anything locked to one damage type once
-   Absolute Wrath's layered resistances appear.
+4. Watch what **loses** a rung across acts:
+   - anything **flat-magnitude** — a 1d6 rider keeps about two-thirds of its relative value from
+     the end of Act I to the end of Act III;
+   - **Eldritch Cone** AoE, which stops scaling at character 10 outright;
+   - anything locked to **one damage type** once Absolute Wrath's layered resistances appear;
+   - a **three-disjoint save set** with no booster, as boss DCs climb;
+   - **flat-only mitigation** in a boss-weighted act.
+
+   And what does **not**: Advantage/Disadvantage, proportional mitigation, attack counts, summons
+   (allies scale too), at-will damage — and **save-DC control**, which the old version of this list
+   wrongly included. See the correction under "What actually drifts".

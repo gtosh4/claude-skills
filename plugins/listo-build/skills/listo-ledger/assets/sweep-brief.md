@@ -30,10 +30,10 @@ assignment lists the keys (they are `<class file>/<### heading verbatim>`; copy,
 
 ```json
 {"warlock/The Hexblade": {"verdict":"candidate","builds":{
-  "front-line": {"chassis":"Hexplate","split":"Warlock 12 / Paladin 8",
-                 "peak":4,"peak_axis":"st","why":"Cha to attack and damage, short-rest slots feeding smites, aura at Paladin 6."},
-  "short-rest": {"chassis":"Curse","split":"Warlock 12 / Sorcerer 8",
-                 "peak":4,"peak_axis":"ctrl_s","why":"Same stat, different clock: Chains of Carceri and Quickened blast off pact slots."}}}}
+  "front-line": {"chassis":"Hexplate","split":"Warlock 12 (The Hexblade) / Paladin 8 (Oath of Devotion)",
+                 "peak":4,"peak_axis":"st","breadth":5,"why":"Cha to attack and damage, short-rest slots feeding smites, aura at Paladin 6."},
+  "short-rest": {"chassis":"Curse","split":"Warlock 12 (The Hexblade) / Sorcerer 8 (Draconic Bloodline)",
+                 "peak":4,"peak_axis":"ctrl_s","breadth":4,"why":"Same stat, different clock: Chains of Carceri and Quickened blast off pact slots."}}}}
 ```
 
 | verdict | when | required |
@@ -43,12 +43,31 @@ assignment lists the keys (they are `<class file>/<### heading verbatim>`; copy,
 | `none` | no 20-level split rescues it | `why` |
 | `not-a-subclass` | the heading is a table or a note | `why` |
 
-Every build needs `chassis` `split` `peak` `peak_axis` `why`.
+Every build needs `chassis` `split` `niche` (as its key) `peak` `peak_axis` `breadth` `why`.
 `why` is **one sentence, 25 words maximum**. Rejections need it more than candidates do.
 
 **Emit no other fields.** `src`, `seed_deps` and `score_deps` are cache stamps written by
 `seed_index.py --stamp` after your output is merged; a stamp you invent would mark a judgement as
 verified against source you never read.
+
+## The seven niches
+
+**`niche` is a closed set.** It is the key each build sits under, and it must be one of exactly
+these seven strings. Anything else is rejected on load, so copy them character for character.
+
+| niche | what a body in it does with its turns | the catch |
+|---|---|---|
+| `action-economy` | Manufactures turns — summons, Haste, Action Surge, Quickened, or an Action handed to the partner | Summons cost a turn to set up; Haste is concentration and competes with your control spell |
+| `lockdown` | Save-or-lose against crowds; area control that composes rather than duplicating | Enemy saves climb +1 per 6 levels, so a static DC decays; single-target-only control falls further as fights crowd |
+| `front-line` | Weapon damage into a priority target — smites, Extra Attack, Fighter 11's third attack | Resource-limited burst runs dry in long fights; needs an endurance answer |
+| `reaction` | Spends Lone Wolf's **second reaction** — off-turn Sneak Attack, Uncanny Dodge, Riposte, opportunity attacks | Worthless if nothing triggers it; needs a build shaped around being attacked |
+| `short-rest` | Runs on the short clock — pact slots, superiority dice, ki, Second Wind | Usually caps spell tier or damage ceiling against a long-rest caster |
+| `durability` | Refuses to die — heavy armour, shields, flat reduction, and **self-healing counts here** | Being un-killable does not end fights, and a duo cannot afford a passenger |
+| `skills` | Clears gates — Expertise, Guidance, covering checks the partner cannot | Depth saturates at one source; breadth does not. Rarely worth building around, always worth dividing |
+
+**There is no carry/support field.** The ledger pairs every chassis with every other, so a body is
+not typed as one or the other — the niche already says what it does with its turns, and whether it
+reads as the damage half of a duo depends on the partner, which a seed does not know.
 
 ### One build per niche — a subclass is not one chassis
 
@@ -74,18 +93,46 @@ the identity — Bombard, Volley, Zeal, Chains, Mercy, Hexplate.
 ## The split
 
 The build's 20-level expression: **one, two or three distinct classes, summing to 20, joined by
-`/`.** Each class appears once, carrying its total.
+`/`.** Each class appears once, carrying its total, **with its subclass in parentheses**.
 
 ```
-Fighter 20                                        one class is a real answer
-Cleric 14 / Paladin 6                             two
-Storm Sorcerer 17 / Tempest Cleric 1 / Fighter 2  three, the maximum
+Cleric 14 (Life) / Paladin 6 (Oath of the Ancients)                     two classes
+Sorcerer 17 (Storm) / Cleric 1 (Tempest) / Fighter 2 (none)             three, the maximum
+Fighter 20 (Battle Master)                                              one class is legal, and rare
 ```
+
+**Name the subclass for every class in the split.** A reader cannot rebuild `Fighter 2` — Battle
+Master, Champion and Eldritch Knight are different dips. If a class is taken below its subclass
+level, write `(none)`.
+
+### Dipping is close to free here, and mono-class is the exception
+
+The single largest error in the last sweep was mono-class splits: three quarters of the roster took
+one class for all twenty levels. **That was wrong, and the numbers say so** — the multiclass
+quarter beat the mono three-quarters by +0.8 on Actions, the axis that caps Tempo, and took a
+third more than its share of the frontier.
+
+The reason is arithmetic. **Feats key off character level (3/6/9/12/13/15/18), not class level, so
+a dip costs no feats at all.** Nor does it cost save proficiencies: Lone Wolf already grants two
+of its own, so the classic Fighter 1 or Sorcerer 1 for Constitution buys nothing here. A dip in
+this list costs only what the top of the abandoned class table would have given — and outside a
+handful of real capstones, that is very little.
+
+So **the burden of proof runs the other way**: a 20-level single class needs a reason, and the
+reason must be a specific late feature worth more than the best three levels available elsewhere.
+Paragon has one (Paragon Of Legend at 20 breaks the stat ceiling). Most classes do not.
+
+Read the `## Dip value` sections as a menu you are expected to buy from, not as background.
 
 - **Never more than three classes.** A fourth is a build that has stopped being a chassis.
+- **A feature you name must be one the split actually reaches.** If `why` says a body has
+  slot-free Counterspell, the split must include the level that grants it. Class files list a
+  level against every feature — `L13 Will Over Weave` — and a `## Duo relevance` bullet praising a
+  subclass is describing the *whole* subclass, not the three levels you are dipping into. Check
+  the level before you cite the feature.
 - **Do not record levelling order.** No arrows, and never the same class twice. Which block comes
   first matters enormously to a build, but it is a **pair-sheet** decision — a seed that encodes
-  it is claiming precision the sweep does not have. `Rogue 9 / Ranger 11`, not
+  it is claiming precision the sweep does not have. `Rogue 9 (Thief) / Ranger 11 (Gloom Stalker)`, not
   `Rogue 1 -> Ranger 11 -> Rogue 8`.
 - **It must sum to 20.** A split that does not has shipped here before, and `--check` refuses it
   rather than letting it through.
@@ -93,8 +140,12 @@ Storm Sorcerer 17 / Tempest Cleric 1 / Fighter 2  three, the maximum
 - Feats land at character **3/6/9/12/13/15/18**, plus **11 for Fighter and Rogue only**. Every
   mod page's own feat table is wrong for this list.
 - The primary stat must reach **20 by character 6 and 22 by 18**. One stat, in practice.
-- Prefer the subclass carrying the majority of levels. If its best home is a 3-level dip under
-  someone else's body, that is usually a `dupe` or a `none`, not a candidate.
+- **The subclass you were assigned must take more levels than any other class in the split** — it
+  is the dominant class, not the only one. `Cleric 14 (Life) / Paladin 6` is right. `Paladin 14 /
+  Cleric 6 (Life)` is a Paladin build and belongs to whoever was assigned Paladin.
+  If your subclass has nothing to offer *except* as a 3-level dip under someone else's body,
+  **that** is what makes it a `dupe` or a `none`. It is a judgement about the subclass being
+  seeded, and says nothing about whether that body should itself dip. It should.
 
 **Two players, Lone Wolf, level cap 20.** Lone Wolf is baseline for every body from level 1:
 2 Actions, 2 Bonus Actions, 2 Reactions, **halved damage from all sources**, +4 to two abilities
@@ -117,14 +168,27 @@ Seed its subclasses `none` unless the split stops at 2, and say the mod needs up
 pass, which revisits it with the full rubric and both classes' complete text in front of it.
 Get the majority class and the shape right; do not agonise over whether the dip is 2 or 3.
 
-## `peak` and `peak_axis`
+## `peak`, `peak_axis` and `breadth`
 
-The **highest rung this body reaches on any single axis, in Act II** (characters 9–15, 5–6 feats,
-8th-level slots), and which axis it is. Act II because it is the richest band — six feats and
-nearly every run-defining breakpoint. One number, 0–5, **per build**. It ranks builds for
-promotion and is then discarded.
+Two numbers, both judged in **Act II** (characters 9–15, 5–6 feats, 8th-level slots) because it is
+the richest band — six feats and nearly every run-defining breakpoint. Both rank builds for
+promotion and are then discarded; the ledger re-scores every promoted chassis from scratch.
 
-Rungs are **act-relative**: 5 means "as good as a body can be at this point in the run", not ever.
+**`peak`** is the highest rung this body reaches on **any single axis**, 0–5, and `peak_axis`
+names that axis.
+
+**`breadth`** is **how many of the ten axes reach 3 or better** in Act II, 0–10.
+
+> **Why `breadth` exists.** `peak` is a maximum, and a maximum cannot see the thing a dip buys.
+> Fighter 20 and Fighter 11 / Rogue 9 both peak at 5 on `st`; the dip's gain lands on `act` and
+> `skl`, which the maximum discards. The last sweep asked for `peak` alone and came back
+> three-quarters mono-class — agents optimised the one number they were given, and that number was
+> blind to breadth by construction. Write both, and let a wide body show as wide.
+
+Do not inflate `breadth`. A 3 is "does this competently for the act"; most bodies are 0 or 1 on
+several axes and a `breadth` above 6 is a claim that needs a split to back it.
+
+Rungs are **act-relative**: a `peak` of 5 means "as good as a body can be at this point in the run", not ever.
 A body that is merely competent peaks at 3. Be willing to write 2.
 
 | key | axis | **4 =** | **5 =** |
@@ -147,15 +211,6 @@ Two rules that bite:
 - **Self-healing is `dur`, not `rsc`.** Only what a body can aim at its *partner* is rescue. Damage
   redirection (Warding Bond, Protective Bond) **never scores above 1** — in a duo it moves damage
   from one half of the party to the other.
-
-## `niche`
-
-`niche` is the **key** each build sits under, and is one of exactly: `action-economy` `lockdown`
-`front-line` `reaction` `short-rest` `durability` `skills`.
-
-**There is no carry/support field.** The ledger pairs every chassis with every other, so a body is
-not typed as one or the other — the niche already says what it does with its turns, and whether it
-reads as the damage half of a duo depends on the partner, which a seed does not know.
 
 ## Traps that have cost points here
 

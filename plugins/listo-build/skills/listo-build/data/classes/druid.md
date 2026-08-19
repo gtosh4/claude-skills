@@ -415,6 +415,16 @@ cadence.
 - **Do not dip Druid for Shillelagh alone** if you can take a fighting style (**Druidic Warrior**) or
   the **Arcanist** feat instead — both reach it without spending a level. See `listo-10.2-feats.md`.
 
+**Against dipping out.** Druid is a full caster, so every level out costs slot progression 1-for-1,
+and the class's own scaling is all keyed to *Druid* level rather than character level: Wild Shape
+form CR (**6**, then **9** for Moon's CR3 forms), the circle tier-2 feature at **6**, and
+**Nature's Ward at 10** (immunity to poison/disease, no charm or fright by elementals or fey) plus
+the circles' level-10 features. **5** buys Conjure Animals and Wild Strike/Extra Attack. Stormchasers'
+Storm Shift (3× Druid level temp HP) and Winter's Winter Spirit (5× Druid level temp HP) are the
+clearest cases — a dip gives you a rounding error, a main class gives you a second health bar.
+Levels 13–20 come from the `Expansion` pak and the modded circles advertise level-14 features built
+for it; **exact vanilla-circle progression at 13–20 is (unverified)**.
+
 ---
 
 ## Not present

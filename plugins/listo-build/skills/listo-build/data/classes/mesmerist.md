@@ -344,6 +344,9 @@ the level-1 package matters most, but the standout is level **2**.
   Hypnotic Bonds (Trickster), 1 Tier-1 Bold Stare (Eyebiter), or 2 Panache and 1 Tier-1
   Dazzling Feint (Daredevil). **Gift of Will is Tier 2 and needs Mesmerist 7**, so a 3-dip does
   *not* get the partner-facing Wisdom bonus.
+- **Multiclass node `(unverified)`.** The saves are level-1-locked (stated above), but whether a
+  Mesmerist taken at level 2+ still grants light armor, finesse weapons, hand crossbows and the
+  skill picks is not documented by the mod. Confirm on the sheet before planning a mid-run dip.
 - **Against dipping deep:** half-caster slot progression means Mesmerist levels contribute only
   half to a multiclass slot table, and the class's own damage scaling (Painful Stare, Extra
   Attack, stance tiers) is back-loaded to 5–12.

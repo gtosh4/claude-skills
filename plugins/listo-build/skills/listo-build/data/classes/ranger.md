@@ -379,7 +379,9 @@ means for a Ranger:
   4th skill proficiency, and a Favoured Enemy pick that can be a straight skill proficiency
   (Investigation / Arcana / History + heavy armour / Religion + Sacred Flame) or **Beast Tamer's
   Find Familiar once per short rest** — another cheap extra body. **Favored Foe** is available
-  here as a concentration-based 1d4 damage rider even at one level.
+  here as a concentration-based 1d4 damage rider even at one level. Taken as a *later* class the
+  saves are gone and the skill pick drops from **3 to 1**; the armour, shield and martial weapon
+  proficiencies still come through.
 - **Ranger 2** — adds **Archery (+2 to ranged attack rolls)** or Defence/Duelling/Two-Weapon,
   plus half-caster entry with two always-prepared spells. A very cheap fighting style for a
   ranged build that doesn't want Fighter.

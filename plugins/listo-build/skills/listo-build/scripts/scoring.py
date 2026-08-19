@@ -70,14 +70,45 @@ FLAG = 3.0      # an idle body, in a fight type worth >=40% of the act
 ABILITIES = ("str", "dex", "con", "int", "wis", "cha")
 KEY_SAVES = frozenset(("wis", "con", "dex"))
 # scope: "self" applies to this body, "pair" applies to both and does not stack.
-# `blanket` means the effect applies to EVERY save, which is what the rung table trades a
-# proficiency for. War Caster is advantage on *concentration* saves only — real, but narrow, and
-# marking it blanket silently lifted every concentration build a rung on the heaviest-weighted
-# axis in the model. It stays a legal id because it is worth authoring; it just does not buy a
-# rung. Its actual value is already priced by `concentration` and the rung-3 cap below.
-BOOSTERS = {"brutish-durability": {"scope": "self", "blanket": True},
-            "war-caster":         {"scope": "self", "blanket": False},
-            "aura-of-protection": {"scope": "pair", "blanket": True}}
+#
+# Three tiers, because a two-way split under-counted the list badly. The first sweep found ten-odd
+# real blanket save effects with no id here; every one of them contributed nothing, which is
+# indistinguishable from an honest low score on the heaviest-weighted axis in the model.
+#
+#   blanket=True   applies to EVERY save, always. Buys the rung the table trades a proficiency for.
+#   partial=True   applies to a subset of abilities, or costs an action or a limited resource.
+#                  **Two partials count as one blanket** — the effect is real but half-covered, and
+#                  a body carrying two of them is as protected as one carrying a blanket.
+#   neither        documented, priced elsewhere, worth no rung on its own. War Caster is advantage
+#                  on *concentration* saves only — marking it blanket silently lifted every
+#                  concentration build a rung. Its value is already priced by `concentration` and
+#                  the rung-3 cap below.
+#
+# Advantage against spells and magical effects counts as blanket: in this list almost every save
+# that decides a fight comes off a spell or a magical effect, so the condition is nearly always met.
+BOOSTERS = {
+    # unconditional, every save
+    "brutish-durability": {"scope": "self", "blanket": True},   # Fighter 7 — +1d6, no resource
+    "aura-of-protection": {"scope": "pair", "blanket": True},   # Paladin 6 — +Cha
+    "emboldening-bond":   {"scope": "pair", "blanket": True},   # Cleric Peace — +1d4, both bodies
+    "friars-blessing":    {"scope": "pair", "blanket": True},   # Way of the Friar — +1d4, both bodies
+    "lunar-champion":     {"scope": "pair", "blanket": True},   # Oath of the Moon 20 — +Cha aura
+    "heroic-warrior":     {"scope": "self", "blanket": True},   # Champion — a free reroll every turn
+    # advantage against spells and magical effects
+    "magic-resistance":   {"scope": "self", "blanket": True},   # Paragon 9
+    "spell-resistance":   {"scope": "self", "blanket": True},   # Wizard Abjuration 14
+    "magic-awareness":    {"scope": "pair", "blanket": True},   # Wildsurge — PB to both, vs spells
+    "rage-of-ginnungagap": {"scope": "self", "blanket": True},  # advantage vs spells while raging
+    # a subset of abilities, or a limited resource
+    "dark-augmentation":  {"scope": "self", "partial": True},   # Blood Hunter 2 — +Int to str/dex/con
+    "towering-ego":       {"scope": "self", "partial": True},   # Mesmerist 2 — +Cha to wis, half to int
+    "frost-rune":         {"scope": "self", "partial": True},   # Rune Knight — +2 to str/con
+    "fanatical-focus":    {"scope": "self", "partial": True},   # Zealot — one reroll per Rage
+    "gift-of-will":       {"scope": "pair", "partial": True},   # Trickster — partner's wis saves
+    "flash-of-genius":    {"scope": "pair", "partial": True},   # Artificer 7 — +Int, costs a reaction
+    # real, but priced elsewhere
+    "war-caster":         {"scope": "self", "blanket": False},  # concentration saves only
+}
 
 
 # ── combining ────────────────────────────────────────────────────────────────
@@ -106,21 +137,51 @@ def norm(ax, value):
 
 
 # ── saves are derived from the authored set, never authored directly ─────────
+# ── hot-path memoisation ─────────────────────────────────────────────────────
+# A body's save block and its derived rung do not depend on the partner, but `score()` recomputes
+# both for every pairing: C(150,2) pairs meant 134,100 calls for 150 distinct bodies. Ranking
+# enumerated split variants against a pool is the same shape and two orders of magnitude larger,
+# so both are cached on their *content*. The functions are pure — same inputs, same result and the
+# same raised error — so memoising cannot change behaviour, only cost.
+#
+# Errors still fail closed: an invalid block raises on the first call and, being uncached, raises
+# identically on every later one.
+def _saves_block_ok(prof, boosters):
+    """Cached validity check on block content. Returns None, or the reason it is invalid."""
+    key = (prof, boosters)
+    hit = _SAVES_OK_CACHE.get(key, _MISS)
+    if hit is not _MISS:
+        return hit
+    reason = None
+    for a in prof:
+        if a not in ABILITIES:
+            reason = f"unknown ability {a!r} — expected one of {ABILITIES}"
+            break
+    else:
+        if len(set(prof)) != len(prof):
+            reason = (f"duplicate ability in prof {list(prof)!r} — record the union after "
+                      "de-duplication, so overlapping grants correctly count once")
+        else:
+            for b in boosters:
+                if b not in BOOSTERS:
+                    reason = (f"unknown booster {b!r} — add it to BOOSTERS with an "
+                              "implemented effect before authoring it")
+                    break
+    _SAVES_OK_CACHE[key] = reason
+    return reason
+
+
+_SAVES_OK_CACHE = {}
+_SAVES_CACHE = {}
+_MISS = object()
+
+
 def _validate_saves_block(block, who, act):
     _require(isinstance(block, dict), f"{who} {act}: saves block must be an object")
     for field in ("prof", "boosters"):
         _require(field in block, f"{who} {act}: saves block missing {field!r}")
-    prof = block["prof"]
-    for a in prof:
-        _require(a in ABILITIES,
-                 f"{who} {act}: unknown ability {a!r} — expected one of {ABILITIES}")
-    _require(len(set(prof)) == len(prof),
-             f"{who} {act}: duplicate ability in prof {prof!r} — record the union after "
-             "de-duplication, so overlapping grants correctly count once")
-    for b in block["boosters"]:
-        _require(b in BOOSTERS,
-                 f"{who} {act}: unknown booster {b!r} — add it to BOOSTERS with an "
-                 "implemented effect before authoring it")
+    reason = _saves_block_ok(tuple(block["prof"]), tuple(block["boosters"]))
+    _require(reason is None, f"{who} {act}: {reason}")
 
 
 def derive_saves(prof, boosters, concentration):
@@ -130,6 +191,10 @@ def derive_saves(prof, boosters, concentration):
     ability or booster silently contributing nothing is the one failure mode the
     model cannot detect downstream.
     """
+    key = (tuple(prof), tuple(boosters), bool(concentration))
+    hit = _SAVES_CACHE.get(key, _MISS)
+    if hit is not _MISS:
+        return hit
     for a in prof:
         _require(a in ABILITIES,
                  f"unknown ability {a!r} — expected one of {ABILITIES}")
@@ -138,7 +203,10 @@ def derive_saves(prof, boosters, concentration):
         _require(b in BOOSTERS, f"unknown booster {b!r}")
     s = set(prof)
     n, nkey = len(s), len(s & KEY_SAVES)
-    blanket = any(BOOSTERS[b]["blanket"] for b in boosters)
+    # Two partials make a blanket: each covers half the save set or costs a resource, and a body
+    # carrying both is about as protected as one carrying an unconditional effect.
+    blanket = (any(BOOSTERS[b].get("blanket") for b in boosters)
+               or sum(1 for b in boosters if BOOSTERS[b].get("partial")) >= 2)
     covers_key = KEY_SAVES <= s
 
     if n >= 6:
@@ -160,6 +228,7 @@ def derive_saves(prof, boosters, concentration):
     # structurally fragile regardless of what else it is proficient in.
     if concentration and "con" not in s:
         v = min(v, 3)
+    _SAVES_CACHE[key] = v
     return v
 
 
@@ -176,15 +245,21 @@ def saves_pair(ca, cb, act):
         _validate_saves_block(blk, c["_id"], act)
         blocks[who] = blk
 
-    pair_src = [w for w in ("a", "b")
-                if any(BOOSTERS[x]["scope"] == "pair" for x in blocks[w]["boosters"])]
-    if len(pair_src) > 1:
-        warnings.append(
-            f"both {ca['_id']} and {cb['_id']} bring a pair-scope booster "
-            "(aura-of-protection). Auras do not stack — the second is ignored, and "
-            "six levels are being wasted.")
-    shared = [x for x in blocks[pair_src[0]]["boosters"]
-              if BOOSTERS[x]["scope"] == "pair"] if pair_src else []
+    # Pair-scope boosters raise both bodies. Non-stacking is per *effect*, not per scope: an Aura
+    # of Protection and an Emboldening Bond are different sources and both apply, but two Auras of
+    # Protection are one Aura and six wasted levels. So dedupe by id and warn only on a collision.
+    shared, seen = [], set()
+    for w in ("a", "b"):
+        for x in blocks[w]["boosters"]:
+            if BOOSTERS[x]["scope"] != "pair":
+                continue
+            if x in seen:
+                warnings.append(
+                    f"both {ca['_id']} and {cb['_id']} bring {x}. It does not stack with itself — "
+                    "the second is ignored, and the levels that bought it are wasted.")
+                continue
+            seen.add(x)
+            shared.append(x)
 
     for who, c in (("a", ca), ("b", cb)):
         blk = blocks[who]

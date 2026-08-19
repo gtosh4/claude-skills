@@ -1,5 +1,5 @@
 {
-  "provenance": "Ten worked rows, not a sweep. Copy to chassis-seeds.json and fill until `seed_index.py --check` is clean. Keys are `<class file>/<### heading verbatim>` — take them from `--list`, never retype them. A candidate carries `builds`, keyed by niche: one subclass often has more than one honest expression, and they belong in different niches. Warlock/The Hexblade below is the case. The `src` / `seed_deps` / `score_deps` stamps are the cache key — written by `--stamp`, never by hand or by a sweep agent; those on this template are illustrative and will read as drifted once the class files move.",
+  "provenance": "Ten worked rows, not a sweep. Copy to chassis-seeds.json and fill until `seed_index.py --check` is clean. Splits name every class's subclass in parentheses, so a reader can rebuild the body. Keys are `<class file>/<### heading verbatim>` — take them from `--list`, never retype them. A candidate carries `builds`, keyed by niche: one subclass often has more than one honest expression, and they belong in different niches. Warlock/The Hexblade below is the case. The `src` / `seed_deps` / `score_deps` stamps are the cache key — written by `--stamp`, never by hand or by a sweep agent; those on this template are illustrative and will read as drifted once the class files move.",
   "seeds": {
     "cleric/Heavy armour / martial weapon table (the dip-planning summary)": {
       "verdict": "not-a-subclass",
@@ -12,10 +12,11 @@
       "builds": {
         "front-line": {
           "chassis": "Zeal",
-          "split": "Cleric 12 / Fighter 8",
+          "split": "Cleric 12 (Zeal (Hazoret)) / Fighter 8 (Battle Master)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "Weapon domain that keeps full casting; Fighter 8 buys Action Surge, Brutish Durability and the off-cadence feat."
+          "why": "Weapon domain that keeps full casting; Fighter 8 buys Action Surge, Brutish Durability and the off-cadence feat.",
+          "breadth": 5
         }
       },
       "src": "8b2123ef5ba4",
@@ -26,11 +27,12 @@
       "builds": {
         "durability": {
           "chassis": "Mercy",
-          "split": "Cleric 14 / Paladin 6",
+          "split": "Cleric 14 (Life) / Paladin 6 (Oath of Devotion)",
           "peak": 5,
           "peak_axis": "rsc",
           "why": "The rescue ceiling in the list. Paladin 6 adds a pair-wide aura, which is why the split runs that deep.",
-          "score_deps": "d95a9e4d6e0a"
+          "score_deps": "d95a9e4d6e0a",
+          "breadth": 4
         }
       },
       "src": "262546e84a42",
@@ -41,10 +43,11 @@
       "builds": {
         "skills": {
           "chassis": "Lore",
-          "split": "Cleric 17 / Rogue 3",
+          "split": "Cleric 17 (Knowledge) / Rogue 3 (Thief)",
           "peak": 3,
           "peak_axis": "skl",
-          "why": "Expertise plus domain skills covers every gate, but nothing here scales into Act III and the damage never arrives."
+          "why": "Expertise plus domain skills covers every gate, but nothing here scales into Act III and the damage never arrives.",
+          "breadth": 4
         }
       },
       "src": "92ccdbf1357b",
@@ -62,17 +65,19 @@
       "builds": {
         "front-line": {
           "chassis": "Standard",
-          "split": "Fighter 11 / Rogue 9",
+          "split": "Fighter 11 (Battle Master) / Rogue 9 (Thief)",
           "peak": 5,
           "peak_axis": "st",
-          "why": "Fighter 11 for the third attack, superiority dice on the short-rest clock, Rogue 9 for off-turn Sneak Attack into the second reaction."
+          "why": "Fighter 11 for the third attack, superiority dice on the short-rest clock, Rogue 9 for off-turn Sneak Attack into the second reaction.",
+          "breadth": 6
         },
         "reaction": {
           "chassis": "Riposte",
-          "split": "Fighter 20",
+          "split": "Fighter 20 (Battle Master)",
           "peak": 3,
           "peak_axis": "act",
-          "why": "Both reactions on manoeuvres and opportunity attacks; real only in a pair built to be attacked, which is why it is a separate build and not a variant."
+          "why": "Both reactions on manoeuvres and opportunity attacks; real only in a pair built to be attacked, which is why it is a separate build and not a variant.",
+          "breadth": 4
         }
       },
       "src": "6398a70d9171",
@@ -83,10 +88,11 @@
       "builds": {
         "lockdown": {
           "chassis": "Bombard",
-          "split": "Blood Hunter 14 / Wizard 6",
+          "split": "Blood Hunter 14 (Order of the Profane Soul) / Wizard 6 (Evocation)",
           "peak": 5,
           "peak_axis": "aoe",
-          "why": "Int carries hemocraft and spell DCs at once, so one stat buys both halves."
+          "why": "Int carries hemocraft and spell DCs at once, so one stat buys both halves.",
+          "breadth": 5
         }
       },
       "src": "5a748420eeaf",
@@ -97,17 +103,19 @@
       "builds": {
         "front-line": {
           "chassis": "Hexplate",
-          "split": "Warlock 12 / Paladin 8",
+          "split": "Warlock 12 (The Hexblade) / Paladin 8 (Oath of Devotion)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "Charisma to attack and damage, short-rest slots feeding smites, aura at Paladin 6."
+          "why": "Charisma to attack and damage, short-rest slots feeding smites, aura at Paladin 6.",
+          "breadth": 5
         },
         "short-rest": {
           "chassis": "Curse",
-          "split": "Warlock 12 / Sorcerer 8",
+          "split": "Warlock 12 (The Hexblade) / Sorcerer 8 (Draconic Bloodline)",
           "peak": 4,
           "peak_axis": "ctrl_s",
-          "why": "Same Charisma, different clock and role: Chains of Carceri and Quickened blast off pact slots rather than a weapon."
+          "why": "Same Charisma, different clock and role: Chains of Carceri and Quickened blast off pact slots rather than a weapon.",
+          "breadth": 4
         }
       },
       "src": "3b4fe2c740c6",
@@ -124,10 +132,11 @@
       "builds": {
         "action-economy": {
           "chassis": "Chorus",
-          "split": "Paragon 14 / Bard 6",
+          "split": "Paragon 14 (Regent) / Bard 6 (College of Lore)",
           "peak": 4,
           "peak_axis": "act",
-          "why": "Hands actions to the partner rather than taking more itself, which is the half of the Actions axis a duo actually lacks."
+          "why": "Hands actions to the partner rather than taking more itself, which is the half of the Actions axis a duo actually lacks.",
+          "breadth": 5
         }
       },
       "src": "3af553ed5dd7",

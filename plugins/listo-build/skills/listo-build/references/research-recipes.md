@@ -14,6 +14,7 @@ A full capture of **10.2** ships with this skill. Check it before fetching anyth
 | `data/classes/*.md` | **Compiled** — one file per class, full detail |
 | `data/listo-10.2-races.md` | **Compiled** — races and subraces with their traits |
 | `data/listo-10.2-feats.md` | **Compiled** — feats and fighting styles with mechanics |
+| `data/listo-10.2-spells.md` | **Compiled** — spell-list access per class and feat, read from the installed paks |
 | `data/listo-10.2-equipment.md` | **Compiled** — items, slots, locations, upgrade paths |
 | `data/listo-10.2-mods.tsv` | 706 Nexus mods as `ModID<TAB>Name` — the fast "does X exist" lookup |
 | `data/listo-10.2-manifest.json` | The raw Wabbajack manifest (1.2 MB) |
@@ -127,7 +128,29 @@ awk '/Collections containing this mod/{f=1} f' mod.txt | tr -d '\n' | sed 's/  *
 ```
 
 **bg3.wiki works with the same curl approach** and is the right source for vanilla mechanics —
-feat prerequisites, item effects, proficiency grants.
+feat prerequisites, item effects, proficiency grants. It is also **the only source for the
+base-game spell lists**, because Larian's `Shared.pak` is not under the Mod Organizer mods root.
+
+Its `List of <Class> spells` pages build their tables from a Cargo store. **Arbitrary Cargo
+queries are blocked** (`action=cargoquery` returns `permissiondenied`) and
+`action=parse&prop=wikitext` returns only the `{{Spell table}}` transclusion — so fetch the
+rendered page and parse the single `<table class="wikitable sortable">`:
+
+```bash
+UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0"
+for c in Wizard Sorcerer Bard Cleric Druid Ranger Paladin Warlock; do
+  curl -sS -A "$UA" -o "$c.html" "https://bg3.wiki/wiki/List_of_${c}_spells"
+done
+```
+
+Column 1 is the spell name, column 2 the level (`C` for cantrip). Note the title form:
+`List_of_Cleric_spells` works, `Cleric_Spells` 404s. Search for the right title with
+`action=query&list=search` when unsure.
+
+**Reconcile the wiki against the paks rather than trusting either alone.** For any list a mod
+re-declares in full, `vanilla + modlist additions` must equal the measured total — that check
+validated `data/listo-10.2-spells.md` and, where it failed, found that Listo had moved Shillelagh
+off the Druid cantrip list.
 
 ---
 

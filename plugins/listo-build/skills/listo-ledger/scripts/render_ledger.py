@@ -6,13 +6,14 @@
 
 Author the CHASSIS SCORES and the PROSE. Everything derived is produced here:
 pair combining, tempo and the non-tempo blocks, reach discounts, idle-body
-flags, melee lock, holes, the full carry x support field table, the roster order, the
-entry list (best partner per carry, ranked) and every number quoted in a
-variation line. See assets/ledger-schema.md.
+flags, melee lock, holes, every chassis against every other, the frontier and the
+field table drawn from it, the roster order, the entry list (best partner per
+chassis, ranked) and every number quoted in a variation line.
+See assets/ledger-schema.md.
 
 Strings pass through as HTML: inline <b>/<em>/<code> are fine.
 """
-import json, sys, os, itertools
+import json, sys, os, re, itertools
 
 HERE   = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
@@ -89,9 +90,13 @@ def roster_block(key, ch, disp):
                     + f'<td class="tot">{sum(vals)}</td></tr>')
     rows = "".join(rows)
     meta = f'<span class="dot">·</span>{ch["meta"]}' if ch.get("meta") else ""
+    # A split carries its subclasses as parentheticals — `Warlock 17 (The Hexblade)`. They are the
+    # part a reader actually needs to rebuild the body, so they are kept, just set back from the
+    # class and level that carry the arithmetic.
+    split = re.sub(r"\(([^)]*)\)", r'<span class="sub">\1</span>', ch.get("split", ""))
     return f'''<article class="rost" id="r-{key.lower()}">
 <header><h3>{disp(key)}</h3>
-<p class="chassis">{ch.get("split","")}{meta}</p>
+<p class="chassis">{split}{meta}</p>
 <p class="chassis reachline">reach: <b>{REACH_LABEL[ch["reach"]]}</b></p></header>
 {f'<p class="note">{ch["note"]}</p>' if ch.get("note") else ""}
 <div class="scroll"><table class="matrix"><thead><tr><th>Act</th>{head}
@@ -225,10 +230,21 @@ def render(d):
     if cut:
         names = ", ".join(f'<b>{disp(me)}</b> ({r["score"]})' for me, _, r in cut)
         cut_line = (f' {len(kept)} chassis make the cut; {names} '
-                    f'{"does" if len(cut)==1 else "do"} not, and stay in the field table '
-                    f'and the roster.')
+                    f'{"does" if len(cut)==1 else "do"} not, and stay in the roster.')
 
     ranked_key = {(r["a"], r["b"]): i for i, (_, _, r) in enumerate(kept, 1)}
+
+    # The field table is the audit trail, not the whole cartesian product: C(150,2) is 11,175 rows
+    # and about 5MB of HTML that nobody reads. Every frontier pairing is always shown — those are
+    # the ones selection acted on — and the remainder is filled with the highest-scoring dominated
+    # pairings up to `field_limit`. What was dropped is stated, never silently truncated.
+    flimit = d.get("field_limit", 500)
+    shown = [r for r in field if (r["a"], r["b"]) in front_pairs]
+    if len(shown) < flimit:
+        shown += [r for r in field if (r["a"], r["b"]) not in front_pairs][:flimit - len(shown)]
+    shown.sort(key=lambda r: -r["score"])
+    dropped = len(field) - len(shown)
+
     frows = "".join(
         f'<tr class="{"in" if (r["a"], r["b"]) in ranked_key else ""}'
         f'{" front" if (r["a"], r["b"]) in front_pairs else ""}">'
@@ -242,7 +258,7 @@ def render(d):
                   for i, a in enumerate(ACTS))
         + f'<td class="n dm sep">{r["nontempo"]*100:.0f}</td>'
           f'<td class="n b">{r["score"]}</td></tr>'
-        for r in field)
+        for r in shown)
 
     # roster order is derived, so a chassis added later can never be dropped
     peak = {}
@@ -280,13 +296,13 @@ def render(d):
 </section>
 
 <section>
-  <h2>The full field</h2>
-  <p class="sublede">{len(field)} pairings &mdash; every one of the {len(C)} chassis with every other.
-  Axis values summed across acts, then tempo per act. Sorted by score.
-  <b>{len(front)}</b> sit on the four-block frontier (marked), meaning nothing beats them on
-  tempo, resilience, duration <em>and</em> utility at once; the rest are dominated, and kept here
-  as the record rather than deleted.</p>
-  <div class="scroll"><table class="field matrix"><thead><tr><th></th><th>Pairing</th>
+  <h2>The field</h2>
+  <p class="sublede">Every one of the {len(C)} chassis was paired with every other &mdash;
+  <b>{len(field)}</b> pairings scored. Axis values summed across acts, then tempo per act, sorted
+  by score. <b>{len(front)}</b> sit on the four-block frontier (marked), meaning nothing beats them
+  on tempo, resilience, duration <em>and</em> utility at once; those are the ones selection acted
+  on, and all of them are here.{f" The remaining rows are the highest-scoring dominated pairings; <b>{dropped}</b> further pairings were scored and are not listed." if dropped else ""}</p>
+  <div class="scroll"><table class="field matrix"><thead><tr><th>Pairing</th>
     {"".join(f"<th>{a}</th>" for a in AXES)}
     <th title="tempo %, act I">I</th><th title="tempo %, act II">II</th>
     <th title="tempo %, act III">III</th>

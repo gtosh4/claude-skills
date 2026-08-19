@@ -551,6 +551,20 @@ one most likely to collide with Lone Wolf's +4. Prefer a different level-1 class
 building a Sorcerer and want four distinct save proficiencies across the duo; see the worked
 comparison in `references/listo-rules.md`.
 
+**Against dipping out.** The dip gives tools without fuel, and the fuel *is* the class: sorcery
+points equal **Sorcerer class level**, so every level spent elsewhere is a point per rest you do
+not have to Twin or Quicken with. Levels out also cost full-caster slot progression 1-for-1, and
+the slots are what the points convert to and from. The stopping points: **5** (3rd-level slots —
+Fireball, Haste, and Twinned Haste on a two-person party), **10** (4th Metamagic), **11**
+(6th-level slots and the tier-3 subclass feature — Draconic Wings, Controlled Chaos, Storm's Fury,
+Shadow Walk; note the level-11-vs-14 MCM ambiguity recorded above is **(unverified)**), **17**
+(5th Metamagic, from `Expansion`), **18** (subclass capstone: Draconic Presence, Umbral Form or
+Wind Soul — **Wild Magic gets nothing here**) and **20** (**Sorcerous Restoration**, the only thing
+in the class that takes sorcery points off the long-rest clock, which in a 120-supply run is the
+difference between two Twinned Hastes a day and two per fight). A Sorcerer that plans to dip out
+should do it early and shallow; the 3-level dip is a thing you take *on* another chassis, not a
+thing you take *off* a Sorcerer.
+
 ---
 
 ## Not present

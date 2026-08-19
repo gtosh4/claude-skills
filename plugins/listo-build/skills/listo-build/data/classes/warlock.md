@@ -103,9 +103,9 @@ unaffected: **beams key off character level, so two Warlock levels buy the whole
 
 ---
 
-## Dip value — level by level
+## Dip value
 
-Rows are cumulative. A dip of size N gives you every row up to N.
+Level by level. Rows are cumulative. A dip of size N gives you every row up to N.
 
 ### Warlock 1
 

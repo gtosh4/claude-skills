@@ -581,6 +581,18 @@ spell is the goal.
 > specifically so a Cleric dip does not reassign your character's Spellcasting Stat to Wisdom for
 > scrolls, Illithid powers and items. Take advantage of it, but confirm on the character sheet.
 
+**Against dipping out.** Cleric is a full caster and a prepared one, so levels out cost slot
+progression *and* prepared-spell count (Cleric level + WIS mod) 1-for-1. The levels worth staying
+for: **5** (Destroy Undead, 3rd-level spells), **6** (second Channel Divinity charge on the
+**short-rest** clock, plus the domain's tier-2 feature — War's Extra Attack lives here), **8**
+(Divine Strike *or* Potent Spellcasting, or Expansion's **Blessed Strikes** replacing either —
+1d8 radiant once per turn on cantrips *or* weapon attacks), **10** (Divine Intervention), **14**
+(Divine Strike 2d8), **17** (domain capstone), **18** (third CD charge) and **20** (Divine
+Intervention returns on a **once per long rest** clock instead of once per playthrough). Listo also
+leaves Expansion's optional **Harness Divine Power** on: a bonus action spending a Channel Divinity
+charge to regain a spell slot, 1/2/3 uses at levels 2/6/18 — a short-rest-to-slot converter that
+only scales if you stay. See `data/listo-10.2-mcm.md`.
+
 ---
 
 ## Not present

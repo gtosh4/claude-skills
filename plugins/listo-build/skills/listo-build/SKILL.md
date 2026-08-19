@@ -100,7 +100,7 @@ The niche table below is **working material, not output**. Mine it for the optio
 | Niche | What carries it here | The catch |
 |---|---|---|
 | **Action-economy engine** | **Not only summons.** Bodies: Warlock 3 Chain familiar (Help, Magic Resistance, doubled HP from `18881`), Ranger 3 Beast Master (Expansion moves Companion's Bond to **3**), Summon Beast 5 / Conjure Animals 9 (`13458`), the **Skeleton Crew feat**. Extra actions: **Haste** — the strongest action-economy spell in the list for a duo — **Action Surge** (2 charges from 17), and **Quickened**, the only general exemption from Listo's rule that a bonus-action spell blocks a levelled cast. **Twinned Haste covers 100% of a two-person party for one Metamagic pick** | Summons cost a turn to set up. Haste is **concentration** — it competes with your control spell — and Lethargy costs the target a turn if it drops |
-| **Lockdown controller** | Save-or-lose against crowds; area control composes rather than duplicating | Enemy saves climb with **+1 ability point per 6 levels** (bosses and enemies alike), so a static DC decays. Single-target-only CC *falls* further as encounters crowd |
+| **Lockdown controller** | Save-or-lose against crowds; area control composes rather than duplicating | Enemy saves climb with **+1 ability point per 6 levels** plus a flat +1 at 20 — about **+2 to +3** across the run, against **+4** on your own DC, so a growing DC keeps pace and only a *frozen* one decays. What actually falls is single-target-only CC as encounters crowd |
 | **Front-line damage** | Smites, Extra Attack, **Fighter 11** (3 attacks *and* an off-cadence feat) | Long fights mean resource-limited burst runs dry; needs an endurance answer |
 | **Reaction economy** | Lone Wolf's **second reaction**: Rogue's off-turn Sneak Attack, Uncanny Dodge as an interrupt, Riposte, Opportunity Attacks | Reaction effects are worthless if nothing triggers them — it needs a build shaped around being attacked |
 | **Short-rest engine** | Warlock pact slots, Battle Master dice, Monk ki, Second Wind / Action Surge | Usually caps spell tier or damage ceiling relative to a long-rest caster |
@@ -214,6 +214,7 @@ mechanics, not just the names:
 | Races and subraces | `data/listo-10.2-races.md` |
 | Backgrounds, skills, skill gates | `data/listo-10.2-backgrounds.md` |
 | Feats and fighting styles | `data/listo-10.2-feats.md` |
+| Spells, spell lists, who can reach what | `data/listo-10.2-spells.md` |
 | Items, slots, attunement, economy | `data/listo-10.2-equipment.md` |
 | Illithid powers, charges, IMR, tadpole supply | `data/listo-10.2-illithid.md` |
 | Any "is this toggle on?" question | `data/listo-10.2-mcm.md` — resolved from the install |
@@ -492,10 +493,9 @@ and gets the arithmetic wrong. There is no pair HTML template to read: `pair.css
 
 It is the same chassis as the single-character sheet, with the duo-specific structure:
 
-- **One radar with three series** — character A, character B, and a *computed* pair value. The
-  combining rule follows the axis kind: additive sums, **complementary** takes `hi + ⌊lo/2⌋`,
-  **personal takes the lower**, because a save gap on one character is a party-level gap. Author
-  A and B only; never hand-write a pair number.
+- **One radar with three series** — character A, character B, and a *computed* pair value.
+  **Author A and B only; never hand-write a pair number** — `references/scoring-model.md` §4 owns
+  the operators and the renderer applies them.
 - **Per-character panes** for ability spread, saves-with-source, and racial kit. Set
   `data-who="a"` / `"b"` — A takes the structure accent, B the highlight accent.
 - **A combined "How it plays"** — A's loop, B's loop, then the shared loop. If the third pass is
@@ -554,41 +554,15 @@ turns out to be, or two sheets from one run can't be read against each other.
 | **1** | Thin. A real liability if nobody else covers it. |
 | **0** | Absent. |
 
-**Every score is relative to that act's own encounters, and scores are expected to fall.**
-Combat Extender scales enemies off *player* level — **bosses reach +170% HP and regular enemies
-+126% by 20**, with bosses also gaining +1 AC per 9 levels and +1 spell save DC per 7 — so there
-is no out-levelling and no absolute yardstick. A feature that does not scale therefore loses
-ground: the Eldritch Cannon's 20 HP and flat 2d8 are excellent at character 3 and nearly
-irrelevant by Act 2, and that decline belongs in the numbers. Read a flat row as *keeps pace*,
-not as *stopped growing*, and a falling row as the build being outrun.
+**Score each act separately, against that act's own encounters.** A build that peaks at 20 and one
+that peaks at 8 are different builds, and one polygon cannot say so.
 
-**Summons are the exception.** CX buffs the `Allies` category too — +34% HP by 20 and **+1 AC
-static plus +1 per 4 levels** — so a summon decays far more slowly than a flat-statted feature.
-Don't score Actions down as hard as the rest. Numbers in `data/listo-10.2-mcm.md`.
-
-**Score each act separately.** A build that peaks at 20 and a build that peaks at 8 are different
-builds, and one polygon cannot say so. Acts map to character levels roughly:
-
-| Act | Char levels | Feats | Full-caster tier |
-|---|---|---|---|
-| I | **3–8** | 2 | 4th |
-| II | **9–15** | 5–6 | 8th |
-| III | **16–20** | 7–8 | 9th |
-
-> **`references/axis-rubrics.md` owns these bands and the content anchors for every rung** — what a
-> 5 actually *is* in named manifest features, per act. This section owns the functional ladder above
-> and the axis definitions below; go there for "is this build a 4 or a 5".
->
-> The bands are supported by the installed CX config: `Level.Bosses.Act` caps boss level at **10 in
-> Act I** and **16 in Act II**, and those two numbers are **identical across the EASY, live and HARD
-> configs** while only the offsets change — so MaxLevel is structural, not a difficulty knob. Listo's
-> `data/docs/3-GameBalance.md` adds that Act 3 encounters "should keep you awake beyond level 16+".
-> Level cap is 20; most players reach 15+ and 20 needs the optional encounter content. Label the
-> bands as approximate on the sheet.
->
-> **Act II is the richest band, not Act III** — six feats, 8th-level slots, and nearly every
-> run-defining breakpoint (Fighter 11, Rogue 11, ProfaneSoul 11, Ranger 11, Monk 11, Warlock 12,
-> Monk 14, Rogue 15). Act III adds the 9th tier, Mirror of Loss, Legendary attunement and capstones.
+> **`references/axis-rubrics.md` owns the act bands, what each rung *is* per act, and what drifts
+> between acts.** Go there for "is this a 4 or a 5", for the character-level / feat / caster-tier
+> band table, and for the Combat Extender scaling that makes flat features lose ground while
+> summons and proportional effects hold. This section owns the functional ladder above, the axis
+> definitions below, and the sheet-authoring mechanics — nothing else. Label the bands as
+> approximate on the sheet.
 
 What each axis measures, and its **kind** — which decides whether a second source of it is worth
 anything to the party:
@@ -599,64 +573,41 @@ anything to the party:
 | **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
 | **Durability** | **personal** | it survives incoming HP damage. **Effective HP, however it is bought:** AC, hit dice, resistances, damage reduction — *and self-healing*. Durable's full-HP short rests, temp HP on yourself, Second Wind and Lay on Hands spent on yourself all belong here. **Personal because BG3 has no taunt** — enemy AI picks by softness, so the weaker half is targeted *more*, and with Enemy Crits ON it eats the crits too |
 | **Actions** | **complementary** | **action economy, not gold, and not just minions** — anything that raises the number of meaningful things the party does per round. Four routes, all scored here: **extra bodies** (summons, familiars, companions, Skeleton Crew), **extra actions on your turn** (Haste, Action Surge, Quickened), **off-turn actions** (Lone Wolf's second reaction, Riposte, off-turn Sneak Attack, interrupts), and **actions handed to your partner** (Twinned Haste, Commander's Strike). **Score surplus, not sufficiency**: Lone Wolf's 2 Actions / 2 Bonus / 2 Reactions per body already gives the duo a four-body party's economy, which is what Listo is tuned against, so a chassis here is adding on top of a met baseline rather than filling a hole |
-| **Control** | **complementary** | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. **Bounded by concentration**: each character holds exactly one, so the pair has two slots and no more, which is why control costing *no* concentration (Brand of the Sapping Scar, Divine Scourge, Chains of Carceri) is worth a full rung more than another save-DC spell. A build with only single-target CC should *fall* as encounters get more crowded, and pure save-DC control falls anyway — CX gives bosses +1 spell save DC per 7 levels |
-| **Rescue** | **complementary** | it keeps **the other character** functional, or gets them back: prevention (Death Ward, Sanctuary on the partner), restoration (Revivify, Greater Restoration, condition removal), outward healing and temp HP. Not just heal *spells*, and **the top of the axis is not healing at all** — it must be delegatable, or it is Durability. **Damage redirection is discounted**: Warding Bond and Protective Bond move damage onto a *spare* body, and a duo has none. Complementary rather than a pure maximum because one delegatable rescuer is enough, but if that rescuer is the one who goes down, nobody picks them up |
+| **Control** | **complementary** | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. **Bounded by concentration**: each character holds exactly one, so the pair has two slots and no more, which is why control costing *no* concentration is worth a full rung more than another save-DC spell. A build with only single-target CC should *fall* as encounters get more crowded. **Save-DC control itself does not decay** — see `references/axis-rubrics.md` § "What actually drifts"; §5 and §6 there carry the no-concentration exemplars per act |
+| **Rescue** | **complementary** | it keeps **the other character** functional, or gets them back. Not just heal *spells*, and **the top of the axis is not healing at all** — it must be delegatable, or it is Durability. Complementary rather than a pure maximum because one delegatable rescuer is enough, but if that rescuer is the one who goes down, nobody picks them up. `references/axis-rubrics.md` §7 has the four forms and why damage redirection is discounted in a duo |
 | **Skills** | **complementary** | it covers out-of-combat checks: expertise, proficiencies, face skills. **Not a pure maximum** — see below, because two characters with different proficiencies cover more of the campaign than either does alone |
 | **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
-| **Endurance** | personal | **how many fights it can take before the party must long rest.** Not "short rest good, long rest bad" — a pool large enough to last the day is just as good as one that refreshes. See the arithmetic below |
+| **Endurance** | personal | **how many fights it can take before the party must long rest.** Not "short rest good, long rest bad" — a pool large enough to last the day is just as good as one that refreshes |
 
-**Scoring Endurance — count fights, not rest types.** The axis used to be called Cadence and
-asked whether a resource refreshed on a short rest. That is a proxy, and it is wrong in both
-directions, because **Listo allows only two short rests per long rest**
-(`references/listo-rules.md`). A short-rest pool is therefore worth **three times its size** per
-long-rest cycle — not infinity — and a large long-rest pool can outlast a small short-rest one.
+**Scoring Endurance — count fights, not rest types.** The axis used to be called Cadence and asked
+whether a resource refreshed on a short rest. That is a proxy and it is wrong in both directions,
+because **Listo allows only two short rests per long rest** (`references/listo-rules.md`), so a
+short-rest pool is worth **three times its size** per cycle — not infinity — and a large long-rest
+pool can outlast a small short-rest one. Count hit point recovery in the budget too: what forces a
+120-supply long rest is usually missing hit points, not missing slots.
 
-Work out the character's **budget per long-rest cycle**, then divide by what a hard Combat
-Extender fight actually costs it:
+> `references/axis-rubrics.md` §10 owns the per-act rungs and the worked budgets. The
+> `Resource cadence` column in `data/listo-10.2-classes.md` is the *input* — it names the clock;
+> the axis scores the consequence.
 
-| Character | Budget per cycle |
-|---|---|
-| Rogue, Champion or Battle Master Fighter, Blood Hunter | **unbounded** — the damage is at-will; the pool is a bonus |
-| Monk 14 | 14 ki × 3 = **42**, but a hard fight costs 8–10 |
-| Cleric 18 / Bard 15 (full caster) | ≈**21** / ≈**18** slots, 4–5 per hard fight |
-| **Paladin 17** (half caster) | ≈**15** slots — *more than twice a Warlock 7 dip* |
-| Warlock 3 / 5 / 7 | 2 pact slots × 3 = **6** |
-| Warlock 11+ | 3 pact slots × 3 = **9** |
+The three **kinds** in the table above say only whether a second source of an axis is worth
+anything to the party:
 
-| Score | Fights per long rest |
-|---|---|
-| **5** | **8+, or output is essentially resource-free** — the character fights all day and only its partner forces the rest |
-| **4** | 6–7 |
-| **3** | 4–5 — a full caster's meaningful slots |
-| **2** | 2–3 |
-| **1** | 1 |
+- **Additive** — more is always more. Single-target and AoE only.
+- **Complementary** — one is enough, two is better. Actions, Control, Rescue, Skills.
+- **Personal** — cannot be delegated at all. A partner's Wisdom save does not stop *you* being
+  Held, and their short-rest engine does not refill *your* slots.
 
-**Count hit point recovery too, not only burst resources.** What usually forces a 120-supply long
-rest is missing hit points, not missing slots — so out-of-combat healing on a short-rest clock
-(Way of Mercy's ki healing, Song of Rest, Durable) raises this axis, and a healing pool that only
-refreshes on a long rest (Celestial's Healing Light) does not.
+> **`references/scoring-model.md` §4 owns the operators and their arithmetic.** Do not restate a
+> combining formula here — an earlier version of this section carried a capped
+> `min(5, hi + ⌊lo/2⌋)`, which the model file explicitly rejects, because capping makes `5+4` and
+> `5+0` identical and reintroduces the saturation the operator exists to avoid.
 
-**It stays a personal axis.** Slots cannot be lent, so the pair takes the lower of the two. The
-`Resource cadence` column in `data/listo-10.2-classes.md` is the *input* to this — it names the
-clock; the axis scores the consequence.
-
-- **Additive** stacks across the party — more is always more. Only single-target and AoE carry
-  this kind, and both are scored through the damage model rather than the coverage radar.
-- **Complementary** — **one is enough, two is better**. Actions, Control, Rescue and Skills.
-  Stacks *only where the two do not overlap*, so the second source is real but discounted:
-  `hi + ⌊lo/2⌋`. Depth does saturate — only one character rolls
-  any given check, so a second Persuasion expert adds almost nothing — but **breadth does not**.
-  A Rogue with Stealth, Sleight of Hand and Perception beside a Cleric with Religion, Insight and
-  Medicine covers more of the campaign's gates than either could alone, and the campaign gates
-  content behind *many different* skills.
-- **Personal** cannot be delegated at all. A partner's Wisdom save does not stop *you* being Held,
-  and their short-rest engine does not refill *your* slots.
-
-**How a complementary axis combines on a pair sheet:** `min(5, higher + floor(lower / 2))`. The
-stronger character's coverage stands in full; the weaker one is credited at half, because some of
-its proficiencies duplicate ground already covered and some do not. Two characters at 3 and 3
-reach **4**, not 5 and not 3 — which is the honest answer for a pair that split the skill list
-between them.
+**Why complementary and not a maximum, for Skills.** Depth saturates — only one character rolls
+any given check, so a second Persuasion expert adds almost nothing — but **breadth does not**. A
+Rogue with Stealth, Sleight of Hand and Perception beside a Cleric with Religion, Insight and
+Medicine covers more of the campaign's gates than either could alone, and the campaign gates
+content behind *many different* skills.
 
 **Consequence for planning: the skill map can be divided.** Do not assume one character has to buy
 the whole axis. Give the Intelligence character the knowledge gates (Arcana, History, Religion,
@@ -679,14 +630,10 @@ something is summoned, the axis is being read wrong. Two riders:
   for CC is worth materially less than the same effect on a partner or a summon — and if it
   drops, **Lethargy** costs that character their next turn, which out of two bodies is dear.
 
-**Rescue splits by who it targets, and the split decides the axis.** Self-healing is not
-delegatable, so scoring it as outward recovery prices it wrong — a partner's Durable does
-nothing for your hit points. Route it by target:
-
-| Recovery aimed at | Axis | Why |
-|---|---|---|
-| **Yourself** — Durable's full-HP short rests, Second Wind, Fiendish Vigor, self-cast Lay on Hands, temp HP on yourself | **Durability** | It is effective HP bought a different way. Additive, and it makes you harder to remove |
-| **The other character** — Death Ward, Sanctuary on the partner, Healing Word, raising a downed partner, Greater Restoration, Aid, temp HP granted outward | **Rescue** | Genuinely delegatable, so one source largely covers the pair — but a second still counts, because if the only rescuer is the one who drops, nobody picks them up |
+**Rescue splits by who it targets, and the split decides the axis.** Recovery aimed at *yourself*
+is **Durability** — effective HP bought a different way, and not delegatable. Recovery aimed at
+*the other character* is **Rescue**. `references/axis-rubrics.md` §7 lists the four forms that
+count and what each is worth in a duo.
 
 **Count each feature once.** A build with heavy self-healing scores it on Durability and takes
 no Rescue credit for it — putting it in both inflates the polygon and breaks the pairing read,
@@ -883,6 +830,7 @@ weighted damage figure alongside it.
 | `data/listo-10.2-races.md` | Every race and subrace, with the traits each grants |
 | `data/listo-10.2-backgrounds.md` | The twelve backgrounds, the eighteen skills, the campaign's skill gates, and the skill-map method |
 | `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
+| `data/listo-10.2-spells.md` | **Spell-list access as installed** — what each class's list actually holds, Magical Secrets pool sizes, the feat pick-lists, and which "cross-class" lists are wired vs shelfware |
 | `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
 | `data/listo-10.2-illithid.md` | **IPO2 as installed** — the 25-power tree, charge costs, IMR scaling and its tax, tadpole supply per act, the astral gate |
 | `data/listo-10.2-mcm.md` | **Resolved MCM and SE_CONFIG values** read out of an installed copy — Expansion toggles, feat cadence, CX scaling, attunement caps, what ships disabled |
