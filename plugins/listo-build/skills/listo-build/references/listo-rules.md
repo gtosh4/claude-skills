@@ -403,8 +403,25 @@ changes at natural breakpoints rather than paying the fiddle cost every level.
     Armament, unarmed, spell attacks — dodge a failure mode that costs a martial its whole turn.
   - Weigh **elixirs and consumables** higher than the 4× merchant multiplier suggests; they are
     the cheap answer to an affix you did not plan for.
-- **Illithid Powers Overhaul 2** is optional and strong; Illithid powers become very powerful in
-  Act 3 if the astral tadpole is used.
+- **Illithid Powers Overhaul 2 is live for this run** — it ships flagged `OPTIONAL_` and is enabled
+  in the profile, together with its **Half Potency** patch, which is what the live numbers are.
+  These drive every planning decision; the rest is in `data/listo-10.2-illithid.md`:
+  - **Powers cost an Action plus charges** from `SiaelIPORes`, a long-rest pool of
+    `2.5 + 0.5 × powers mastered` (half back on a short rest). They are a long-rest resource that
+    competes with the attack routine, not free riders on the turn.
+  - **Power numbers scale off Illithid Mind Rank = `⌊powers ÷ 5⌋`, cap 5** — not off character
+    level. Power count *is* the scaling stat.
+  - **The tax is unconditional: `+IMR` bonus physical damage taken per hit.** Owning powers makes
+    that body softer, and enemy AI already selects by softness.
+  - **Tadpoles are one finite party pool and nothing in the list adds any** — verified across all
+    810 installed paks, encounter mods included, since most tadpoles are looted off True Souls.
+    Roughly 12 in Act I, 12 in Act II, 26 in Act III, one tadpole per power per character. Ten of
+    the 25 powers, and therefore IMR 4–5, are gated behind the **Astral-Touched Tadpole at the
+    start of Act III**; **commune with it rather than eat it**, or the second character is locked
+    out.
+  - **`Topple the Weave` can wipe the whole investment.** Once **Volo is dead** its wild-magic
+    surge arms for every caster, and about 0.7% of spell casts strip *all* tadpole powers. A
+    committed illithid build keeps Volo alive.
 - **Attunement:** each attuned item consumes an Action Resource, refunded on unequip, with **no
   rest or combat restriction** — so re-attuning is free and unlimited. Treat it as a per-fight
   loadout, not a permanent commitment. **Resolved caps: 5 attuned total; 3 Legendary, 5

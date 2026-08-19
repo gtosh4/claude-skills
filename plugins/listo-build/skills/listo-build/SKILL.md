@@ -36,6 +36,15 @@ resisted (Force, and Radiant in Act 2) are worth more than their raw numbers**, 
 that cannot be disarmed, or a character who does not depend on one, is worth more than usual.
 Carry resistance-stripping or elixirs for the rest.
 
+**Illithid Powers Overhaul 2 is live for this run**, with its Half Potency patch. Powers cost an
+Action **plus charges** from a long-rest pool, their numbers scale off **Illithid Mind Rank
+(`⌊powers ÷ 5⌋`, cap 5)** rather than character level, and owning them costs **`+IMR` physical
+damage taken per hit**. Tadpoles are **one finite pool shared by both characters** — nothing in
+the list adds any — and the inner ring, so IMR 4 and 5, is gated behind the Astral-Touched Tadpole
+at the **start of Act III**. `data/listo-10.2-illithid.md` has the roster and the arithmetic; the
+allocation is a **pair-level decision**, so it belongs in the interview (§1b) and on the ladder
+(§4a), not in a footnote.
+
 What follows from two characters, regardless of what either of them is:
 
 - **Action economy is the structural problem.** Two bodies against encounters tuned for five.
@@ -154,6 +163,14 @@ already answered reads as not listening.
 5. **Resource clock tolerance.** Short-rest engine, long-rest nova, or a mix — this decides
    half the chassis list on its own.
 6. **Melee or ranged**, if the niche hasn't already settled it.
+7. **Illithid appetite.** IPO2 is live and the tadpole pool is finite and shared, so this is a
+   real fork and it is the player's, not the skill's. Ask it as three positions, with the cost
+   attached to each: **none** (Stomp that Tadpole keeps the refusal live, and the build owes
+   nothing to a resource it will not use), **opportunistic** (a handful of ring-1/2 powers, IMR 1–2,
+   +1–2 physical damage per hit), or **committed** (spend most of the pool on this body, IMR 3
+   before Act III and 4–5 after, +3–5 per hit). Ask **who eats them** in the same breath — a share
+   given to this character is a share the partner cannot have. If the partner's sheet exists, read
+   their plan off it rather than asking twice.
 
 **Batch three — the decisive trade-off.** Once the shortlist exists, ask the *specific* question
 the shortlist turns on, with the real candidates as options. That is where §3b's decisive
@@ -198,6 +215,7 @@ mechanics, not just the names:
 | Backgrounds, skills, skill gates | `data/listo-10.2-backgrounds.md` |
 | Feats and fighting styles | `data/listo-10.2-feats.md` |
 | Items, slots, attunement, economy | `data/listo-10.2-equipment.md` |
+| Illithid powers, charges, IMR, tadpole supply | `data/listo-10.2-illithid.md` |
 | Any "is this toggle on?" question | `data/listo-10.2-mcm.md` — resolved from the install |
 
 Each has a "not present" section listing what the docs still advertise but the list no longer
@@ -392,7 +410,7 @@ and mark the rungs where the arrangement stops being an extension of the previou
 respec points. Write the "why" for a rung in terms of what comes online, not what is being saved
 up for.
 
-Three checks at every rung, because all three move with the arrangement:
+Four checks at every rung, because all four move with the arrangement:
 
 - **Feat count.** Class-level cadence means two arrangements of the same character level hold
   different feat counts — Cleric 6 / Fighter 3 holds three feats at character 9, Cleric 7 /
@@ -401,6 +419,16 @@ Three checks at every rung, because all three move with the arrangement:
 - **Subclass timing.** **A dip that only pays late should be taken late** — deferring it pulls
   every primary-class feature forward. Check this on every build; it is the most common free win
   and the easiest to miss.
+- **Illithid holdings**, if the player took any. State **powers mastered at that rung**, not
+  tadpoles spent, because IMR — and therefore every power's numbers, the charge pool and the
+  physical-damage tax — steps at 5, 10, 15, 20, 25. Two rungs bind: **IMR 3 is the ceiling until
+  the Astral-Touched Tadpole**, and the inner ring lands in one lump at the start of Act III.
+  A ladder that shows illithid strength climbing smoothly through Act II is wrong.
+
+> **The dip order sets the illithid save DC.** Power DCs use the spellcasting modifier of the
+> **last class added**, so a late one-level dip into a class whose ability this build dumped
+> silently zeroes every save-based power. When a ladder both dips late and spends tadpoles on
+> Mind Blast, Fracture Psyche or Psionic Dominance, say which class is last at each rung.
 
 **Temporary subclasses and temporary feats are first-class answers.** A domain, patron or conclave
 that is strongest in Act 1 and weak later should be *taken* in Act 1 and traded out — say so on
@@ -414,6 +442,14 @@ real changes. Gold is not the cost; re-picking spells and rebuilding hotbars is.
 Publish an artifact using `assets/sheet-template.html`. Keep it to **picks and when** — what to
 select at each level, the stat spread, the gear targets. Reasoning belongs in conversation, not
 on the sheet. State unverified assumptions explicitly rather than smoothing over them.
+
+**An illithid plan is picks-and-when, so it goes on the sheet.** There is no dedicated section for
+it: put the powers in the **progression ladder** at the rung they are bought — naming the count and
+the resulting IMR, since that is what the numbers key off — and put the turn they change in the
+**play loop**. State the **tadpole share it assumes** as an explicit assumption, because the pool is
+shared and the sheet is read next to a partner's, and say whether the plan communes with the
+Astral-Touched Tadpole or eats it. A build that takes none should say so once, rather than leaving
+the reader to wonder whether it was considered.
 
 **A build that needs a mod change is blocked until the change is made, and the sheet has to say
 so.** Two exist in this install: **Inquisitor** requires updating its pak to 2.2.1 (the shipped
@@ -667,6 +703,54 @@ says what the *other* character still owes; the bands are in §1b and are not re
 with that reading in mind, because it is how the paired sheet will be read. It does not apply to
 additive or personal axes.
 
+**Illithid powers score on the axis they act on, and only in the act they exist in.** They get no
+axis of their own — Mind Blast is AoE, Psionic Dominance is Control (single), Eldritch Ward is
+Durability and Saves, Transfuse Health is Durability, Peace Breaker and Elevated Mind are Skills.
+`data/listo-10.2-illithid.md` carries the per-power mapping. Four rules keep the scores honest:
+
+- **Gate them by act.** Nothing before the first tadpoles are spent; **IMR 3 is the hard ceiling
+  until the Astral-Touched Tadpole**, so no Act I or Act II score may lean on inner-ring powers or
+  on rank-4/5 numbers. The whole inner ring lands at once at the **start of Act III**, which is a
+  step in the polygon, not a slope.
+- **Charges bound how much is deployable.** The pool is `2.5 + 0.5 × powers` per long rest — 5
+  charges at 5 powers, 15 at 25 — against typical costs of 2 to 5. A power the body can afford
+  twice a day is not a repeatable source and must not be scored as one; that is the same
+  distinction the AoE rung 2/3 boundary already makes. Heavy illithid spending also **pulls
+  Endurance down**, because it burns a long-rest pool that only half-refills on a short rest.
+- **Charge the tax to Durability.** `+IMR` physical damage on every incoming hit is unconditional
+  and it lands on the body that bought the powers, which enemy AI already prefers. A committed
+  illithid plan on a soft body is a Durability rung, not a rounding error.
+- **Count each power once**, as with self-healing versus outward healing. Transfuse Health steals
+  from an ally to heal *you*: Durability, never Rescue.
+
+**A sheet scores the plan it authors, not the baseline.** The ledger scores every chassis at the
+**even share** — half the pool per body, roughly IMR 1/2/4 by act — because that is the only
+allocation comparable across pairings. A pair sheet knows better: it knows who is actually eating
+the tadpoles. So if the plan concentrates, **the other body's illithid contribution comes down**,
+it does not sit at baseline; a sheet showing both bodies at even-share numbers while the prose
+says one of them is the illithid carry is internally inconsistent. **Score the fit, not the
+appetite** — a body that converts the share unusually well (a cheap Action, a casting stat on the
+last class added, an idle reaction, armour that shrugs off the tax) earns the rung; a body that
+merely *spends* a lot of tadpoles badly does not.
+
+**On splitting the pool between the two characters, score what is authored — but do the
+arithmetic.** Illithid returns are **convex in power count on one body**: potency scales with IMR
+*and* the charge pool grows with every power, so the same tadpoles concentrated buy strictly more
+active output than the same tadpoles split. Three things push the other way, and they are what a
+split plan is buying:
+
+| | Concentrated | Split |
+|---|---|---|
+| **Active powers** (damage, control) — additive and complementary | wins, and by more than proportionally | each half stays a rung or two below |
+| **Passive powers** (Psychic Fortress, Eldritch Ward, Emporium's +1 AC per 5) — **personal axes** | pays nothing to the pair, since personal takes the **lower** half | the only way these move the pair value at all |
+| **Actions** | a large pool one body cannot spend — 2 Actions a round caps it | two bodies can spend two pools |
+| **The tax** | concentrated on one body, where it may or may not bind | spread thin |
+
+So the honest read is: **concentrate for tempo, split for resilience**, and say which one the plan
+chose. A plan that splits evenly and still claims rank-4 numbers on both bodies before Act III has not
+been costed: half the run's ~50 tadpoles arrive in Act III, several of the earlier ones are locked
+behind mutually exclusive choices, and 25 on each body needs every single one.
+
 **A 4 across the board is a failed evaluation, not a great build.** If nothing scores 1 or 0, look
 harder. Then say in one sentence, under the table, what the lowest axis that matters is and what
 covers it.
@@ -781,6 +865,15 @@ weighted damage figure alongside it.
 - **Ignoring where a proficiency comes from.** Shields, in particular, are often unobtainable
   without a specific feat or dip — check before assuming an AC number.
 - **Planning gear without checking attunement.** Listo caps how much you can wear at once.
+- **Scoring illithid powers from vanilla knowledge.** Under IPO2 they cost charges, scale off
+  power count rather than character level, make the owner softer, and the astral tadpole grants
+  none of the six powers the wiki lists. Treating them as free Act I riders overstates every act.
+- **Spending the tadpole pool twice.** It is one party pool, so a share planned for this character
+  is a share the partner cannot have — and eating the Astral-Touched Tadpole instead of communing
+  with it locks the partner out of half the tree entirely.
+- **Letting Volo die on an illithid build.** `Topple the Weave` arms its wild-magic surge once Volo
+  is dead, and roughly 0.7% of spell casts then strip *every* tadpole power. Say so on any sheet
+  that commits to the tree.
 
 ## Reference files
 
@@ -794,6 +887,7 @@ weighted damage figure alongside it.
 | `data/listo-10.2-backgrounds.md` | The twelve backgrounds, the eighteen skills, the campaign's skill gates, and the skill-map method |
 | `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
 | `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
+| `data/listo-10.2-illithid.md` | **IPO2 as installed** — the 25-power tree, charge costs, IMR scaling and its tax, tadpole supply per act, the astral gate |
 | `data/listo-10.2-mcm.md` | **Resolved MCM and SE_CONFIG values** read out of an installed copy — Expansion toggles, feat cadence, CX scaling, attunement caps, what ships disabled |
 | `data/listo-10.2-mods.tsv` | 706 mods as `ModID<TAB>Name` — grep this to confirm anything exists |
 | `data/listo-10.2-manifest.json` | Raw manifest; holds which *file variant* was pulled per mod |

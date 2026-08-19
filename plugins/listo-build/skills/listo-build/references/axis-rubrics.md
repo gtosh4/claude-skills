@@ -367,6 +367,50 @@ This is the most act-stable axis: a clock is a clock at every level, so the rung
 
 ---
 
+## Illithid powers across the axes
+
+IPO2 is live (`data/listo-10.2-illithid.md`). Powers **fill** rungs on the axes above; they never
+create rungs of their own, and no power is worth a rung in an act it cannot exist in.
+
+**The rungs above are authored illithid-free, and stay that way.** Every body may spend tadpoles,
+so a uniform uplift would move every chassis together and mean nothing. What moves a row is
+**differential conversion** — a body that turns the same share of the pool into more than its
+neighbours do. Score against the **even share**, roughly **IMR 1 / 2 / 4** by act, and ask what
+this body gets out of it that another would not: a cheap Action, a real casting stat on the last
+class added, an idle reaction, armour that shrugs off the tax, or a missing damage type that
+Psychic and Force fill. `listo-ledger` SKILL.md has the full both-ways table.
+
+**What the act allows.** Nothing before the first tadpoles are spent. Only the outer 15 powers
+exist before the Astral-Touched Tadpole, so **IMR is capped at 3 through Acts I and II** whatever
+the tadpole count; the inner ring and IMR 4–5 arrive in one step at the **start of Act III**. A
+duo can fund about 12 powers between both bodies through Act I and about 24 through Act II, so
+IMR 1–2 is the realistic Act I holding on the body that gets the share.
+
+**What a charge pool can support.** `2.5 + 0.5 × powers` per long rest, half back per short rest,
+against costs of 2–5. Below about IMR 3 an illithid power is a **per-fight burst**, which is rung 2
+on AoE and cannot be read as the repeatable rung 3. At IMR 4–5 the pool reaches 12.5–15 and, with
+Astral Stillness discounting every cast by 1, it becomes a genuine repeatable engine.
+
+| Axis | What illithid can anchor | Needs |
+|---|---|---|
+| **Single-target** | Concentrated Blast 6d6 or Stage Fright 5d6 as a third damage source beside the attack routine; Psionic Overload as a rider on every offensive action; Fracture Psyche's vulnerability window | rung 4 at IMR 4+; **rung 3 rider at IMR 2–3** |
+| **AoE** | Mind Blast 7d8 in a cone, half on a save; Cull the Weak's overkill spread executing under 2×IMR HP | Act III for Mind Blast; Cull the Weak reaches rung 2–3 in Act II |
+| **Durability** | Eldritch Ward's flat `IMR` reduction against AoE, ranged and spells, plus its Shield-like interrupt; Transfuse Health; Cerebral Citadel armour's +1 AC per 5 powers | Ward is rung-worthy from IMR 2; **subtract the `+IMR` physical-damage tax** at every rank |
+| **Actions** | Astral Stillness — every power 1 charge cheaper, free casts every `10 − IMR` stacks; Awakened making Force Tunnel free | Act III |
+| **Control (single)** | Psionic Dominance = Dominate Person, **no concentration**; Psionic Backlash as a repeatable counterspell to level IMR+1; Ability Drain | Act III. **No-concentration control is the rung-4 clause in §5** |
+| **Control (area)** | Black Hole's pull with Prone and guaranteed Dazed 2; Mind Flayer's Insanity stacks; Repulsor | Black Hole is Act III; Repulsor and Mind Flayer are Act I/II rung-2 material |
+| **Rescue** | Shield of Thralls outward | thin — illithid is a poor rescue answer at every rank |
+| **Skills** | Elevated Mind: Expertise **and** proficiency in every skill of one ability, permanent and re-selectable — a rung on its own; Peace Breaker's +IMR+1 on the first Persuasion, Deception or Intimidation check | Elevated Mind is Act III; Peace Breaker is a **rung-1 to rung-2 lift from Act I** |
+| **Saves** | Psychic Fortress: Psychic resistance plus **+IMR to Intelligence, Wisdom and Charisma saves**; Eldritch Ward's interrupt on a failed save | +3 at IMR 3 is a full rung against Listo's inflated DCs |
+| **Endurance** | nothing — illithid **costs** Endurance. A build leaning on charges burns a long-rest pool that only half-refills on a short rest | — |
+
+> Two power sources are commonly mis-scored. **Transfuse Health heals only the caster** — it is
+> Durability, never Rescue. And **Peace Breaker is consumed by the first attack roll or check**, so
+> it is a Skills anchor — a one-shot +6 on an opening check — not a damage one, whatever its
+> `RollBonus(Attack)` suggests.
+
+---
+
 ## Applying these
 
 1. **Fix the level order first.** Act scores come from where a feature actually lands in the

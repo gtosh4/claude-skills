@@ -122,6 +122,42 @@ baseline. This is the same "surplus, not sufficiency" reading §5a now carries.
 > roster. Do not tune this against the current chassis values; they were authored under the old
 > model and against a curated shortlist.
 
+## Illithid charges are a second currency, and the tadpole pool is shared
+
+IPO2 is live, so a body can hold a second spendable pool: `SiaelIPORes`, `2.5 + 0.5 × powers`
+per long rest, half back on a short rest (`data/listo-10.2-illithid.md`). It does not change the
+model — an illithid power costs **an Action *and* charges**, so it buys enemy-AP removal through
+the same §1 currency and is bounded by the same §6 cap. What it adds is a second constraint:
+
+- **Charges convert Endurance into tempo.** They are a long-rest pool, so a plan that leans on
+  them lowers §2's Duration block while raising Tempo. Score both ends; a build that spends its
+  charges by fight two has bought Act-III tempo with Act-III rests.
+- **Nothing illithid raises the Actions cap** except Astral Stillness and Awakened, which are
+  Act III. Charges beyond what two Actions a round can spend deliver nothing.
+
+**Tadpoles are the only resource the two bodies genuinely share**, and that is new. Every other
+axis is scored per body and combined afterwards; the tadpole pool is one finite party stock of
+roughly 50, spent one per power per character, half of it arriving in Act III.
+
+Returns on it are **convex in one body's power count** — potency scales with `IMR = ⌊powers ÷ 5⌋`
+*and* the pool grows with every power — so concentrating a given number of tadpoles yields more
+active output than splitting them. Splitting buys three things instead: the **personal**-kind
+powers (Psychic Fortress's saves, Eldritch Ward's flat reduction, the Emporium armour's AC) only
+move a pair value when *both* bodies hold them, since personal takes `min(a, b)`; two bodies can
+spend two pools against the Actions cap; and the `+IMR` physical-damage tax is spread rather than
+loaded onto the body enemy AI already prefers.
+
+**The model stays neutral on the split** and scores what the sheet authored — but a pair whose two
+illithid plans sum past the act's supply is not a pair the run can build, and that check belongs
+with the pair sheet, not inside an axis.
+
+Two surfaces, two allocations, and they must not be confused. A **chassis row in the ledger** is
+scored at the **even share** — half the pool, roughly IMR 1/2/4 by act — because a row has no
+partner yet and only a fixed allocation keeps rows comparable; what moves such a row is how well
+that chassis *converts* the share, never how many tadpoles it would like. A **pair sheet** knows
+the actual split, so it scores that, and a concentrated plan must show up as one body up and the
+other down.
+
 ## 7. Only Control splits
 
 Checked per axis rather than assumed:
@@ -193,7 +229,8 @@ commensurable despite personal capping at 5 and complementary at 7.
 **Derived** — traceable to a game mechanic or an installed config, safe to rely on:
 no cap on complementary; personal for durability/saves/endurance; complementary for control
 (two concentration slots); Actions as a cap (Lone Wolf's 2/2/2 meets four-body parity); Rescue in
-Resilience (action cost already in the rungs); the AoE and single-target coefficients.
+Resilience (action cost already in the rungs); the AoE and single-target coefficients; the
+convexity of illithid returns in one body's power count, and the personal-kind consequence of it.
 
 **Provisional** — reasoned but uncalibrated, and every one of them should be revisited against a
 re-authored roster: all four weights, the control and rescue coefficients, the tempo cap's

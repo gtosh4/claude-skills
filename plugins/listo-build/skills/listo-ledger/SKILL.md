@@ -34,6 +34,32 @@ Acts map to character levels **I 3–8, II 9–15, III 16–20**. Scores are rel
 is the richest band**, holding six feats, 8th-level slots and nearly every
 run-defining class breakpoint.
 
+**Score illithid at the even share, and only where the chassis converts it unusually well.**
+IPO2 is live, tadpoles are open to every chassis, and how much a body gets is a *pairing* decision
+— so the ledger needs one allocation every row is scored against, or the numbers stop being
+comparable. Use the **even share**: half the party pool per body, which is the only allocation
+consistent across every pairing in the ledger, and lands at roughly **IMR 1 in Act I, 2 in Act II,
+4 in Act III**.
+
+**Then move a row only for differential fit.** The rubric ceilings in
+`listo-build/references/axis-rubrics.md` are authored illithid-free, so a chassis that converts
+powers averagely gains nothing — folding a flat uplift into every row would just inflate the whole
+ledger. What earns a rung is a chassis that converts *better than its neighbours* do, and what
+costs one is a chassis that converts worse:
+
+| Converts well | Converts badly |
+|---|---|
+| A **cheap Action** — a body whose turn is often a cantrip loses nothing casting a power; the passive powers (Psionic Overload, Cull the Weak, Luck of the Far Realms) cost no Action at all and **scale with attack count** | An **expensive Action** — Fighter 11 gives up six attacks per cast, a Paladin gives up smites |
+| A **real casting stat on the last class added** — that is where power DCs come from — and doubly so with Arcane Acuity | **No casting stat**: every save power in the tree is dead, leaving only the no-save half |
+| **Spare reactions**: Eldritch Ward and Psionic Backlash are interrupts, and Lone Wolf's second reaction is often idle | Bonus action and both reactions already committed — Force Tunnel and the wards have nowhere to go |
+| **At-will damage** chassis: charges are a long-rest pool bolted onto a body with no long-rest clock, so the Endurance cost is small | **Full casters**: charges compete for the rest that slots already force |
+| **Armour and AC to spare** — the `+IMR` tax and Psionic Overload's self-damage are cheap here, and the Cerebral Citadel set's +1 AC per 5 powers wants medium-armour proficiency | **Soft bodies** — the tax lands on the half enemy AI already prefers |
+| A body **short on damage types** — Psychic and Force answer Absolute Wrath's layered resistances | A body that already carries two damage types |
+
+Record the even-share baseline as a `caveats.assumptions` item, so a reader knows which allocation
+the column assumes. A pair sheet may then deviate from it — concentrating the pool lifts one body
+and lowers the other — and that is `listo-build` §5a's business, not the ledger's.
+
 Then the renderer does the rest. Your job is three things and nothing else:
 
 1. **The chassis scores** — ten ints per act, honestly, with the low ones low.

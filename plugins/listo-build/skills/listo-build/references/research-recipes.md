@@ -233,6 +233,85 @@ That is the highest-confidence evidence available and beats any page.
 
 ---
 
+## Illithid powers — how `listo-10.2-illithid.md` was built
+
+Four paks under the mods root carry the whole system, and **which one wins is decided by
+`profiles/Listonomicon/modsettings.lsx`, not by the MO2 order** — later entries override earlier:
+
+```bash
+python3 - "$L/profiles/Listonomicon/modsettings.lsx" <<'EOF'
+import re,sys
+t=open(sys.argv[1],encoding='utf-8',errors='ignore').read()
+for i,n in enumerate(re.findall(r'id="Name" type="LSString" value="([^"]*)"',t)):
+    if 'llithid' in n or 'otency' in n: print(i,n)
+EOF
+```
+
+That is how the **Half Potency** patch was found to be live: it redefines every distributor's
+`ActionResource(SiaelIPORes,…)` grant at 0.5 instead of 1, so the Nexus page's charge numbers are
+double the shipped ones. Whenever an "overhaul + patch" pair ships together, check the order before
+quoting any number from either.
+
+| Question | File inside `Illithid Powers Overhaul.pak` |
+|---|---|
+| Which powers exist, their ring, and the half-illithid gate | `Public/IllithidPowersOverhaul/TadpolePowers/TadpolePowersTree.lsx` — `NeedsHalfIllithidToUnlock` is the Act III gate |
+| A power's action and charge cost | `Public/IllithidPowersOverhaul/Stats/Generated/Data/<n>-<Name>.txt` → `UseCosts` |
+| What a power actually does | the same file — **the author's leading `//` comment block states the change from vanilla**, which is faster than reading the functors |
+| How the charge pool is sized and refilled | `1-IllithidMind.txt` — `Boosts`, `Siael_IllithidRecovery`, `Siael_IllithidRecoveryPotion` |
+| Rank scaling and its drawback | `1-IllithidMind.txt` — `SIAEL_ILLITHID_MIND_APPLIER_1…5`, and `Siael_IllithidMind_1…5` for the physical-damage tax |
+| What the astral tadpole grants here | `BootstrapServer.lua`, the `TAD_PARTIAL_CEREMORPH` listener, plus `29-GrandDesign.txt` |
+
+Dump every power's comment header in one pass:
+
+```bash
+for f in $(ls *.txt | sort -t- -k1 -n); do echo "## $f"; \
+  awk '/^\/\//{print} !/^\/\//{c++} c>3{exit}' "$f" | grep -v '^\/\/---'; done
+```
+
+**Tadpole supply cannot be read this way.** Placements live in base-game level files, which are not
+under the mods root — the counts in the data file are bg3.wiki's and are marked `(unverified)`. What
+*can* be checked is that **no installed mod adds any**, and that check is worth generalising.
+
+## "Does any mod add X?" — scan all 810 paks, don't guess from names
+
+Name-guessing fails here: tadpoles drop off **True Souls**, so the mods that could add supply are
+the *encounter* mods, which say nothing about tadpoles in their titles. Three passes, cheapest
+first. Build the index once — it is entry names only, so it reads file tables rather than payloads:
+
+```python
+# index.py — ~579k rows for 810 paks, a couple of minutes
+import sys, os
+sys.path.insert(0, "<skill>/scripts"); import lspk
+root = "/mnt/mercury/Games/Listonomicon/mods"
+paks = [os.path.join(d, f) for d, _, fs in os.walk(root) for f in fs if f.lower().endswith(".pak")]
+with open("pak_index.tsv", "w") as out:
+    for p in sorted(paks):
+        try:
+            for n in lspk.Pak(p).names(): out.write(f"{p}\t{n}\n")
+        except Exception as e: print("ERR", p, e, file=sys.stderr)
+```
+
+Then filter the index and read only what matters:
+
+| Pass | Filter on the index | Answers |
+|---|---|---|
+| **1. Loot** | `TreasureTable\|Equipment\.txt\|Character\.txt\|Object\.txt` — ~440 files | does any mod put the item in a drop table |
+| **2. Placement** | paks holding any `Levels/` entry — 82 of 810 | does any mod place the item or a creature carrying it |
+| **3. Script** | `\.lua$`, `Story/RawFiles/Goals/.*\.txt$`, `\.khn$`, `\.lsx$` — ~10.4k files | does any mod grant it at runtime |
+
+Two noise sources will otherwise swamp pass 2 and 3. **`Story/story.div`, `goals.raw` and
+`story_ac.dat` are a full copy of the recompiled base-game story**, so every story-editing mod
+matches every vanilla keyword — ignore those three filenames. And the **ScriptExtender IDE helper
+Lua** (`IDEHelpers/`, `Osi.lua`, `ExtIdeHelpers.lua`) lists every Osiris call that exists, so it
+matches everything — ignore it too.
+
+**Check the profile before reporting a hit.** `profiles/Listonomicon/modlist.txt` prefixes each mod
+`+` enabled or `-` disabled; this run's tadpole scan found `OPTIONAL_The Debug Book`, which can set
+tadpole count outright, shipping `-`. A disabled mod is not a finding, but it belongs in the file as
+a caveat.
+
+---
+
 ## Documentation
 
 Raw markdown, far more reliable than the rendered site:
