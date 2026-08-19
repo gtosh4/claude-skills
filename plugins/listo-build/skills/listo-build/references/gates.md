@@ -59,9 +59,10 @@ two rerolls, which is what turns most of these DCs from a gamble into a plan.
 both appearing in other mods' compatibility notes. `Auto Lockpicking` is installed and automates
 the rolls; it does not change them.
 
-> ⚠ Paks also exist in the game's own `Mods/` folder outside Mod Organizer, including
-> `improved_pickpocketing` and `inspirationsuncapped`. If those load alongside the profile, both
-> statements above flip. `(unverified — check before scoring a pickpocket gate)`
+**The Mod Organizer profile is the whole load order.** The game's own `Mods/` folder is empty, so
+nothing loads outside it — checked directly, not inferred. Earlier it held loose paks including
+`improved_pickpocketing` and `inspirationsuncapped`, which would have changed both the pickpocket
+DCs and the inspiration bank; they have been removed and were never part of Listo.
 
 ---
 
@@ -70,7 +71,8 @@ the rolls; it does not change them.
 | Gate | Cost | Buys | Axis |
 |---|---|---|---|
 | **Auntie Ethel's Hair** | **Deception or Intimidation, DC 20** — Fighters and Barbarians instead get **Intimidation DC 15 with advantage** | **+1 to a chosen ability**, above 20 | any |
-| **Awakened** (Zaith'isk, Crèche Y'llek) | **three saving throws**; each failure is a permanent **−2 to INT, WIS, CON** respectively | **every illithid power becomes a bonus action** | **Actions** |
+| **Awakened** (Zaith'isk, Crèche Y'llek) | **three saving throws**; each failure is a permanent **−2 to INT, WIS, CON** respectively | **Force Tunnel becomes free**, and a power can be cast **with an Action once the bonus action is gone** | **Actions** |
+| **Survival Instinct** | complete *Help Omeluum investigate the parasite* in the Underdark | a unique illithid power outside the tree — infuse a creature with psionic force, healing it at 0 HP. Toggleable under IPO2 | Rescue |
 | **Forbidden Knowledge** (*Necromancy of Thay*) | none — turn all three pages; **no save has to be passed** | **+1 Wisdom saving throws and +1 ability checks**, plus Speak with Dead 1/long rest | Saves, Skills |
 | **Silvanus' Blessing** | Emerald Grove | **proficiency in Nature and Animal Handling** | Skills |
 | **Loviatar's Love** | submit to Abdirak and perform well | **+2 attack rolls and Wisdom saves at ≤30% HP** | Tempo, Saves |
@@ -93,6 +95,12 @@ non-Charisma route in the list, and worth more now that Intimidation is one of o
 Failing costs permanent ability score. The saves are easier with the player character in the
 device rather than Lae'zel. `Sword of the Emperor Enhanced` gives Raulothim's Psychic Lance extra
 behaviour for a body that has Awakened or Partial Ceremorphosis.
+
+> **Vanilla says Awakened makes every illithid power a bonus action. Under IPO2 it does not.**
+> Powers cost an **Action** here and therefore compete with the attack routine, so what Awakened
+> actually buys is the escape from that competition — read the effect off
+> `data/listo-10.2-illithid.md`, which is compiled from the installed paks. That file wins over
+> any vanilla description of an illithid feature, including this one.
 
 **Forbidden Knowledge is free.** No check is required — the saving throws associated with turning
 the pages can all be failed. A flat +1 to every ability check for nothing is the cheapest Skills
@@ -147,7 +155,7 @@ matters given Short Rest Full Heal is off and the party leans on short rests any
 | **Sweet Stone Features** | **5000 gold** to Boney at the Circus — **one statue for the whole party** | **+1d4 to attack rolls and saving throws** | Saves, Tempo |
 | **Phalar Aluve +3** | **Sleight of Hand**, pickpocket-only, in the Circus — needs the Act II music box first | the sword upgraded to Legendary | Tempo |
 | **Danse Macabre** | *Tharchiate Codex*, then the last page of *Necromancy of Thay*, **DC 20 Wisdom save** | 4 ghouls; −5 Constitution, removable with Remove Curse | Actions |
-| **Partial Ceremorphosis** | consume the Astral-Touched Tadpole from the Emperor | tier 3 illithid powers, all tier 1 refunded, Fly | Actions |
+| **Partial Ceremorphosis** | **commune** with the Astral-Touched Tadpole from the Emperor — do *not* eat it | **Grand Design / Ceremorphosis**, and unlocks the ten inner-ring powers, which still cost charges | Actions |
 | **Slayer Knowledge** | rescue Volo at the Steel Watch Foundry, read the guidebook | advantage against Slayer abilities | Saves |
 | **Unstable Blood** | give Araj blood in Act II, help her again in Act III | flammable blood | Tempo |
 
@@ -168,6 +176,15 @@ is maintainable rather than once-per-rest. **Only the first character to read th
 > Wolf's own 50% is not confirmed from data. The mod author claims multiplicative stacking with
 > *resistance*, which is not the same claim. Do not score a body at 75% total reduction until this
 > is tested in game.
+
+**The astral tadpole is the one gate a duo can hit twice.** Eating it consumes the item for one
+body; **communing leaves it usable by the other**, so both can become half-illithid from the single
+tadpole. Eating it is a planning error here. IPO2 also **suppresses the six powers the vanilla item
+grants** — it intercepts `TAD_PARTIAL_CEREMORPH` and substitutes Ceremorphosis — so there is **no
+tier-1 refund and no free Fly**; Fly is an inner-ring power that still has to be bought. `Stomp
+that Tadpole` keeps the refuse option available at the reveal even after eating tadpoles, behind a
+DC 14 Constitution check. Full tree, charge costs and the `NeedsHalfIllithidToUnlock` list are in
+`data/listo-10.2-illithid.md`.
 
 **Mirror of Loss is DC 25 Religion, not 20.** `data/listo-10.2-backgrounds.md` carried `~20
 (verify)`; the check is 25. Three things follow: it is a genuinely hard gate even at Act III
@@ -212,6 +229,8 @@ Every entry below is confirmed by reading the installed pak, not the mod page.
 | `Zethino Love Test Buff Fix` | repairs the vanilla script; unreachable here, see above |
 | `Auto Lockpicking` | automates lockpick rolls; does not change DCs |
 | `Phalar Aluve - Legendary` (`2987`) | adds the two-music-box upgrade path that creates the Act III pickpocket gate |
+| `Illithid Powers Overhaul 2` + `Half Potency` | rewrites what Awakened and the astral tadpole deliver — see `data/listo-10.2-illithid.md`, which owns every illithid number |
+| `Stomp that Tadpole` | keeps *refuse the astral tadpole* available after eating tadpoles, behind a **DC 14 Constitution check** |
 
 **The three "no longer lost on death" fixes matter more than they look.** At this difficulty a
 body goes down regularly, and in vanilla those three conditions evaporate the first time it
@@ -226,6 +245,10 @@ happens. Score them as held for the rest of the run.
   Potion Osiris goal, the Permanent Passives stat overrides, the Zethino goal conditions.
 - **bg3.wiki**: the vanilla gate list, DCs and rewards. **Base-game paks are not under the Mod
   Organizer root**, so vanilla numbers cannot be confirmed the same way — treat every vanilla DC
-  here as wiki-sourced.
+  here as wiki-sourced. **The illithid gates are the exception**: vanilla descriptions of Awakened,
+  the astral tadpole and Survival Instinct are wrong under IPO2, so those rows follow
+  `data/listo-10.2-illithid.md`, which is compiled from the paks.
+- **The Mod Organizer profile is the complete load order.** `profiles/Listonomicon/modlist.txt`
+  holds 747 enabled mods, and the game's own `Mods/` folder is empty — so nothing loads outside it.
 - **Listo's own docs**: the Phalar Aluve music-box upgrade path, from
   `data/docs/4-SpellsFeatsClassesItems.md`.
