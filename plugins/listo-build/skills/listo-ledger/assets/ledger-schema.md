@@ -21,10 +21,11 @@ Every string is emitted as HTML, so inline `<b>`, `<em>` and `<code>` work.
 | Tempo cap | `min(capability breadth, action points)` — Actions bounds tempo rather than adding to it |
 | Score | the four blocks of `scoring-model.md` §9 |
 | Idle-body flags, holes, chips | flag under 3.0 in a fight type worth ≥40% of the act; hole is any pair axis ≤2 |
-| The whole field table | every carry × every support, ranked |
-| Which pairings become entries | each carry's **best** partner, ranked, capped at `entry_limit` |
+| The whole field table | **every chassis with every other**, ranked — `C(n,2)` unordered pairs |
+| Which pairings become entries | each chassis's **best** partner, ranked, capped at `entry_limit`; a pairing that two chassis both name is kept once |
 | Every number in a variation line | from the pairing itself — you write only the clause after it |
-| Roster order | carries then supports, each by the best score that chassis reaches anywhere |
+| Roster order | by the best score that chassis reaches anywhere |
+| Order within a pairing | higher delivered damage first, then higher total axis value, then the id alphabetically — see `scoring-model.md` §10 |
 
 **This list is the point of the format.** Hand-written variation figures were the
 single largest source of stale numbers in the previous ledger: a re-score moved
@@ -39,13 +40,12 @@ because they do not exist until render time.
   "eyebrow": "Listonomicon 10.2 · two-player Lone Wolf",
   "lede":    "One paragraph on what the ledger is for.",
   "facts":   ["26 chassis", "level cap 20"],   // mono chips under the standfirst
-  "entry_limit": 12,                        // carries beyond this fall out, and are named
+  "entry_limit": 12,                        // chassis beyond this fall out, and are named
   "footer":  "Provenance line.",
 
   "chassis": {
     "Bombard": {                            // key is the id; used for anchors
       "display": "Bombard",                 // optional; shown instead of the key
-      "role":    "carry",                   // carry | support
       "reach":   "hybrid",                  // ranged | hybrid | mobile | static
       "split":   "Blood Hunter 14 / Wizard 6",
       "meta":    "Int 22 · 7 feats",
@@ -64,7 +64,7 @@ because they do not exist until render time.
     }
   },
 
-  "entries": {                              // keyed by CARRY id, not by pairing
+  "entries": {                              // keyed by CHASSIS id, not by pairing
     "Bombard": {
       "name":    "Bombard & Fervor",
       "tag":     "caster blood hunter + weapon-cleric support",
@@ -191,9 +191,19 @@ cannot score something correctly must not produce a number for it.
 - a chassis with no `saves` block, or one missing an act
 - a `prof` entry outside `str dex con int wis cha`, or a duplicate within one act
 - an unknown `boosters` id
-- an entry whose carry survives the `entry_limit` cut but has no prose
-- a variation naming a partner the carry has no pairing with
+- an entry whose chassis survives the `entry_limit` cut but has no prose
+- a variation naming a partner the chassis has no pairing with
 
-The last two are the ones that bite. A carry that rises into the cut needs prose
+The last two are the ones that bite. A chassis that rises into the cut needs prose
 before the ledger will build, which is what stops the entries and the field
 table drifting apart.
+
+## There is no carry/support field
+
+A chassis is **not typed**. The renderer pairs every chassis with every other, so a duo of two
+damage bodies or two controllers is representable and rankable rather than unsayable — the old
+`product(carries, supports)` could not express one even to show it scoring badly. `C(n,2)` costs
+nothing: pairings are derived from the authored ints at roughly 600 bytes and microseconds each.
+
+What a body does with its turns is still visible — in its `note`, its axis values, and the
+`niche` its seed sat under. It is just not a partition the model enforces.

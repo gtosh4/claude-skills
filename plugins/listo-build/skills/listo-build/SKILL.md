@@ -487,8 +487,8 @@ scripts/render_pair.py pair.json -o sheet.html
 `assets/pair-schema.md` is the wire format and `assets/pair-example.json` a filled-in skeleton to
 copy. The renderer owns the CSS, the JS, all section scaffolding, **the whole damage-coverage
 table** and the pair radar values — a hand-written sheet re-emits ~60KB of boilerplate per pair
-and gets the arithmetic wrong. `assets/pair-template.html` is a rendering reference only; do not
-read it to author a sheet.
+and gets the arithmetic wrong. There is no pair HTML template to read: `pair.css`, `pair.js` and
+`render_pair.py` are the rendering reference, and unlike a worked example they cannot go stale.
 
 It is the same chassis as the single-character sheet, with the duo-specific structure:
 
@@ -774,11 +774,6 @@ throughput. So compute delivered damage alongside the radar and report both. **N
 and call the result a ranking** — `references/scoring-model.md` §9 has the block structure that
 replaces a flat total.
 
-> **The −0.46 / +0.81 / 0.00 correlation figures previously quoted here are retired.** They were
-> computed across the curated 26-chassis roster, which is a shortlist selected for being good at
-> *something* rather than a sample of build space, so they could not show whether the blocks
-> genuinely trade off. Recompute once the roster is re-authored.
-
 **The split rule: 5 + 0 is worse than 3 + 3.** A character — or a pair — that wins one fight type
 and is a passenger in the other is worth less than one that is useful in both, because the
 passenger's turns are lost every time the wrong fight happens. Splitting single-target against
@@ -900,7 +895,6 @@ weighted damage figure alongside it.
 | `assets/pair-example.json` | Filled-in pair-sheet skeleton to copy |
 | `scripts/render_pair.py` | Renders a pair JSON into the finished sheet |
 | `assets/pair.css`, `assets/pair.js` | Pair-sheet chassis, inlined by the renderer |
-| `assets/pair-template.html` | The same sheet as one worked HTML example — rendering reference, not an authoring path |
 
 The compiled `.md` data files are the **first stop** for "does X exist and what does it do".
 They were built from the mods index, the manifest's file variants, and the mod pages themselves,

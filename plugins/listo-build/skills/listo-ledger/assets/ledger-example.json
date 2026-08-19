@@ -2,88 +2,312 @@
   "title": "Listo Pairing Ledger",
   "eyebrow": "Listonomicon 10.2 · two-player Lone Wolf",
   "lede": "A four-chassis template showing every field the format supports. <b>The numbers here are illustrative, not a scored roster</b> — copy this file, delete these chassis and author your own against <code>listo-build/references/axis-rubrics.md</code>. The pre-rebuild 26-chassis roster is archived beside this file as <code>ledger-v1-roster.json</code>; it predates the ten-axis model and will not validate.",
-  "facts": ["4 chassis", "level cap 20", "acts I 3–8 · II 9–15 · III 16–20"],
+  "facts": [
+    "4 chassis",
+    "level cap 20",
+    "acts I 3–8 · II 9–15 · III 16–20"
+  ],
   "entry_limit": 2,
   "footer": "Template. Scoring model: <code>listo-build/references/scoring-model.md</code>.",
-
   "chassis": {
     "Bombard": {
-      "role": "carry",
       "reach": "hybrid",
       "split": "Profane Soul Blood Hunter 14 (INT) / Wizard 6 (Evocation), Wizard 1 first",
       "meta": "Int 22 · 7 feats",
       "note": "Wizard 1 grants <b>Intelligence and Wisdom saves</b>, the only clean route to a Wisdom save without spending Resilient. <b>Brand of the Sapping Scar</b> costs no concentration, which is why <code>concentration</code> is false here and why its control sits on the single-target axis — <code>Brand_Castigation</code> marks one creature.",
       "concentration": false,
       "saves": {
-        "I":   {"prof": ["int", "wis"], "boosters": []},
-        "II":  {"prof": ["int", "wis", "con"], "boosters": []},
-        "III": {"prof": ["int", "wis", "con", "dex"], "boosters": []}
+        "I": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "boosters": []
+        },
+        "II": {
+          "prof": [
+            "int",
+            "wis",
+            "con"
+          ],
+          "boosters": []
+        },
+        "III": {
+          "prof": [
+            "int",
+            "wis",
+            "con",
+            "dex"
+          ],
+          "boosters": []
+        }
       },
       "scores": {
-        "I":   [3, 2, 3, 2, 2, 1, 0, 3, null, 4],
-        "II":  [4, 4, 3, 3, 4, 3, 0, 3, null, 4],
-        "III": [4, 4, 3, 3, 4, 3, 0, 3, null, 4]
+        "I": [
+          3,
+          2,
+          3,
+          2,
+          2,
+          1,
+          0,
+          3,
+          null,
+          4
+        ],
+        "II": [
+          4,
+          4,
+          3,
+          3,
+          4,
+          3,
+          0,
+          3,
+          null,
+          4
+        ],
+        "III": [
+          4,
+          4,
+          3,
+          3,
+          4,
+          3,
+          0,
+          3,
+          null,
+          4
+        ]
       }
     },
-
     "Volley": {
-      "role": "carry",
       "reach": "ranged",
       "split": "Rogue 1 → Ranger 11 → Rogue 8",
       "meta": "Dex 22 · 6 feats",
       "note": "Rogue 1 opens for the <b>Dex + Int</b> save pair, four skills and two Expertise. Ranger 11 buys <b>Volley / Whirlwind</b> — full weapon damage to every target, at-will, no save, no resource — which is the Act II AoE ceiling. Control stays low on both halves: this chassis answers crowds with damage, not with locks.",
       "concentration": false,
       "saves": {
-        "I":   {"prof": ["dex", "int"], "boosters": []},
-        "II":  {"prof": ["dex", "int", "con", "cha"], "boosters": []},
-        "III": {"prof": ["dex", "int", "con", "cha"], "boosters": []}
+        "I": {
+          "prof": [
+            "dex",
+            "int"
+          ],
+          "boosters": []
+        },
+        "II": {
+          "prof": [
+            "dex",
+            "int",
+            "con",
+            "cha"
+          ],
+          "boosters": []
+        },
+        "III": {
+          "prof": [
+            "dex",
+            "int",
+            "con",
+            "cha"
+          ],
+          "boosters": []
+        }
       },
       "scores": {
-        "I":   [3, 1, 3, 2, 1, 1, 0, 4, null, 5],
-        "II":  [4, 4, 3, 3, 2, 2, 0, 4, null, 5],
-        "III": [4, 4, 3, 3, 2, 2, 0, 5, null, 5]
+        "I": [
+          3,
+          1,
+          3,
+          2,
+          1,
+          1,
+          0,
+          4,
+          null,
+          5
+        ],
+        "II": [
+          4,
+          4,
+          3,
+          3,
+          2,
+          2,
+          0,
+          4,
+          null,
+          5
+        ],
+        "III": [
+          4,
+          4,
+          3,
+          3,
+          2,
+          2,
+          0,
+          5,
+          null,
+          5
+        ]
       }
     },
-
     "Zeal": {
-      "role": "support",
       "reach": "static",
       "split": "Zeal Cleric 17 (Hazoret) / Bard 3 (Lore)",
       "meta": "Wis 22 · 7 feats",
       "note": "<b>Haste and Fireball sit on the domain list at Cleric 5</b> (<code>Cleric Zeal Domain 5</code> = <code>Target_Haste;Projectile_Fireball</code>), and Consuming Fervor maximises Fire <i>or</i> Thunder twice per short rest. Holds Haste, so <code>concentration</code> is true — which caps its Saves at 3 in any act where Constitution is not proficient.",
       "concentration": true,
       "saves": {
-        "I":   {"prof": ["wis", "cha", "con", "dex"], "boosters": []},
-        "II":  {"prof": ["wis", "cha", "con", "dex"], "boosters": []},
-        "III": {"prof": ["wis", "cha", "con", "dex"], "boosters": []}
+        "I": {
+          "prof": [
+            "wis",
+            "cha",
+            "con",
+            "dex"
+          ],
+          "boosters": []
+        },
+        "II": {
+          "prof": [
+            "wis",
+            "cha",
+            "con",
+            "dex"
+          ],
+          "boosters": []
+        },
+        "III": {
+          "prof": [
+            "wis",
+            "cha",
+            "con",
+            "dex"
+          ],
+          "boosters": []
+        }
       },
       "scores": {
-        "I":   [3, 2, 4, 2, 2, 2, 3, 4, null, 3],
-        "II":  [3, 3, 4, 3, 3, 3, 4, 4, null, 4],
-        "III": [4, 4, 3, 3, 3, 3, 4, 5, null, 4]
+        "I": [
+          3,
+          2,
+          4,
+          2,
+          2,
+          2,
+          3,
+          4,
+          null,
+          3
+        ],
+        "II": [
+          3,
+          3,
+          4,
+          3,
+          3,
+          3,
+          4,
+          4,
+          null,
+          4
+        ],
+        "III": [
+          4,
+          4,
+          3,
+          3,
+          3,
+          3,
+          4,
+          5,
+          null,
+          4
+        ]
       }
     },
-
     "Vow": {
-      "role": "support",
       "reach": "static",
       "split": "Paladin 15 / Warlock 5",
       "meta": "Cha 22 · 7 feats",
       "note": "Paladin opens for heavy armour and <b>Wis + Cha</b> — neither repeatable by dipping later. <b>Aura of Protection at Paladin 6</b> lands inside Act I and is a <i>pair</i> booster: it raises both bodies before the Personal <code>min</code>, and does not stack with a second aura.",
       "concentration": false,
       "saves": {
-        "I":   {"prof": ["wis", "cha", "con", "dex"], "boosters": ["aura-of-protection"]},
-        "II":  {"prof": ["wis", "cha", "con", "dex"], "boosters": ["aura-of-protection"]},
-        "III": {"prof": ["wis", "cha", "con", "dex"], "boosters": ["aura-of-protection"]}
+        "I": {
+          "prof": [
+            "wis",
+            "cha",
+            "con",
+            "dex"
+          ],
+          "boosters": [
+            "aura-of-protection"
+          ]
+        },
+        "II": {
+          "prof": [
+            "wis",
+            "cha",
+            "con",
+            "dex"
+          ],
+          "boosters": [
+            "aura-of-protection"
+          ]
+        },
+        "III": {
+          "prof": [
+            "wis",
+            "cha",
+            "con",
+            "dex"
+          ],
+          "boosters": [
+            "aura-of-protection"
+          ]
+        }
       },
       "scores": {
-        "I":   [3, 1, 4, 2, 2, 1, 2, 2, null, 3],
-        "II":  [4, 2, 4, 2, 2, 2, 2, 2, null, 3],
-        "III": [4, 2, 3, 2, 2, 2, 2, 3, null, 3]
+        "I": [
+          3,
+          1,
+          4,
+          2,
+          2,
+          1,
+          2,
+          2,
+          null,
+          3
+        ],
+        "II": [
+          4,
+          2,
+          4,
+          2,
+          2,
+          2,
+          2,
+          2,
+          null,
+          3
+        ],
+        "III": [
+          4,
+          2,
+          3,
+          2,
+          2,
+          2,
+          2,
+          3,
+          null,
+          3
+        ]
       }
     }
   },
-
   "entries": {
     "Bombard": {
       "name": "Bombard & Fervor",
@@ -91,8 +315,13 @@
       "verdict": "The AoE moves onto the carry and is cast off the <i>same Intelligence</i> the chassis already maximises for Dark Augmentation and the Brand — so every DC lands into <b>Brand of the Sapping Scar's</b> blanket Disadvantage, which costs no concentration and therefore never competes with it.",
       "cost": "Costs the 1d10 hemocraft die (BH 14 sits at 1d8 per the <code>HemocraftDie</code> levelmap), Action Surge, and the echo. Rescue is 0 on the carry, so the pair leans entirely on the support for it.",
       "vars": [
-        {"partner": "Vow", "note": "Trades the maximised Fireball for an aura that lifts both bodies' saves."},
-        {"text": "<b>Wisdom variant</b>: free prose, no numbers attached. The mod.io Hemocraft patch is <i>not installed</i> — check before scoring anything that assumes it."}
+        {
+          "partner": "Vow",
+          "note": "Trades the maximised Fireball for an aura that lifts both bodies' saves."
+        },
+        {
+          "text": "<b>Wisdom variant</b>: free prose, no numbers attached. The mod.io Hemocraft patch is <i>not installed</i> — check before scoring anything that assumes it."
+        }
       ]
     },
     "Volley": {
@@ -101,20 +330,44 @@
       "verdict": "Volley is full weapon damage to every target with no save and no resource, delivered twice a round by Lone Wolf's second Action. That is the Act II AoE ceiling reached with a class feature rather than a slot.",
       "cost": "Control is thin on both axes, so the pair removes enemy action points by killing rather than locking — which is slower at +126% enemy HP than the raw damage suggests.",
       "vars": [
-        {"partner": "Vow", "note": "Aura plus five proficient saves, at the price of the maximised burst."}
+        {
+          "partner": "Vow",
+          "note": "Aura plus five proficient saves, at the price of the maximised burst."
+        }
       ]
+    },
+    "Zeal": {
+      "name": "Zeal pairing",
+      "tag": "example",
+      "verdict": "Illustrative prose.",
+      "cost": "Illustrative cost.",
+      "vars": []
+    },
+    "Vow": {
+      "name": "Vow pairing",
+      "tag": "example",
+      "verdict": "Illustrative prose.",
+      "cost": "Illustrative cost.",
+      "vars": []
     }
   },
-
   "method": {
     "h2": "How these numbers are made",
     "cards": [
-      {"title": "Tempo", "body": "Damage and control both remove enemy action points — permanently and temporarily. Both are split crowd-versus-boss, blended by act, then <b>capped by Actions</b>: a capability you cannot afford to deploy delivers nothing."},
-      {"title": "The rest", "body": "Resilience (durability, saves, rescue), duration (endurance) and utility (skills) are weighted and averaged. Rescue sits here rather than in tempo because its action cost is already priced by where a chassis lands on the rubric ladder."},
-      {"title": "Saves are derived", "body": "Index 8 is always <code>null</code>. Author the proficient-ability set and any boosters; the renderer applies the rung table, the pair-scope aura rule, and the concentration cap."}
+      {
+        "title": "Tempo",
+        "body": "Damage and control both remove enemy action points — permanently and temporarily. Both are split crowd-versus-boss, blended by act, then <b>capped by Actions</b>: a capability you cannot afford to deploy delivers nothing."
+      },
+      {
+        "title": "The rest",
+        "body": "Resilience (durability, saves, rescue), duration (endurance) and utility (skills) are weighted and averaged. Rescue sits here rather than in tempo because its action cost is already priced by where a chassis lands on the rubric ladder."
+      },
+      {
+        "title": "Saves are derived",
+        "body": "Index 8 is always <code>null</code>. Author the proficient-ability set and any boosters; the renderer applies the rung table, the pair-scope aura rule, and the concentration cap."
+      }
     ]
   },
-
   "caveats": {
     "h2": "What would still move these numbers",
     "assumptions": {

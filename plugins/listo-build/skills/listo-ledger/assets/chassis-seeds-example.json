@@ -1,0 +1,137 @@
+{
+  "provenance": "Ten worked rows, not a sweep. Copy to chassis-seeds.json and fill until `seed_index.py --check` is clean. Keys are `<class file>/<### heading verbatim>` — take them from `--list`, never retype them. A candidate carries `builds`, keyed by niche: one subclass often has more than one honest expression, and they belong in different niches. Warlock/The Hexblade below is the case. The `src` / `seed_deps` / `score_deps` stamps are the cache key — written by `--stamp`, never by hand or by a sweep agent; those on this template are illustrative and will read as drifted once the class files move.",
+  "seeds": {
+    "cleric/Heavy armour / martial weapon table (the dip-planning summary)": {
+      "verdict": "not-a-subclass",
+      "why": "A planning table that sits inside the Domains section, so it parses as a heading. The only one in 157.",
+      "src": "b9a44bfbdd2b",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "cleric/Zeal (Hazoret)": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Zeal",
+          "split": "Cleric 12 / Fighter 8",
+          "peak": 4,
+          "peak_axis": "st",
+          "why": "Weapon domain that keeps full casting; Fighter 8 buys Action Surge, Brutish Durability and the off-cadence feat."
+        }
+      },
+      "src": "8b2123ef5ba4",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "cleric/Life": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Mercy",
+          "split": "Cleric 14 / Paladin 6",
+          "peak": 5,
+          "peak_axis": "rsc",
+          "why": "The rescue ceiling in the list. Paladin 6 adds a pair-wide aura, which is why the split runs that deep.",
+          "score_deps": "d95a9e4d6e0a"
+        }
+      },
+      "src": "262546e84a42",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "cleric/Knowledge": {
+      "verdict": "candidate",
+      "builds": {
+        "skills": {
+          "chassis": "Lore",
+          "split": "Cleric 17 / Rogue 3",
+          "peak": 3,
+          "peak_axis": "skl",
+          "why": "Expertise plus domain skills covers every gate, but nothing here scales into Act III and the damage never arrives."
+        }
+      },
+      "src": "92ccdbf1357b",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "cleric/Dream": {
+      "verdict": "dupe",
+      "dupe_of": "cleric/Life",
+      "why": "Its best expression is the same Cleric 14 / Paladin 6 body; the domain changes the flavour of the healing, not the shape of the chassis.",
+      "src": "e2a046753f68",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "fighter/Battle Master": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Standard",
+          "split": "Fighter 11 / Rogue 9",
+          "peak": 5,
+          "peak_axis": "st",
+          "why": "Fighter 11 for the third attack, superiority dice on the short-rest clock, Rogue 9 for off-turn Sneak Attack into the second reaction."
+        },
+        "reaction": {
+          "chassis": "Riposte",
+          "split": "Fighter 20",
+          "peak": 3,
+          "peak_axis": "act",
+          "why": "Both reactions on manoeuvres and opportunity attacks; real only in a pair built to be attacked, which is why it is a separate build and not a variant."
+        }
+      },
+      "src": "6398a70d9171",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "wizard/School of Bombardment": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Bombard",
+          "split": "Blood Hunter 14 / Wizard 6",
+          "peak": 5,
+          "peak_axis": "aoe",
+          "why": "Int carries hemocraft and spell DCs at once, so one stat buys both halves."
+        }
+      },
+      "src": "5a748420eeaf",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "warlock/The Hexblade": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Hexplate",
+          "split": "Warlock 12 / Paladin 8",
+          "peak": 4,
+          "peak_axis": "st",
+          "why": "Charisma to attack and damage, short-rest slots feeding smites, aura at Paladin 6."
+        },
+        "short-rest": {
+          "chassis": "Curse",
+          "split": "Warlock 12 / Sorcerer 8",
+          "peak": 4,
+          "peak_axis": "ctrl_s",
+          "why": "Same Charisma, different clock and role: Chains of Carceri and Quickened blast off pact slots rather than a weapon."
+        }
+      },
+      "src": "3b4fe2c740c6",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "monk/Way of the Four Elements (vanilla)": {
+      "verdict": "none",
+      "why": "Every ki option is flat dice with no upcast path, so it decays against Combat Extender's +126% regular and +170% boss HP. No 20-level split fixes the scaling.",
+      "src": "7a55f4afff0e",
+      "seed_deps": "9e1dd4878f1e"
+    },
+    "paragon/Regent": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Chorus",
+          "split": "Paragon 14 / Bard 6",
+          "peak": 4,
+          "peak_axis": "act",
+          "why": "Hands actions to the partner rather than taking more itself, which is the half of the Actions axis a duo actually lacks."
+        }
+      },
+      "src": "3af553ed5dd7",
+      "seed_deps": "9e1dd4878f1e"
+    }
+  }
+}

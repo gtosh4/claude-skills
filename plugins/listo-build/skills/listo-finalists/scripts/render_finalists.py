@@ -96,8 +96,11 @@ def dmg_table(p, rec):
         r = rec["acts"][act]
         wc, wb = MIX[act]
         f = lambda u, w: f'<td class="{"crit" if u < FLAG and w >= .40 else ""}">{u:.2f}</td>'
-        rows.append(f'<tr><th>{act}</th>' + f(r["ua"][0], wc) + f(r["ua"][1], wb)
-                    + f(r["ub"][0], wc) + f(r["ub"][1], wb)
+        # By id, not by slot: score_bodies orders a pairing damage-first, which need not match
+        # this sheet's authored a/b.
+        ua, ub = r["u"][p["names"]["a"]], r["u"][p["names"]["b"]]
+        rows.append(f'<tr><th>{act}</th>' + f(ua[0], wc) + f(ua[1], wb)
+                    + f(ub[0], wc) + f(ub[1], wb)
                     + f'<td class="mix">{r["tempo"]*100:.0f}%</td></tr>')
     return ('<div class="scroll"><table class="matrix dmg"><thead>'
             f'<tr><th rowspan="2">Act</th><th colspan="2">{p["names"]["a"]}</th>'

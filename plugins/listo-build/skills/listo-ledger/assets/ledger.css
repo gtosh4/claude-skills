@@ -218,3 +218,7 @@ footer {
   margin-top:64px; padding-top:20px; border-top:1px solid var(--line);
   font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--muted);
 }
+
+/* Pareto frontier: a pairing nothing beats on all four blocks at once. */
+.field tr.front th[scope="row"] { box-shadow: inset 3px 0 0 var(--accent, #7aa2f7); }
+.field tr.front td.b { font-weight: 700; }

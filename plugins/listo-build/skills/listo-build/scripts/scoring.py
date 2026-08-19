@@ -37,6 +37,7 @@ KIND_MAX = {"add": 10, "comp": 7, "per": 5}
 KINDNAME = {"add": "Additive", "comp": "Complementary", "per": "Personal"}
 
 # Blocks. `act` is in none of them — it caps tempo rather than contributing.
+BLOCKS = ("tempo", "resilience", "duration", "utility")
 TEMPO = ["st", "aoe", "ctrl_s", "ctrl_a"]
 RESILIENCE = ["dur", "sav", "rsc"]
 DURATION = ["end"]
@@ -50,7 +51,6 @@ REACH = {"ranged": (1.00, 1.00), "hybrid": (0.95, 0.95),
          "mobile": (0.95, 1.00), "static": (0.85, 0.90)}
 REACH_LABEL = {"ranged": "ranged", "hybrid": "melee + ranged option",
                "mobile": "mobile melee", "static": "static melee"}
-ROLES = ("carry", "support")
 
 # Fight-type coefficients (crowd, boss). AoE/ST derived; the rest provisional.
 FIGHT = {"aoe": (1.00, 0.25), "st": (0.50, 1.00),
@@ -70,8 +70,13 @@ FLAG = 3.0      # an idle body, in a fight type worth >=40% of the act
 ABILITIES = ("str", "dex", "con", "int", "wis", "cha")
 KEY_SAVES = frozenset(("wis", "con", "dex"))
 # scope: "self" applies to this body, "pair" applies to both and does not stack.
+# `blanket` means the effect applies to EVERY save, which is what the rung table trades a
+# proficiency for. War Caster is advantage on *concentration* saves only — real, but narrow, and
+# marking it blanket silently lifted every concentration build a rung on the heaviest-weighted
+# axis in the model. It stays a legal id because it is worth authoring; it just does not buy a
+# rung. Its actual value is already priced by `concentration` and the rung-3 cap below.
 BOOSTERS = {"brutish-durability": {"scope": "self", "blanket": True},
-            "war-caster":         {"scope": "self", "blanket": True},
+            "war-caster":         {"scope": "self", "blanket": False},
             "aura-of-protection": {"scope": "pair", "blanket": True}}
 
 
@@ -215,8 +220,9 @@ def action_factor(act_pair):
 
 # ── validation ───────────────────────────────────────────────────────────────
 def validate_chassis(cid, c):
-    _require(c.get("role") in ROLES,
-             f"{cid}: unknown role {c.get('role')!r} — expected one of {ROLES}")
+    # No role. A chassis is not typed carry-or-support: the model pairs every chassis with every
+    # other, so a duo of two damage bodies or two controllers is representable and rankable
+    # rather than unsayable.
     _require(c.get("reach") in REACH,
              f"{cid}: unknown reach {c.get('reach')!r} — expected one of {tuple(REACH)}")
     _require("saves" in c, f"{cid}: missing `saves` block — saves is derived, not authored")
@@ -237,6 +243,41 @@ def validate_chassis(cid, c):
                      f"{cid} {act}: {KEYS[i]} is {v!r}, expected an integer 0-5")
 
 
+# ── presentation order within a pairing ──────────────────────────────────────
+def _lead_metrics(ca, cb):
+    """Each body's (delivered damage, total axis value), summed across acts.
+
+    Saves are derived per *pairing*, since Aura of Protection is a pair-scope booster, so both
+    bodies are resolved together here exactly as they are in the score itself.
+    """
+    dmg = {"a": 0.0, "b": 0.0}
+    tot = {"a": 0.0, "b": 0.0}
+    for act in ACTS:
+        va, vb, _ = saves_pair(ca, cb, act)
+        for who, c, sv in (("a", ca, va), ("b", cb, vb)):
+            row = list(c["scores"][act])
+            row[SAV_IDX] = sv
+            dmg[who] += sum(utilisation(row, c["reach"]))
+            tot[who] += sum(row)
+    return (dmg["a"], tot["a"]), (dmg["b"], tot["b"])
+
+
+def lead_order(ca, cb):
+    """Which body is presented first. Returns the two bodies, ordered.
+
+    **Higher delivered damage leads**, then higher total axis value, then the id alphabetically.
+    A pairing is unordered — the score is symmetric — so without a rule the order would fall out
+    of whatever sequence the caller happened to iterate in, and the same duo could render one way
+    in the field table and the other in an entry. The damage-first rule also puts the body a
+    reader thinks of as carrying the fight on the left, which is what the old carry/support
+    partition used to do implicitly.
+    """
+    (da, oa), (db, ob) = _lead_metrics(ca, cb)
+    if (-db, -ob, cb["_id"]) < (-da, -oa, ca["_id"]):
+        return cb, ca
+    return ca, cb
+
+
 # ── the score ────────────────────────────────────────────────────────────────
 def score(C, a, b):
     """Pair score from a chassis map. Ids are injected as `_id`."""
@@ -249,10 +290,12 @@ def score_bodies(ca, cb):
     Each needs `_id`, `reach`, `scores` (act -> 10 values, index 8 null),
     `saves` (act -> {prof, boosters}) and optionally `concentration`.
     """
+    _require(ca["reach"] in REACH, f"{ca['_id']}: unknown reach {ca['reach']!r}")
+    _require(cb["reach"] in REACH, f"{cb['_id']}: unknown reach {cb['reach']!r}")
+
+    ca, cb = lead_order(ca, cb)
     a, b = ca["_id"], cb["_id"]
     ra, rb = ca["reach"], cb["reach"]
-    _require(ra in REACH, f"{a}: unknown reach {ra!r}")
-    _require(rb in REACH, f"{b}: unknown reach {rb!r}")
     locked = ra in ("static", "mobile") and rb in ("static", "mobile")
 
     rec = {"a": a, "b": b, "acts": {}, "locked": locked,
@@ -293,11 +336,26 @@ def score_bodies(ca, cb):
         nontempo = (sum(WEIGHTS[ax] * adj[ax] for ax in WEIGHTS)
                     / sum(WEIGHTS.values()))
 
+        # §2's four blocks, kept apart. `nontempo` is their weighted mean and is what the score
+        # uses; these are what *selection* runs against, because a pairing that is beaten on one
+        # block and wins another is not beaten at all — which a single number cannot say.
+        blocks = {
+            "tempo": tempo,
+            "resilience": (sum(WEIGHTS[ax] * adj[ax] for ax in RESILIENCE)
+                           / sum(WEIGHTS[ax] for ax in RESILIENCE)),
+            "duration": sum(adj[ax] for ax in DURATION) / len(DURATION),
+            "utility": sum(adj[ax] for ax in UTILITY) / len(UTILITY),
+        }
+
         # display: collapse the two control axes to one act-appropriate spoke
         radar = dict(pair)
         radar["ctrl"] = wc * pair["ctrl_a"] + wb * pair["ctrl_s"]
 
+        # `ua`/`ub` follow the record's own presentation order, which lead_order may have
+        # swapped relative to the caller's. `u` is keyed by id so a consumer holding its own
+        # notion of which body is which can never mis-attribute delivered damage.
         rec["acts"][act] = {"radar": radar, "pair": pair, "ua": ua, "ub": ub,
+                            "u": {a: ua, b: ub}, "blocks": blocks,
                             "crowd": crowd, "boss": boss, "tempo": tempo,
                             "nontempo": nontempo,
                             "dmg_crowd": dmg_crowd, "dmg_boss": dmg_boss}
@@ -308,6 +366,8 @@ def score_bodies(ca, cb):
     rec["warnings"] = list(dict.fromkeys(rec["warnings"]))
     rec["tempo"] = tempo_total / len(ACTS)
     rec["nontempo"] = nontempo_total / len(ACTS)
+    rec["blocks"] = {b: sum(rec["acts"][a]["blocks"][b] for a in ACTS) / len(ACTS)
+                     for b in BLOCKS}
     rec["score"] = round(50 * rec["tempo"] + 50 * rec["nontempo"], 1)
     rec["holes"] = sorted(rec["holes"], key=KEYS.index)
     return rec

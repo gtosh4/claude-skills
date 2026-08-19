@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
 
 # The scoring model lives in ONE place: listo-build/scripts/scoring.py, which
 # implements listo-build/references/scoring-model.md. Never reimplement it here.
-from scoring import (                                       # noqa: E402
+from scoring import (BLOCKS,                                       # noqa: E402
     KEYS, LABELS, AXES, KINDS, KINDNAME, KIND_MAX, ACTS, BANDS, MIX, FLAG,
     REACH, REACH_LABEL, SAV_IDX, WEIGHTS, TEMPO, RESILIENCE,
     ScoringError, score, norm, derive_saves, validate_chassis)
@@ -90,12 +90,36 @@ def roster_block(key, ch, disp):
     rows = "".join(rows)
     meta = f'<span class="dot">·</span>{ch["meta"]}' if ch.get("meta") else ""
     return f'''<article class="rost" id="r-{key.lower()}">
-<header><h3>{disp(key)}<span class="role {ch["role"]}">{ch["role"]}</span></h3>
+<header><h3>{disp(key)}</h3>
 <p class="chassis">{ch.get("split","")}{meta}</p>
 <p class="chassis reachline">reach: <b>{REACH_LABEL[ch["reach"]]}</b></p></header>
 {f'<p class="note">{ch["note"]}</p>' if ch.get("note") else ""}
 <div class="scroll"><table class="matrix"><thead><tr><th>Act</th>{head}
 <th class="tot"><span>Sum</span></th></tr></thead><tbody>{rows}</tbody></table></div></article>'''
+
+
+def frontier(field):
+    """Indices of the pairings no other pairing beats on all four blocks.
+
+    Selection has to run on the blocks, not the score. The whole argument for four blocks is
+    that a total cannot see a pairing that trades damage for resilience — so cutting by score
+    would discard exactly what the model was built to preserve. A pairing survives here if it is
+    best at *something*.
+
+    Sorted by the first block descending, so a candidate can only be dominated by one already
+    kept; a final pass clears the ties that ordering alone cannot.
+    """
+    order = sorted(range(len(field)), key=lambda i: -field[i]["blocks"][BLOCKS[0]])
+    kept = []
+    for i in order:
+        p = field[i]["blocks"]
+        if not any(all(field[j]["blocks"][b] >= p[b] for b in BLOCKS)
+                   and any(field[j]["blocks"][b] > p[b] for b in BLOCKS) for j in kept):
+            kept.append(i)
+    return [i for i in kept
+            if not any(all(field[j]["blocks"][b] >= field[i]["blocks"][b] for b in BLOCKS)
+                       and any(field[j]["blocks"][b] > field[i]["blocks"][b] for b in BLOCKS)
+                       for j in kept if j != i)]
 
 
 def details(block, open_=False):
@@ -115,38 +139,59 @@ def render(d):
         validate_chassis(k, ch)
     disp = lambda k: C[k]["display"]
 
-    carries  = [k for k in C if C[k]["role"] == "carry"]
-    supports = [k for k in C if C[k]["role"] == "support"]
-    if not carries or not supports:
-        sys.exit("need at least one carry and one support")
+    if len(C) < 2:
+        sys.exit("need at least two chassis to form a pairing")
 
-    field = sorted((score(C, a, b) for a, b in itertools.product(carries, supports)),
+    # Every unordered pair. The pair score is symmetric — combine() is add/comp/per, all
+    # order-independent — so (a, b) and (b, a) are one row, not two.
+    field = sorted((score(C, a, b) for a, b in itertools.combinations(C, 2)),
                    key=lambda r: -r["score"])
     by_pair = {(r["a"], r["b"]): r for r in field}
 
-    # entries: each carry's best partner, ranked, capped at entry_limit
+    # Selection: the Pareto frontier over the four blocks. Everything else stays in the field
+    # table as the audit trail — it is dominated, not deleted.
+    front_idx = set(frontier(field))
+    front = [field[i] for i in sorted(front_idx, key=lambda i: -field[i]["score"])]
+    front_pairs = {(r["a"], r["b"]) for r in front}
+    relevant = {k for r in front for k in (r["a"], r["b"])}
+
+    # entries: each chassis's best partner, ranked, capped at entry_limit. Both sides of a
+    # pairing count, since neither is privileged as "the carry" any more — so an entry records
+    # *which* chassis it headlines (`me`) separately from the record's own a/b labels.
     best = {}
-    for r in field:
-        best.setdefault(r["a"], r)
-    ranked = sorted(best.values(), key=lambda r: -r["score"])
+    for r in front:                                   # frontier only, in score order
+        for me, other in ((r["a"], r["b"]), (r["b"], r["a"])):
+            best.setdefault(me, (me, other, r))
+
+    # When two chassis are each other's best partner they would otherwise headline the identical
+    # pairing twice. Keep the first and let the second appear as that entry's partner instead.
+    ranked, seen = [], set()
+    for ent in sorted(best.values(), key=lambda t: -t[2]["score"]):
+        pair_id = (ent[2]["a"], ent[2]["b"])
+        if pair_id in seen:
+            continue
+        seen.add(pair_id)
+        ranked.append(ent)
+
     limit = d.get("entry_limit", len(ranked))
     kept, cut = ranked[:limit], ranked[limit:]
 
     prose = d.get("entries", {})
-    missing = [r["a"] for r in kept if r["a"] not in prose]
+    missing = sorted({me for me, _, _ in kept if me not in prose})
     if missing:
         sys.exit("entry prose missing for: " + ", ".join(missing))
 
     entries = []
-    for i, rec in enumerate(kept, 1):
-        e = prose[rec["a"]]
+    for i, (me, other, rec) in enumerate(kept, 1):
+        e = prose[me]
         vars_html = []
         for v in e.get("vars", []):
             if "partner" in v:
                 p = v["partner"]
-                vr = by_pair.get((rec["a"], p))
+                # by_pair holds one direction per unordered pair; look both ways.
+                vr = by_pair.get((me, p)) or by_pair.get((p, me))
                 if vr is None:
-                    sys.exit(f"entry {rec['a']}: no pairing with {p}")
+                    sys.exit(f"entry {me}: no pairing with {p}")
                 vars_html.append(f'<li><b>+ {disp(p)}</b> &mdash; {vr["score"]} &middot; '
                                  f'tempo {vr["tempo"]*100:.0f}% &middot; rest {vr["nontempo"]*100:.0f}%. {v.get("note","")}</li>')
             else:
@@ -157,9 +202,9 @@ def render(d):
   <div class="etitle">
     <h3>{e["name"]}</h3>
     <p class="tag">{e.get("tag","")}</p>
-    <p class="members"><a href="#r-{rec["a"].lower()}">{disp(rec["a"])}</a>
+    <p class="members"><a href="#r-{me.lower()}">{disp(me)}</a>
       <span class="plus">+</span>
-      <a href="#r-{rec["b"].lower()}">{disp(rec["b"])}</a></p>
+      <a href="#r-{other.lower()}">{disp(other)}</a></p>
   </div>
   <div class="score"><span class="num">{rec["score"]}</span><span class="lbl">rank score</span>
     <span class="sub">tempo {rec["tempo"]*100:.0f}% &middot; damage + control, capped by Actions</span>
@@ -178,14 +223,15 @@ def render(d):
 
     cut_line = ""
     if cut:
-        names = ", ".join(f'<b>{disp(r["a"])}</b> ({r["score"]})' for r in cut)
-        cut_line = (f' {len(kept)} carries make the cut; {names} '
+        names = ", ".join(f'<b>{disp(me)}</b> ({r["score"]})' for me, _, r in cut)
+        cut_line = (f' {len(kept)} chassis make the cut; {names} '
                     f'{"does" if len(cut)==1 else "do"} not, and stay in the field table '
                     f'and the roster.')
 
-    ranked_key = {(r["a"], r["b"]): i for i, r in enumerate(kept, 1)}
+    ranked_key = {(r["a"], r["b"]): i for i, (_, _, r) in enumerate(kept, 1)}
     frows = "".join(
-        f'<tr class="{"in" if (r["a"], r["b"]) in ranked_key else ""}">'
+        f'<tr class="{"in" if (r["a"], r["b"]) in ranked_key else ""}'
+        f'{" front" if (r["a"], r["b"]) in front_pairs else ""}">'
         f'<th scope="row">'
         + (f'<span class="ent">{ranked_key[(r["a"], r["b"])]:02d}</span>'
            if (r["a"], r["b"]) in ranked_key else "")
@@ -203,8 +249,7 @@ def render(d):
     for r in field:
         peak[r["a"]] = max(peak.get(r["a"], 0), r["score"])
         peak[r["b"]] = max(peak.get(r["b"], 0), r["score"])
-    order = (sorted(carries,  key=lambda k: -peak[k])
-             + sorted(supports, key=lambda k: -peak[k]))
+    order = sorted(C, key=lambda k: (k not in relevant, -peak.get(k, 0)))
     roster = "".join(roster_block(k, C[k], disp) for k in order)
 
     kindrows = "".join(f"<tr><td>{LABELS[i]}</td><td>{KINDNAME[KINDS[k]]}</td></tr>"
@@ -236,8 +281,11 @@ def render(d):
 
 <section>
   <h2>The full field</h2>
-  <p class="sublede">{len(field)} pairings, {len(carries)} carries &times; {len(supports)} supports.
-  Axis values summed across acts, then tempo per act. Sorted by score.</p>
+  <p class="sublede">{len(field)} pairings &mdash; every one of the {len(C)} chassis with every other.
+  Axis values summed across acts, then tempo per act. Sorted by score.
+  <b>{len(front)}</b> sit on the four-block frontier (marked), meaning nothing beats them on
+  tempo, resilience, duration <em>and</em> utility at once; the rest are dominated, and kept here
+  as the record rather than deleted.</p>
   <div class="scroll"><table class="field matrix"><thead><tr><th></th><th>Pairing</th>
     {"".join(f"<th>{a}</th>" for a in AXES)}
     <th title="tempo %, act I">I</th><th title="tempo %, act II">II</th>
@@ -249,15 +297,15 @@ def render(d):
 <section>
   <h2>The entries</h2>
   <p class="sublede">Ranked by score, in the same order as the field table above.
-  <b>One entry per carry</b>, headlined by that carry's highest-scoring partner; every other
-  partner for the same carry is a variation beneath it rather than an entry of its own.{cut_line}</p>
+  <b>One entry per chassis</b>, headlined by its highest-scoring partner; every other partner for
+  the same chassis is a variation beneath it rather than an entry of its own.{cut_line}</p>
   {"".join(entries)}
 </section>
 
 <section>
   <h2>The roster</h2>
-  <p class="sublede">Every chassis, carries first, each ranked by the best score it reaches anywhere
-  in the field. Act bands: {" &middot; ".join(f"{a} {b}" for a, b in zip(ACTS, BANDS))}.</p>
+  <p class="sublede">Every chassis, the {len(relevant)} that reach the frontier first, then those
+  whose every pairing is dominated. Each ranked by the best score it reaches anywhere in the field. Act bands: {" &middot; ".join(f"{a} {b}" for a, b in zip(ACTS, BANDS))}.</p>
   {roster}
 </section>
 

@@ -204,6 +204,11 @@ roster, which is a shortlist rather than a sample of build space, so it could no
 coverage and damage genuinely trade off. **Recompute it once the roster is re-authored from
 scratch**, which is the first point the data will not be selected on the outcome.
 
+> **The figures that attempt produced — −0.46, +0.81, 0.00 — are retired**, and this is the only
+> file that still names them, so that a reader meeting them in an older sheet or ledger can tell
+> they are dead rather than merely unfamiliar. They are not evidence for anything; do not restore
+> them to a weight, a rubric or a skill file.
+
 Two things to carry into that decision. At +126% regular and +170% boss HP, kills are slow enough
 that enemy turns happen regardless, which pushes work onto resilience rather than tempo. And
 tempo's *defensive* value lives in the crowd term, not the boss term — a boss acts whether you took
@@ -223,6 +228,17 @@ Source keeps the full granularity. Presentation collapses it so a radar stays re
 
 Every spoke plots **percent of that axis's achievable maximum**, so all nine are visually
 commensurable despite personal capping at 5 and complementary at 7.
+
+**Order within a pairing is presentation, not model.** A pair score is symmetric, so which body
+is "first" would otherwise fall out of whatever order the caller iterated in, and the same duo
+could render one way in a field table and the other in an entry. The rule: **higher delivered
+damage leads**, then higher total axis value, then the id alphabetically. It also puts the body a
+reader thinks of as carrying the fight on the left, which is the one useful thing the retired
+carry/support partition did implicitly.
+
+Consumers that hold their own notion of which body is which — a pair sheet with an authored left
+and right — must read per-body figures **by id**, from `acts[act]["u"]`, never by the record's
+`ua`/`ub` slots. Indexing by slot silently attributes one body's damage to the other.
 
 ## 11. What is derived and what is not
 
