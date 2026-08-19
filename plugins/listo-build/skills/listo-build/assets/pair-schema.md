@@ -69,7 +69,7 @@ values. Every string is emitted as HTML, so inline `<b>`, `<em>` and
 
   "gates": {
     "h2": "...",
-    "rows": [{"gate": "Hag's Hair", "skill": "Persuasion", "act": "I", "dc": "20",
+    "rows": [{"gate": "Hag's Hair", "skill": "Deception", "act": "I", "dc": "20",
               "owner": "a",                    // a | b | either | none  — none renders the row as a failure
               "mod": "+8", "pc": "45% cold · 83% on two rerolls", "source": "—"}],
     "note": "..."

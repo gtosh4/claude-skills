@@ -367,7 +367,7 @@
     "rows": [
       {
         "gate": "Hag's Hair",
-        "skill": "Persuasion / Intimidation",
+        "skill": "Deception / Intimidation",
         "act": "I",
         "dc": "20",
         "owner": "a",
@@ -376,14 +376,24 @@
         "pc": "45% cold · 83% on two rerolls"
       },
       {
+        "gate": "Potion of Everlasting Vigour",
+        "skill": "Sleight of Hand",
+        "act": "II",
+        "dc": "pickpocket",
+        "owner": "none",
+        "grade": "bad",
+        "mod": "untrained",
+        "pc": "no proficiency in the pair \u2014 the Act II ability point is unreachable"
+      },
+      {
         "gate": "Mirror of Loss",
         "skill": "Religion",
         "act": "III",
-        "dc": "~20",
+        "dc": "25",
         "owner": "b",
-        "grade": "ok",
+        "grade": "mid",
         "mod": "+12",
-        "pc": "65% cold · 96% on two rerolls"
+        "pc": "40% cold · 78% on two rerolls"
       },
       {
         "gate": "Phalar Aluve +3",

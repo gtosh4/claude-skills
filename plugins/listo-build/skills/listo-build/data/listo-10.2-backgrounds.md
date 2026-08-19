@@ -67,24 +67,31 @@ character cannot actually pass a check with is not coverage.
 
 ---
 
-## Weighting — five skills carry the axis, thirteen are breadth
+## Weighting — six skills carry the axis, twelve are breadth
 
 **Do not score coverage by counting ticks.** Most of the eighteen gate nothing but flavour text.
-Five gate **permanent character power or a unique item**, and those five decide the score. Each
+Six gate **permanent character power or a unique item**, and those six decide the score. Each
 is rolled in a specific **act**, against that act's DC, with that act's proficiency bonus — so
 score them **where they land**, not at level 20:
 
 | Gate | Skill | Act | DC | What passing buys |
 |---|---|---|---|---|
-| **Hag's Hair**, keeping Mayrina | **Persuasion** or **Intimidation** | **I**, char ~4–6 | 20 | permanent **+1** to an ability |
-| **Mirror of Loss** | **Religion** | **III** | ~20 `(verify)` | permanent **+2** to an ability |
+| **Hag's Hair**, keeping Mayrina | **Deception** or **Intimidation** | **I**, char ~4–6 | 20 | permanent **+1** to an ability |
+| **Potion of Everlasting Vigour** | **Sleight of Hand**, pickpocket Araj Oblodra | **II** | pickpocket, scales with value | permanent **+2** to an ability |
+| **Mirror of Loss** | **Religion** | **III** | **25** | permanent **+2** to an ability (to 24), optional +1 Cha |
 | **Phalar Aluve +3** | **Sleight of Hand**, pickpocket only | **III** | ~20, scales with value | the upgraded sword |
 | Traps, hidden caches | **Perception** — **passive**, never rolled | all three | 15–25 | avoided damage and lost loot |
 | Secret doors, switches | **Investigation** | all three | 15–20 | routes and caches |
 
 Everything else is **breadth**: it opens dialogue and small XP, and missing it costs nothing
-permanent. Deception and Intimidation sit between — they avoid fights, which has real value under
-Combat Extender, but nothing permanent hangs on them.
+permanent. **Persuasion is breadth** — no gate in the run runs off it, which is the single most
+common misallocation here. Deception and Intimidation are not: between them they open Hag's Hair,
+*and* they avoid fights, which has its own value under Combat Extender.
+
+> **`references/gates.md` owns the full gate list**, including the gates that are not paid in
+> skill checks at all — Awakened, the Tharchiate blessing, Anointed in Splendour and the rest —
+> and the mods that change these numbers. The table above is only the skill-check subset.
+> **Both pickpocket rows and every dialogue row assume the host makes the roll**; see there.
 
 ### Score against the DC of the act the check lands in
 
@@ -95,8 +102,8 @@ proficiency does** — which is why the earliest gate is the hardest one:
 | Act | Char | Prof | Routine DC | The gate that lands here |
 |---|---|---|---|---|
 | **I** | 3–8 | +2 → +3 | 10–15 | **Hag's Hair, DC 20** — an outlier, rolled at prof **+2/+3** |
-| **II** | 9–15 | +4 → +5 | 15–18 | none permanent; Shadowfell dialogue clusters at 18 |
-| **III** | 16–20 | +5 → +6 | 18–22 | **Mirror of Loss** and the **Circus pickpocket**, both ~20 |
+| **II** | 9–15 | +4 → +5 | 15–18 | **the Araj pickpocket**; Shadowfell dialogue clusters at 18 |
+| **III** | 16–20 | +5 → +6 | 18–22 | the **Circus pickpocket** at ~20, and the **Mirror of Loss at 25** |
 
 **Hag's Hair is the hardest check in the run relative to what is available.** At character 5 a
 face with Expertise and a 20 in the ability rolls `+6 + 5 = +11` — 60%. The same character in
@@ -120,6 +127,12 @@ The check is `d20 + ability modifier + proficiency`. Against **DC 20**, at Act I
 **The rule that follows:** a gate is satisfied only by **Expertise**, or by **proficiency on the
 character's primary ability**, or by proficiency plus stacked boosts. Plain proficiency on a dump
 stat is a tick on the map and a failed check in the game.
+
+**The Mirror of Loss is DC 25, so shift every row down 25%** — Expertise on the primary ability
+is 65%, not 90%, and Expertise on a dumped ability is 35%. Only Expertise on a real ability plus
+Guidance clears it reliably, and **there is a route that skips the check entirely**: sacrificing
+knowledge of the *Necromancy of Thay* gives a guaranteed +2. That trades away Forbidden Knowledge
+(+1 Wisdom saves and +1 ability checks, taken in Act I), so it is a real cost, not a free out.
 
 **Where this bites hardest is Religion**, because Religion keys off **Intelligence** and almost
 nothing in a duo runs Intelligence. A Cleric with Religion on its class list and INT 8 rolls
@@ -222,7 +235,7 @@ single most important one. Three consequences, and they reorder the whole axis:
 
 ### Scoring the axis
 
-Audit the five gates at the act each lands in, then score:
+Audit the six gates at the act each lands in, then score:
 
 Score each gate at the act it lands in, **with two Inspiration rerolls assumed**:
 
@@ -230,7 +243,7 @@ Score each gate at the act it lands in, **with two Inspiration rerolls assumed**
 |---|---|
 | **5** | Every rolled gate at **≥90% with two rerolls**, every one of them on a **proficient** character, and **passive Perception 21+** |
 | **4** | Every gate has a proficient character, but one needs the **full bank** to clear 90%, or passive Perception is **17–20**, or **Investigation** has no proficient character, or the pair has **no Guidance** for unplanned checks |
-| **3** | **No proficient character on Hag's Hair, the Mirror or the pickpocket**, or passive Perception **≤16** |
+| **3** | **No proficient character on Hag's Hair, the Mirror or either pickpocket**, or passive Perception **≤16** |
 | **2** | Two gates with no proficient character |
 | **1** | Three or more |
 
@@ -302,10 +315,15 @@ and mark it for Expertise:
 
 | Gate | Skill | Put it on |
 |---|---|---|
-| Hag's Hair, DC 20 | **Persuasion** (or Intimidation) | the higher Charisma |
-| Mirror of Loss | **Religion** | either — but it must exist |
-| Circus pickpocket | **Sleight of Hand** | the higher Dexterity |
+| Hag's Hair, DC 20 | **Deception** or **Intimidation** — *not* Persuasion | the higher Charisma |
+| Mirror of Loss, DC 25 | **Religion** | either — but it must exist |
+| Araj and Circus pickpockets | **Sleight of Hand** | the higher Dexterity |
 | Traps, secrets | **Perception**, **Investigation** | split them |
+
+**The ability and the proficiency must land on the same character, but that character does not
+have to be the one who rolls.** `Use Highest Modifier in dialogue` and `Use Best Sleight of Hand`
+hand the party-best total to the **host**, so reserve each gate on whichever body has the ability
+for it — then run the check on the host. See `references/gates.md`.
 
 **3 · Count how many picks each character actually has.** Level-1 class list (2–4), the
 multiclass node of any dip (usually 1, sometimes 0), college or subclass bonus proficiencies
@@ -327,9 +345,10 @@ skill immediately when taken** — but plan as if you have it, because the pick 
 thrown away, with two exceptions worth doubling: **Perception**, because it is rolled passively
 and often, and **Sleight of Hand** if both will attempt the Circus.
 
-**6 · Audit the five gates, then score** — for each of Hag's Hair, the Mirror of Loss, the Circus
-pickpocket, passive Perception and Investigation, write down **who rolls it, at what total, in
-which act**. Coverage count does not enter the score; it only breaks ties. See "Weighting" above.
+**6 · Audit the six gates, then score** — for each of Hag's Hair, the Araj pickpocket, the Mirror
+of Loss, the Circus pickpocket, passive Perception and Investigation, write down **who rolls it,
+at what total, in which act**. Coverage count does not enter the score; it only breaks ties. See
+"Weighting" above.
 
 > **Step 2 has a consequence step 4 must honour:** assigning a gate to the character with the
 > higher modifier is not enough if that modifier is still too low. **Religion on a Cleric's

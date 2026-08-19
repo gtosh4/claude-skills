@@ -281,10 +281,12 @@ really has → **allocate every slot at once, narrow sources first**, leaving wi
 three proficiencies for last → delete overlaps, except Perception and Sleight of Hand which are
 worth doubling.
 
-The gates: **Persuasion or Intimidation** for Hag's Hair, **Religion** for the Mirror of Loss,
-**Sleight of Hand** for the Circus pickpocket, **Perception** and **Investigation** throughout.
-Full method, the eighteen skills by ability and the worked allocation are in
-`data/listo-10.2-backgrounds.md`.
+The gates: **Deception or Intimidation** for Hag's Hair — *not* Persuasion, which opens no gate in
+the run — **Religion** for the Mirror of Loss, **Sleight of Hand** for the Araj and Circus
+pickpockets, **Perception** and **Investigation** throughout. Full method, the eighteen skills by
+ability and the worked allocation are in `data/listo-10.2-backgrounds.md`;
+**`references/gates.md` owns the gate list itself**, including the gates paid in gold, saving
+throws or a quest decision rather than a skill check.
 
 **Score the axis off the gate arithmetic, not off the map's tick count.** Three things decide
 whether a proficiency is actually coverage, and all three are easy to skip:

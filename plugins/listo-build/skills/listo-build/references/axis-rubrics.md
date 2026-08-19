@@ -292,7 +292,11 @@ Four things count, and they are not equal in a duo:
 ## 8. Skills
 
 Out-of-combat coverage. Judge against the **named gates that exist in that act**, not a
-proficiency count — this axis is the most strongly act-gated of the nine.
+proficiency count — this axis is the most strongly act-gated of the ten.
+
+**`gates.md` owns the gate list** — every act, DC, cost and reward, and which mods change them.
+The rows below name only the gates that are *paid in a skill check*; most gates are not, and what
+they buy usually lands on another axis. Do not restate a gate's numbers here.
 
 | | |
 |---|---|
@@ -305,12 +309,20 @@ proficiency count — this axis is the most strongly act-gated of the nine.
 
 | ceiling | I | II | III |
 |---|---|---|---|
-| **gates** | **Hag's Hair, DC 20** (one per run) | passive Perception for hidden content; no unique named gate | **Mirror of Loss** (+2 chosen, +1 Cha — needs an Intelligence skill), and the **pickpocket-only** second Phalar Aluve music box in the Circus (Sleight of Hand) |
-| **5 =** | Expertise ×2 (Bard/Rogue 3) + Guidance + a check that clears DC 20 | + passive Perception in the 20s | + a Sleight of Hand body **and** an Intelligence skill |
+| **skill gates** | **Hag's Hair, DC 20** — **Deception or Intimidation**, one per run | **Potion of Everlasting Vigour** — pickpocket Araj (Sleight of Hand); plus passive Perception for hidden content | **Mirror of Loss, Religion DC 25**, and the **pickpocket-only** second Phalar Aluve music box in the Circus (Sleight of Hand) |
+| **5 =** | Expertise ×2 (Bard/Rogue 3) + Guidance + a check that clears DC 20 | + a Sleight of Hand body + passive Perception in the 20s | + an Intelligence skill that clears DC 25, or Forbidden Knowledge spent to bypass it |
 
-> **Stern Gaze** (Inquisitor) lets Intimidation use **Wisdom instead of Charisma** — the only
-> non-Charisma route to Hag's Hair in the list. Vengeance's **Monster Tactician** grants Expertise
-> in an Intelligence skill *and* double Wisdom modifier on it, which buys Mirror of Loss outright.
+> **Persuasion does not open Hag's Hair** — the check is Deception or Intimidation, and Fighters
+> and Barbarians get an easier **Intimidation DC 15 with advantage** instead. **Stern Gaze**
+> (Inquisitor) lets Intimidation use **Wisdom instead of Charisma**, the only non-Charisma route
+> in the list. Vengeance's **Monster Tactician** grants Expertise in an Intelligence skill *and*
+> double Wisdom modifier on it, which clears the Mirror's DC 25 outright.
+
+> **The gate rows above assume the host makes the roll.** `Use Highest Modifier in dialogue` and
+> `Use Best Sleight of Hand` hand the party-best total to `GetHostCharacter()` only, so a gate
+> cleared by the non-host body is not cleared at all. The ability and the proficiency must still
+> sit on the *same* body, and the flat bonus does **not** carry proficiency — **Reliable Talent**
+> and **Silver Tongue** stay with whichever body owns them. Full mechanics in `gates.md`.
 
 ## 9. Saves
 

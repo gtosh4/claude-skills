@@ -39,8 +39,10 @@ remains capped.
 
 Non-feat sources that stack above 20: **Hag's Hair** (+1) and the **Tomes and Manuals** mod
 (+1 each). The **Mirror of Loss** gives +2 to a chosen ability *plus* a separate +1 Charisma, per
-character — whether it exceeds 20 is **unconfirmed**. Acquisition gates for all three are in
-`data/listo-10.2-equipment.md`.
+character, and **raises a score as high as 24**. A fourth source exists in this modlist: the
+**Potion of Everlasting Vigour** is +2 above 20, and two installed mods make it **+2 to a chosen
+ability** and obtainable **by pickpocketing Araj Oblodra in Act II**. Acquisition costs for all
+four are in `references/gates.md`.
 
 ### Feat cadence and count
 
@@ -212,7 +214,8 @@ Sources, and their ceilings:
 | **Lone Wolf +4** | +4 | stops at 20 |
 | ASI feat | +2 | stops at 20 |
 | Half-feats (Feats Overhaul) | +1 each | **bypass 20** |
-| Mirror of Loss | +2 chosen, +1 Cha | Act 3 |
+| Mirror of Loss | +2 chosen, +1 Cha | Act 3, **raises to 24** |
+| Potion of Everlasting Vigour | +2 chosen | Act 2, pickpocket Araj |
 | Hag's Hair | +1 | Act 1, one per run |
 | Tomes and Manuals | +1 each | — |
 | **Paragon 20 capstone** | **+4 to STR/CHA or DEX/CHA** | **caps at 25** — requires pure Paragon 20 |
