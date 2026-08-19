@@ -14,6 +14,9 @@ The distinction that matters: the ledger scores **chassis**, this page scores
 a race, a background, gear and a gate audit — and those choices move the numbers.
 A sheet's scores are the authority; the ledger's were the estimate.
 
+The shortlist is however many pairings the user asked to compare — two, three,
+eleven. Nothing here assumes a count; title the page after the field it holds.
+
 **Author JSON. Never write comparison HTML.**
 
 ```sh

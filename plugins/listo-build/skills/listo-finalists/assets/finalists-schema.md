@@ -26,7 +26,7 @@ per pairing out of a sheet is how transcription errors get in.
 
 ```jsonc
 {
-  "title":   "Three Finalists v2",
+  "title":   "Eleven Built Pairings",    // name the shortlist; no fixed count
   "eyebrow": "Listonomicon 10.2 · two players · Lone Wolf",
   "lede":    "What this page is.",
   "facts":   ["11 built pairings", "6 carries"],
