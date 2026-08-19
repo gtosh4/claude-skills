@@ -17,7 +17,8 @@ values. Every string is emitted as HTML, so inline `<b>`, `<em>` and
 | Thing | Rule |
 |---|---|
 | Pair radar value per axis | from `profile.scores`, by axis kind, at view time in the page's JS |
-| Whole damage-coverage table | from `profile.scores` (ST, AoE) + `damage.reach` |
+| Whole delivered-damage table | from `profile.scores` (ST, AoE) + `damage.reach` |
+| Saves (index 8) | derived from `profile.saves` — authored as `null` |
 | Idle-body flags (`u-idle`) | character under 3.0 in a fight type worth ≥40% of that act |
 | Melee lock | applied, and its callout emitted, when neither reach is `ranged`/`hybrid` |
 | Axis names, kinds, order, act bands | fixed; override with `profile.axes` / `.kinds` / `.labels` / `.bands` only if a sheet genuinely differs |
@@ -47,12 +48,17 @@ values. Every string is emitted as HTML, so inline `<b>`, `<em>` and
 
   "profile": {
     "h2": "...",
-    "scores": {                       // 9 axes, fixed order: single, aoe, durability, actions,
-      "a": [[...9], [...9], [...9]],  // control, sustain, skills, saves, endurance — one array per act
-      "b": [[...9], [...9], [...9]]
+    "scores": {                       // 10 axes, fixed order: single, aoe, durability, actions,
+      "a": [[...10], [...10], [...10]],  // control-single, control-area, rescue, skills, saves,
+      "b": [[...10], [...10], [...10]]   // endurance — one array per act; saves index 8 is null
     },
-    "reads": ["—", "— B carries every crowd", ...9],   // "Reads as" column, optional
-    "notes": ["..."]                  // r-notes under the table
+    "reads": ["—", "— B carries every crowd", ...10],  // "Reads as" column, optional
+    "notes": ["..."],                 // r-notes under the table
+    "concentration": {"a": false, "b": true},          // does this body hold a concentration spell?
+    "saves": {                        // source of truth for the saves axis
+      "a": {"I": {"prof": ["wis","dex"], "boosters": []}, "II": {...}, "III": {...}},
+      "b": {"I": {"prof": ["wis","cha","con","dex"], "boosters": ["aura-of-protection"]}, ...}
+    }
   },
 
   "damage": {

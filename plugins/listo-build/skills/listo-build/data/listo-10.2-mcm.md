@@ -160,7 +160,7 @@ Level.Bosses.Act.3  MaxLevel 24  Offset 4
 
 Bosses are set to *player level + offset*, capped. The Act I cap of 10 and the Act II cap of 16
 (binding from player level 14) are the closest thing in the install to a stated expectation of
-where the player is per act, and they support the skill's I 1–10 / II 11–15 / III 16–20 bands.
+where the player is per act, and they support the skill's I 3–8 / II 9–15 / III 16–20 bands.
 The Act III cap of 24 never binds at cap 20, so Act III bosses are **always player level +4**.
 
 ---

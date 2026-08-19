@@ -94,9 +94,9 @@ proficiency does** — which is why the earliest gate is the hardest one:
 
 | Act | Char | Prof | Routine DC | The gate that lands here |
 |---|---|---|---|---|
-| **I** | 1–10 | +2 → +4 | 10–15 | **Hag's Hair, DC 20** — an outlier, rolled at prof **+2/+3** |
-| **II** | 11–15 | +4 → +5 | 15–18 | none permanent; Shadowfell dialogue clusters at 18 |
-| **III** | 16–20 | +6 | 18–22 | **Mirror of Loss** and the **Circus pickpocket**, both ~20 |
+| **I** | 3–8 | +2 → +3 | 10–15 | **Hag's Hair, DC 20** — an outlier, rolled at prof **+2/+3** |
+| **II** | 9–15 | +4 → +5 | 15–18 | none permanent; Shadowfell dialogue clusters at 18 |
+| **III** | 16–20 | +5 → +6 | 18–22 | **Mirror of Loss** and the **Circus pickpocket**, both ~20 |
 
 **Hag's Hair is the hardest check in the run relative to what is available.** At character 5 a
 face with Expertise and a 20 in the ability rolls `+6 + 5 = +11` — 60%. The same character in

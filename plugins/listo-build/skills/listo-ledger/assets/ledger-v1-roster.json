@@ -1,0 +1,1420 @@
+{
+ "title": "Listo Pairing Ledger",
+ "eyebrow": "Listonomicon 10.2 \u00b7 two-player Lone Wolf \u00b7 ledger v2",
+ "lede": "Every candidate pairing, scored on nine axes per act, then checked against the thing a nine-axis total cannot see: whether both bodies are still doing damage in the fight actually in front of them.",
+ "facts": [
+  "26 chassis",
+  "level cap 20",
+  "Absolute Wrath on",
+  "compiled 18 Aug 2026"
+ ],
+ "entry_limit": 12,
+ "chassis": {
+  "Vow": {
+   "role": "carry",
+   "reach": "static",
+   "display": "Vow",
+   "split": "Paladin 15 / Warlock 5",
+   "meta": "Cha 22 \u00b7 7 feats",
+   "note": "Paladin opens (heavy armour, Wis + Cha saves \u2014 neither is repeatable by dipping later). Warlock 5 turns two short-rest pact slots into smite fuel and hands the Charisma chassis Agonizing Blast as its ranged option. Improved Divine Smite at 11.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     4,
+     2,
+     1,
+     2,
+     2,
+     4,
+     2
+    ],
+    "II": [
+     5,
+     0,
+     4,
+     2,
+     1,
+     2,
+     2,
+     5,
+     3
+    ],
+    "III": [
+     5,
+     0,
+     3,
+     2,
+     1,
+     2,
+     2,
+     5,
+     3
+    ]
+   }
+  },
+  "Hexplate": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Hexplate",
+   "split": "Paladin 1 \u2192 Warlock 12 \u2192 Paladin 8",
+   "meta": "Cha 22 \u00b7 6 feats",
+   "note": "Paladin 1 first for heavy armour and the save pair, then straight to Warlock 9 so <b>Eldritch Cone / Line</b> is online around character 10. Eldritch Doom at Warlock 12; Extra Attack lands late (character 15) and Aura of Protection at 16. Order-critical ladder.",
+   "scores": {
+    "I": [
+     3,
+     1,
+     4,
+     2,
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "II": [
+     3,
+     3,
+     4,
+     2,
+     2,
+     2,
+     2,
+     4,
+     4
+    ],
+    "III": [
+     4,
+     3,
+     3,
+     3,
+     1,
+     2,
+     2,
+     5,
+     4
+    ]
+   }
+  },
+  "Knives": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Knives",
+   "split": "Rogue 13 / Fighter 7",
+   "meta": "Dex 22 \u00b7 8 feats",
+   "note": "Both eight-feat classes. Cunning Strike spends Sneak Attack dice on Prone / Poison / Disarm every turn; Goon's rework fires Sneak Attack off-turn on a reaction, which Lone Wolf's second reaction doubles. Reliable Talent at 11, Action Surge from Fighter 2.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     3,
+     2,
+     1,
+     0,
+     4,
+     2,
+     5
+    ],
+    "II": [
+     5,
+     0,
+     3,
+     3,
+     2,
+     0,
+     5,
+     3,
+     5
+    ],
+    "III": [
+     5,
+     0,
+     3,
+     3,
+     1,
+     0,
+     5,
+     4,
+     5
+    ]
+   }
+  },
+  "Volley": {
+   "role": "carry",
+   "reach": "ranged",
+   "display": "Volley",
+   "split": "Rogue 1 \u2192 Ranger 11 \u2192 Rogue 8",
+   "meta": "Dex 22 \u00b7 6 feats",
+   "note": "Rogue 1 opens for four skills, two Expertise and the Dex + Int save pair. Ranger 11 buys <b>Volley / Whirlwind Attack</b> \u2014 full weapon damage to every target, at-will, no save, no resource \u2014 plus Summon Beast at 5 and Conjure Animals at 9. Gives up Reliable Talent, and the second Expertise pair does not arrive until Rogue 6 lands around character 18 &mdash; so its Skills sit a full point under the pure Rogue for most of the run.",
+   "scores": {
+    "I": [
+     3,
+     1,
+     3,
+     2,
+     1,
+     0,
+     3,
+     2,
+     5
+    ],
+    "II": [
+     4,
+     3,
+     3,
+     3,
+     1,
+     0,
+     3,
+     3,
+     5
+    ],
+    "III": [
+     4,
+     4,
+     3,
+     3,
+     1,
+     0,
+     4,
+     3,
+     5
+    ]
+   }
+  },
+  "Ember": {
+   "role": "carry",
+   "reach": "ranged",
+   "display": "Ember",
+   "split": "Warlock 17 / Sorcerer 3",
+   "meta": "Cha 22 \u00b7 7 feats",
+   "note": "Eldritch Blast is 1d8 here, not 1d10, but beams key off <i>character</i> level: 4 by 17. <b>Eldritch Cone / Line at invocation 9</b> is the same beams as a 9m cone or 18m line on a Dex save. Eldritch Doom at 12. Sorcerer 3 adds Twinned and Quickened.",
+   "scores": {
+    "I": [
+     3,
+     1,
+     2,
+     2,
+     2,
+     0,
+     2,
+     3,
+     5
+    ],
+    "II": [
+     3,
+     3,
+     2,
+     3,
+     3,
+     0,
+     2,
+     3,
+     5
+    ],
+    "III": [
+     4,
+     3,
+     2,
+     3,
+     2,
+     0,
+     2,
+     4,
+     5
+    ]
+   }
+  },
+  "Breath": {
+   "role": "carry",
+   "reach": "mobile",
+   "display": "Breath",
+   "split": "Monk 17 Ascendant Dragon / Cleric 3 Twilight",
+   "meta": "Wis 22 \u00b7 7 feats",
+   "note": "Wisdom is the Monk's primary stat in Listo, so the Cleric dip costs nothing in stats. Breath of the Dragon <i>replaces one attack</i> \u2014 cone or line, two martial dice, three at 11, four at 17 \u2014 so the AoE mode costs no bonus action and no extra resource. Twilight Sanctuary refunds on a short rest.",
+   "scores": {
+    "I": [
+     3,
+     1,
+     3,
+     2,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "II": [
+     4,
+     3,
+     3,
+     2,
+     2,
+     3,
+     3,
+     4,
+     5
+    ],
+    "III": [
+     4,
+     3,
+     3,
+     2,
+     1,
+     2,
+     3,
+     5,
+     4
+    ]
+   }
+  },
+  "Standard": {
+   "role": "carry",
+   "reach": "static",
+   "display": "Crozier",
+   "split": "War Cleric 17 / Fighter 3",
+   "meta": "Wis 22 \u00b7 7 feats",
+   "note": "<code>Cat's Cleric Changes</code> gives War Domain a real <b>Extra Attack at 6</b>, which the published docs still deny. War Priest bonus attacks on top, Divine Strike to 2d8 at 14, heavy armour and martial weapons from the domain, and the full Cleric list for AoE, Control and Sustain.",
+   "scores": {
+    "I": [
+     3,
+     2,
+     4,
+     1,
+     2,
+     4,
+     3,
+     4,
+     3
+    ],
+    "II": [
+     3,
+     3,
+     4,
+     2,
+     3,
+     4,
+     3,
+     4,
+     3
+    ],
+    "III": [
+     4,
+     4,
+     3,
+     2,
+     2,
+     4,
+     3,
+     5,
+     3
+    ]
+   }
+  },
+  "Drake": {
+   "role": "carry",
+   "reach": "static",
+   "display": "Drake",
+   "split": "Fighter 17 Purple Dragon Knight / Cleric 3",
+   "meta": "Str or Dex 22 \u00b7 8 feats",
+   "note": "Dragon hatchling from 3 \u2014 shares your initiative, acts without a bonus action, grows with you. Gravity Breath becomes a 9m cone with +2d6 force and 4/day at 7, 5/day at 15. Three attacks at 11, Action Surge twice from 17.",
+   "scores": {
+    "I": [
+     4,
+     1,
+     4,
+     3,
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "II": [
+     4,
+     2,
+     4,
+     3,
+     1,
+     1,
+     2,
+     3,
+     5
+    ],
+    "III": [
+     5,
+     1,
+     3,
+     4,
+     1,
+     1,
+     2,
+     4,
+     5
+    ]
+   }
+  },
+  "Scar": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Scar",
+   "split": "Profane Soul Blood Hunter 17 / Fighter 3 (Echo Knight)",
+   "meta": "Int 22 \u00b7 7 feats \u00b7 <b>INT as shipped</b>",
+   "note": "Crimson Rite is at-will and <i>everything</i> refreshes on a short rest. <b>Brand of the Sapping Scar at 11</b> gives blanket Disadvantage on saving throws, costs no concentration and fires as a free interrupt \u2014 so it never competes with the partner's one control spell, and unlike a save DC it does not decay as enemy saves climb. Echo Knight's Unleash Incarnation adds a melee attack to every Attack action, which Lone Wolf's second Action and Action Surge each bring one of. <b>Wisdom variant:</b> the mod.io <code>Blood Hunter (Wisdom Variant Patch)</code> moves Hemocraft to WIS and the level-1 saves to <b>Wis + Dex</b> instead of Int + Dex \u2014 take it and the dip wants Monk's Unarmoured Defence rather than Fighter, and Saves rises a point. The class grants <b>no Constitution save</b> either way: pay for it with Lone Wolf's +4 or Resilient.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     3,
+     3,
+     1,
+     0,
+     3,
+     2,
+     5
+    ],
+    "II": [
+     5,
+     1,
+     3,
+     4,
+     3,
+     0,
+     3,
+     3,
+     5
+    ],
+    "III": [
+     5,
+     1,
+     3,
+     4,
+     3,
+     0,
+     3,
+     3,
+     5
+    ]
+   }
+  },
+  "Fang": {
+   "role": "carry",
+   "reach": "mobile",
+   "display": "Fang",
+   "split": "Order of the Lycan Blood Hunter 17 / Fighter 3",
+   "meta": "Int or Wis 22 \u00b7 7 feats",
+   "note": "Hybrid Transformation, 3 per short rest: Resilient Hide (resistance to non-magical bludgeoning, piercing and slashing, +1 AC out of heavy armour), Predatory Strikes that <b>scale off Dexterity when Dex beats Str</b>, an extra unarmed strike as a bonus action, and Unarmed Crimson Rite. Lycan Regeneration at 11 refunds 1 + Con each turn below half HP. <b>Bloodlust is a real risk in a duo:</b> start a turn below half while transformed and a failed Wisdom save turns you on the nearest creature \u2014 which is your partner. Advantage on that save only arrives at 15.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     4,
+     3,
+     1,
+     0,
+     3,
+     2,
+     5
+    ],
+    "II": [
+     5,
+     0,
+     4,
+     3,
+     1,
+     0,
+     3,
+     3,
+     5
+    ],
+    "III": [
+     5,
+     1,
+     4,
+     3,
+     2,
+     0,
+     3,
+     3,
+     5
+    ]
+   }
+  },
+  "Judge": {
+   "role": "carry",
+   "reach": "static",
+   "display": "Judgment",
+   "split": "Inquisitor 17 (Vengeance) / Cleric 3",
+   "meta": "Wis 22 \u00b7 7 feats \u00b7 <b>needs mod update</b>",
+   "note": "\u26a0 The shipped pak is <b>2.2.0 and cannot level past 2</b> \u2014 a dangling subclass GUID at level 3. This build is blocked until <code>mods/Inquisitor Class/PAK_FILES/PFInquisitor.pak</code> is replaced with 2.2.1. Once updated: Wisdom primary, martial weapons and shields, Extra Attack at 5, and <b>Judgment charges on a short rest</b> (2 rising to 6). Vengeance's Divine Scourge turns Conviction into Disadvantage on saves against your own spells \u2014 control that does not decay. Wisdom + Strength saves at level 1, the best Wisdom-save opener in the list that also brings a shield. <b>Stern Gaze</b> hands it Insight and Intimidation free and lets Intimidation use <b>Wisdom instead of Charisma</b> &mdash; so this is the one non-Charisma chassis that can roll Hag's Hair in Act I. Vengeance's <b>Monster Tactician</b> adds Expertise in an Intelligence skill <i>and</i> double Wisdom modifier on it, which buys the Mirror of Loss outright; Perception is on the class list and Wisdom 22 carries passive to 22+. Only the pickpocket is missing.",
+   "scores": {
+    "I": [
+     3,
+     1,
+     4,
+     2,
+     2,
+     2,
+     4,
+     4,
+     4
+    ],
+    "II": [
+     4,
+     1,
+     4,
+     2,
+     3,
+     2,
+     5,
+     4,
+     4
+    ],
+    "III": [
+     4,
+     1,
+     3,
+     2,
+     3,
+     2,
+     5,
+     5,
+     4
+    ]
+   }
+  },
+  "Dusk": {
+   "role": "support",
+   "reach": "static",
+   "display": "Dusk",
+   "split": "Twilight Cleric 17 / Fighter 3",
+   "meta": "Wis 22 \u00b7 7 feats",
+   "note": "Twilight Sanctuary is a 9m sphere that hands <i>every</i> creature ending its turn inside 1d6 + Cleric level temp HP <b>or</b> ends one charm or fright effect \u2014 for one Channel Divinity charge a short rest refunds. Heavy armour and martial weapons.",
+   "scores": {
+    "I": [
+     2,
+     2,
+     4,
+     1,
+     3,
+     4,
+     3,
+     4,
+     3
+    ],
+    "II": [
+     2,
+     3,
+     4,
+     1,
+     4,
+     5,
+     3,
+     4,
+     3
+    ],
+    "III": [
+     2,
+     3,
+     3,
+     2,
+     3,
+     4,
+     3,
+     5,
+     3
+    ]
+   }
+  },
+  "Fold": {
+   "role": "support",
+   "reach": "ranged",
+   "display": "Fold",
+   "split": "Shepherd Druid 17 / Cleric 1 (Nature)",
+   "meta": "Wis 22 \u00b7 6 feats",
+   "note": "Every Spirit Totem is an aura aimed at the <i>other</i> character. Conjure Animals and Summon Beast from <code>13458</code> are non-concentration and last until long rest, and <code>Automated Summons</code> hands their turns to the AI \u2014 the thing that makes a summon build playable in a two-player run.",
+   "scores": {
+    "I": [
+     2,
+     2,
+     3,
+     3,
+     2,
+     3,
+     3,
+     4,
+     3
+    ],
+    "II": [
+     2,
+     3,
+     3,
+     4,
+     3,
+     4,
+     3,
+     4,
+     3
+    ],
+    "III": [
+     2,
+     3,
+     2,
+     4,
+     2,
+     4,
+     3,
+     4,
+     3
+    ]
+   }
+  },
+  "Grave": {
+   "role": "support",
+   "reach": "ranged",
+   "display": "Charnel",
+   "split": "Necromancy Wizard 19 / Fighter 1",
+   "meta": "Int 22 \u00b7 7 feats",
+   "note": "Fighter 1 opens for heavy armour and the Con save. <code>Animate Dead++</code> removes the undead cap entirely, moves the free Animate Dead to 5, and extends Undead Thralls' HP and damage bonus to every undead you own. Four to eight extra bodies is the most direct answer to the duo's action-economy problem.",
+   "scores": {
+    "I": [
+     2,
+     2,
+     2,
+     2,
+     3,
+     0,
+     3,
+     3,
+     3
+    ],
+    "II": [
+     2,
+     4,
+     2,
+     4,
+     4,
+     0,
+     3,
+     3,
+     3
+    ],
+    "III": [
+     3,
+     4,
+     2,
+     5,
+     3,
+     1,
+     3,
+     4,
+     3
+    ]
+   }
+  },
+  "Tide": {
+   "role": "support",
+   "reach": "ranged",
+   "display": "Riptide",
+   "split": "Storm Sorcerer 17 / Tempest Cleric 1 / Fighter 2",
+   "meta": "Cha 22 \u00b7 6 feats",
+   "note": "Twinned Spell covers 100% of a two-person party for one Metamagic pick \u2014 Haste, Death Ward, Greater Invisibility, Hold Person. Quickened is the only general exemption from Listo's rule that a bonus-action spell blocks a levelled cast. The <b>Tempest 1 dip does not buy maximised lightning</b> &mdash; Destructive Wrath is Channel Divinity at Cleric <b>2</b>, and this split cannot afford the second level. What one level buys is Wis + Cha saves, heavy armour, shields, martial weapons, Guidance and Wrath of the Storm; <b>Elemental Adept (Lightning)</b> is the feat that actually answers resistance. <code>Multiclass Preferred Casting Ability Fix</code> keeps Charisma as the casting stat.",
+   "scores": {
+    "I": [
+     3,
+     3,
+     3,
+     2,
+     3,
+     0,
+     2,
+     3,
+     3
+    ],
+    "II": [
+     3,
+     4,
+     3,
+     4,
+     4,
+     1,
+     2,
+     3,
+     3
+    ],
+    "III": [
+     3,
+     4,
+     2,
+     4,
+     3,
+     1,
+     2,
+     4,
+     3
+    ]
+   }
+  },
+  "Chorus": {
+   "role": "support",
+   "reach": "ranged",
+   "display": "Chorus",
+   "split": "Eloquence Bard 17 / Rogue 3",
+   "meta": "Cha 22 \u00b7 6 feats",
+   "note": "Unsettling Words shows you the die before you commit the control spell. Unfailing Inspiration means a failed Inspiration die is refunded, so the Inspiration economy never runs dry in a party where it always goes to the same partner. Magical Secrets fills whatever the pair is missing.",
+   "scores": {
+    "I": [
+     2,
+     1,
+     2,
+     2,
+     3,
+     3,
+     5,
+     3,
+     3
+    ],
+    "II": [
+     2,
+     2,
+     2,
+     3,
+     4,
+     4,
+     5,
+     4,
+     3
+    ],
+    "III": [
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     5,
+     4,
+     3
+    ]
+   }
+  },
+  "Mercy": {
+   "role": "support",
+   "reach": "mobile",
+   "display": "Mercy",
+   "split": "Monk 14 (Way of Mercy) / Warlock 6 (Celestial, Chain)",
+   "meta": "Wis 22 \u00b7 6 feats",
+   "note": "<b>The only short-rest-clock healer in 706 mods.</b> Flurry of Healing and Harm at Monk 11 replaces every Flurry strike with a free Hands of Healing, and Lone Wolf's second bonus action buys two Flurries a round \u2014 so this is the one character that scores <b>Sustain 5 and Endurance 5 at the same time</b>, which is what breaks the long-rest ceiling every other support here runs into. <b>Diamond Soul at 14</b> grants proficiency in all six saving throws, so the pair needs no Aura of Protection and the partner need not be a Charisma build. Chain familiar for Help and a third body. Skills is the price: Way of Mercy's free Insight and Medicine gate nothing, neither class list carries Perception or Sleight of Hand, and Monk plus Warlock means <b>no Guidance</b>.",
+   "scores": {
+    "I": [
+     2,
+     1,
+     3,
+     3,
+     2,
+     3,
+     2,
+     4,
+     5
+    ],
+    "II": [
+     3,
+     1,
+     3,
+     3,
+     3,
+     5,
+     2,
+     4,
+     5
+    ],
+    "III": [
+     3,
+     1,
+     3,
+     3,
+     3,
+     5,
+     2,
+     5,
+     5
+    ]
+   }
+  },
+  "Zeal": {
+   "role": "support",
+   "reach": "static",
+   "display": "Fervor",
+   "split": "Zeal Cleric 17 (Hazoret) / Bard 3 (Lore)",
+   "meta": "Wis 22 \u00b7 7 feats",
+   "note": "A Cleric whose baseline output is weapon attacks in heavy armour rather than slots, so its per-cycle budget stretches to six or seven fights and it scores <b>Endurance 4</b> where every other full-caster support here scores 3. <b>Haste and Fireball sit on the domain list at Cleric 5</b>, and Consuming Fervor maximises fire damage twice per short rest. Lore Bard 3 adds Expertise \u00d72 and three proficiencies &mdash; enough for passive Perception and one of Religion or Persuasion, but not both, and there is no Dexterity anywhere for the pickpocket.",
+   "scores": {
+    "I": [
+     3,
+     3,
+     4,
+     3,
+     2,
+     3,
+     4,
+     4,
+     4
+    ],
+    "II": [
+     4,
+     4,
+     4,
+     4,
+     2,
+     4,
+     4,
+     4,
+     4
+    ],
+    "III": [
+     4,
+     4,
+     3,
+     4,
+     2,
+     4,
+     4,
+     5,
+     4
+    ]
+   }
+  },
+  "Phantom": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Phantom",
+   "split": "Rogue 17 (Phantom) / Fighter 3 (Battle Master)",
+   "meta": "Dex 22 \u00b7 8 feats",
+   "note": "The Rogue with no long-rest resource anywhere: Sneak Attack has no clock, Battle Master dice, Action Surge and Second Wind are short-rest. <b>Slippery Mind at Rogue 15</b> adds the Wisdom save, which with Dex + Int at level 1, Charisma from Lone Wolf and Resilient (Constitution) is five proficient saves without an aura. <b>Risk:</b> the Act III AoE rests on Phantom's level-17 <i>Death's Friend</i>, whose compatibility patch was authored against Book of Rogues 1.0.0.2 while Listo ships 1.0.0.3 and the author states level 17 was untested. Score it 0 there and the pair loses about a point.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     3,
+     2,
+     1,
+     0,
+     4,
+     2,
+     5
+    ],
+    "II": [
+     5,
+     0,
+     3,
+     3,
+     2,
+     0,
+     5,
+     3,
+     5
+    ],
+    "III": [
+     5,
+     2,
+     3,
+     3,
+     2,
+     0,
+     5,
+     5,
+     5
+    ]
+   }
+  },
+  "Plate": {
+   "role": "carry",
+   "reach": "static",
+   "display": "Plate",
+   "split": "Moon Paladin 17 / Warlock 3 (Hexblade)",
+   "meta": "Cha 22 \u00b7 7 feats",
+   "note": "Paladin 17 rather than 13 is the Endurance correction: seventeen Paladin levels plus three Warlock levels hold about <b>21 castings per long-rest cycle</b> against 13/7's 17, because two short-rest pact slots are worth six per cycle, not infinity. Take the Warlock dip for Hex Warrior, Hexblade's Curse and the familiar &mdash; not for the clock. Actor solves Hag's Hair at character 3.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     4,
+     2,
+     1,
+     2,
+     3,
+     4,
+     3
+    ],
+    "II": [
+     5,
+     0,
+     4,
+     2,
+     2,
+     2,
+     3,
+     5,
+     3
+    ],
+    "III": [
+     5,
+     1,
+     4,
+     2,
+     2,
+     2,
+     3,
+     5,
+     4
+    ]
+   }
+  },
+  "Bombard": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Bombard",
+   "split": "Profane Soul Blood Hunter 14 (INT) / Wizard 6 (Evocation), Wizard 1 first",
+   "meta": "Int 22 \u00b7 7 feats",
+   "note": "The AoE moves onto the carry. Wizard 6 buys Fireball, Haste, Counterspell, Hypnotic Pattern and Arcane Recovery <i>off Intelligence</i> &mdash; the stat the chassis already maximises for Dark Augmentation and the Brand &mdash; so every one of those DCs is cast into <b>Brand of the Sapping Scar's blanket Disadvantage</b>. Wizard 1 also grants <b>Intelligence and Wisdom saves</b>, the only clean route to a Wisdom save proficiency without spending Resilient. Costs the 1d10 hemocraft die, Action Surge and the echo.",
+   "scores": {
+    "I": [
+     3,
+     2,
+     3,
+     2,
+     2,
+     0,
+     3,
+     3,
+     4
+    ],
+    "II": [
+     4,
+     4,
+     3,
+     3,
+     4,
+     0,
+     3,
+     4,
+     4
+    ],
+    "III": [
+     4,
+     4,
+     3,
+     3,
+     4,
+     0,
+     3,
+     4,
+     4
+    ]
+   }
+  },
+  "Brute": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Brute",
+   "split": "Profane Soul Blood Hunter 13 (INT) / Fighter 7 (Brute), Fighter 1 first",
+   "meta": "Int 22 \u00b7 7 feats",
+   "note": "Fighter 1 as the level-1 class buys heavy armour, shields, Second Wind, a fighting style and <b>Strength + Constitution</b> saves &mdash; with Lone Wolf on Dexterity and Intelligence that is four disjoint saves rather than three, since Blood Hunter's own grant duplicates Lone Wolf's. <b>Brutish Durability at Fighter 7</b> adds 1d6 to every saving throw, unconditional and resource-free. The price is a dead level (Extra Attack is granted at both Blood Hunter 5 and Fighter 5 and does not stack) and a hemocraft die stuck at 1d8.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     4,
+     2,
+     1,
+     0,
+     3,
+     3,
+     5
+    ],
+    "II": [
+     5,
+     0,
+     4,
+     3,
+     2,
+     0,
+     3,
+     4,
+     5
+    ],
+    "III": [
+     5,
+     1,
+     4,
+     3,
+     3,
+     0,
+     3,
+     4,
+     5
+    ]
+   }
+  },
+  "Chains": {
+   "role": "support",
+   "reach": "ranged",
+   "display": "Chains",
+   "split": "Life Cleric 1 / Celestial Warlock 16 (Chain) / Bard 3 (Lore)",
+   "meta": "Cha 22 \u00b7 6 feats",
+   "note": "Three dips, four jobs. Cleric as the level-1 class gives <b>Wisdom and Charisma saves</b>, heavy armour from the Life domain, Guidance at will and Religion; Disciple of Life applied to pact-slot healing is Cure Wounds off a fifth-level <i>short-rest</i> slot. Lore Bard 3 is Expertise \u00d72 for Religion and Perception plus three proficiencies. And Warlock 12 buys <code>Invocations Expanded</code>'s <b>Chains of Carceri &mdash; Hold Monster, once per short rest, no slot</b>, which puts the pair's kill button on the same clock as everything else.",
+   "scores": {
+    "I": [
+     2,
+     1,
+     3,
+     2,
+     2,
+     3,
+     4,
+     4,
+     4
+    ],
+    "II": [
+     3,
+     3,
+     3,
+     2,
+     3,
+     4,
+     4,
+     4,
+     4
+    ],
+    "III": [
+     3,
+     4,
+     3,
+     2,
+     5,
+     4,
+     4,
+     4,
+     4
+    ]
+   }
+  },
+  "Sanctum": {
+   "role": "support",
+   "reach": "mobile",
+   "display": "Sanctum",
+   "split": "Way of Mercy Monk 14 / Zeal Cleric 6",
+   "meta": "Wis 22 \u00b7 6 feats",
+   "note": "Way of Mercy's short-rest healing with a Cleric dip deep enough to reach the <b>Zeal domain list at Cleric 5 &mdash; Haste and Fireball</b>. Haste handed to the partner is an extra Attack action, which is the Actions axis directly; Consuming Fervor maximises fire damage on a short-rest Channel Divinity, cast off the Monk's own Wisdom. Heavy armour from Cleric 1, Guidance with no fighting-style tax, and Diamond Soul at Monk 14. Gives up the Chain familiar, and Hand of Ultimate Mercy at Monk 17 is out of reach.",
+   "scores": {
+    "I": [
+     2,
+     1,
+     3,
+     3,
+     2,
+     3,
+     3,
+     4,
+     5
+    ],
+    "II": [
+     3,
+     3,
+     3,
+     4,
+     3,
+     5,
+     3,
+     4,
+     5
+    ],
+    "III": [
+     3,
+     3,
+     4,
+     4,
+     3,
+     5,
+     3,
+     5,
+     5
+    ]
+   }
+  },
+  "Sapper": {
+   "role": "carry",
+   "reach": "hybrid",
+   "display": "Sapper",
+   "split": "Profane Soul Blood Hunter 14 (WIS) / Zeal Cleric 6",
+   "meta": "Wis 22 \u00b7 7 feats \u00b7 <b>Wisdom patch</b>",
+   "note": "The Wisdom answer to Bombard: the AoE sits on the carry and is cast off the <i>same Wisdom</i> Hemocraft now uses. <b>Haste and Fireball land on the Zeal domain list at Cleric 5</b>, and Consuming Fervor maximises that Fireball twice per short rest &mdash; and unlike a Monk, a Blood Hunter can actually wear the heavy armour and carry the shield Zeal 1 hands over. <b>Priest of Zeal's charges scale with Wisdom</b> (six at Wis 22), so the same stat buys the bonus-action attacks too. Open <b>Blood Hunter 1</b> for Wis + Dex, then the Cleric block, then the rest of the class &mdash; which puts Brand of the Sapping Scar at character 17, so the control arrives in Act III only.",
+   "scores": {
+    "I": [
+     3,
+     2,
+     4,
+     3,
+     1,
+     3,
+     2,
+     4,
+     4
+    ],
+    "II": [
+     4,
+     4,
+     4,
+     4,
+     2,
+     4,
+     2,
+     4,
+     5
+    ],
+    "III": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     2,
+     5,
+     5
+    ]
+   }
+  },
+  "Rite": {
+   "role": "carry",
+   "reach": "mobile",
+   "display": "Rite",
+   "split": "Profane Soul Blood Hunter 17 (WIS) / Monk 3",
+   "meta": "Wis 22 \u00b7 7 feats \u00b7 <b>Wisdom patch</b>",
+   "note": "Scar rebuilt around the patch. Monk's <b>Unarmoured Defence puts the same Wisdom on AC</b>, Step of the Wind makes it the only mobile Blood Hunter here, and Martial Arts gives a bonus-action strike that the class otherwise lacks &mdash; the dip an Intelligence Blood Hunter could never justify. Brand of the Sapping Scar at character 11, hemocraft die 1d10, and everything on a short-rest clock. What it gives up is Echo Knight: no Unleash Incarnation, no Action Surge, and no heavy armour.",
+   "scores": {
+    "I": [
+     4,
+     0,
+     3,
+     2,
+     1,
+     0,
+     2,
+     4,
+     5
+    ],
+    "II": [
+     5,
+     1,
+     4,
+     3,
+     3,
+     0,
+     2,
+     5,
+     5
+    ],
+    "III": [
+     5,
+     1,
+     4,
+     3,
+     3,
+     0,
+     2,
+     5,
+     5
+    ]
+   }
+  }
+ },
+ "entries": {
+  "Bombard": {
+   "name": "Bombard & Fervor",
+   "tag": "caster blood hunter + weapon-cleric support",
+   "verdict": "<b>Joint top of the field at 28.6 damage coverage with no hole on any axis</b> &mdash; tied by Sapper, which is the same idea run on Wisdom. Wizard 6 puts Fireball, Hypnotic Pattern and Counterspell on the carry, cast off the <i>same Intelligence</i> the chassis already maximises for Dark Augmentation &mdash; so every one of those DCs lands into <b>Brand of the Sapping Scar's</b> blanket Disadvantage, which costs no concentration and therefore never competes with them. Zeal supplies Haste, a second Fireball and heavy armour on the other half.",
+   "cost": "The hemocraft die stops at 1d8 and there is no echo, no Action Surge and no heavy armour on the carry &mdash; Blood Hunter 14 gives up everything Fighter 3 was buying. Wizard 1 has to be the level-1 class for the Wisdom save, which means no armour proficiency at all until gear covers it. Intelligence comes from point buy and wants two feats to reach 20.",
+   "vars": [
+    {
+     "partner": "Chains",
+     "note": "Hold Monster once per short rest with no slot, on a partner in heavy armour; identical coverage, three points less damage."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "The short-rest healer instead of the second caster &mdash; the pair stops resting for hit points."
+    },
+    {
+     "partner": "Tide",
+     "note": "The highest damage coverage on the page, and a Sustain hole to pay for it."
+    }
+   ]
+  },
+  "Ember": {
+   "name": "Ember & Fervor",
+   "tag": "AoE carry + weapon-cleric support",
+   "verdict": "<b>Eldritch Cone / Line at invocation 9</b> is the cleanest mode-switch AoE on the page: a 9m cone or 18m line on a Dex save, at will, for an Action and nothing else. Reading the pak sets its ceiling, though &mdash; <code>Zone_EldritchCone</code> deals <code>LevelMapValue(EldritchZoneDamage)</code>, which is <b>3d10 from character 10 to 20, flat</b>, and never checks <code>AgonizingBlast</code>. No Charisma, no per-beam scaling. Zeal brings Fireball and Haste from the domain list at Cleric 5 and fights with a weapon in heavy armour, so its slot table is not the pair's damage.",
+   "cost": "Durability 2 on the carry for the entire run &mdash; a d8 in light armour with no armour answer at any level. And the cone is a <b>flat feature in a scaling game</b>: 3d10 against +126% regular and +170% boss HP by 20, half of that on a successful save. It stays useful because it is free, not because it is big.",
+   "vars": [
+    {
+     "partner": "Chains",
+     "note": "Hold Monster on a short-rest clock and Guidance at will; an AoE hole in Act I."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "Same score, four more coverage, one less damage &mdash; the short-rest healer trade."
+    },
+    {
+     "partner": "Mercy",
+     "note": "Sustain 5 and Endurance 5 on one character, at ten points of score."
+    }
+   ]
+  },
+  "Hexplate": {
+   "name": "Hexplate & Fervor",
+   "tag": "hybrid carry + weapon-cleric support",
+   "verdict": "Paladin 1 opens for heavy armour and the Wisdom + Charisma save pair, then straight to Warlock 9 so the cone is online around character 10. Both halves fight without spending a daily resource to do it, and both wear armour &mdash; among the highest damage coverage of any pairing with no hole anywhere.",
+   "cost": "An order-critical ladder: Extra Attack does not land until character 15 and Aura of Protection until 16, so the middle of the run is a Warlock in plate rather than a Paladin. Skills 2 on the carry means the partner owns every gate.",
+   "vars": [
+    {
+     "partner": "Chains",
+     "note": "A second Charisma build bidding on the same shelf at 4&times; merchant prices."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "The healer that never long-rests, at five points of score."
+    },
+    {
+     "text": "<b>Warlock 9 stop, Paladin 11 finish</b>: Improved Divine Smite instead of Eldritch Doom."
+    }
+   ]
+  },
+  "Volley": {
+   "name": "Volley & Fervor",
+   "tag": "mode-switch carry + weapon-cleric support",
+   "verdict": "<b>Volley / Whirlwind Attack at Ranger 11</b> is full weapon damage to every target in range &mdash; at will, no save, no resource, no concentration. It is the purest mode-switch AoE in the list: the same attack routine pointed at a crowd, so crowd fights and boss fights cost the same. Damage coverage 27.6 on a ranged body &mdash; the highest of any pairing that is not a Blood Hunter.",
+   "cost": "<b>Saves is a hole.</b> Rogue 1's Dex + Int is the whole grant and nothing later repairs Wisdom, which is what Hold and Dominate target. Skills falls a point behind the pure Rogue too &mdash; the second Expertise pair waits for Rogue 6 around character 18, and Reliable Talent never arrives.",
+   "vars": [
+    {
+     "partner": "Chains",
+     "note": "Hold Monster off the short-rest clock, and an AoE hole in Act I."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "Same score by a different route: coverage instead of damage."
+    },
+    {
+     "text": "<b>Rogue 1 &rarr; Fighter 1</b> opener: heavy armour and the Con save instead of four skills and Expertise."
+    }
+   ]
+  },
+  "Standard": {
+   "name": "Crozier & Fervor",
+   "tag": "weapon-caster carry + weapon-cleric support",
+   "verdict": "Two Clerics that both fight with weapons in heavy armour, so neither spends its slot table on damage. War Domain's <b>Extra Attack at 6</b> is real &mdash; <code>Cat's Cleric Changes</code> writes <code>War 6: WarGodsBlessing;ExtraAttack</code>, which the published docs still deny &mdash; and War Priest's bonus attacks sit on top. Opposite it, <b>Priest of Zeal's charges scale with Wisdom</b>: six bonus-action attacks at Wis 22, with Haste and Fireball from the domain list at Cleric 5.",
+   "cost": "<b>Melee-locked</b>, and the classic threshold waste: two Sustain sources where the party needs one, so the second is worth far less than its number. Both halves are Wisdom builds in heavy armour competing for the same shelf at 4&times; merchant prices.",
+   "vars": [
+    {
+     "partner": "Tide",
+     "note": "Twinned Haste and a ranged half &mdash; 0.3 behind, and it breaks the melee lock."
+    },
+    {
+     "partner": "Grave",
+     "note": "Four to eight undead bodies against the duo's action-economy problem."
+    },
+    {
+     "partner": "Chains",
+     "note": "Hold Monster with no slot, and heavy armour on both halves."
+    }
+   ]
+  },
+  "Breath": {
+   "name": "Breath & Fervor",
+   "tag": "mode-switch carry + weapon-cleric support",
+   "verdict": "<b>Breath of the Dragon replaces one attack</b> &mdash; a cone or line for two martial dice, three from 11 &mdash; the progression upgrades once and level 17 is Ascendant Aspect, not a fourth die &mdash; so the AoE mode costs no bonus action and no extra resource. Wisdom is the Monk's primary in Listo, so the Cleric dip is stat-free, and Twilight Sanctuary refunds on a short rest.",
+   "cost": "<b>Melee-locked.</b> Neither body has a ranged answer, so anything that kites or flies is fought on its terms &mdash; the model docks the pair a further 10% on crowd delivery for it. Durability sits at 3 on a character expected to stand in the front rank.",
+   "vars": [
+    {
+     "partner": "Tide",
+     "note": "Breaks the lock and adds a point of damage; opens a Sustain hole."
+    },
+    {
+     "partner": "Chains",
+     "note": "A ranged half with Hold Monster on the short clock."
+    },
+    {
+     "text": "<b>Breath's Cleric 3 &rarr; Rogue 3</b>: Expertise \u00d72 patches the skill floor, giving up the short-rest temp HP."
+    }
+   ]
+  },
+  "Scar": {
+   "name": "Scar & Fervor",
+   "tag": "blood hunter carry + weapon-cleric support",
+   "verdict": "Crimson Rite is at-will and <i>everything</i> refreshes on a short rest. <b>Brand of the Sapping Scar at 11</b> is blanket Disadvantage on saving throws with no concentration and no DC of its own &mdash; so it never competes with the partner's one control spell, and unlike a save DC it does not decay as enemy saves climb. Echo Knight's Unleash Incarnation adds a melee attack to every Attack action, and Haste from the Zeal domain buys a fourth.",
+   "cost": "<b>Saves is a hole.</b> Dark Augmentation adds Intelligence to Strength, Dexterity and Constitution saves only &mdash; Wisdom is excluded, and Wisdom is what Hold, Dominate and Fear target. Lone Wolf's +4 is already spent, and Saves is a personal axis, so no partner repairs it.",
+   "vars": [
+    {
+     "text": "<b>Wisdom variant</b> &mdash; the mod.io <code>Blood Hunter (Wisdom Variant Patch)</code> moves Hemocraft to WIS and the level-1 saves to Wis + Dex, which closes the hole; the dip then wants Monk's Unarmoured Defence rather than Fighter."
+    },
+    {
+     "partner": "Chains",
+     "note": "A ranged half and Guidance at will, at three points of damage."
+    },
+    {
+     "partner": "Tide",
+     "note": "Haste on a body that already gets an echo attack per Attack action."
+    }
+   ]
+  },
+  "Phantom": {
+   "name": "Phantom & Fervor",
+   "tag": "no-rest rogue + weapon-cleric support",
+   "verdict": "<b>The carry owns no long-rest resource at all.</b> Sneak Attack has no clock; Battle Master dice, Action Surge and Second Wind are short-rest &mdash; the direct answer to a 120-supply long rest. Eight feats, the most in the roster, and <b>Slippery Mind at Rogue 15</b> adds the Wisdom save that every other Dexterity carry here is missing.",
+   "cost": "<b>The Act III AoE is an untested assumption.</b> It rests on Phantom's level-17 <i>Death's Friend</i>, whose compatibility patch was written against Book of Rogues 1.0.0.2 while Listo ships 1.0.0.3, and the patch author states the level 17 features were not tested. Score it 0 and this entry drops about a point. Sustain 0 on the carry, and no armour beyond medium.",
+   "vars": [
+    {
+     "partner": "Sanctum",
+     "note": "The best coverage in the entire field &mdash; and it costs three and a half points of damage."
+    },
+    {
+     "partner": "Chains",
+     "note": "Hold Monster feeding an auto-crit Sneak Attack, on a short-rest clock."
+    },
+    {
+     "text": "<b>Sanctum &rarr; Monk 14 / Ranger 6 (Beast Master)</b>: the Panther uses your proficiency bonus, is proficient in every saving throw and gains ASIs when you do &mdash; a better third body than a familiar, and it arrives in Act I. Costs Revivify and Counterspell."
+    }
+   ]
+  },
+  "Brute": {
+   "name": "Brute & Fervor",
+   "tag": "save-proof blood hunter + weapon-cleric support",
+   "verdict": "The Blood Hunter that fixes its own Saves axis. <b>Fighter 1 as the level-1 class</b> buys heavy armour, shields, Second Wind, a fighting style and Strength + Constitution saves &mdash; four disjoint proficiencies alongside Lone Wolf's Dexterity and Intelligence, where Blood Hunter's own grant just duplicates them. <b>Brutish Durability at Fighter 7</b> then adds 1d6 to every save, unconditional and resource-free. No hole on any axis.",
+   "cost": "A dead level: Extra Attack is granted at both Blood Hunter 5 and Fighter 5 and does not stack, so Fighter 5 exists only to reach 7. Blood Hunter drops to 13, which holds the hemocraft die at 1d8 across roughly nine attacks a round and means Unsealed Arcana and Soul Eater never arrive. No echo.",
+   "vars": [
+    {
+     "partner": "Sanctum",
+     "note": "Four more coverage for three and a half of damage."
+    },
+    {
+     "partner": "Chains",
+     "note": "A ranged half; opens an AoE hole in Act I."
+    },
+    {
+     "partner": "Tide",
+     "note": "Twinned Haste on nine attacks a round, and a Sustain hole."
+    }
+   ]
+  },
+  "Sapper": {
+   "name": "Sapper & Fervor",
+   "tag": "wisdom blood hunter + weapon-cleric support",
+   "verdict": "<b>Ties the field for first, and it is the same idea as Bombard run on the other stat.</b> The mod.io Hemocraft patch moves Blood Hunter to Wisdom, which makes a <i>Cleric</i> the natural six-level block instead of a Wizard &mdash; and the Zeal domain hands Haste and Fireball over at Cleric 5, off the same Wisdom. Consuming Fervor maximises that Fireball twice per short rest. Unlike a Monk, a Blood Hunter can actually use the heavy armour and shield Zeal 1 grants, and <b>Priest of Zeal's charges scale with Wisdom</b> &mdash; six bonus-action attacks at Wis 22, bought with the stat the build already wanted.",
+   "cost": "<b>The control arrives late.</b> Blood Hunter 1 opens for the saves, then the whole Cleric block, so Brand of the Sapping Scar does not land until character 17 &mdash; Acts I and II are a weapon-cleric with a rite, not a debuffer. <b>Skills 2</b>, and it cannot be fixed: the class list is Arcana, History, Investigation and Religion, all Intelligence, and Intelligence is now the dump. Both halves are Wisdom builds bidding on the same gear.",
+   "vars": [
+    {
+     "partner": "Tide",
+     "note": "Ten points of coverage for a ranged half and the highest damage coverage in the field."
+    },
+    {
+     "partner": "Chains",
+     "note": "Identical coverage to Fervor, three less damage, and Hold Monster on a short-rest clock."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "The best coverage of any Sapper pairing, and the pair stops long-resting for hit points."
+    }
+   ]
+  },
+  "Rite": {
+   "name": "Rite & Fervor",
+   "tag": "mobile blood hunter + weapon-cleric support",
+   "verdict": "Scar rebuilt around the Wisdom patch, and the rebuild fixes the hole Scar could not. <b>Blood Hunter 1 grants Wisdom + Dexterity</b>, and <code>DarkAugmentation</code> keys off the casting stat rather than Intelligence, so it follows the patch across and adds the Wisdom modifier to Strength, Dexterity and Constitution &mdash; five of six saves at real numbers. Monk 3 then puts that <i>same</i> Wisdom on AC through Unarmoured Defence and makes this the only mobile Blood Hunter in the roster.",
+   "cost": "<b>It gives up Echo Knight entirely</b> &mdash; no Unleash Incarnation, no Action Surge, no heavy armour, so the Actions axis is a bonus-action strike and nothing else. AoE never exceeds 1 on the carry, so the entry leans on Fervor for every crowd, and Skills is 2 for the same Intelligence reason as Sapper.",
+   "vars": [
+    {
+     "partner": "Chains",
+     "note": "A ranged half and Guidance at will, at two points of damage."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "Coverage 96 &mdash; near the top of the page &mdash; against the least damage of the Rite set."
+    },
+    {
+     "text": "<b>Intelligence variant</b>: without the patch this is Scar, and the Wisdom save goes with it."
+    }
+   ]
+  },
+  "Judge": {
+   "name": "Judgment & Fervor",
+   "tag": "inquisitor carry + weapon-cleric support",
+   "verdict": "<b>Coverage 94 of 105.</b> Two Wisdom builds in armour with shields, both on short-rest resources &mdash; Judgment charges on one side, Consuming Fervor on the other. Vengeance's Divine Scourge turns Conviction into Disadvantage on saves against your own spells, which is a rider rather than a DC and therefore does not decay. <b>Stern Gaze</b> lets Intimidation roll on Wisdom, making this the one non-Charisma chassis that can take Hag's Hair.",
+   "cost": "<b>Blocked until the mod is updated.</b> The shipped Inquisitor pak is 2.2.0 and cannot level past 2. And it is <b>melee-locked</b>. Damage coverage 21.4 sits in the bottom third despite near-best coverage &mdash; the sharpest disagreement between the two numbers anywhere in the field.",
+   "vars": [
+    {
+     "partner": "Tide",
+     "note": "Ten points of coverage to buy a ranged half."
+    },
+    {
+     "partner": "Chains",
+     "note": "Hold Monster with no slot, and the lock broken."
+    },
+    {
+     "partner": "Sanctum",
+     "note": "Coverage 97, the highest number on the page, and the least damage of any variation here."
+    }
+   ]
+  }
+ },
+ "footer": "Scored against the bundled Listonomicon 10.2 snapshot; load-bearing mod claims read from the installed .pak archives.",
+ "method": {
+  "h2": "Two numbers, each counted once",
+  "cards": [
+   {
+    "title": "Coverage",
+    "body": "The <b>seven non-damage axes</b> \u2014 35 per act, 105 across the run. Damage is deliberately excluded here so it is not counted twice."
+   },
+   {
+    "title": "Damage coverage",
+    "body": "What the pair actually delivers: <code>crowd = AoE + 0.5 \u00d7 ST \u00d7 reach</code> and <code>priority = ST \u00d7 reach + 0.25 \u00d7 AoE</code>, weighted by the act's fight mix (I 70/30, II 60/40, III 50/50)."
+   },
+   {
+    "title": "Why not the total",
+    "body": "Ranking on the nine-axis sum is damage-blind by accident: across the field its correlation with delivered damage is <b>0.00</b>, because the seven completeness axes correlate <em>negatively</em> (\u22120.46) and cancel the damage block's +0.81."
+   },
+   {
+    "title": "Reach, and the flag",
+    "body": "Reach discounts the single-target term only \u2014 area is already priced into the AoE score. A body under <b>3.0</b> in a fight type worth \u226540% of the act is flagged: it has nothing useful to do there. <b>5 + 0 is worse than 3 + 3.</b>"
+   }
+  ]
+ },
+ "caveats": {
+  "h2": "What this ledger does not include",
+  "excluded": {
+   "summary": "Excluded chassis, and why",
+   "items": [
+    "<b>Path of the Lightning Vessel</b> \u2014 real melee AoE, but Listo's nerf patch ships inside the Wabbajack and appears in no archive, so the published numbers are wrong by an unknown amount.",
+    "<b>Swords Bard</b> \u2014 <code>Arcane Acuity Rework</code> caps Acuity at 3 stacks, one per trigger, combat-only.",
+    "<b>School of Bombardment</b> \u2014 every mechanic is published only as images behind a JavaScript gate."
+   ]
+  },
+  "settled": {
+   "summary": "Settled by reading the installed paks",
+   "items": [
+    "<b>Agonizing Blast does not apply to the Eldritch Cone.</b> <code>Zone_EldritchCone</code> checks <code>RepellingBlast</code> and <code>GraspOfHadar</code> by name and never <code>AgonizingBlast</code>; damage is <code>LevelMapValue(EldritchZoneDamage)</code> \u2014 1d10 at 1\u20134, 2d10 at 5\u20139, <b>3d10 from 10, where the map ends</b>.",
+    "<b>Chains of Carceri is real</b> \u2014 <code>Cooldown \"OncePerShortRest\"</code>, and the passive appears only in the largest of five nested invocation lists, so Warlock 12.",
+    "<b>War Domain Extra Attack at 6</b> \u2014 <code>Cat's Cleric Changes</code> writes exactly three progression rows, and that is one of them.",
+    "<b>Animate Dead++ does not remove the undead cap</b> \u2014 a free casting at Necromancy 5 and the vanilla <code>UndeadThrall_ExtraSummon</code> pair at 6.",
+    "<b>Summons carry a <code>StackId</code></b> \u2014 recasting replaces rather than adds."
+   ]
+  },
+  "assumptions": {
+   "summary": "Assumptions that would still move numbers",
+   "items": [
+    "<b>Which Conjure Animals wins the load order.</b> A pak read cannot answer load order.",
+    "<b>Feat cadence</b> assumed 3/6/9/12/13/15/18, plus 11 for Fighter and Rogue.",
+    "<b>Whether half-feats bypass the 20 cap.</b> Every 22 on this page depends on it.",
+    "<b>Base-game features cannot be pak-verified</b> \u2014 the game archives are not under the mod root."
+   ]
+  }
+ }
+}

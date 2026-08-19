@@ -15,20 +15,22 @@ import json, sys, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
 
-AXES = ["Single", "AoE", "Durab.", "Actions", "Control",
-        "Sustain", "Skills", "Saves", "Endur."]
-LABELS = ["Single-target", "AoE", "Durability", "Action economy", "Control",
-          "Sustain", "Skills", "Saves", "Endurance"]
-KINDS = ["additive", "additive", "additive", "additive", "additive",
-         "threshold", "complementary", "personal", "personal"]
-BANDS = ["1–10", "11–15", "16–20"]
+sys.path.insert(0, HERE)
 
-# reach class -> (crowd multiplier, priority multiplier)
-REACH = {"ranged": (1.00, 1.00), "hybrid": (0.95, 0.95),
-         "mobile": (0.95, 1.00), "static": (0.85, 0.90)}
+# One implementation of the scoring model: scripts/scoring.py, which implements
+# references/scoring-model.md. Never restate its constants here.
+import scoring as S                                          # noqa: E402
+from scoring import ScoringError, derive_saves, SAV_IDX      # noqa: E402
+
+AXES = list(S.AXES)
+LABELS = list(S.LABELS)
+KINDS = [{"add": "additive", "comp": "complementary", "per": "personal"}[S.KINDS[k]]
+         for k in S.KEYS]
+BANDS = list(S.BANDS)
+REACH = dict(S.REACH)
 REACH_LABEL = {"ranged": "ranged", "hybrid": "hybrid",
                "mobile": "mobile melee", "static": "static melee"}
-MIX = [(0.70, 0.30), (0.60, 0.40), (0.50, 0.50)]
+MIX = [S.MIX[a] for a in S.ACTS]
 DASH = "—"
 
 
@@ -86,14 +88,32 @@ def profile(d, names):
     kinds = p.get("kinds", KINDS)
     labels = p.get("labels", LABELS)
     reads = p.get("reads") or [DASH] * len(axes)
+    for nm, seq in (("axes", axes), ("kinds", kinds), ("labels", labels), ("reads", reads)):
+        if len(seq) != len(S.KEYS):
+            sys.exit("profile: %s has %d entries, expected %d (%s)"
+                     % (nm, len(seq), len(S.KEYS), ", ".join(S.KEYS)))
     attrs = ['data-names="%s,%s"' % (names["a"], names["b"]),
              'data-axes="%s"' % ",".join(axes),
              'data-kinds="%s"' % ",".join(kinds),
              'data-bands="%s"' % ",".join(p.get("bands", BANDS))]
+    saves = p.get("saves")
+    if saves is None:
+        sys.exit("profile: missing `saves` block — saves is derived, not authored")
+    conc = p.get("concentration", {})
     for who in ("a", "b"):
         for act in (1, 2, 3):
+            row = list(sc[who][act - 1])
+            if len(row) != len(S.KEYS):
+                sys.exit("profile %s act %d: %d axis values, expected %d (%s)"
+                         % (who, act, len(row), len(S.KEYS), ", ".join(S.KEYS)))
+            if row[SAV_IDX] is not None:
+                sys.exit("profile %s act %d: index %d (saves) must be null — it is "
+                         "derived from the `saves` block" % (who, act, SAV_IDX))
+            blk = saves[who][S.ACTS[act - 1]]
+            row[SAV_IDX] = derive_saves(blk["prof"], blk["boosters"],
+                                        conc.get(who, False))
             attrs.append('data-%s%d="%s"' % (
-                who, act, ",".join(str(v) for v in sc[who][act - 1])))
+                who, act, ",".join(str(v) for v in row)))
     trs = []
     for i, label in enumerate(labels):
         cells = []
@@ -126,9 +146,11 @@ def profile(d, names):
         </table></div>
         <p class="r-note">
           Each cell reads <span class="va">A</span> <span class="vb">B</span> <b class="pv">pair</b>.
-          <strong>Additive</strong> axes sum (capped at 5). <strong>Threshold</strong> axes take the
-          higher. <strong>Complementary</strong> axes take the higher plus half the lower.
+          <strong>Additive</strong> axes sum, uncapped. <strong>Complementary</strong> axes take the
+          higher plus half the lower, uncapped &mdash; one source is enough, a second is discounted.
           <strong>Personal</strong> axes take the <em>lower</em> &mdash; they cannot be delegated.
+          Each spoke on the chart is a percent of <em>its own</em> maximum, so a personal axis at 5
+          and a complementary axis at 7 both reach the outer ring.
         </p>
 %s
       </div>

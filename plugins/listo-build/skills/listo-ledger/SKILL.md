@@ -1,6 +1,6 @@
 ---
 name: listo-ledger
-description: Build or update the Listonomicon pairing ledger — score every candidate chassis on the nine-axis radar, rank every carry × support pairing on coverage plus delivered damage, and render the ledger artifact. Use when comparing many possible duos rather than building one.
+description: Build or update the Listonomicon pairing ledger — score every candidate chassis on the ten-axis radar, rank every carry × support pairing on tempo, resilience, duration and utility, and render the ledger artifact. Use when comparing many possible duos rather than building one.
 ---
 
 # Listo pairing ledger
@@ -21,32 +21,55 @@ working ledger to copy.
 
 ## What you are scoring
 
-Each chassis gets **nine axes × three acts**, on `listo-build`'s §5a anchors —
-read that section, it is the rubric. Acts map to character levels I 1–10,
-II 11–15, III 16–20. Scores are relative to *that act's* encounters, so a
-feature that does not scale must fall.
+Each chassis gets **ten axes × three acts** — Control is split crowd-versus-boss
+exactly as damage already is. Three files own the rules and they do not overlap:
+**`listo-build/references/axis-rubrics.md`** gives the content anchors — what a 5
+actually *is* in named manifest features, per act; **`listo-build` §5a** gives the
+functional ladder (5 Surplus → 0 Absent) and what each axis measures; and
+**`listo-build/references/scoring-model.md`** owns how two bodies combine, the
+fight-type coefficients, the weights and the score. Read all three before scoring.
+
+Acts map to character levels **I 3–8, II 9–15, III 16–20**. Scores are relative to
+*that act's* encounters, so a feature that does not scale must fall — and **Act II
+is the richest band**, holding six feats, 8th-level slots and nearly every
+run-defining class breakpoint.
 
 Then the renderer does the rest. Your job is three things and nothing else:
 
-1. **The chassis scores** — nine ints per act, honestly, with the low ones low.
+1. **The chassis scores** — ten ints per act, honestly, with the low ones low.
+   Index 8 (saves) is `null`: author the `saves` set instead and let the renderer derive it.
 2. **`reach`** — `ranged`, `hybrid` (melee with a real ranged option), `mobile`
    (melee with repeatable mobility), `static` (melee, none).
 3. **The prose** — what each chassis is, and why each entry reads the way it does.
 
-## The two numbers, and why not one
+## Four blocks, and why not one total
 
-**Coverage** is the seven non-damage axes. **Damage coverage** is what the pair
-actually delivers, reach-discounted. Score weights them evenly.
+The unifying currency is the **action point**: one buys one of damage, control or
+rescue. The pair's job is to remove enemy action points faster than they remove
+yours. `scoring-model.md` has the full argument; the shape is:
 
-Do not be tempted back to a nine-axis total. Across a full field its correlation
-with delivered damage is **0.00** — the completeness axes correlate *negatively*
-with damage (−0.46) and cancel the damage block's +0.81 exactly. Two pairings
-with an identical ST+AoE block can differ by seven points of delivered damage,
-and a total cannot see it.
+| block | axes | answers |
+|---|---|---|
+| **Tempo** | single-target, aoe, control-single, control-area | how fast you remove enemy APs |
+| **Resilience** | durability, saves, rescue | how hard yours are to remove |
+| **Duration** | endurance | how many fights your supply covers |
+| **Utility** | skills | out-of-combat coverage |
+
+**Actions is none of these — it caps Tempo** rather than adding to it. A capability
+you cannot afford to deploy delivers nothing.
+
+Do not collapse these to one total. Two pairings with an identical damage block can
+differ by seven points of delivered damage, and a total cannot see it.
+
+> **The old −0.46 / +0.81 / 0.00 correlation figures have been retired.** They were
+> computed across the curated 26-chassis roster, which is a shortlist selected for
+> being good at *something*, not a sample of build space — so they cannot show
+> whether the blocks genuinely trade off. Recompute them once the roster is
+> re-authored, which is the first point the data is not selected on the outcome.
 
 **5 + 0 is worse than 3 + 3.** A pair that wins one fight type and is a passenger
-in the other has a dead body in every encounter of the wrong kind. Split
-single-target against area only when *neither* half has a dead fight.
+in the other has a dead body in every encounter of the wrong kind — and the control
+split now catches that on the control side too, not just the damage side.
 
 ## Method notes that keep the ledger honest
 
@@ -59,6 +82,24 @@ single-target against area only when *neither* half has a dead fight.
   the number.
 - **Re-scoring is cheap and should be frequent.** Change the ints, re-render.
   Nothing downstream needs hand-patching.
+
+## Confirm special handling before you author it
+
+Some fields are not plain data — `boosters`, `reach`, `prof` abilities, axis kinds — and the
+renderer applies each one through a registry. **Before authoring such a value, confirm the
+renderer implements it.** If you cannot point at the line that applies the effect, it is not
+implemented.
+
+**The renderer fails on an unrecognised value rather than skipping it, and that is deliberate.**
+A dropped booster contributes nothing, so the score lands **too low** — and a score that is too
+low is indistinguishable from an honest one. The field table still ranks, the entries still
+render, and the chassis just sits a rung below where it belongs, permanently and invisibly. Every
+other bug in this format announces itself; this one would not.
+
+Failing closed makes the check reactive instead of a standing tax. You do not audit boosters
+before each render. You fix one crash the first time you author something new. Never add a
+permissive branch, a default, or a warn-and-continue to any of these — see
+`assets/ledger-schema.md`, "Anything with special handling fails closed".
 
 ## Verify before you score
 

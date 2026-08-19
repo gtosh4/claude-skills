@@ -2,3 +2,6 @@
 *.html
 *.txt
 !plugins/**/*.txt
+__pycache__/
+*.pyc
+.playwright-mcp/

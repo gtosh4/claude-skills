@@ -23,57 +23,22 @@ import json, sys, os, re, html
 HERE   = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
 
-AXES = ["Single", "AoE", "Durab.", "Actions", "Control", "Sustain", "Skills", "Saves", "Endur."]
-KEYS = ["st", "aoe", "dur", "act", "ctrl", "sus", "skl", "sav", "end"]
-KINDS = {"st": "add", "aoe": "add", "dur": "add", "act": "add", "ctrl": "add",
-         "sus": "thr", "skl": "comp", "sav": "per", "end": "per"}
-ACTS = ("I", "II", "III")
-REACH = {"ranged": (1.00, 1.00), "hybrid": (0.95, 0.95),
-         "mobile": (0.95, 1.00), "static": (0.85, 0.90)}
-MIX  = {"I": (0.70, 0.30), "II": (0.60, 0.40), "III": (0.50, 0.50)}
-FLAG, COV_MAX, DMG_MAX = 3.0, 105.0, 28.0
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                                "listo-build", "scripts"))
 
-
-def combine(a, b):
-    o = {}
-    for i, ax in enumerate(KEYS):
-        x, y, k = a[i], b[i], KINDS[ax]
-        o[ax] = (min(5, x + y) if k == "add" else max(x, y) if k == "thr"
-                 else min(x, y) if k == "per" else min(5, max(x, y) + min(x, y) // 2))
-    return o
+# One implementation of the scoring model, in listo-build/scripts/scoring.py.
+from scoring import (                                       # noqa: E402
+    KEYS, AXES, ACTS, MIX, FLAG, REACH, KIND_MAX, KINDS, SAV_IDX,
+    ScoringError, score_bodies, derive_saves)
 
 
 def score(p):
-    A, B = p["scores"]["a"], p["scores"]["b"]
-    ra, rb = p["reach"]["a"], p["reach"]["b"]
-    locked = ra in ("static", "mobile") and rb in ("static", "mobile")
-    rec = {"acts": {}, "cov": 0, "dmg": 0.0, "covs": [], "holes": set(),
-           "locked": locked, "flags": set()}
-    for act in ACTS:
-        sa, sb = A[act], B[act]
-        r = combine(sa, sb)
-        (rca, rpa), (rcb, rpb) = REACH[ra], REACH[rb]
-        ua = [sa[1] + .5 * sa[0] * rca, sa[0] * rpa + .25 * sa[1]]
-        ub = [sb[1] + .5 * sb[0] * rcb, sb[0] * rpb + .25 * sb[1]]
-        if locked:
-            ua[0] *= .9
-            ub[0] *= .9
-        wc, wb = MIX[act]
-        for who, u in (("a", ua), ("b", ub)):
-            if u[0] < FLAG and wc >= .40: rec["flags"].add((who, "crowd"))
-            if u[1] < FLAG and wb >= .40: rec["flags"].add((who, "priority"))
-        crowd, boss = ua[0] + ub[0], ua[1] + ub[1]
-        cov = sum(r[k] for k in KEYS if k not in ("st", "aoe"))
-        rec["acts"][act] = {"radar": r, "ua": ua, "ub": ub, "crowd": crowd,
-                            "boss": boss, "mix": wc * crowd + wb * boss, "cov": cov}
-        rec["covs"].append(cov)
-        rec["cov"] += cov
-        rec["dmg"] += rec["acts"][act]["mix"]
-        rec["holes"] |= {k for k in KEYS if r[k] <= 2}
-    rec["dmg"] = round(rec["dmg"], 1)
-    rec["score"] = round(rec["cov"] / COV_MAX * 50 + rec["dmg"] / DMG_MAX * 50, 1)
-    rec["holes"] = sorted(rec["holes"], key=KEYS.index)
-    return rec
+    """Adapter: a finalists pairing is two bodies rather than a chassis map."""
+    def body(who):
+        return {"_id": p["names"][who], "reach": p["reach"][who],
+                "scores": p["scores"][who], "saves": p["saves"][who],
+                "concentration": p.get("concentration", {}).get(who, False)}
+    return score_bodies(body("a"), body("b"))
 
 
 def scrape(slug, sheetdir):
@@ -97,6 +62,15 @@ def cell(v):
     return f'<td class="v v{v}">{v}</td>'
 
 
+def _own(p, who, act):
+    """A body's own row: index 8 is null, so derive it without the pair aura."""
+    vals = list(p["scores"][who][act])
+    blk = p["saves"][who][act]
+    vals[SAV_IDX] = derive_saves(blk["prof"], blk["boosters"],
+                                 p.get("concentration", {}).get(who, False))
+    return vals
+
+
 def matrix(p, rec):
     head = "".join(f"<th><span>{a}</span></th>" for a in AXES)
     body = []
@@ -104,15 +78,15 @@ def matrix(p, rec):
         nm = p["names"][who]
         for act in ACTS:
             body.append(f'<tr class="ind {who}"><th>{nm if act == "I" else ""} {act}</th>'
-                        + "".join(cell(x) for x in p["scores"][who][act])
+                        + "".join(cell(x) for x in _own(p, who, act))
                         + '<td class="tot">—</td></tr>')
     for act in ACTS:
         r = rec["acts"][act]
         body.append(f'<tr class="pairrow"><th>Pair {act}</th>'
-                    + "".join(cell(r["radar"][k]) for k in KEYS)
-                    + f'<td class="tot">{r["cov"]}</td></tr>')
+                    + "".join(cell(r["pair"][k]) for k in KEYS)
+                    + f'<td class="tot">{r["tempo"]*100:.0f}%</td></tr>')
     return (f'<div class="scroll"><table class="matrix"><thead><tr><th>Series</th>{head}'
-            f'<th class="tot"><span>Cov</span></th></tr></thead><tbody>'
+            f'<th class="tot"><span>Tempo</span></th></tr></thead><tbody>'
             + "".join(body) + '</tbody></table></div>')
 
 
@@ -124,10 +98,10 @@ def dmg_table(p, rec):
         f = lambda u, w: f'<td class="{"crit" if u < FLAG and w >= .40 else ""}">{u:.2f}</td>'
         rows.append(f'<tr><th>{act}</th>' + f(r["ua"][0], wc) + f(r["ua"][1], wb)
                     + f(r["ub"][0], wc) + f(r["ub"][1], wb)
-                    + f'<td class="mix">{r["mix"]:.2f}</td></tr>')
+                    + f'<td class="mix">{r["tempo"]*100:.0f}%</td></tr>')
     return ('<div class="scroll"><table class="matrix dmg"><thead>'
             f'<tr><th rowspan="2">Act</th><th colspan="2">{p["names"]["a"]}</th>'
-            f'<th colspan="2">{p["names"]["b"]}</th><th rowspan="2">Mixed</th></tr>'
+            f'<th colspan="2">{p["names"]["b"]}</th><th rowspan="2">Tempo</th></tr>'
             '<tr><th>crowd</th><th>prio</th><th>crowd</th><th>prio</th></tr></thead>'
             '<tbody>' + "".join(rows) + '</tbody></table></div>')
 
@@ -139,7 +113,7 @@ def chips(p, rec):
     for h in rec["holes"]:
         out.append(f'<span class="chip warn">{AXES[KEYS.index(h)].lower()} hole</span>')
     for who, kind in sorted(rec["flags"]):
-        out.append(f'<span class="chip">{p["names"][who]} idles in {kind} fights</span>')
+        out.append(f'<span class="chip">{who} idles in {kind} fights</span>')
     if not out:
         out.append('<span class="chip ok">no hole, no idle body</span>')
     out.append(f'<span class="chip flat">reach {p["reach"]["a"]} · {p["reach"]["b"]}</span>')
@@ -158,15 +132,24 @@ def render(d, sheetdir=None):
         for who in ("a", "b"):
             if p["reach"][who] not in REACH:
                 sys.exit(f"pairing {slug}: unknown reach {p['reach'][who]!r}")
+            if who not in p.get("saves", {}):
+                sys.exit(f"pairing {slug}: missing saves block for {who!r} — "
+                         "saves is derived, not authored")
             for act in ACTS:
-                if len(p["scores"][who][act]) != 9:
-                    sys.exit(f"pairing {slug} {who} {act}: expected 9 axis values")
+                row = p["scores"][who][act]
+                if len(row) != len(KEYS):
+                    sys.exit(f"pairing {slug} {who} {act}: scores has {len(row)} entries, "
+                             f"expected {len(KEYS)} ({', '.join(KEYS)})")
+                if row[SAV_IDX] is not None:
+                    sys.exit(f"pairing {slug} {who} {act}: index {SAV_IDX} (saves) must be "
+                             "null — it is derived from the saves block")
+                if act not in p["saves"][who]:
+                    sys.exit(f"pairing {slug} {who}: saves block missing act {act}")
 
     ranked = sorted(((score(p), p) for p in pairs.values()), key=lambda t: -t[0]["score"])
 
     cards = []
     for i, (rec, p) in enumerate(ranked, 1):
-        c = rec["covs"]
         splits = "".join(f'<span>{p["splits"][w]}</span>' for w in ("a", "b")
                          if p.get("splits", {}).get(w))
         cards.append(f'''<article class="card" id="{p["slug"]}">
@@ -177,8 +160,8 @@ def render(d, sheetdir=None):
       <p class="splits">{splits}</p>
     </div>
     <div class="score"><span class="num">{rec["score"]}</span><span class="lbl">score</span>
-      <span class="sub">coverage {c[0]}/{c[1]}/{c[2]} &middot; {rec["cov"]} of 105</span>
-      <span class="sub">damage {rec["dmg"]} of 28</span></div>
+      <span class="sub">tempo {rec["tempo"]*100:.0f}% &middot; damage + control, capped by Actions</span>
+      <span class="sub">resilience &middot; duration &middot; utility {rec["nontempo"]*100:.0f}%</span></div>
   </header>
   <div class="chips">{chips(p, rec)}</div>
   <p class="lede">{p.get("tagline","")}</p>
@@ -194,10 +177,10 @@ def render(d, sheetdir=None):
     frows = "".join(
         f'<tr><th scope="row"><span class="ent">{i:02d}</span>'
         f'<a href="#{p["slug"]}">{p["names"]["a"]} + {p["names"]["b"]}</a></th>'
-        + "".join(cell(rec["acts"]["III"]["radar"][k]) for k in KEYS)
-        + f'<td class="n sep">{rec["covs"][0]}</td><td class="n">{rec["covs"][1]}</td>'
-          f'<td class="n">{rec["covs"][2]}</td><td class="n b">{rec["cov"]}</td>'
-          f'<td class="n dm sep">{rec["dmg"]}</td><td class="n b">{rec["score"]}</td></tr>'
+        + "".join(cell(rec["acts"]["III"]["pair"][k]) for k in KEYS)
+        + "".join(f'<td class="n{" sep" if n == 0 else ""}">{rec["acts"][a]["tempo"]*100:.0f}</td>' for n, a in enumerate(ACTS))
+        + f'<td class="n dm sep">{rec["nontempo"]*100:.0f}</td>' 
+          f'<td class="n b">{rec["score"]}</td></tr>' 
         for i, (rec, p) in enumerate(ranked, 1))
 
     facts = "".join(f"<li>{f}</li>" for f in d.get("facts", []))
@@ -226,7 +209,7 @@ def render(d, sheetdir=None):
   <p class="sublede">Act III axis values, then coverage per act. Sorted by score.</p>
   <div class="scroll"><table class="field matrix"><thead><tr><th>Pairing</th>
     {"".join(f"<th>{a}</th>" for a in AXES)}
-    <th>I</th><th>II</th><th>III</th><th>Cov</th><th>Dmg</th><th>Score</th></tr></thead>
+    <th title="tempo %, act I">I</th><th title="tempo %, act II">II</th><th title="tempo %, act III">III</th><th title="resilience, duration, utility">Rest</th><th>Score</th></tr></thead>
     <tbody>{frows}</tbody></table></div>
 </section>
 

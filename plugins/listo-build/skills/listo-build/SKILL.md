@@ -92,7 +92,7 @@ The niche table below is **working material, not output**. Mine it for the optio
 |---|---|---|
 | **Action-economy engine** | **Not only summons.** Bodies: Warlock 3 Chain familiar (Help, Magic Resistance, doubled HP from `18881`), Ranger 3 Beast Master (Expansion moves Companion's Bond to **3**), Summon Beast 5 / Conjure Animals 9 (`13458`), the **Skeleton Crew feat**. Extra actions: **Haste** — the strongest action-economy spell in the list for a duo — **Action Surge** (2 charges from 17), and **Quickened**, the only general exemption from Listo's rule that a bonus-action spell blocks a levelled cast. **Twinned Haste covers 100% of a two-person party for one Metamagic pick** | Summons cost a turn to set up. Haste is **concentration** — it competes with your control spell — and Lethargy costs the target a turn if it drops |
 | **Lockdown controller** | Save-or-lose against crowds; area control composes rather than duplicating | Enemy saves climb with **+1 ability point per 6 levels** (bosses and enemies alike), so a static DC decays. Single-target-only CC *falls* further as encounters crowd |
-| **Front-line damage** | Smites, Extra Attack, **Fighter 11** (3 attacks *and* an off-cadence feat) | Long fights mean resource-limited burst runs dry; needs a sustain answer |
+| **Front-line damage** | Smites, Extra Attack, **Fighter 11** (3 attacks *and* an off-cadence feat) | Long fights mean resource-limited burst runs dry; needs an endurance answer |
 | **Reaction economy** | Lone Wolf's **second reaction**: Rogue's off-turn Sneak Attack, Uncanny Dodge as an interrupt, Riposte, Opportunity Attacks | Reaction effects are worthless if nothing triggers them — it needs a build shaped around being attacked |
 | **Short-rest engine** | Warlock pact slots, Battle Master dice, Monk ki, Second Wind / Action Surge | Usually caps spell tier or damage ceiling relative to a long-rest caster |
 | **Durability anchor** | Lone Wolf already gives **halved damage and +30% HP**; heavy armour + shields stack on top. **Self-healing counts here too** — `Durable` refunds full HP on *every* short rest plus in-combat regen below 60%, which is effective HP on the cheap clock | Being un-killable does not end fights, and the duo cannot afford a passenger |
@@ -123,7 +123,7 @@ as what they did — an unticked "healing" means this character has to carry som
 they then pick. Say the derived brief back to them in one sentence before moving on, because it
 is an inference and it may be wrong.
 
-**On a partner's threshold and complementary axes, the score converts straight into a requirement.** Sustain and
+**On a partner's complementary axes, the score converts straight into a requirement.** Rescue and
 Skills saturate at the party's first real source, so the partner's number tells you exactly how
 much this build owes:
 
@@ -131,12 +131,12 @@ much this build owes:
 |---|---|
 | **5** | **Solos it.** Build nothing here — every point spent is wasted. |
 | **4** | **Optional.** A second source is a luxury. Take it only if it falls out of the chassis for free; never spend a feat or a level on it. |
-| **≤ 3** | **Must be covered, non-trivially.** Real levels or a real feat, not a token gesture. A 3 is not "mostly fine" — on a threshold axis it means the party has no reliable answer. |
+| **≤ 3** | **Must be covered, non-trivially.** Real levels or a real feat, not a token gesture. A 3 is not "mostly fine" — on a complementary axis it means the party has no reliable answer. |
 
-**Score it per act, not overall.** A partner at Sustain 3/4/4 needs genuine help in Act I and
+**Score it per act, not overall.** A partner at Rescue 3/4/4 needs genuine help in Act I and
 almost none afterwards, which argues for an early dip rather than a late investment.
 
-This mapping applies to **threshold and complementary** axes. Additive axes always want more regardless of the partner's
+This mapping applies to **complementary** axes. Additive axes always want more regardless of the partner's
 number, and personal axes cannot be delegated at all — a partner's Saves score does nothing for
 you. The kind labels are in §5a.
 
@@ -455,7 +455,7 @@ read it to author a sheet.
 It is the same chassis as the single-character sheet, with the duo-specific structure:
 
 - **One radar with three series** — character A, character B, and a *computed* pair value. The
-  combining rule follows the axis kind: additive sums (capped at 5), threshold takes the higher,
+  combining rule follows the axis kind: additive sums, **complementary** takes `hi + ⌊lo/2⌋`,
   **personal takes the lower**, because a save gap on one character is a party-level gap. Author
   A and B only; never hand-write a pair number.
 - **Per-character panes** for ability spread, saves-with-source, and racial kit. Set
@@ -481,13 +481,20 @@ Theme a pair sheet **once**, on the pair's lead class (highest class level acros
 
 ### 5a. Score the profile radar
 
-The sheet opens with a nine-axis radar, tabbed by act. On `<figure class="profile">` fill
+The sheet opens with a ten-axis radar, tabbed by act (the two Control axes may be collapsed to one spoke for display — see `references/scoring-model.md` §10). On `<figure class="profile">` fill
 `data-act1`, `data-act2` and `data-act3` — one score set per act — plus `data-bands` for the
 character-level range each act covers. **Keep the table rows in sync with the numbers**; the
 table is the accessible view and the only thing that survives if the script doesn't run.
 
-Axis order is fixed: **single-target, aoe, durability, actions, control, sustain, skills,
-saves, endurance.**
+Axis order is fixed, and there are **ten** — Control is two axes, split crowd-versus-boss exactly
+as damage already is:
+
+    single-target, aoe, durability, actions, control-single, control-area,
+    rescue, skills, saves, endurance
+
+**`references/scoring-model.md` owns how these combine** — operators, fight-type coefficients,
+weights, the tempo cap and the score. This section owns the functional ladder and what each axis
+measures; `references/axis-rubrics.md` owns what a 0–5 *is* in named manifest content.
 
 **"Actions" is *action* economy** — bodies, actions and reactions per round. It has nothing to do
 with gold. Listo's 4× merchant prices and 120-supply long rests are real constraints and belong
@@ -496,7 +503,7 @@ in the gear and endurance prose, but they are **never scored on this chart**. La
 in a modlist this expensive reads as money.
 
 **Score 0–5 against what a party needs — a general sense, not a named partner's sheet.** Two-player
-Lone Wolf is the *environment* (halved damage, +30% HP, few bodies), so a four-person party's
+Lone Wolf is the *environment* (halved damage, doubled actions/bonus actions/reactions, few bodies — and **+30% max HP only if MCM `enableHpMax` is on**; with it off a body is 2.0x effective HP, not 2.6x), so a four-person party's
 expectations are the wrong yardstick. But the score must not depend on who the other character
 turns out to be, or two sheets from one run can't be read against each other.
 
@@ -524,17 +531,26 @@ Don't score Actions down as hard as the rest. Numbers in `data/listo-10.2-mcm.md
 **Score each act separately.** A build that peaks at 20 and a build that peaks at 8 are different
 builds, and one polygon cannot say so. Acts map to character levels roughly:
 
-| Act | Char levels |
-|---|---|
-| I | 1–10 |
-| II | 11–15 |
-| III | 16–20 |
+| Act | Char levels | Feats | Full-caster tier |
+|---|---|---|---|
+| I | **3–8** | 2 | 4th |
+| II | **9–15** | 5–6 | 8th |
+| III | **16–20** | 7–8 | 9th |
 
-> These bands are an **estimate**, but the installed CX config supports them: boss level is
-> capped at **10 in Act I** and **16 in Act II** (binding from player level 14), while Act III
-> bosses are always player level **+4**. Level cap is 20 (`Expansion.Levels.MaxLevel`); most
-> players reach 15+ and 20 needs the optional encounter content. Label the bands as approximate
-> on the sheet.
+> **`references/axis-rubrics.md` owns these bands and the content anchors for every rung** — what a
+> 5 actually *is* in named manifest features, per act. This section owns the functional ladder above
+> and the axis definitions below; go there for "is this build a 4 or a 5".
+>
+> The bands are supported by the installed CX config: `Level.Bosses.Act` caps boss level at **10 in
+> Act I** and **16 in Act II**, and those two numbers are **identical across the EASY, live and HARD
+> configs** while only the offsets change — so MaxLevel is structural, not a difficulty knob. Listo's
+> `data/docs/3-GameBalance.md` adds that Act 3 encounters "should keep you awake beyond level 16+".
+> Level cap is 20; most players reach 15+ and 20 needs the optional encounter content. Label the
+> bands as approximate on the sheet.
+>
+> **Act II is the richest band, not Act III** — six feats, 8th-level slots, and nearly every
+> run-defining breakpoint (Fighter 11, Rogue 11, ProfaneSoul 11, Ranger 11, Monk 11, Warlock 12,
+> Monk 14, Rogue 15). Act III adds the 9th tier, Mirror of Loss, Legendary attunement and capstones.
 
 What each axis measures, and its **kind** — which decides whether a second source of it is worth
 anything to the party:
@@ -543,11 +559,11 @@ anything to the party:
 |---|---|---|
 | **Single-target** | additive | it kills one priority enemy fast enough that the fight ends before resources do |
 | **AoE** | additive | it clears groups. Split from single-target because Listo's encounters lean on numbers, and a build can be excellent at one and absent at the other |
-| **Durability** | additive | it survives incoming HP damage. **Effective HP, however it is bought:** AC, hit dice, resistances, damage reduction — *and self-healing*. Durable's full-HP short rests, temp HP on yourself, Second Wind and Lay on Hands spent on yourself all belong here |
-| **Actions** | additive | **action economy, not gold, and not just minions** — anything that raises the number of meaningful things the party does per round. Four routes, all scored here: **extra bodies** (summons, familiars, companions, Skeleton Crew), **extra actions on your turn** (Haste, Action Surge, Quickened), **off-turn actions** (Lone Wolf's second reaction, Riposte, off-turn Sneak Attack, interrupts), and **actions handed to your partner** (Twinned Haste, Commander's Strike). **The duo's structural problem, so weight it heavily** |
-| **Control** | additive | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. Additive because two locked-down enemies are twice as good as one, and area control composes with single-target rather than duplicating it. A build with only single-target CC should *fall* as encounters get more crowded |
-| **Sustain** | threshold | it recovers **the other character**: heals aimed outward, raising a downed partner, Greater Restoration and condition removal, temp HP granted to someone else. Not just heal *spells* — but it must be delegatable, or it is Durability |
-| **Skills** | **complementary** | it covers out-of-combat checks: expertise, proficiencies, face skills. **Not threshold** — see below, because two characters with different proficiencies cover more of the campaign than either does alone |
+| **Durability** | **personal** | it survives incoming HP damage. **Effective HP, however it is bought:** AC, hit dice, resistances, damage reduction — *and self-healing*. Durable's full-HP short rests, temp HP on yourself, Second Wind and Lay on Hands spent on yourself all belong here. **Personal because BG3 has no taunt** — enemy AI picks by softness, so the weaker half is targeted *more*, and with Enemy Crits ON it eats the crits too |
+| **Actions** | **complementary** | **action economy, not gold, and not just minions** — anything that raises the number of meaningful things the party does per round. Four routes, all scored here: **extra bodies** (summons, familiars, companions, Skeleton Crew), **extra actions on your turn** (Haste, Action Surge, Quickened), **off-turn actions** (Lone Wolf's second reaction, Riposte, off-turn Sneak Attack, interrupts), and **actions handed to your partner** (Twinned Haste, Commander's Strike). **Score surplus, not sufficiency**: Lone Wolf's 2 Actions / 2 Bonus / 2 Reactions per body already gives the duo a four-body party's economy, which is what Listo is tuned against, so a chassis here is adding on top of a met baseline rather than filling a hole |
+| **Control** | **complementary** | it reliably removes an enemy's turn — and the CC lands against Listo's inflated saves. **Bounded by concentration**: each character holds exactly one, so the pair has two slots and no more, which is why control costing *no* concentration (Brand of the Sapping Scar, Divine Scourge, Chains of Carceri) is worth a full rung more than another save-DC spell. A build with only single-target CC should *fall* as encounters get more crowded, and pure save-DC control falls anyway — CX gives bosses +1 spell save DC per 7 levels |
+| **Rescue** | **complementary** | it keeps **the other character** functional, or gets them back: prevention (Death Ward, Sanctuary on the partner), restoration (Revivify, Greater Restoration, condition removal), outward healing and temp HP. Not just heal *spells*, and **the top of the axis is not healing at all** — it must be delegatable, or it is Durability. **Damage redirection is discounted**: Warding Bond and Protective Bond move damage onto a *spare* body, and a duo has none. Complementary rather than a pure maximum because one delegatable rescuer is enough, but if that rescuer is the one who goes down, nobody picks them up |
+| **Skills** | **complementary** | it covers out-of-combat checks: expertise, proficiencies, face skills. **Not a pure maximum** — see below, because two characters with different proficiencies cover more of the campaign than either does alone |
 | **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
 | **Endurance** | personal | **how many fights it can take before the party must long rest.** Not "short rest good, long rest bad" — a pool large enough to last the day is just as good as one that refreshes. See the arithmetic below |
 
@@ -586,11 +602,11 @@ refreshes on a long rest (Celestial's Healing Light) does not.
 `Resource cadence` column in `data/listo-10.2-classes.md` is the *input* to this — it names the
 clock; the axis scores the consequence.
 
-- **Additive** stacks across the party — more is always more.
-- **Threshold** saturates at the party's first source. The campaign needs one healer; a second is
-  worth far less than the number suggests.
-- **Complementary** stacks *only where the two do not overlap*. **Skills is the one axis of this
-  kind, and calling it threshold prices it wrong.** Depth does saturate — only one character rolls
+- **Additive** stacks across the party — more is always more. Only single-target and AoE carry
+  this kind, and both are scored through the damage model rather than the coverage radar.
+- **Complementary** — **one is enough, two is better**. Actions, Control, Rescue and Skills.
+  Stacks *only where the two do not overlap*, so the second source is real but discounted:
+  `hi + ⌊lo/2⌋`. Depth does saturate — only one character rolls
   any given check, so a second Persuasion expert adds almost nothing — but **breadth does not**.
   A Rogue with Stealth, Sleight of Hand and Perception beside a Cleric with Religion, Insight and
   Medicine covers more of the campaign's gates than either could alone, and the campaign gates
@@ -625,38 +641,31 @@ something is summoned, the axis is being read wrong. Two riders:
   for CC is worth materially less than the same effect on a partner or a summon — and if it
   drops, **Lethargy** costs that character their next turn, which out of two bodies is dear.
 
-**Sustain splits by who it targets, and the split decides the axis.** Self-healing is not
-delegatable, so scoring it on a threshold axis prices it wrong — a partner's Durable does
+**Rescue splits by who it targets, and the split decides the axis.** Self-healing is not
+delegatable, so scoring it as outward recovery prices it wrong — a partner's Durable does
 nothing for your hit points. Route it by target:
 
 | Recovery aimed at | Axis | Why |
 |---|---|---|
 | **Yourself** — Durable's full-HP short rests, Second Wind, Fiendish Vigor, self-cast Lay on Hands, temp HP on yourself | **Durability** | It is effective HP bought a different way. Additive, and it makes you harder to remove |
-| **The other character** — Healing Word, raising a downed partner, Greater Restoration, Aid, temp HP granted outward | **Sustain** | Genuinely delegatable, so genuinely threshold |
+| **The other character** — Death Ward, Sanctuary on the partner, Healing Word, raising a downed partner, Greater Restoration, Aid, temp HP granted outward | **Rescue** | Genuinely delegatable, so one source largely covers the pair — but a second still counts, because if the only rescuer is the one who drops, nobody picks them up |
 
 **Count each feature once.** A build with heavy self-healing scores it on Durability and takes
-no Sustain credit for it — putting it in both inflates the polygon and breaks the pairing read,
-because a partner would see Sustain 4 and correctly conclude they owe nothing, while in fact
+no Rescue credit for it — putting it in both inflates the polygon and breaks the pairing read,
+because a partner would see Rescue 4 and correctly conclude they owe nothing, while in fact
 nobody can heal them.
 
 > A build that keeps *itself* up but cannot heal its partner should read **high Durability, low
-> Sustain**. That is the shape of a self-sufficient martial, and it is exactly the information
+> Rescue**. That is the shape of a self-sufficient martial, and it is exactly the information
 > the paired sheet needs.
 
 **So the column never totals, and two sheets are never compared by summed score.** Read the shape
 and read the low axes; that is what the chart is for.
 
-**A threshold score is a statement about the whole party, so score it that way.** On a threshold
-axis the number says what the *other* character still owes, and the bands are sharp:
-
-| Score | What the partner owes on this axis |
-|---|---|
-| **5** | Nothing. This build solos the axis. |
-| **4** | Optional — worth taking only if it falls out of their chassis free. |
-| **≤ 3** | A real investment: levels or a feat. **3 is not "mostly fine"** on a threshold axis. |
-
-Score with that reading in mind, because it is how the paired sheet will be read — see §1b.
-It does not apply to additive or personal axes.
+**A complementary score is a statement about the whole party, so score it that way.** The number
+says what the *other* character still owes; the bands are in §1b and are not repeated here. Score
+with that reading in mind, because it is how the paired sheet will be read. It does not apply to
+additive or personal axes.
 
 **A 4 across the board is a failed evaluation, not a great build.** If nothing scores 1 or 0, look
 harder. Then say in one sentence, under the table, what the lowest axis that matters is and what
@@ -664,7 +673,7 @@ covers it.
 
 **5 is rare and it is earned.** Reserve it for an axis that ends fights on its own at that point in
 the campaign — nine attacks a round with smites, or a Dominate Monster that removes the boss from
-its own encounter. Threshold axes reach it least often, and that is information rather than a
+its own encounter. Complementary axes reach it least often, and that is information rather than a
 defect: you cannot over-invest in Skills the way you can in damage.
 
 **The ceiling still exists at 5.** When a build's real advantage is headroom past what any
@@ -672,15 +681,17 @@ encounter demands, say so in prose rather than inflating a number.
 
 ### 5b. Score the damage coverage — the radar cannot
 
-**The nine-axis chart is damage-blind by accident, and the fix is a second number rather than a
-tenth axis.** Single-target and AoE cap at 5 and combine additively, so on a pair sheet they
-saturate almost immediately: two characters at 3 and 3 read identically to 5 and 0. Across a
-135-pairing field the correlation between the nine-axis total and delivered damage is **0.00** —
-the seven non-damage axes correlate *negatively* with damage (−0.46) and cancel the damage block's
-+0.81 exactly. Rank on the total and you are ranking on completeness alone.
+**The radar is damage-blind by accident, and the fix is a separate delivered-damage figure rather
+than a louder axis.** Single-target and AoE saturate on the chart almost immediately: two
+characters at 3 and 3 read identically to 5 and 0, because a radar shows capability and not
+throughput. So compute delivered damage alongside the radar and report both. **Never sum the axes
+and call the result a ranking** — `references/scoring-model.md` §9 has the block structure that
+replaces a flat total.
 
-So compute a **damage coverage** figure alongside the radar and report both. Never sum all nine
-axes and call the result a ranking.
+> **The −0.46 / +0.81 / 0.00 correlation figures previously quoted here are retired.** They were
+> computed across the curated 26-chassis roster, which is a shortlist selected for being good at
+> *something* rather than a sample of build space, so they could not show whether the blocks
+> genuinely trade off. Recompute once the roster is re-authored.
 
 **The split rule: 5 + 0 is worse than 3 + 3.** A character — or a pair — that wins one fight type
 and is a passenger in the other is worth less than one that is useful in both, because the

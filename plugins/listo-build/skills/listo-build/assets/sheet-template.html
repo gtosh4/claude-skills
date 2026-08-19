@@ -198,10 +198,12 @@
      no legend: the selected tab names it. Accent contrast measured 6.5–7.3:1
      on both surfaces across all 17 themes.
 
-     Axes come in four kinds, and the table says which:
-       additive       stacks across the party — more is always more
-       threshold      the party needs one source; a second adds little
-       complementary  stacks only where the two do not overlap. SKILLS is the
+     Axes come in three kinds, and the table says which:
+       additive       stacks across the party — more is always more. Only
+                      single-target and AoE, both delivered through the
+                      damage table rather than this chart
+       complementary  one is enough, two is better: hi + floor(lo/2),
+                      uncapped. Actions, both Control axes, Rescue, and
                       axis of this kind: only one character rolls any given
                       check, so depth saturates, but the campaign gates content
                       behind many different skills, so breadth does not. Score
@@ -522,7 +524,7 @@
        Edit ONLY the data attributes on <figure>, then keep the table rows
        in sync. Scores are 0–5 in fixed axis order:
 
-         single, aoe, durability, actions, control, sustain, skills,
+         single, aoe, durability, actions, control, rescue, skills,
          saves, endurance
 
        ENDURANCE IS FIGHTS PER LONG REST, not "short rest good, long rest
@@ -572,17 +574,18 @@
        scale loses ground and its score is meant to FALL. A flat row means
        the build keeps pace; a falling row means it is being outrun.
 
-       THE COLUMN DOES NOT TOTAL. Additive axes stack, threshold axes
-       saturate at the party's first source, personal axes cannot be
-       delegated at all. Rubric per axis is in SKILL.md.
+       THE COLUMN DOES NOT TOTAL. Additive axes stack, complementary axes
+       credit the weaker half at half, personal axes cannot be delegated at
+       all. Rubric per axis is in references/axis-rubrics.md; how they
+       combine is in references/scoring-model.md.
 
-       SUSTAIN IS OUTWARD-FACING ONLY. Recovery aimed at yourself — Durable,
+       RESCUE IS OUTWARD-FACING ONLY. Recovery aimed at yourself — Durable,
        Second Wind, self-cast Lay on Hands, temp HP on yourself — is
        DURABILITY, because it is effective HP and cannot be delegated.
-       Sustain is what you do for the OTHER character. Count each feature
-       once; a self-sufficient martial reads high Durability, low Sustain.
+       Rescue is what you do for the OTHER character. Count each feature
+       once; a self-sufficient martial reads high Durability, low Rescue.
 
-       On the two THRESHOLD axes the score says what the partner still owes:
+       On the COMPLEMENTARY axes the score says what the partner still owes:
        5 = solos it, 4 = optional, <=3 = they must invest levels or a feat.
        ═══════════════════════════════════════════════════════════════════ -->
   <section>
@@ -590,8 +593,8 @@
     <h2>One line naming the shape — what it does, what it cannot</h2>
 
     <figure class="profile" style="margin:0"
-            data-axes="Single,AoE,Durab.,Actions,Control,Sustain,Skills,Saves,Endur."
-            data-bands="1–10,11–15,16–20"
+            data-axes="Single,AoE,Durab.,Actions,Ctrl-S,Ctrl-A,Rescue,Skills,Saves,Endur."
+            data-bands="3–8,9–15,16–20"
             data-act1="2,1,3,3,2,2,3,1,4"
             data-act2="3,3,2,3,3,2,3,1,3"
             data-act3="4,5,1,4,4,2,3,2,3">
@@ -621,7 +624,7 @@
               <tr><td>Durability</td><td class="kind">Additive</td><td class="sc a1">3</td><td class="sc gap a2">2</td><td class="sc gap a3">1</td><td>— static AC, outrun by the act</td></tr>
               <tr><td>Action economy</td><td class="kind">Additive</td><td class="sc a1">3</td><td class="sc a2">3</td><td class="sc a3">4</td><td>—</td></tr>
               <tr><td>Control</td><td class="kind">Additive</td><td class="sc a1">2</td><td class="sc a2">3</td><td class="sc a3">4</td><td>—</td></tr>
-              <tr><td>Sustain</td><td class="kind">Threshold</td><td class="sc a1">2</td><td class="sc a2">2</td><td class="sc a3">2</td><td>—</td></tr>
+              <tr><td>Rescue</td><td class="kind">Complementary</td><td class="sc a1">2</td><td class="sc a2">2</td><td class="sc a3">2</td><td>—</td></tr>
               <tr><td>Skills</td><td class="kind">Complementary</td><td class="sc a1">3</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
               <tr><td>Saves</td><td class="kind">Personal</td><td class="sc gap a1">1</td><td class="sc gap a2">1</td><td class="sc gap a3">2</td><td>—</td></tr>
               <tr><td>Endurance</td><td class="kind">Personal</td><td class="sc a1">4</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
@@ -629,9 +632,9 @@
           </table>
         </div>
         <p class="r-note">
-          <strong>Additive</strong> stacks across the party. <strong>Threshold</strong> saturates —
-          the party needs one source and a second adds little. <strong>Complementary</strong> —
-          Skills — stacks only where the two characters' proficiencies differ.
+          <strong>Additive</strong> stacks across the party — single-target and AoE only.
+          <strong>Complementary</strong> is one-is-enough-two-is-better: the higher plus half the
+          lower, uncapped. Actions, both Control axes, Rescue and Skills.
           <strong>Personal</strong> cannot be handed to anyone. <strong>So this column does not total.</strong> Scores are relative to
           each act's own encounters, so a row that falls is a feature the campaign outgrew.
         </p>

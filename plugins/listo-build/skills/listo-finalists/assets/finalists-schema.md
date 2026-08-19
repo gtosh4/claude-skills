@@ -17,8 +17,8 @@ per pairing out of a sheet is how transcription errors get in.
 
 | Thing | Rule |
 |---|---|
-| Pair value per axis | by axis kind — additive capped at 5, threshold `max`, complementary `min(5, hi + ⌊lo/2⌋)`, personal `min` |
-| Coverage, damage coverage, score | as the ledger: `cov/105×50 + dmg/28×50` |
+| Pair value per axis | by axis kind — **`listo-build/references/scoring-model.md` §4 is authoritative**: additive `a+b` uncapped, complementary `hi + ⌊lo/2⌋` **uncapped**, personal `min` |
+| Tempo, the non-tempo blocks, score | as the ledger — one implementation, in `listo-build/scripts/scoring.py`, which implements `listo-build/references/scoring-model.md` |
 | Reach discount, melee lock, idle flags, holes | identical rules to the ledger and the pair sheet |
 | Card order and the field table | ranked by score |
 
@@ -45,7 +45,7 @@ per pairing out of a sheet is how transcription errors get in.
       "shape":   "…",                       // the sheet's profile headline
       "damage":  "…",                       // the sheet's damage headline
       "scores": {                           // omit and use --scrape
-        "a": {"I": [9 ints], "II": [...], "III": [...]},
+        "a": {"I": [10 values], "II": [...], "III": [...]},   // index 8 (saves) is null
         "b": {"I": [...],    "II": [...], "III": [...]}
       }
     }

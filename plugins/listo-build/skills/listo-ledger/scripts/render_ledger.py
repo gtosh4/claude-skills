@@ -5,8 +5,8 @@
     scripts/render_ledger.py ledger.json -o out.html
 
 Author the CHASSIS SCORES and the PROSE. Everything derived is produced here:
-pair combining, coverage, damage coverage, reach discounts, idle-body flags,
-melee lock, holes, the full carry x support field table, the roster order, the
+pair combining, tempo and the non-tempo blocks, reach discounts, idle-body
+flags, melee lock, holes, the full carry x support field table, the roster order, the
 entry list (best partner per carry, ranked) and every number quoted in a
 variation line. See assets/ledger-schema.md.
 
@@ -16,74 +16,15 @@ import json, sys, os, itertools
 
 HERE   = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                                "listo-build", "scripts"))
 
-AXES   = ["Single", "AoE", "Durab.", "Actions", "Control", "Sustain", "Skills", "Saves", "Endur."]
-LABELS = ["Single-target", "AoE", "Durability", "Action economy", "Control",
-          "Sustain", "Skills", "Saves", "Endurance"]
-KEYS   = ["st", "aoe", "dur", "act", "ctrl", "sus", "skl", "sav", "end"]
-KINDS  = {"st": "add", "aoe": "add", "dur": "add", "act": "add", "ctrl": "add",
-          "sus": "thr", "skl": "comp", "sav": "per", "end": "per"}
-KINDNAME = {"add": "Additive", "thr": "Threshold", "comp": "Complementary", "per": "Personal"}
-BANDS  = ["1–10", "11–15", "16–20"]
-ACTS   = ("I", "II", "III")
-
-# reach class -> (crowd multiplier, priority multiplier); applied to the
-# single-target term only, because area is already priced into the AoE score.
-REACH = {"ranged": (1.00, 1.00), "hybrid": (0.95, 0.95),
-         "mobile": (0.95, 1.00), "static": (0.85, 0.90)}
-REACH_LABEL = {"ranged": "ranged", "hybrid": "melee + ranged option",
-               "mobile": "mobile melee", "static": "static melee"}
-MIX  = {"I": (0.70, 0.30), "II": (0.60, 0.40), "III": (0.50, 0.50)}
-FLAG = 3.0          # a body under this in a fight type worth >=40% of the act
-COV_MAX = 105.0     # 7 non-damage axes x 5 x 3 acts
-DMG_MAX = 28.0      # observed ceiling; keeps the two halves commensurable
-
-
-# ── scoring ──────────────────────────────────────────────────────────────────
-def combine(a, b):
-    o = {}
-    for i, ax in enumerate(KEYS):
-        x, y, k = a[i], b[i], KINDS[ax]
-        o[ax] = (min(5, x + y) if k == "add" else max(x, y) if k == "thr"
-                 else min(x, y) if k == "per" else min(5, max(x, y) + min(x, y) // 2))
-    return o
-
-
-def utilisation(sc, reach):
-    rc, rp = REACH[reach]
-    return [sc[1] + 0.5 * sc[0] * rc, sc[0] * rp + 0.25 * sc[1]]
-
-
-def score(C, a, b):
-    sa_all, sb_all = C[a], C[b]
-    ra, rb = sa_all["reach"], sb_all["reach"]
-    locked = ra in ("static", "mobile") and rb in ("static", "mobile")
-    rec = {"a": a, "b": b, "acts": {}, "cov": 0, "dmg": 0.0, "covs": [],
-           "holes": set(), "locked": locked, "flags": set()}
-    for act in ACTS:
-        sa, sb = sa_all["scores"][act], sb_all["scores"][act]
-        r = combine(sa, sb)
-        ua, ub = utilisation(sa, ra), utilisation(sb, rb)
-        if locked:
-            ua[0] *= 0.9
-            ub[0] *= 0.9
-        wc, wb = MIX[act]
-        crowd, boss = ua[0] + ub[0], ua[1] + ub[1]
-        mix = wc * crowd + wb * boss
-        for who, u in ((a, ua), (b, ub)):
-            if u[0] < FLAG and wc >= 0.40: rec["flags"].add((who, "crowd"))
-            if u[1] < FLAG and wb >= 0.40: rec["flags"].add((who, "priority"))
-        cov = sum(r[k] for k in KEYS if k not in ("st", "aoe"))
-        rec["acts"][act] = {"radar": r, "ua": ua, "ub": ub, "crowd": crowd,
-                            "boss": boss, "mix": mix, "cov": cov}
-        rec["covs"].append(cov)
-        rec["cov"] += cov
-        rec["dmg"] += mix
-        rec["holes"] |= {k for k in KEYS if r[k] <= 2}
-    rec["dmg"] = round(rec["dmg"], 1)
-    rec["score"] = round(rec["cov"] / COV_MAX * 50 + rec["dmg"] / DMG_MAX * 50, 1)
-    rec["holes"] = sorted(rec["holes"], key=KEYS.index)
-    return rec
+# The scoring model lives in ONE place: listo-build/scripts/scoring.py, which
+# implements listo-build/references/scoring-model.md. Never reimplement it here.
+from scoring import (                                       # noqa: E402
+    KEYS, LABELS, AXES, KINDS, KINDNAME, KIND_MAX, ACTS, BANDS, MIX, FLAG,
+    REACH, REACH_LABEL, SAV_IDX, WEIGHTS, TEMPO, RESILIENCE,
+    ScoringError, score, norm, derive_saves, validate_chassis)
 
 
 # ── fragments ────────────────────────────────────────────────────────────────
@@ -106,12 +47,17 @@ def chips(rec, disp):
 
 def radar_table(rec):
     head = "".join(f"<th><span>{a}</span></th>" for a in AXES)
-    body = "".join(
-        f'<tr><th>{act}</th>' + "".join(cell(rec["acts"][act]["radar"][k]) for k in KEYS)
-        + f'<td class="tot">{rec["acts"][act]["cov"]}</td></tr>' for act in ACTS)
+    rows = []
+    for act in ACTS:
+        r = rec["acts"][act]
+        rows.append(f'<tr><th>{act}</th>'
+                    + "".join(cell(r["pair"][k]) for k in KEYS)
+                    + f'<td class="tot">{r["tempo"]*100:.0f}%</td>'
+                    + f'<td class="tot">{r["nontempo"]*100:.0f}%</td></tr>')
     return (f'<div class="scroll"><table class="matrix"><thead><tr><th>Act</th>{head}'
-            f'<th class="tot" title="the seven non-damage axes"><span>Cov</span></th></tr></thead>'
-            f'<tbody>{body}</tbody></table></div>')
+            '<th class="tot" title="damage + control, capped by Actions"><span>Tempo</span></th>'
+            '<th class="tot" title="resilience, duration, utility"><span>Rest</span></th>'
+            f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>')
 
 
 def dmg_table(rec, disp):
@@ -122,19 +68,26 @@ def dmg_table(rec, disp):
         f = lambda u, w: f'<td class="{"crit" if u < FLAG and w >= .40 else ""}">{u:.2f}</td>'
         rows.append(f'<tr><th>{act}</th>' + f(r["ua"][0], wc) + f(r["ua"][1], wb)
                     + f(r["ub"][0], wc) + f(r["ub"][1], wb)
-                    + f'<td class="mix">{r["mix"]:.2f}</td></tr>')
+                    + f'<td class="mix">{r["tempo"]*100:.0f}%</td></tr>')
     A, B = disp(rec["a"]), disp(rec["b"])
     return ('<div class="scroll"><table class="matrix dmg"><thead>'
             f'<tr><th rowspan="2">Act</th><th colspan="2">{A}</th>'
-            f'<th colspan="2">{B}</th><th rowspan="2">Mixed</th></tr>'
+            f'<th colspan="2">{B}</th><th rowspan="2">Tempo</th></tr>'
             '<tr><th>crowd</th><th>prio</th><th>crowd</th><th>prio</th></tr></thead>'
             '<tbody>' + "".join(rows) + '</tbody></table></div>')
 
 
 def roster_block(key, ch, disp):
     head = "".join(f"<th><span>{a}</span></th>" for a in AXES)
-    rows = "".join(f'<tr><th>{act}</th>' + "".join(cell(v) for v in ch["scores"][act])
-                   + f'<td class="tot">{sum(ch["scores"][act])}</td></tr>' for act in ACTS)
+    rows = []
+    for act in ACTS:
+        vals = list(ch["scores"][act])
+        blk = ch["saves"][act]
+        vals[SAV_IDX] = derive_saves(blk["prof"], blk["boosters"],
+                                     ch.get("concentration", False))
+        rows.append(f'<tr><th>{act}</th>' + "".join(cell(v) for v in vals)
+                    + f'<td class="tot">{sum(vals)}</td></tr>')
+    rows = "".join(rows)
     meta = f'<span class="dot">·</span>{ch["meta"]}' if ch.get("meta") else ""
     return f'''<article class="rost" id="r-{key.lower()}">
 <header><h3>{disp(key)}<span class="role {ch["role"]}">{ch["role"]}</span></h3>
@@ -159,11 +112,7 @@ def render(d):
     C = d["chassis"]
     for k, ch in C.items():
         ch.setdefault("display", k)
-        if ch["reach"] not in REACH:
-            sys.exit(f"chassis {k}: unknown reach {ch['reach']!r}")
-        for act in ACTS:
-            if len(ch["scores"][act]) != 9:
-                sys.exit(f"chassis {k} act {act}: expected 9 axis values")
+        validate_chassis(k, ch)
     disp = lambda k: C[k]["display"]
 
     carries  = [k for k in C if C[k]["role"] == "carry"]
@@ -191,7 +140,6 @@ def render(d):
     entries = []
     for i, rec in enumerate(kept, 1):
         e = prose[rec["a"]]
-        c = rec["covs"]
         vars_html = []
         for v in e.get("vars", []):
             if "partner" in v:
@@ -200,7 +148,7 @@ def render(d):
                 if vr is None:
                     sys.exit(f"entry {rec['a']}: no pairing with {p}")
                 vars_html.append(f'<li><b>+ {disp(p)}</b> &mdash; {vr["score"]} &middot; '
-                                 f'cov {vr["cov"]} &middot; dmg {vr["dmg"]}. {v.get("note","")}</li>')
+                                 f'tempo {vr["tempo"]*100:.0f}% &middot; rest {vr["nontempo"]*100:.0f}%. {v.get("note","")}</li>')
             else:
                 vars_html.append(f'<li>{v["text"]}</li>')
         entries.append(f'''<article class="entry">
@@ -214,13 +162,13 @@ def render(d):
       <a href="#r-{rec["b"].lower()}">{disp(rec["b"])}</a></p>
   </div>
   <div class="score"><span class="num">{rec["score"]}</span><span class="lbl">rank score</span>
-    <span class="sub">coverage {c[0]}/{c[1]}/{c[2]} &middot; {rec["cov"]} of 105</span>
-    <span class="sub">damage {rec["dmg"]} of 28</span></div>
+    <span class="sub">tempo {rec["tempo"]*100:.0f}% &middot; damage + control, capped by Actions</span>
+    <span class="sub">resilience &middot; duration &middot; utility {rec["nontempo"]*100:.0f}%</span></div>
 </header>
 <div class="chips">{chips(rec, disp)}</div>
 <div class="cols">
   <div class="col"><h4>Pair profile</h4>{radar_table(rec)}</div>
-  <div class="col"><h4>Damage coverage</h4>{dmg_table(rec, disp)}</div>
+  <div class="col"><h4>Delivered damage</h4>{dmg_table(rec, disp)}</div>
 </div>
 <div class="prose">
   <p><span class="lead">Reads as.</span> {e["verdict"]}</p>
@@ -242,11 +190,12 @@ def render(d):
         + (f'<span class="ent">{ranked_key[(r["a"], r["b"])]:02d}</span>'
            if (r["a"], r["b"]) in ranked_key else "")
         + f'{disp(r["a"])} + {disp(r["b"])}</th>'
-        + "".join(f'<td class="v v{round(sum(r["acts"][a]["radar"][k] for a in ACTS)/3)}">'
-                  f'{sum(r["acts"][a]["radar"][k] for a in ACTS)}</td>' for k in KEYS)
-        + f'<td class="n sep">{r["covs"][0]}</td><td class="n">{r["covs"][1]}</td>'
-          f'<td class="n">{r["covs"][2]}</td><td class="n b">{r["cov"]}</td>'
-          f'<td class="n dm sep">{r["dmg"]}</td><td class="n b">{r["score"]}</td></tr>'
+        + "".join(f'<td class="v v{min(5, round(sum(r["acts"][a]["pair"][k] for a in ACTS)/3/KIND_MAX[KINDS[k]]*5))}">'
+                  f'{sum(r["acts"][a]["pair"][k] for a in ACTS)}</td>' for k in KEYS)
+        + "".join(f'<td class="n{" sep" if i == 0 else ""}">{r["acts"][a]["tempo"]*100:.0f}</td>'
+                  for i, a in enumerate(ACTS))
+        + f'<td class="n dm sep">{r["nontempo"]*100:.0f}</td>'
+          f'<td class="n b">{r["score"]}</td></tr>'
         for r in field)
 
     # roster order is derived, so a chassis added later can never be dropped
@@ -288,10 +237,12 @@ def render(d):
 <section>
   <h2>The full field</h2>
   <p class="sublede">{len(field)} pairings, {len(carries)} carries &times; {len(supports)} supports.
-  Act III axis values, then coverage per act. Sorted by score.</p>
+  Axis values summed across acts, then tempo per act. Sorted by score.</p>
   <div class="scroll"><table class="field matrix"><thead><tr><th></th><th>Pairing</th>
     {"".join(f"<th>{a}</th>" for a in AXES)}
-    <th>I</th><th>II</th><th>III</th><th>Cov</th><th>Dmg</th><th>Score</th></tr></thead>
+    <th title="tempo %, act I">I</th><th title="tempo %, act II">II</th>
+    <th title="tempo %, act III">III</th>
+    <th title="resilience, duration, utility">Rest</th><th>Score</th></tr></thead>
     <tbody>{frows}</tbody></table></div>
 </section>
 

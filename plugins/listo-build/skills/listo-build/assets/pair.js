@@ -5,9 +5,15 @@
    Three series per act: A, B, and the pair. The pair is never authored —
    it is derived from data-kinds:
 
-     additive   min(5, a + b)
-     threshold  max(a, b)
-     personal   min(a, b)
+     additive       a + b        (uncapped; max 10)
+     complementary  hi + floor(lo / 2)  (uncapped; max 7)
+     personal       min(a, b)    (max 5)
+
+   The pair value is NOT capped at 5 any more: capping made 5+4 and 5+0 read
+   identically, which is the saturation that made a plain maximum wrong. Each
+   spoke is therefore plotted as a PERCENT OF ITS OWN ACHIEVABLE MAXIMUM, so a
+   personal axis at 5 and a complementary axis at 7 both reach the outer ring.
+   See listo-build/references/scoring-model.md.
 
    If this never runs, the chart stays hidden (.profile:not(.ready) .radar),
    the .pv spans stay empty, and the table still carries both characters'
@@ -27,25 +33,29 @@
     var a = attr.split(",").map(function (n) { return parseFloat(n.trim()); });
     return a.every(function (n) { return isFinite(n); }) ? a : null;
   }
-  function at(u, v) {
-    v = Math.max(0, Math.min(MAX, isFinite(v) ? v : 0));
+  var KIND_MAX = { additive: 10, complementary: 7, personal: 5 };
+  function kindMax(kind) { return KIND_MAX[kind] || MAX; }
+  /* v is plotted as a fraction of `full`, scaled onto the 0..MAX grid. */
+  function at(u, v, full) {
+    full = full || MAX;
+    v = Math.max(0, Math.min(full, isFinite(v) ? v : 0)) / full * MAX;
     return [CX + u[0] * STEP * v, CY + u[1] * STEP * v];
   }
-  function poly(U, get) {
+  function poly(U, get, full) {
     return U.map(function (u, i) {
-      var p = at(u, get(i));
+      var p = at(u, get(i), full ? full(i) : MAX);
       return p[0].toFixed(1) + "," + p[1].toFixed(1);
     }).join(" ");
   }
   function combine(kind, a, b) {
-    if (kind === "threshold") return Math.max(a, b);
     if (kind === "personal") return Math.min(a, b);
     /* complementary: the stronger half's coverage stands in full, the weaker half
        is credited at half, because some of it duplicates ground already covered. */
     if (kind === "complementary") {
-      return Math.min(MAX, Math.max(a, b) + Math.floor(Math.min(a, b) / 2));
+      return Math.max(a, b) + Math.floor(Math.min(a, b) / 2);
     }
-    return Math.min(MAX, a + b);
+    if (kind === "additive") return a + b;
+    throw new Error("unknown axis kind: " + kind);
   }
 
   Array.prototype.forEach.call(document.querySelectorAll(".profile"), function (fig) {
@@ -139,7 +149,10 @@
 
       shapeA.setAttribute("points", poly(U, function (i) { return s.a[i]; }));
       shapeB.setAttribute("points", poly(U, function (i) { return s.b[i]; }));
-      shapeP.setAttribute("points", poly(U, function (i) { return s.p[i]; }));
+      /* the pair series is the only one that can exceed 5, so it is plotted
+         against each axis kind's own maximum rather than the 0..5 grid. */
+      shapeP.setAttribute("points", poly(U, function (i) { return s.p[i]; },
+                                         function (i) { return kindMax(kinds[i]); }));
 
       while (dots.firstChild) dots.removeChild(dots.firstChild);
       U.forEach(function (u, i) {
