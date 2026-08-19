@@ -425,7 +425,10 @@ Inquisition. **Five grant both:** Tempest, War, Twilight, Zeal, Inquisition.
   Smite/Thunderous Smite (1), Magic Weapon/Shatter (3), **Haste**/Fireball (5), Fire Shield/Freedom
   of Movement (7), Destructive Wave/Flame Strike (9). L2 Channel Divinity **Consuming Fervor** —
   **maximise fire or thunder damage** (Tempest's Destructive Wrath, and Listo separately patched
-  it to stop spamming confirmations on AoE casts). L6 **Resounding Strike** — thunder damage pushes
+  it to stop spamming confirmations on AoE casts). **It costs a Channel Divinity charge**
+  (`TooltipUseCosts "ChannelDivinity:1"`), so it is **once per short rest until Cleric 6** and
+  twice thereafter — the domain's own interrupt resource refunds itself on cast and is not the
+  limiter. `(Read from the installed pak.)` L6 **Resounding Strike** — thunder damage pushes
   Large-or-smaller creatures 3m; has a toggle. L8 Divine Strike (weapon's type, magical, 2d8 at 14;
   the mod also fixes the base-game multi-trigger bug). L17 **Blaze of Glory** — once per long rest,
   when an enemy drops you to 0, that attacker takes **5d10 fire + 5d10 thunder**; toggleable passive.

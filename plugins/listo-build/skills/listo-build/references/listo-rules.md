@@ -287,7 +287,7 @@ have, so two Warlock levels still buy a fully-scaling damage engine.
 1d10**, and Repelling Blast now allows a Strength save. Any damage math taken from outside Listo
 is overstated. See `data/classes/warlock.md`.
 
-### Respec
+### Respec — cheap enough to change the planning unit
 
 Withers' fee is unchanged by the 4× merchant multiplier. A rebuild **re-derives everything from
 class levels** — nothing banks, so you cannot take a level for a feat and then drop back.
@@ -296,6 +296,41 @@ It also **re-picks your first class**, and saving throw proficiencies come from 
 only. This is the single easiest thing to lose silently.
 
 **Trap:** starting as an Oathbreaker Paladin blocks normal respec entirely.
+
+**Because it is cheap, the planning unit is the character LEVEL, not the run.** In a pack tuned
+this far above vanilla, the correct play is to hold, at every level, the strongest arrangement of
+*that many* levels — and to re-cut whenever the strongest arrangement stops being the one you are
+holding. A 20-level split is a **destination, not a path**: the order is re-choosable at every
+rung, and so is almost everything else.
+
+**What a respec re-picks:** class levels and their order · every subclass (domain, oath, patron,
+college, conclave, Way, Order, Heroic Title) · every feat · the whole ability spread · Sorcerer
+and Bard spells known · fighting styles · Warlock invocations and pact boon.
+
+**What it does not:** the level 1 class's save proficiencies unless you re-pick that same class
+first — **always re-pick it** — and gear, which is free to re-attune anyway.
+
+**Three things that change with the arrangement, and must be re-checked at each rung:**
+
+1. **Feat count.** Feats key off *class* level, so two arrangements of the same character level
+   do not hold the same number of feats. At character 9, a **Cleric 6 / Fighter 3** holds
+   `2 + 1 = 3` feats while a **Cleric 7 / Fighter 2** holds `2 + 0 = 2`. Same nine levels, one
+   feat apart.
+2. **Spell tier.** Full casters unlock a tier at odd class levels, so a dip taken *now* costs a
+   tier *now* and nothing later. Deferring the dip until after the tier lands is usually free.
+3. **Subclass timing.** A subclass feature arrives with its class level, so pushing a dip to the
+   end of the ladder pulls every one of the primary's features forward. **This is the single most
+   common free win** — a dip that is only good late should be *taken* late.
+
+**Temporary subclasses are a real tool.** Pick the subclass that is strongest at the level you
+are on, not the one the level 20 sheet names: a Light domain that supplies area damage while the
+partner's Sneak Attack dice are small, swapped to Grave once those dice are worth doubling. The
+same applies to feats — hold Resilient while a partner's aura is offline, trade it away when the
+aura lands.
+
+**Practical cadence:** re-cut at the rungs where the optimum actually moves — typically four to
+six times in a run. Gold is not the constraint; re-picking spells and hotbars is, so cluster the
+changes at natural breakpoints rather than paying the fiddle cost every level.
 
 ---
 
@@ -308,6 +343,30 @@ only. This is the single easiest thing to lose silently.
   the cost, but an idle body costs under a third of an active one — **recruiting companions is
   not the trap the older note made it**.
 - **Short rests are unchanged** — two per long rest. Listo's own docs advise leaning on them.
+
+  > **This is the number that prices the Endurance axis, and it is easy to get backwards.** Two
+  > short rests means a short-rest pool is spent **three times** per long-rest cycle — the initial
+  > fill plus two refreshes — **not indefinitely**. So the question is never "short rest or long
+  > rest", it is **how many fights the budget covers**:
+  >
+  > | Character | Budget per long-rest cycle |
+  > |---|---|
+  > | Rogue, Champion / Battle Master Fighter, Blood Hunter | **unbounded** — the damage is at-will |
+  > | Monk 14 | 14 ki × 3 = **42**, at 8–10 per hard fight |
+  > | Cleric 18 / Bard 15 | ≈**21** / ≈**18** slots, 4–5 per hard fight |
+  > | **Paladin 17** | ≈**15** slots `(slot counts are not stated in the data files)` |
+  > | Warlock 3 / 5 / 7 | 2 pact slots × 3 = **6** |
+  > | Warlock 11+ | 3 pact slots × 3 = **9** |
+  >
+  > **A Paladin 17's own table is more than twice a Warlock 7 dip.** Trading Paladin levels for
+  > pact slots to "get onto the short-rest clock" *loses* budget — `Paladin 17 / Warlock 3` holds
+  > 21 units against `Paladin 13 / Warlock 7`'s 18, and keeps four more class levels. The
+  > short-rest dip is worth taking for what else it carries (Hex Warrior, Hexblade's Curse, a
+  > familiar), not for the clock.
+  >
+  > **Hit points force more long rests than slots do.** Count out-of-combat healing in the same
+  > budget: ki healing between fights and Song of Rest raise Endurance; a healing pool that only
+  > refreshes on a long rest (Celestial's Healing Light) does not.
 - **Merchants: 4× buy, ¼ sell.** Withers is a merchant with 50,000 gold that resets each
   conversation.
 - **Initiative: d10 + Dex + bonuses** — `InitiativeDie: 10` confirmed in the installed config.

@@ -9,7 +9,7 @@ rest). Nothing in the list changes the Wizard chassis itself: d6 hit die, no arm
 proficiency, Int/Wis saves, Arcane Recovery on a long-rest cadence, scroll transcription as the
 class's private gold sink. For a two-person Lone Wolf run that makes Wizard the **highest-
 ceiling and lowest-floor** pick in the list — the widest spell access and the best summon
-support (`Animate Dead++` removes the undead cap outright), attached to the squishiest body,
+support (`Animate Dead++` — **one** extra corpse, not an uncapped one; see below), attached to the squishiest body,
 refuelled off the most expensive rest type.
 
 **Provenance.** Compiled 17 August 2026 against the bundled 10.2 snapshot. Every school named

@@ -225,6 +225,11 @@ Blood Hunter spends **bonus actions and reactions**, leaving the Action free for
 - Crimson Rite — bonus action, once per weapon per long rest
 - Most Blood Curses — bonus action
 - Eyeless, Exposure, Fallen Puppet, Soul Eater — **reactions**
+- **The Brand marks one creature at a time.** `BRAND_OF_CASTIGATION` and `BRAND_OF_SAPPING`
+  share `StackId "BRAND"`, and the status is applied at duration **−1** — permanent until the
+  target dies or you brand something else. With one `Brand` charge on a short-rest clock that is
+  **three brands per long-rest cycle, one live at a time**: excellent against a boss, and no
+  answer at all to a crowd. `(Read from the installed pak.)`
 - Brand of Castigation — a free interrupt on a Rite hit; its retaliation is also a free interrupt
 
 In a two-body party, off-turn damage and off-turn debuffs are the scarcest resource. This is the

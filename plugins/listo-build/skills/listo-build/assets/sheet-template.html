@@ -278,6 +278,84 @@
   .r-table thead th.on { color: var(--brass); }
   .r-note { font-size: .82rem; color: var(--text-dim); padding: .5rem .25rem 0; }
 
+  /* ── damage coverage ──────────────────────────────────────────────────
+     The radar's Single-target and AoE cells cap at 5 and say nothing about
+     DELIVERY, so damage gets its own small table underneath. Two utilisation
+     numbers per act — what this build actually contributes to a crowd fight
+     and to a priority fight — with the reach discount already applied:
+
+       crowd     = AoE + 0.5 × ST × reach_crowd
+       priority  = ST × reach_priority + 0.25 × AoE
+
+     Reach discounts the SINGLE-TARGET term only. Area is already priced into
+     the AoE score itself, because a 9m cone and a 3m burst are not the same
+     axis value.
+
+       ranged  1.00 / 1.00      mobile melee  0.95 / 1.00
+       hybrid  0.95 / 0.95      static melee  0.85 / 0.90
+
+     .u-idle marks a number under 3.0 — a body with nothing useful to do in
+     that fight type. On a carry that is a fault; on a support it is expected,
+     and the prose should say which axis covers for it.
+     ──────────────────────────────────────────────────────────────────── */
+  .dmg { border: 1px solid var(--rule); background: var(--surface); overflow-x: auto; }
+  .dmg table { border-collapse: collapse; width: 100%; font-size: .84rem; }
+  .dmg th, .dmg td { padding: .45rem .7rem; text-align: left; border-bottom: 1px solid var(--rule-soft); }
+  .dmg thead th {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint);
+    font-weight: 600; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  .dmg tbody tr:last-child td { border-bottom: 0; }
+  .dmg td.act { white-space: nowrap; font-weight: 600; }
+  .dmg td.mix {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: .74rem; color: var(--text-faint); white-space: nowrap;
+  }
+  .dmg td.u { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .dmg td.u b { font-weight: 600; }
+  .dmg td.w { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700;
+              border-left: 1px solid var(--rule); }
+  .dmg td.u-idle b { color: var(--rust); }
+  .dmg td.u-idle::after { content: " ⚑"; color: var(--rust); }
+  .reach {
+    display: inline-block;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+    padding: .1rem .45rem; border: 1px solid var(--rule); color: var(--text-dim);
+  }
+
+  /* ── gate audit ───────────────────────────────────────────────────────
+     The Skills score is DERIVED from this table and never eyeballed off the
+     skill map's tick count. One row per gate, carrying the modifier this
+     character actually rolls, at the act the check lands in, and what that
+     means on a d20 with two Inspiration rerolls banked.
+
+     A gate is satisfied only by Expertise, by proficiency on the character's
+     PRIMARY ability, or by proficiency plus stacked boosts. Plain proficiency
+     on a dump stat is a tick on the map and a failed check in the game — mark
+     it .g-bad, not .g-mid. Passive Perception is the one row the bank never
+     reaches, because nothing is rolled.
+     ──────────────────────────────────────────────────────────────────── */
+  .gt { border: 1px solid var(--rule); background: var(--surface); overflow-x: auto; }
+  .gt table { border-collapse: collapse; width: 100%; font-size: .84rem; }
+  .gt th, .gt td { padding: .45rem .7rem; text-align: left; border-bottom: 1px solid var(--rule-soft); }
+  .gt thead th {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint);
+    font-weight: 600; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  .gt tbody tr:last-child td { border-bottom: 0; }
+  .gt td.gate { white-space: nowrap; font-weight: 600; }
+  .gt td.mod { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gt td.mod b { font-weight: 600; }
+  .gt td.mod .pc { display: block; color: var(--text-faint); font-size: .92em; line-height: 1.35; }
+  .gt td.g-ok  b { color: var(--astral); }
+  .gt td.g-mid b { color: var(--brass); }
+  .gt td.g-bad b { color: var(--rust); }
+  .gt td.g-bad .pc { color: var(--rust); }
+  .gt tr.fail td.gate { box-shadow: inset 3px 0 0 var(--rust); }
+
   section { display: flex; flex-direction: column; gap: 1.15rem; }
   .eyebrow {
     font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
@@ -319,6 +397,17 @@
   .ability { font-weight: 600; }
   .dead td { color: var(--text-faint); }
   .win { color: var(--astral); font-weight: 600; }
+
+  /* A respec rung: the holding on this row is NOT an extension of the row
+     above — the player re-cuts at Withers here. Mark only real re-cuts. */
+  tr.respec td { box-shadow: inset 3px 0 0 var(--rust); }
+  tr.respec td:first-child { font-weight: 600; }
+  .rung {
+    display: inline-block;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+    font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+    padding: .08rem .4rem; border: 1px solid var(--rule); color: var(--rust);
+  }
 
   .cards {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -386,8 +475,17 @@
     section > .eyebrow (two spans: label + right-aligned note) + h2 + content
     .prose            paragraph stack, max 66ch
     .scroller > table thead th / td; classes: .num .mono .final .win .ability; tr.dead for empty rows
+    tr.respec + .rung   a respec rung — the holding on that row is not an extension of
+                        the row above. Progression tables are LADDERS: each row is the
+                        strongest arrangement of that many levels, not a purchase order.
+                        Respec is cheap, so temporary subclasses and feats are expected.
     .cards > .card    hairline grid; each card takes .lvl (mono label) + p
     figure.profile    the act-tabbed capability radar — see its own comment below
+    .dmg              the damage-coverage table — crowd and priority utilisation per act,
+                      reach discount already applied. See its own comment in the CSS
+    .gt               the five-gate skill audit. The Skills axis score is DERIVED from
+                      this table; never eyeball it off the skill map's tick count
+    .reach            inline chip naming how a body delivers damage
     .ck               astral-bordered callout: .ck-head + p        — decisions
     p.note            rust-barred callout, use <b> for the lead-in  — warnings
     .tag              inline astral chip, good for feat names in tables
@@ -413,6 +511,7 @@
     </div>
     <div class="fields">
       <div class="field"><span class="field-key">Race</span><span class="field-val">—</span></div>
+      <div class="field"><span class="field-key">Background</span><span class="field-val">—</span></div>
       <div class="field"><span class="field-key">Split</span><span class="field-val">—</span></div>
       <div class="field"><span class="field-key">Subclass</span><span class="field-val">—</span></div>
       <div class="field"><span class="field-key">Ruleset</span><span class="field-val">Listo v10.2</span></div>
@@ -424,7 +523,21 @@
        in sync. Scores are 0–5 in fixed axis order:
 
          single, aoe, durability, actions, control, sustain, skills,
-         saves, cadence
+         saves, endurance
+
+       ENDURANCE IS FIGHTS PER LONG REST, not "short rest good, long rest
+       bad". Listo allows only TWO short rests per long rest, so a
+       short-rest pool is worth 3x its size per cycle, not infinity — and a
+       large long-rest table can outlast a small short-rest one. Work out
+       the budget per cycle, divide by what a hard Combat Extender fight
+       costs, and score:
+
+         5  8+ fights, or the output is essentially resource-free
+         4  6-7      3  4-5      2  2-3      1  1
+
+       Count out-of-combat hit point recovery in the same budget: missing
+       HP forces more long rests than missing slots do. Personal axis — the
+       pair takes the LOWER of the two, because slots cannot be lent.
 
        "ACTIONS" IS ACTION ECONOMY — bodies, actions and reactions per
        round. It has NOTHING to do with gold, merchant prices or camp
@@ -477,7 +590,7 @@
     <h2>One line naming the shape — what it does, what it cannot</h2>
 
     <figure class="profile" style="margin:0"
-            data-axes="Single,AoE,Durab.,Actions,Control,Sustain,Skills,Saves,Cadence"
+            data-axes="Single,AoE,Durab.,Actions,Control,Sustain,Skills,Saves,Endur."
             data-bands="1–10,11–15,16–20"
             data-act1="2,1,3,3,2,2,3,1,4"
             data-act2="3,3,2,3,3,2,3,1,3"
@@ -511,7 +624,7 @@
               <tr><td>Sustain</td><td class="kind">Threshold</td><td class="sc a1">2</td><td class="sc a2">2</td><td class="sc a3">2</td><td>—</td></tr>
               <tr><td>Skills</td><td class="kind">Complementary</td><td class="sc a1">3</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
               <tr><td>Saves</td><td class="kind">Personal</td><td class="sc gap a1">1</td><td class="sc gap a2">1</td><td class="sc gap a3">2</td><td>—</td></tr>
-              <tr><td>Cadence</td><td class="kind">Personal</td><td class="sc a1">4</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
+              <tr><td>Endurance</td><td class="kind">Personal</td><td class="sc a1">4</td><td class="sc a2">3</td><td class="sc a3">3</td><td>—</td></tr>
             </tbody>
           </table>
         </div>
@@ -528,6 +641,61 @@
         </p>
       </div>
     </figure>
+  </section>
+
+  <!-- ══ 2b · DAMAGE COVERAGE ═════════════════════════════════════════════
+       The radar caps Single-target and AoE at 5 and says nothing about
+       DELIVERY. This table is where reach lands. Compute, do not eyeball:
+
+         crowd     = AoE + 0.5 × ST × reach_crowd
+         priority  = ST × reach_priority + 0.25 × AoE
+         weighted  = mix_crowd × crowd + mix_priority × priority
+
+       Fight mix by act — Act I 70/30, Act II 60/40, Act III 50/50 — because
+       Listo's early encounters lean on numbers and its late ones on bosses.
+       Flag any number under 3.0 with class="u u-idle" on the cell.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="eyebrow"><span>Damage coverage</span><span>What gets delivered, not what the axis says</span></div>
+    <h2>One line naming which fight type this build is for, and which one it is a passenger in</h2>
+
+    <div class="dmg">
+      <table>
+        <thead>
+          <tr>
+            <th>Act</th><th>Fight mix</th>
+            <th style="text-align:right">Crowd</th>
+            <th style="text-align:right">Priority</th>
+            <th style="text-align:right">Weighted</th>
+            <th>Reads as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="act">I</td><td class="mix">70 / 30</td><td class="u u-idle"><b>2.5</b></td><td class="u"><b>3.1</b></td><td class="w">2.7</td><td>— no area answer until the cone lands</td></tr>
+          <tr><td class="act">II</td><td class="mix">60 / 40</td><td class="u"><b>4.4</b></td><td class="u"><b>3.6</b></td><td class="w">4.1</td><td>—</td></tr>
+          <tr><td class="act">III</td><td class="mix">50 / 50</td><td class="u"><b>5.9</b></td><td class="u"><b>4.6</b></td><td class="w">5.3</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="r-note">
+      Reach <span class="reach">ranged</span> — the delivery discount, applied to the
+      single-target term only. <span class="reach">ranged</span> 1.00,
+      <span class="reach">hybrid</span> 0.95, <span class="reach">mobile melee</span> 0.95 crowd
+      and 1.00 priority, <span class="reach">static melee</span> 0.85 crowd and 0.90 priority.
+      Area is already priced into the AoE score itself.
+    </p>
+
+    <p class="note"><b>5 + 0 is worse than 3 + 3.</b> A build that wins one fight type and is a
+    passenger in the other is worth less than one that is useful in both, which is why this table
+    exists next to a radar that would score them the same. A flagged number is not automatically a
+    defect — but if it is flagged on the axis this build was hired for, it is.</p>
+
+    <p class="note"><b>Say which kind of AoE this is.</b> <b>Mode-switch</b> AoE retargets the
+    engine the build already runs — Volley, Breath of the Dragon, the Eldritch cone — so it costs
+    nothing in the fights that do not want it. <b>Payload</b> AoE is a separate pool — Gravity
+    Breath, a daily Fireball — and is dead in the wrong fight and spent in the right one. Two
+    builds can score AoE 4 and mean completely different things.</p>
   </section>
 
   <section>
@@ -571,6 +739,42 @@
       <span class="ck-head">Respec checkpoint</span>
       <p>What to reconsider, and the criterion for deciding.</p>
     </div>
+  </section>
+
+  <section>
+    <div class="eyebrow"><span>Skill map</span><span>Background is two free proficiencies</span></div>
+    <h2>Every proficiency, by source — and the gate each one is for</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Skill</th><th>Ability</th><th>Source</th><th>Gate it covers</th></tr></thead>
+        <tbody><tr><td class="mono win">—</td><td>—</td><td>Class · Race · Background · Feat</td><td>—</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="gt">
+      <table>
+        <thead>
+          <tr><th>Gate</th><th>Skill</th><th>Act</th><th>DC</th><th>What this character rolls</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="gate">Hag's Hair</td><td>Persuasion / Intimidation</td><td>I</td><td>20</td><td class="mod g-mid"><b>+8</b><span class="pc">45% cold · 83% on two rerolls</span></td><td>—</td></tr>
+          <tr><td class="gate">Mirror of Loss</td><td>Religion</td><td>III</td><td>~20</td><td class="mod g-ok"><b>+11</b><span class="pc">60% cold · 94% on two rerolls</span></td><td>—</td></tr>
+          <tr class="fail"><td class="gate">Phalar Aluve +3</td><td>Sleight of Hand</td><td>III</td><td>~20</td><td class="mod g-bad"><b>untrained</b><span class="pc">23% on the full bank — nobody here can roll it</span></td><td>—</td></tr>
+          <tr><td class="gate">Traps and caches</td><td>Perception — <em>passive</em></td><td>all</td><td>15–25</td><td class="mod g-ok"><b>22</b><span class="pc">the bank never reaches this one</span></td><td>—</td></tr>
+          <tr><td class="gate">Doors and switches</td><td>Investigation</td><td>all</td><td>15–20</td><td class="mod g-mid"><b>+6</b><span class="pc">35% cold · 78% on two rerolls</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="r-note">
+      <strong>This table is where the Skills score comes from</strong> — never the tick count above
+      it. A gate is satisfied only by Expertise, by proficiency on this character's <em>primary</em>
+      ability, or by proficiency plus stacked boosts; plain proficiency on a dump stat is a tick on
+      the map and a failed check in the game. Two Inspiration rerolls are assumed on every gate, so
+      the discriminator is <em>whether anyone can roll the check</em>, not the size of the modifier.
+      Score each gate at the act it lands in — Hag's Hair is rolled at proficiency +2/+3 and is the
+      hardest check in the run.
+    </p>
+    <p class="note"><b>Backgrounds do not swap out duplicates in BG3.</b> A background skill the class or race already granted is wasted, so pick the background last, against the gaps. The gates worth naming: Persuasion or Intimidation for Hag's Hair at DC 20, Religion for the Mirror of Loss, Sleight of Hand for the Circus pickpocket, Perception and Investigation throughout.</p>
   </section>
 
   <section>

@@ -1,0 +1,123 @@
+{
+  "title": "PAIR NAME",
+  "class": "paladin",
+  "tagline": "One or two sentences: what this pair is, and the single decision that shapes both halves.",
+  "splits": { "a": "Cleric 17 / Fighter 3", "b": "Monk 17 / Cleric 3" },
+
+  "roster": {
+    "h2": "One line on how the two spreads differ, and why",
+    "note": "<b>Check at creation:</b> what both sheets should read, and what to do if they don't.",
+    "a": {
+      "name": "NAME A",
+      "sub": "Class 17 / Dip 3 · Subclass · <b>Race</b> · Background",
+      "abilities": [
+        ["STR", 8, "—", "—", "—", 8, "−1"],
+        ["DEX", 14, "—", "—", "—", 14, "+2"],
+        ["CON", 15, 4, "—", "—", 19, "+4"],
+        ["INT", 8, "—", "—", "—", 8, "−1"],
+        ["WIS", 16, 4, 2, "—", 22, "+6"],
+        ["CHA", 10, "—", "—", "—", 10, "+0"]
+      ],
+      "saves": [
+        ["From level-1 class", "Wis, Cha. Lost on any respec that re-picks the first class."],
+        ["From Lone Wolf +4", "Con, Wis."]
+      ],
+      "race": { "name": "Wood Elf", "traits": [["Fleet of Foot", "+1.5m move, from level 1."]] },
+      "skills": {
+        "background": "Sage",
+        "items": [
+          ["Class", "the picks taken from the class list."],
+          ["Background", "its two, chosen for <em>non-overlap</em>."],
+          ["Expertise", "name where it sits, and which campaign gate it is aimed at."]
+        ]
+      }
+    },
+    "b": {
+      "name": "NAME B",
+      "sub": "Class 17 / Dip 3 · Subclass · <b>Race</b> · Background",
+      "abilities": [
+        ["STR", 8, "—", "—", "—", 8, "−1"],
+        ["DEX", 16, 4, "—", "—", 20, "+5"],
+        ["CON", 14, "—", "—", "—", 14, "+2"],
+        ["INT", 10, "—", "—", "—", 10, "+0"],
+        ["WIS", 15, 4, 2, "—", 21, "+5"],
+        ["CHA", 8, "—", "—", "—", 8, "−1"]
+      ],
+      "saves": [["From level-1 class", "Str, Dex."], ["From Lone Wolf +4", "Dex, Wis."]],
+      "race": { "name": "Githyanki", "traits": [["Astral Knowledge", "proficiency in a skill group per long rest."]] },
+      "skills": { "background": "Urchin", "items": [["Class", "the picks taken from the class list."]] }
+    }
+  },
+
+  "profile": {
+    "h2": "One line naming the pair's shape — what it covers, what it does not",
+    "scores": {
+      "a": [[2,1,3,2,1,1,2,3,4], [2,1,3,3,1,1,2,3,4], [3,1,3,3,1,1,2,3,4]],
+      "b": [[1,1,1,2,2,3,3,2,3], [2,2,1,2,3,3,3,2,3], [2,3,1,2,3,3,3,2,3]]
+    },
+    "reads": ["—", "— B carries every crowd; A never scores here", "—", "—", "—",
+              "— B carries it; if B is down, nobody heals", "—",
+              "— the pair reads at B's number, not the average", "—"],
+    "notes": ["Name the <strong>lowest pair value that matters</strong> in one sentence and say which character is expected to fix it, at which level."]
+  },
+
+  "damage": {
+    "h2": "One line naming which fight type this pair owns, and which one it merely survives",
+    "reach": { "a": "hybrid", "b": "static" },
+    "notes": ["<b>5 + 0 is worse than 3 + 3.</b> Split single-target against area only when <em>neither</em> half has a dead fight."]
+  },
+
+  "gates": {
+    "h2": "Every gate, the character who rolls it, and what it actually passes at",
+    "rows": [
+      { "gate": "Hag's Hair", "skill": "Persuasion / Intimidation", "act": "I", "dc": "20",
+        "owner": "a", "grade": "mid", "mod": "+8", "pc": "45% cold · 83% on two rerolls" },
+      { "gate": "Mirror of Loss", "skill": "Religion", "act": "III", "dc": "~20",
+        "owner": "b", "grade": "ok", "mod": "+12", "pc": "65% cold · 96% on two rerolls" },
+      { "gate": "Phalar Aluve +3", "skill": "Sleight of Hand", "act": "III", "dc": "~20",
+        "owner": "none", "mod": "untrained", "pc": "23% on the full bank — no proficiency in the pair" },
+      { "gate": "Traps and caches", "skill": "Perception — <em>passive</em>", "act": "all", "dc": "15–25",
+        "owner": "b", "grade": "ok", "mod": "23", "pc": "the bank never reaches this one" },
+      { "gate": "Doors and switches", "skill": "Investigation", "act": "all", "dc": "15–20",
+        "owner": "a", "grade": "mid", "mod": "+7", "pc": "40% cold · 78% on two rerolls" }
+    ],
+    "note": "A gate is satisfied only by <strong>Expertise</strong>, by proficiency on that character's <strong>primary ability</strong>, or by proficiency plus stacked boosts."
+  },
+
+  "play": {
+    "h2": "One line describing the combined loop",
+    "intro": "What a round looks like with both characters acting, including the opening turn.",
+    "a": "Action, bonus action, reactions. Both of each, from Lone Wolf.",
+    "b": "—",
+    "pair": "The interaction neither half has alone.",
+    "combos": [["Combo — name it", "Trigger, effect, and the character level it comes online."]],
+    "failure": "the situation that breaks the loop, and which character's resource answers it."
+  },
+
+  "prog": {
+    "h2": "Which class each character opens with, and why neither ever changes",
+    "rows": [
+      { "lvl": 1, "flag": "milestone", "a": ["Class 1", "Saves, skills, features", "—"], "b": ["Class 1", "Saves, skills, features", "—"] },
+      { "lvl": 2, "a": ["Class 2", "—", "—"], "b": ["Class 2", "—", "—"] },
+      { "lvl": 3, "a": ["Class 3", "Subclass", "<span class=\"tag\">Feat</span>"], "b": ["Class 3", "Subclass", "<span class=\"tag\">Feat</span>"] },
+      { "lvl": 4, "flag": "dead", "a": ["—", "—", "—"], "b": ["—", "—", "—"] }
+    ],
+    "checkpoint": { "text": "What to reconsider once a specific item lands, on which character, and the criterion for deciding." }
+  },
+
+  "gear": {
+    "h2": "One line on how the two kits avoid competing",
+    "a": [["Weapon", "—", 1, true], ["Armour", "—", "—"], ["Trinket", "—", "—"]],
+    "b": [["Weapon", "—", "—"], ["Armour", "—", "—"], ["Trinket", "—", "—"]],
+    "contested": [
+      { "act": 1, "item": "Hag's Hair", "win": true, "to": "a", "why": "—", "gives_up": "—" },
+      { "act": 3, "item": "Mirror of Loss", "to": "both", "why": "Per character, so it is not contested.", "gives_up": "—" }
+    ],
+    "note": "<b>Unverified:</b> anything whose location, effect or cap has not been confirmed against the 10.2 manifest."
+  },
+
+  "quests": {
+    "h2": "Which of these are skill checks rather than fights",
+    "rows": [{ "act": 1, "reward": "—", "win": true, "source": "—", "gate": "—", "to": "b" }]
+  }
+}

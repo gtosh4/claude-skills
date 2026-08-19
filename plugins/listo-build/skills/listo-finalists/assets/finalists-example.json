@@ -1,0 +1,1026 @@
+{
+ "title": "Three Finalists v2",
+ "eyebrow": "Listonomicon 10.2 \u00b7 two players \u00b7 Lone Wolf",
+ "lede": "Eleven pairings, each one <b>actually built</b> \u2014 ladder, stat spread, race, background, gear and gate audit \u2014 rather than estimated from a roster. Every card carries the numbers from its own sheet and links out to it.",
+ "facts": [
+  "11 built pairings",
+  "6 carries",
+  "6 supports",
+  "level cap 20"
+ ],
+ "cards_note": "The same carry is a different build on every card. Bombard's Act III AoE runs 2&ndash;3 and its Endurance 4&ndash;5 across five sheets, because the feats, race and ladder differ by partner. That spread has not been averaged away.",
+ "method": {
+  "h2": "How to read this",
+  "cards": [
+   {
+    "title": "Per pair, not per chassis",
+    "body": "Nothing here is a shared roster score. Each pairing was built as a pair, so the halves are tuned to each other."
+   },
+   {
+    "title": "Two numbers, counted once",
+    "body": "<b>Coverage</b> is the seven non-damage axes, 105 across the run. <b>Damage coverage</b> is delivered damage with the reach discount applied. The nine-axis total is not used: across a field it correlates with delivered damage at 0.00."
+   },
+   {
+    "title": "Reach is a discount",
+    "body": "Applied to the single-target term only \u2014 ranged 1.00, hybrid 0.95, mobile 0.95/1.00, static 0.85/0.90. A pair with no ranged or hybrid half takes a further 0.9 on crowd."
+   },
+   {
+    "title": "The flag",
+    "body": "A body under <b>3.0</b> in a fight type worth 40% or more of that act has nothing useful to do there. 5 + 0 is worse than 3 + 3, and this is where the tables say so."
+   }
+  ]
+ },
+ "footer": "Scores read from each sheet's own radar \u00b7 load-bearing mod claims read from the installed .pak archives \u00b7 18 August 2026",
+ "pairings": {
+  "ember-fervor": {
+   "names": {
+    "a": "Ember",
+    "b": "Fervor"
+   },
+   "reach": {
+    "a": "ranged",
+    "b": "static"
+   },
+   "splits": {
+    "a": "Warlock 17 (The Fiend) / Sorcerer 3 (Draconic) \u00b7 Astral Half-Elf \u00b7 Charlatan",
+    "b": "Cleric 17 (Zeal / Hazoret) / Bard 3 (Lore) \u00b7 Shadar-kai \u00b7 Folk Hero"
+   },
+   "url": "https://claude.ai/code/artifact/de6beecd-5318-4d61-9a3b-02ae0edcf542",
+   "tagline": "A blast carry whose area mode is the same beams retargeted, beside a heavy-armour Cleric who pays for the fights the beams cannot end. One decision shapes both halves: neither character's damage runs on a rest clock, so the 120-supply long rest is chosen, never forced.",
+   "shape": "The pair covers damage, endurance and durability outright; it is thin on Control from Act III and it has exactly one healer",
+   "damage": "This pair owns the crowd fight from Act II onward and merely keeps pace in the boss fight \u2014 the priority column never doubles the way the crowd column does",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      2,
+      2,
+      3,
+      2,
+      0,
+      3,
+      3,
+      5
+     ],
+     "II": [
+      3,
+      4,
+      2,
+      3,
+      3,
+      0,
+      3,
+      3,
+      5
+     ],
+     "III": [
+      4,
+      5,
+      2,
+      3,
+      2,
+      0,
+      3,
+      3,
+      5
+     ]
+    },
+    "b": {
+     "I": [
+      3,
+      3,
+      4,
+      2,
+      2,
+      4,
+      3,
+      4,
+      4
+     ],
+     "II": [
+      3,
+      4,
+      4,
+      3,
+      2,
+      4,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      3,
+      4,
+      3,
+      3,
+      2,
+      4,
+      4,
+      4,
+      4
+     ]
+    }
+   }
+  },
+  "bombard-fervor": {
+   "names": {
+    "a": "Bombard",
+    "b": "Fervor"
+   },
+   "reach": {
+    "a": "hybrid",
+    "b": "static"
+   },
+   "splits": {
+    "a": "Wizard 6 / Blood Hunter 14 \u00b7 Evocation + Order of the Profane Soul \u00b7 Astral Half-Elf \u00b7 Urchin",
+    "b": "Cleric 17 / Bard 3 \u00b7 Zeal (Hazoret) + College of Lore \u00b7 Lizardfolk \u00b7 Soldier"
+   },
+   "url": "https://claude.ai/code/artifact/ab38218f-470e-4017-934d-b7ba1f7e6a22",
+   "tagline": "Two fire casters who never compete for a concentration slot: Bombard brands one creature into blanket save-Disadvantage at no concentration cost, and Sculpt Spells lets him drop Fireball on a partner standing in melee. The single decision that shapes both halves is that the support, not the carry, owns the deep slot table.",
+   "shape": "Five additive axes saturate by Act I \u2014 the shape to read is Sustain single-sourced, Saves thin early, and a carry whose area damage is capped at 3rd-level slots for the whole run",
+   "damage": "This pair owns crowds in every act and merely keeps pace with bosses \u2014 and the crowd half is carried by the character labelled \"support\"",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      3,
+      2,
+      1,
+      3,
+      0,
+      3,
+      3,
+      4
+     ],
+     "II": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      0,
+      3,
+      4,
+      5
+     ],
+     "III": [
+      4,
+      3,
+      4,
+      3,
+      4,
+      0,
+      3,
+      4,
+      5
+     ]
+    },
+    "b": {
+     "I": [
+      3,
+      4,
+      3,
+      3,
+      3,
+      4,
+      3,
+      3,
+      4
+     ],
+     "II": [
+      3,
+      4,
+      4,
+      3,
+      3,
+      4,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      3,
+      4,
+      4,
+      3,
+      3,
+      5,
+      3,
+      4,
+      4
+     ]
+    }
+   }
+  },
+  "volley-fervor": {
+   "names": {
+    "a": "Volley",
+    "b": "Fervor"
+   },
+   "reach": {
+    "a": "ranged",
+    "b": "static"
+   },
+   "splits": {
+    "a": "Rogue 9 / Ranger 11 \u00b7 Hunter conclave \u00b7 Inquisitive \u00b7 Astral Elf \u00b7 Guild Artisan",
+    "b": "Cleric 17 / Bard 3 \u00b7 Zeal (Hazoret) \u00b7 College of Lore \u00b7 Astral Half-Elf \u00b7 Sage"
+   },
+   "url": "https://claude.ai/code/artifact/a91eec1c-9144-4360-92f3-b3434f5a9ba2",
+   "tagline": "The purest mode-switch AoE in the list beside the anchor that keeps it standing. Volley points the same at-will attack routine at a crowd \u2014 no save, no slot, no concentration \u2014 and pays for it with a save package that only Lone Wolf's second +4 repairs.",
+   "shape": "Two damage axes covered from character 12 onward, one healer, and a control hole neither half fills",
+   "damage": "The pair owns crowds from character 12 and only ever survives Act I's",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      1,
+      3,
+      2,
+      1,
+      0,
+      2,
+      3,
+      5
+     ],
+     "II": [
+      4,
+      4,
+      3,
+      3,
+      1,
+      0,
+      2,
+      3,
+      5
+     ],
+     "III": [
+      4,
+      4,
+      4,
+      3,
+      2,
+      0,
+      3,
+      4,
+      5
+     ]
+    },
+    "b": {
+     "I": [
+      3,
+      3,
+      4,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4
+     ],
+     "II": [
+      3,
+      4,
+      4,
+      3,
+      2,
+      4,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      4,
+      4,
+      4,
+      3,
+      2,
+      4,
+      3,
+      4,
+      4
+     ]
+    }
+   }
+  },
+  "hexplate-fervor": {
+   "names": {
+    "a": "Hexplate",
+    "b": "Fervor"
+   },
+   "reach": {
+    "a": "hybrid",
+    "b": "static"
+   },
+   "splits": {
+    "a": "Paladin 8 (Conquest) / Warlock 12 (Hexblade, Chain) \u00b7 Half-Orc \u00b7 Sage",
+    "b": "Cleric 17 (Zeal / Hazoret) / Bard 3 (Lore) \u00b7 Human \u00b7 Urchin"
+   },
+   "url": "https://claude.ai/code/artifact/ae3f03b3-b289-44f2-beec-d0e41df44464",
+   "tagline": "Two heavy-armour Charisma-and-Wisdom bodies that fight from the front and never run dry. The decision that shapes both halves is order: Hexplate spends ten levels as a Warlock in plate before it is allowed to be a Paladin, and Fervor covers every crowd on its own until the Eldritch Cone arrives at character 10.",
+   "shape": "Two durable, endless bodies with a real control hole in Act I and no Dexterity save anywhere",
+   "damage": "This pair owns crowds from character 10 onward and merely keeps pace on priority targets all run",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      1,
+      4,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4
+     ],
+     "II": [
+      3,
+      3,
+      4,
+      3,
+      2,
+      2,
+      2,
+      3,
+      4
+     ],
+     "III": [
+      4,
+      4,
+      3,
+      3,
+      3,
+      2,
+      2,
+      4,
+      4
+     ]
+    },
+    "b": {
+     "I": [
+      3,
+      3,
+      4,
+      2,
+      2,
+      3,
+      4,
+      4,
+      4
+     ],
+     "II": [
+      3,
+      4,
+      4,
+      3,
+      2,
+      4,
+      4,
+      4,
+      4
+     ],
+     "III": [
+      4,
+      4,
+      3,
+      3,
+      2,
+      4,
+      4,
+      5,
+      4
+     ]
+    }
+   }
+  },
+  "breath-fervor": {
+   "names": {
+    "a": "Breath",
+    "b": "Fervor"
+   },
+   "reach": {
+    "a": "mobile",
+    "b": "static"
+   },
+   "splits": {
+    "a": "Cleric 3 (Twilight) / Monk 17 \u00b7 Way of the Ascendant Dragon \u00b7 Astral Elf \u00b7 Urchin",
+    "b": "Cleric 17 (Zeal, Hazoret) / Bard 3 \u00b7 College of Lore \u00b7 Half-Orc \u00b7 Folk Hero"
+   },
+   "url": "https://claude.ai/code/artifact/c6a255e7-a203-407a-b65e-e7dd09690d8a",
+   "tagline": "Breath of the Dragon replaces one attack, so the Monk's area mode costs no bonus action, no concentration and no second resource \u2014 and Wisdom being the Monk's primary stat in Listo makes the Cleric dip free in points. The pair is built around that one fact, and pays for it by having no ranged body at all.",
+   "shape": "A pair that is never short of damage, never short of a healer, and has no answer at all to a body it cannot walk to",
+   "damage": "The pair owns crowd fights in every act and puts a passenger on the field in every boss fight",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      2,
+      3,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4
+     ],
+     "II": [
+      4,
+      3,
+      3,
+      2,
+      2,
+      2,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      4,
+      4,
+      3,
+      3,
+      2,
+      2,
+      3,
+      5,
+      4
+     ]
+    },
+    "b": {
+     "I": [
+      2,
+      4,
+      4,
+      3,
+      2,
+      4,
+      4,
+      4,
+      4
+     ],
+     "II": [
+      2,
+      4,
+      4,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4
+     ],
+     "III": [
+      2,
+      4,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4
+     ]
+    }
+   }
+  },
+  "crozier-riptide": {
+   "names": {
+    "a": "Crozier",
+    "b": "Riptide"
+   },
+   "reach": {
+    "a": "static",
+    "b": "ranged"
+   },
+   "splits": {
+    "a": "Cleric 17 / Fighter 3 \u00b7 War Domain \u00b7 Battle Master \u00b7 Wood Elf \u00b7 Outlander",
+    "b": "Sorcerer 17 / Cleric 1 / Fighter 2 \u00b7 Storm Sorcery \u00b7 Tempest dip \u00b7 Shadar-kai \u00b7 Charlatan"
+   },
+   "url": "https://claude.ai/code/artifact/737bab4f-bfa9-4509-8423-080178402948",
+   "tagline": "A weapon Cleric whose slots are never the pair's damage, beside a Sorcerer whose one Metamagic pick covers 100% of the party. Twinned Haste is the thesis \u2014 Crozier turns the extra action into two more swings, Riptide into a second levelled cast \u2014 and because Riptide fights from range, this is the one Cleric pairing that is not melee-locked.",
+   "shape": "A carry that never runs out of resources beside a support that never runs out of actions \u2014 the hole is Endurance, and it is Riptide's number",
+   "damage": "The pair owns crowds outright and merely keeps pace on priority targets \u2014 and the weighted figure falls from Act II to Act III because the fight mix moves toward the half it is weaker at",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      2,
+      4,
+      2,
+      2,
+      4,
+      3,
+      4,
+      4
+     ],
+     "II": [
+      4,
+      3,
+      4,
+      3,
+      3,
+      4,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      4,
+      3,
+      4,
+      3,
+      3,
+      4,
+      3,
+      4,
+      4
+     ]
+    },
+    "b": {
+     "I": [
+      2,
+      3,
+      3,
+      3,
+      3,
+      2,
+      3,
+      3,
+      3
+     ],
+     "II": [
+      3,
+      4,
+      3,
+      4,
+      3,
+      2,
+      3,
+      3,
+      3
+     ],
+     "III": [
+      3,
+      4,
+      3,
+      4,
+      3,
+      2,
+      3,
+      4,
+      3
+     ]
+    }
+   }
+  },
+  "crozier-charnel": {
+   "names": {
+    "a": "Crozier",
+    "b": "Charnel"
+   },
+   "reach": {
+    "a": "static",
+    "b": "ranged"
+   },
+   "splits": {
+    "a": "Fighter 3 / Cleric 17 \u00b7 Battle Master + War Domain \u00b7 Shadar-kai \u00b7 Guild Artisan",
+    "b": "Fighter 1 / Wizard 19 \u00b7 School of Necromancy \u00b7 Fey Eladrin \u00b7 Sage"
+   },
+   "url": "https://claude.ai/code/artifact/54445721-063a-438b-98e9-ec8d524f574b",
+   "tagline": "A Cleric that fights with a weapon so its slots stay free, beside a Necromancer whose slots buy bodies. One decision shapes both halves: Animate Dead++ removes the undead cap entirely, so the pair answers the duo's action-economy problem with four to eight extra bodies instead of with spells \u2014 and Crozier is built so none of those spells were needed for damage anyway.",
+   "shape": "The only axis with a genuine hole is Sustain, and it is a threshold axis that Crozier already covers alone \u2014 every other axis has two sources",
+   "damage": "This pair owns crowds in every act and closes the gap on priority targets only in Act III \u2014 which is the act where the fight mix stops rewarding crowds",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      2,
+      4,
+      3,
+      2,
+      4,
+      3,
+      4,
+      4
+     ],
+     "II": [
+      3,
+      3,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      4,
+      4,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4
+     ]
+    },
+    "b": {
+     "I": [
+      2,
+      3,
+      3,
+      4,
+      3,
+      0,
+      3,
+      3,
+      3
+     ],
+     "II": [
+      2,
+      4,
+      3,
+      5,
+      4,
+      0,
+      3,
+      3,
+      3
+     ],
+     "III": [
+      3,
+      4,
+      3,
+      5,
+      4,
+      0,
+      3,
+      4,
+      4
+     ]
+    }
+   }
+  },
+  "bombard-chains": {
+   "names": {
+    "a": "Bombard",
+    "b": "Chains"
+   },
+   "reach": {
+    "a": "hybrid",
+    "b": "ranged"
+   },
+   "splits": {
+    "a": "Wizard 6 (Evocation) / Blood Hunter 14 (Profane Soul, Hexblade patron) \u00b7 Fey Eladrin \u2014 Winter \u00b7 Urchin",
+    "b": "Cleric 1 (Life) / Bard 3 (Lore) / Warlock 16 (Celestial, Pact of the Chain) \u00b7 Shadar-kai \u00b7 Guild Artisan"
+   },
+   "url": "https://claude.ai/code/artifact/47fd14fa-6b6c-476e-9609-8c41e93a797c",
+   "tagline": "Two control engines on the short-rest clock, and only one concentration bar between them. Bombard's Brand of the Sapping Scar costs no concentration at all; Chains of Carceri is a free Hold Monster that leaves the pact slots untouched \u2014 so the debuff and the lock never compete for the same resource.",
+   "shape": "A control pair that pays for it in single-target damage and in bodies on the field",
+   "damage": "This pair owns crowds from character 5 and merely keeps up with bosses all run \u2014 the boss answer is the Brand, not the damage",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      0,
+      3,
+      3,
+      4
+     ],
+     "II": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      0,
+      3,
+      3,
+      4
+     ],
+     "III": [
+      3,
+      3,
+      3,
+      3,
+      4,
+      0,
+      3,
+      4,
+      4
+     ]
+    },
+    "b": {
+     "I": [
+      2,
+      1,
+      3,
+      2,
+      2,
+      4,
+      4,
+      4,
+      4
+     ],
+     "II": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      4,
+      4,
+      4,
+      4
+     ],
+     "III": [
+      3,
+      4,
+      3,
+      2,
+      4,
+      4,
+      4,
+      4,
+      4
+     ]
+    }
+   }
+  },
+  "bombard-riptide": {
+   "names": {
+    "a": "Bombard",
+    "b": "Riptide"
+   },
+   "reach": {
+    "a": "hybrid",
+    "b": "ranged"
+   },
+   "splits": {
+    "a": "Wizard 6 (Evocation) / Blood Hunter 14 (Profane Soul, Celestial) \u00b7 Astral Half-Elf \u00b7 Sage \u00b7 Wizard 1 first",
+    "b": "Cleric 1 (Tempest) / Sorcerer 17 (Storm) / Fighter 2 \u00b7 Shadar-kai \u00b7 Charlatan \u00b7 Cleric 1 first"
+   },
+   "url": "https://claude.ai/code/artifact/7d1c320d-383f-492b-864f-9061de68bb63",
+   "tagline": "Two ranged casters, both throwing area, with Twinned Haste handing each of them a third action. Every additive axis saturates by Act II \u2014 and nobody can heal anybody, which is the one decision the whole sheet is built around.",
+   "shape": "Every additive axis saturates by Act II \u2014 so the only rows that carry information are Sustain, Saves and Endurance, and all three are axes a partner cannot fix",
+   "damage": "This pair owns the crowd fight in every act and is merely very good at the boss fight \u2014 and neither half has a dead encounter, which is the whole reason the numbers are this high",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      3,
+      3,
+      2,
+      2,
+      1,
+      3,
+      3,
+      4
+     ],
+     "II": [
+      4,
+      3,
+      3,
+      3,
+      3,
+      1,
+      3,
+      4,
+      4
+     ],
+     "III": [
+      4,
+      2,
+      3,
+      3,
+      4,
+      1,
+      3,
+      4,
+      5
+     ]
+    },
+    "b": {
+     "I": [
+      3,
+      3,
+      3,
+      3,
+      2,
+      1,
+      2,
+      3,
+      3
+     ],
+     "II": [
+      3,
+      4,
+      3,
+      4,
+      3,
+      1,
+      2,
+      3,
+      3
+     ],
+     "III": [
+      3,
+      4,
+      3,
+      4,
+      3,
+      1,
+      2,
+      3,
+      3
+     ]
+    }
+   }
+  },
+  "bombard-sanctum": {
+   "names": {
+    "a": "Bombard",
+    "b": "Sanctum"
+   },
+   "reach": {
+    "a": "hybrid",
+    "b": "mobile"
+   },
+   "splits": {
+    "a": "Wizard 6 / Blood Hunter 14 \u00b7 Evocation + Order of the Profane Soul \u00b7 Shadar-kai \u00b7 Urchin",
+    "b": "Monk 14 / Cleric 6 \u00b7 Way of Mercy + Zeal (Hazoret) \u00b7 Astral Elf \u00b7 Folk Hero"
+   },
+   "url": "https://claude.ai/code/artifact/0bc94a86-7e23-4d6a-a506-0104e946ef15",
+   "tagline": "A pair built to stop long-resting. Sanctum's Flurry of Healing and Harm converts short-rest ki into hit points, so the 120-supply rest is forced by nothing but story \u2014 and every damage resource on both sheets is either at-will or on the same short clock. The one decision that shapes both halves: Sanctum spends eleven levels on the healing engine before it touches the Zeal domain, which moves Haste and Fireball to Act III and hands the whole spell payload of Acts I\u2013II to Bombard.",
+   "shape": "Everything except Saves and AoE is covered twice by Act III \u2014 and Saves is the axis neither character can lend the other",
+   "damage": "This pair owns priority targets from Act I and only becomes a crowd answer in Act III",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      2,
+      3,
+      3,
+      2,
+      0,
+      3,
+      3,
+      4
+     ],
+     "II": [
+      4,
+      3,
+      3,
+      3,
+      4,
+      0,
+      3,
+      3,
+      5
+     ],
+     "III": [
+      4,
+      3,
+      3,
+      3,
+      4,
+      0,
+      4,
+      4,
+      5
+     ]
+    },
+    "b": {
+     "I": [
+      3,
+      1,
+      3,
+      3,
+      2,
+      3,
+      3,
+      4,
+      4
+     ],
+     "II": [
+      3,
+      1,
+      3,
+      3,
+      3,
+      5,
+      3,
+      4,
+      5
+     ],
+     "III": [
+      3,
+      3,
+      3,
+      4,
+      3,
+      5,
+      3,
+      4,
+      5
+     ]
+    }
+   }
+  },
+  "bombard-fold": {
+   "names": {
+    "a": "Bombard",
+    "b": "Fold"
+   },
+   "reach": {
+    "a": "hybrid",
+    "b": "ranged"
+   },
+   "splits": {
+    "a": "Wizard 6 / Blood Hunter 14 \u00b7 Evocation + Order of the Profane Soul \u00b7 Astral Half-Elf \u00b7 Urchin",
+    "b": "Cleric 1 / Druid 19 \u00b7 Nature Domain + Circle of the Shepherd \u00b7 Astral Elf \u00b7 Haunted One"
+   },
+   "url": "https://claude.ai/code/artifact/139c2d8a-b4ab-4304-b805-584c8e8a8bca",
+   "tagline": "Fold buys the party three or four extra bodies that cost no concentration and no turn to maintain, so Bombard can spend its own concentration on the spell that ends the fight \u2014 and brand the one enemy that has to fail its save.",
+   "shape": "A pair that is never short of bodies, never short of hit points, and one bad Wisdom save away from losing Bombard",
+   "damage": "This pair owns the crowd in every act and merely survives the boss \u2014 Fold is a passenger in priority fights, deliberately",
+   "scores": {
+    "a": {
+     "I": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      0,
+      3,
+      3,
+      4
+     ],
+     "II": [
+      4,
+      3,
+      3,
+      3,
+      3,
+      0,
+      3,
+      3,
+      4
+     ],
+     "III": [
+      4,
+      3,
+      3,
+      3,
+      4,
+      0,
+      3,
+      4,
+      4
+     ]
+    },
+    "b": {
+     "I": [
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      3
+     ],
+     "II": [
+      2,
+      3,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      3
+     ],
+     "III": [
+      2,
+      3,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4
+     ]
+    }
+   }
+  }
+ }
+}

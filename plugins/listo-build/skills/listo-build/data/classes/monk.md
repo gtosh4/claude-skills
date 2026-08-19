@@ -283,7 +283,10 @@ Elements`, and `Way of the Friar` from the DTO archetype pack.
 - **Mod:** `5e Monk Subclasses Combined` (`15907`)
 - **File pulled:** same archive, **v1.0.5.4**
 - **Mechanics:**
-  - **3 — Implements of Mercy:** proficiency in **Insight and Medicine**.
+  - **3 — Implements of Mercy:** **two skill proficiencies, chosen from a list** — the pak's
+    progression row is `SelectSkills(8bb26867-5834-4cfb-aa1a-d3e58c05e57b,2)`, not a fixed
+    Insight + Medicine grant. Spend them on gates the partner cannot roll. `(read from the pak;
+    the contents of that skill list are not enumerated here)`
   - **3 — Hands of Healing:** Action, **1 ki**, heal **Martial Arts die + WIS**. When you Flurry,
     you may replace **one** unarmed strike with this **for free**.
   - **3 — Hands of Harm:** **1 ki** on an unarmed hit for **Martial Arts die + WIS necrotic**,

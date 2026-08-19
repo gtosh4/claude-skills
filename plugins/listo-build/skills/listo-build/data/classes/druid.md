@@ -105,6 +105,11 @@ Concentration).
   every second slot level past 2** (1 extra at slot 4, 2 at slot 6, 3 at slot 8). Its proficiency
   bonus matches the summoner's at time of casting.
 - **Conjure Animals** — spell level 3, unlocked at **Druid 5** (Ranger 9, Bard Magical Secrets).
+  **Both summons carry a `StackId`** — `'ConjureAnimalsStack'` and `'SummonBeastStack'` — so
+  recasting **replaces** rather than adds. The build fields **one pack and one beast at a time**,
+  not an accumulating pile; that is the ceiling on what this circle contributes to Actions.
+  `(Read from ConjureAnimals2024_….pak: every Summon() call is
+  Summon(...,UntilLongRest,,,'ConjureAnimalsStack'|'SummonBeastStack',...).)`
   Twelve options, each with unique abilities: **pairs** of Brown Bears, Dire Wolves, Deep Rothe,
   Giant Badgers, Giant Eagles, Giant Hyenas, Giant Spiders, Panthers; or a **single** Dilophosaurus,
   Giant Boar, Polar Bear, or Sabre-Toothed Tiger. Abilities do not scale on upcast — **upcasting

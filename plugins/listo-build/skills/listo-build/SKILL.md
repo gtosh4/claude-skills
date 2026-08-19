@@ -195,6 +195,7 @@ mechanics, not just the names:
 |---|---|
 | Classes, subclasses, progression | `data/listo-10.2-classes.md`, then `data/classes/<class>.md` |
 | Races and subraces | `data/listo-10.2-races.md` |
+| Backgrounds, skills, skill gates | `data/listo-10.2-backgrounds.md` |
 | Feats and fighting styles | `data/listo-10.2-feats.md` |
 | Items, slots, attunement, economy | `data/listo-10.2-equipment.md` |
 | Any "is this toggle on?" question | `data/listo-10.2-mcm.md` — resolved from the install |
@@ -205,10 +206,100 @@ are. Fall back to `data/listo-10.2-mods.tsv` and the manifest for anything the c
 don't cover. Do not recommend a class, subclass, race or feat without confirming it's in the
 list — v9.0.3 purged a large batch of subclasses and nearly all race mods.
 
+**When a claim is load-bearing, read the pak — it is the only authority.** Mod pages, changelogs
+and even these compiled files go stale; the installed archive does not. `scripts/lspk.py` lists
+and extracts any `.pak` under the Mod Organizer install
+(`/mnt/mercury/Games/Listonomicon/mods` on this machine):
+
+```
+python3 scripts/lspk.py "<file.pak>"                  # list entries
+python3 scripts/lspk.py "<file.pak>" "<entry>"        # extract one
+```
+
+| Question | File inside the pak |
+|---|---|
+| Which level grants a feature | `Progressions/Progressions.lsx` — split on `<node id="Progression">` and read `Level`, `Name`, `PassivesAdded`, `Selectors` |
+| What a domain or subclass spell list holds | `Lists/SpellLists.lsx` |
+| Invocation tiers | `Lists/PassiveLists.lsx` — the lists are nested and ascending, so the *n*th list is the *n*th tier |
+| Whether a resource is short-rest | `ActionResourceDefinitions/*.lsx` — `ReplenishType` is `Turn`, `ShortRest` or `Rest` (= long) |
+| What a passive actually does | `Stats/Generated/Data/Passive.txt` — `Boosts`, `Conditions`, `TooltipUseCosts` |
+| What a status does, and whether it stacks | `Stats/Generated/Data/Status_BOOST.txt` — `Boosts` and **`StackId`** |
+| A spell's shape, save, cost and cooldown | `Stats/Generated/Data/Spell_*.txt` |
+
+Two traps this catches that nothing else does. **`StackId` is a cap** — a summon or a brand that
+carries one *replaces* rather than accumulates, which is the difference between an Actions 5 and
+an Actions 3. And a passive's real strength is often in its `Boosts` conditionals: Zeal's
+Priest-of-Zeal charges are `ActionResource(...)` repeated behind `Wisdom >= 14/16/18/20/…`, so a
+Wisdom 22 build has six of them and a Wisdom 14 build has two.
+
+**Base-game paks are not under the mods root**, so vanilla features — Hunter's Volley, vanilla
+Extra Attack — cannot be confirmed this way. Say so rather than implying a pak read.
+
 ### 3. Work the decisions in this order
 
-Chassis (class + subclass + **dip**) → race → ability spread → feats → equipment. Each constrains
-the next. Doing stats before feats produces wasted points, because half-feats complete odd scores.
+Chassis (class + subclass + **dip**) → race → ability spread → feats → **background** → equipment.
+Each constrains the next. Doing stats before feats produces wasted points, because half-feats
+complete odd scores. **The background is not a late afterthought but part of the level 1 skill
+pass** — it is two fixed proficiencies, so it is solved together with the class picks, not after
+them.
+
+### 3. Build the skill map explicitly — never eyeball the Skills axis
+
+**Every character has a background, and the sheets must name it.** A background is two skill
+proficiencies for free, so a pair gets four; forgetting it is the cheapest mistake available.
+
+**BG3 does not implement the tabletop rule that lets you swap a duplicated proficiency.** If the
+background grants a skill the class or race already gave you, **the pick is simply wasted**. So the
+background is chosen *after* everything else, and chosen for non-overlap.
+
+**Choose every skill in one pass, across both characters, at level 1.** Class picks, race grants,
+subclass grants, background and feat grants are all part of the same assignment problem — filling
+them in sequence ("class first, background last") wastes coverage, because the lists overlap and
+most of the sources are choices.
+
+The order to solve it in: write down what is **fixed** (race, subclass, planned feats) → **reserve
+the gates** on whichever character has the ability for them → count how many picks each character
+really has → **allocate every slot at once, narrow sources first**, leaving wildcards like Lore's
+three proficiencies for last → delete overlaps, except Perception and Sleight of Hand which are
+worth doubling.
+
+The gates: **Persuasion or Intimidation** for Hag's Hair, **Religion** for the Mirror of Loss,
+**Sleight of Hand** for the Circus pickpocket, **Perception** and **Investigation** throughout.
+Full method, the eighteen skills by ability and the worked allocation are in
+`data/listo-10.2-backgrounds.md`.
+
+**Score the axis off the gate arithmetic, not off the map's tick count.** Three things decide
+whether a proficiency is actually coverage, and all three are easy to skip:
+
+- **The ability modifier.** `d20 + ability + proficiency`. Proficiency on a **dumped** ability is
+  `+5` at level 20 — 30% against a DC 20, which is not coverage. A gate is satisfied only by
+  **Expertise**, by proficiency **on the character's primary ability**, or by proficiency plus
+  stacked boosts. **Religion is where this bites**, because it keys off Intelligence and nothing
+  in a duo runs Intelligence: a Cleric with Religion on its class list and INT 8 cannot pass the
+  Mirror of Loss.
+- **The act the check lands in.** Proficiency is `+2` at character 1–4 and `+6` at 17+, and the
+  DC band does not rise nearly as fast. **Hag's Hair is a DC 20 rolled in Act I** and is the
+  hardest check in the run relative to what is available; anything that arrives late —
+  **Reliable Talent at Rogue 11**, Expertise bought at Bard 10 — is not there for it. Score each
+  gate at the act it happens, not at level 20.
+- **The Inspiration bank.** A background's goals grant Inspiration, and a point **rerolls a
+  failed ability check**; the pool caps at 4 and is **shared across the party**. Assume **two
+  rerolls** on a critical gate — which turns a 45% roll into 83% and a 60% roll into 94%. Two
+  consequences: a **guaranteed** floor (Reliable Talent, Silver Tongue) is a convenience rather
+  than a requirement, and **the bank cannot fix a missing proficiency** — untrained against a DC
+  20 is 23% even after spending all four. So the discriminator is *whether anyone can roll the
+  check*, not how big the modifier is. **Passive Perception is the one gate the bank never
+  reaches**, because nothing is rolled.
+- **Boosts, weighed against what they cost.** Guidance is at-will `+1d4` and free on the Cleric,
+  Druid and Artificer lists — if the pair has one, take it. Otherwise it is a **tiebreaker, not a
+  requirement**: after two rerolls it is worth a fraction of a point on a planned gate. In
+  particular, **do not buy it with a Fighting Style slot** unless that slot is idle — Listo's
+  **Protection** gives disadvantage on *all* attacks against an ally within 1.5m, which in a duo
+  is worth far more than a cantrip. **Skilled Expert** is the fix on the other side — a
+  proficiency, an Expertise and +1 to an ability, for one feat.
+
+Weights are not equal either: **five skills gate permanent power or a unique item** and decide the
+score; the other thirteen are breadth and only break ties.
 
 ### 3a. Assume multiclassing by default
 
@@ -262,7 +353,7 @@ Then present **at least six candidates**, each with:
 - **Evaluation** — a verdict sentence saying when this is the right pick.
 
 Follow with a **side-by-side table** across the axes that matter for a duo: damage, control,
-healing, durability, resource cadence, skill coverage, and whether a mid-run mistake is
+healing, durability, endurance, skill coverage, and whether a mid-run mistake is
 recoverable.
 
 Then list what was **dismissed and why**, one line each, so the user can see the space was
@@ -287,6 +378,36 @@ gaps for every one of the 156 subclasses.
 
 The arithmetic in `references/listo-rules.md` is where most build advice goes wrong. In
 particular: modifier thresholds, the feat-count ceiling, and dip placement.
+
+### 4a. Plan the ladder, not the path
+
+**Respec is cheap and this pack is hard, so the planning unit is the character level.** Withers'
+fee is not touched by the 4× markup, and a rebuild re-picks class order, every subclass, every
+feat and the whole ability spread. The 20-level split is a **destination**; what the player holds
+at character 8 does not have to be a prefix of it.
+
+**So a progression table is a ladder of holdings, not a sequence of purchases.** For each
+character level, state the arrangement of *that many* levels that is strongest **at that level**,
+and mark the rungs where the arrangement stops being an extension of the previous one — those are
+respec points. Write the "why" for a rung in terms of what comes online, not what is being saved
+up for.
+
+Three checks at every rung, because all three move with the arrangement:
+
+- **Feat count.** Class-level cadence means two arrangements of the same character level hold
+  different feat counts — Cleric 6 / Fighter 3 holds three feats at character 9, Cleric 7 /
+  Fighter 2 holds two.
+- **Spell tier.** A dip taken now costs a tier now and nothing later.
+- **Subclass timing.** **A dip that only pays late should be taken late** — deferring it pulls
+  every primary-class feature forward. Check this on every build; it is the most common free win
+  and the easiest to miss.
+
+**Temporary subclasses and temporary feats are first-class answers.** A domain, patron or conclave
+that is strongest in Act 1 and weak later should be *taken* in Act 1 and traded out — say so on
+the sheet, with the rung. The same goes for a feat that patches a hole a partner closes later.
+
+Keep the respec count realistic: four to six re-cuts in a run, clustered at rungs where something
+real changes. Gold is not the cost; re-picking spells and rebuilding hotbars is.
 
 ### 5. Deliver as a character sheet
 
@@ -318,8 +439,20 @@ and picking colours by hand breaks that.
 > Both characters in a run get their own sheet. If the two builds share a primary class, they
 > will theme identically — that is correct, not a bug. Distinguish them by name in the wordmark.
 
-**When both characters are being planned together, publish one pair sheet instead** — use
-`assets/pair-template.html`. It is the same chassis with the duo-specific structure:
+**When both characters are being planned together, publish one pair sheet instead.** A pair
+sheet is **never hand-written as HTML** — write a JSON file and render it:
+
+```sh
+scripts/render_pair.py pair.json -o sheet.html
+```
+
+`assets/pair-schema.md` is the wire format and `assets/pair-example.json` a filled-in skeleton to
+copy. The renderer owns the CSS, the JS, all section scaffolding, **the whole damage-coverage
+table** and the pair radar values — a hand-written sheet re-emits ~60KB of boilerplate per pair
+and gets the arithmetic wrong. `assets/pair-template.html` is a rendering reference only; do not
+read it to author a sheet.
+
+It is the same chassis as the single-character sheet, with the duo-specific structure:
 
 - **One radar with three series** — character A, character B, and a *computed* pair value. The
   combining rule follows the axis kind: additive sums (capped at 5), threshold takes the higher,
@@ -329,12 +462,20 @@ and picking colours by hand breaks that.
   `data-who="a"` / `"b"` — A takes the structure accent, B the highlight accent.
 - **A combined "How it plays"** — A's loop, B's loop, then the shared loop. If the third pass is
   just both characters doing their own thing, the pairing is not a pairing.
-- **One progression table.** XP is shared, so the levels are shared; both characters' picks sit
-  in grouped columns against a single character-level row.
+- **One progression table, written as a ladder.** XP is shared, so the levels are shared; both
+  characters' picks sit in grouped columns against a single character-level row. Each row states
+  **what that character should be holding at that level**, not merely the level just bought — and
+  rows where the holding is not an extension of the row above are marked as **respec rungs**
+  (`tr.respec` in both templates). See §4a.
 - **Per-character equipment plus a contested table.** Every unique item is assigned to exactly
   one character, with the benefit to the winner and what the loser gives up stated in the row.
   Hag's Hair is one per *run*; the Mirror of Loss is per character.
 - **One combined quest-reward table**, with an owner chip per reward.
+- **A damage-coverage table under the radar** (`.dmg`) and a **gate audit** (`.gt`) that the
+  Skills scores are derived from. Both are in the single-character template too. See §5b for the
+  damage arithmetic and `data/listo-10.2-backgrounds.md` for the gate arithmetic. On a pair sheet
+  the coverage table is **computed from the radar scores and each body's reach** — author
+  `damage.reach`, never the numbers.
 
 Theme a pair sheet **once**, on the pair's lead class (highest class level across both).
 
@@ -346,11 +487,11 @@ character-level range each act covers. **Keep the table rows in sync with the nu
 table is the accessible view and the only thing that survives if the script doesn't run.
 
 Axis order is fixed: **single-target, aoe, durability, actions, control, sustain, skills,
-saves, cadence.**
+saves, endurance.**
 
 **"Actions" is *action* economy** — bodies, actions and reactions per round. It has nothing to do
 with gold. Listo's 4× merchant prices and 120-supply long rests are real constraints and belong
-in the gear and cadence prose, but they are **never scored on this chart**. Label the axis
+in the gear and endurance prose, but they are **never scored on this chart**. Label the axis
 `Actions` on the chart and **Action economy** in the table; never the bare word "Economy", which
 in a modlist this expensive reads as money.
 
@@ -408,7 +549,42 @@ anything to the party:
 | **Sustain** | threshold | it recovers **the other character**: heals aimed outward, raising a downed partner, Greater Restoration and condition removal, temp HP granted to someone else. Not just heal *spells* — but it must be delegatable, or it is Durability |
 | **Skills** | **complementary** | it covers out-of-combat checks: expertise, proficiencies, face skills. **Not threshold** — see below, because two characters with different proficiencies cover more of the campaign than either does alone |
 | **Saves** | personal | it resists *hard CC*. Distinct from Durability — being Held is a different death than being burst down. Weight Wisdom highest, then Con, then Dex |
-| **Cadence** | personal | its resources refresh on **short** rests. Long-rest-only classes score low, because long rests cost 120+ supplies scaling with camp population |
+| **Endurance** | personal | **how many fights it can take before the party must long rest.** Not "short rest good, long rest bad" — a pool large enough to last the day is just as good as one that refreshes. See the arithmetic below |
+
+**Scoring Endurance — count fights, not rest types.** The axis used to be called Cadence and
+asked whether a resource refreshed on a short rest. That is a proxy, and it is wrong in both
+directions, because **Listo allows only two short rests per long rest**
+(`references/listo-rules.md`). A short-rest pool is therefore worth **three times its size** per
+long-rest cycle — not infinity — and a large long-rest pool can outlast a small short-rest one.
+
+Work out the character's **budget per long-rest cycle**, then divide by what a hard Combat
+Extender fight actually costs it:
+
+| Character | Budget per cycle |
+|---|---|
+| Rogue, Champion or Battle Master Fighter, Blood Hunter | **unbounded** — the damage is at-will; the pool is a bonus |
+| Monk 14 | 14 ki × 3 = **42**, but a hard fight costs 8–10 |
+| Cleric 18 / Bard 15 (full caster) | ≈**21** / ≈**18** slots, 4–5 per hard fight |
+| **Paladin 17** (half caster) | ≈**15** slots — *more than twice a Warlock 7 dip* |
+| Warlock 3 / 5 / 7 | 2 pact slots × 3 = **6** |
+| Warlock 11+ | 3 pact slots × 3 = **9** |
+
+| Score | Fights per long rest |
+|---|---|
+| **5** | **8+, or output is essentially resource-free** — the character fights all day and only its partner forces the rest |
+| **4** | 6–7 |
+| **3** | 4–5 — a full caster's meaningful slots |
+| **2** | 2–3 |
+| **1** | 1 |
+
+**Count hit point recovery too, not only burst resources.** What usually forces a 120-supply long
+rest is missing hit points, not missing slots — so out-of-combat healing on a short-rest clock
+(Way of Mercy's ki healing, Song of Rest, Durable) raises this axis, and a healing pool that only
+refreshes on a long rest (Celestial's Healing Light) does not.
+
+**It stays a personal axis.** Slots cannot be lent, so the pair takes the lower of the two. The
+`Resource cadence` column in `data/listo-10.2-classes.md` is the *input* to this — it names the
+clock; the axis scores the consequence.
 
 - **Additive** stacks across the party — more is always more.
 - **Threshold** saturates at the party's first source. The campaign needs one healer; a second is
@@ -494,6 +670,83 @@ defect: you cannot over-invest in Skills the way you can in damage.
 **The ceiling still exists at 5.** When a build's real advantage is headroom past what any
 encounter demands, say so in prose rather than inflating a number.
 
+### 5b. Score the damage coverage — the radar cannot
+
+**The nine-axis chart is damage-blind by accident, and the fix is a second number rather than a
+tenth axis.** Single-target and AoE cap at 5 and combine additively, so on a pair sheet they
+saturate almost immediately: two characters at 3 and 3 read identically to 5 and 0. Across a
+135-pairing field the correlation between the nine-axis total and delivered damage is **0.00** —
+the seven non-damage axes correlate *negatively* with damage (−0.46) and cancel the damage block's
++0.81 exactly. Rank on the total and you are ranking on completeness alone.
+
+So compute a **damage coverage** figure alongside the radar and report both. Never sum all nine
+axes and call the result a ranking.
+
+**The split rule: 5 + 0 is worse than 3 + 3.** A character — or a pair — that wins one fight type
+and is a passenger in the other is worth less than one that is useful in both, because the
+passenger's turns are lost every time the wrong fight happens. Splitting single-target against
+area, or one damage type against another, is legitimate **only when neither half has a dead
+fight**; a fallback that is still useful is the whole condition.
+
+**Reach is a delivery discount, not an axis.** Mobility for melee single-target, range for ranged
+single-target, area for AoE — the first two multiply what the body can actually reach, and the
+third is already priced into the AoE score itself, because a 9m cone and a 3m burst are not the
+same axis value. So the discount applies to the **single-target term only**:
+
+| Body | Crowd | Priority |
+|---|---|---|
+| **Ranged** | 1.00 | 1.00 |
+| **Hybrid** — melee with a real ranged option | 0.95 | 0.95 |
+| **Mobile melee** — Step of the Wind, Misty Step on a short clock, a teleport rider | 0.95 | 1.00 |
+| **Static melee** — heavy armour, no repeatable mobility | 0.85 | 0.90 |
+
+Adding it to the whole utilisation figure instead of the single-target term penalises Spirit
+Guardians for the armour the Cleric is wearing, which is wrong twice.
+
+**The arithmetic.** Per character, per act:
+
+```
+crowd     = AoE + 0.5 × ST × reach_crowd
+priority  = ST × reach_priority + 0.25 × AoE
+```
+
+Each fight type gets partial credit from the other axis because a boss fight usually has adds and
+a crowd fight usually has a leader. Sum the two characters for a pair figure — damage *is*
+additive in a way a capped axis cell cannot express — then weight by the act's fight mix:
+
+| Act | Crowd | Priority | Why |
+|---|---|---|---|
+| **I** | 70% | 30% | goblin camps, the grove, the gnolls |
+| **II** | 60% | 40% | shadow-cursed packs, but named bosses start mattering |
+| **III** | 50% | 50% | Steel Watch, the brain, Ansur, Raphael |
+
+**The idle-body flag.** A single character under **3.0** in a fight type worth 40% or more of that
+act has nothing useful to do in those encounters. On a **carry** that is a fault; on a **support**
+it is expected, and the prose should name the axis it is trading that damage for. The threshold is
+calibrated deliberately: a 5/0 character scores 2.5 crowd and flags, while 3/3, 4/2 and 5/1 all
+pass — which is the iso-line the split rule implies.
+
+**The melee lock is a pair-level penalty.** If neither body is ranged or hybrid, multiply both
+crowd figures by a further **0.9**. A pair that has to walk to everything fights crowds on the
+crowd's terms, and no cell on the radar says so.
+
+**Name which kind of AoE it is, because two builds scoring 4 can mean opposite things.**
+
+- **Mode-switch AoE** retargets the engine the build already runs — Ranger's Volley, Breath of the
+  Dragon, the Eldritch cone. It costs nothing in the fights that do not want it, so it is a pure
+  addition.
+- **Payload AoE** is a separate pool — Gravity Breath, a daily Fireball, a scroll. It is dead in
+  the wrong fight and spent in the right one, and it decays against Combat Extender the way any
+  flat resource does.
+
+A carry whose only area answer is payload AoE still has a crowd problem; say so rather than
+letting the 4 imply otherwise.
+
+**Reporting.** On a sheet, the damage table sits directly under the profile radar (`.dmg` in both
+templates). When comparing builds against each other, normalise and weight the two numbers evenly:
+coverage as the **seven non-damage axes** — never all nine, or damage is counted twice — and the
+weighted damage figure alongside it.
+
 ## Pitfalls that have bitten before
 
 - **Proposing single-class builds by default.** A 3-level dip is free in feat terms. If the answer
@@ -527,6 +780,7 @@ encounter demands, say so in prose rather than inflating a number.
 | `data/listo-10.2-classes.md` | Index of all 17 classes and 156 subclasses; saves, caster tier, cadence |
 | `data/classes/<class>.md` | One file per class — every subclass's mechanics, dip value, gaps |
 | `data/listo-10.2-races.md` | Every race and subrace, with the traits each grants |
+| `data/listo-10.2-backgrounds.md` | The twelve backgrounds, the eighteen skills, the campaign's skill gates, and the skill-map method |
 | `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
 | `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
 | `data/listo-10.2-mcm.md` | **Resolved MCM and SE_CONFIG values** read out of an installed copy — Expansion toggles, feat cadence, CX scaling, attunement caps, what ships disabled |
@@ -535,7 +789,11 @@ encounter demands, say so in prose rather than inflating a number.
 | `data/docs/*.md` | The four Listo doc pages as raw markdown |
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
 | `assets/sheet-template.html` | Character-sheet artifact template, themed |
-| `assets/pair-template.html` | Two-character sheet — overlaid radar, shared progression, contested-item table |
+| `assets/pair-schema.md` | **Pair sheet wire format** — author this, not HTML |
+| `assets/pair-example.json` | Filled-in pair-sheet skeleton to copy |
+| `scripts/render_pair.py` | Renders a pair JSON into the finished sheet |
+| `assets/pair.css`, `assets/pair.js` | Pair-sheet chassis, inlined by the renderer |
+| `assets/pair-template.html` | The same sheet as one worked HTML example — rendering reference, not an authoring path |
 
 The compiled `.md` data files are the **first stop** for "does X exist and what does it do".
 They were built from the mods index, the manifest's file variants, and the mod pages themselves,
