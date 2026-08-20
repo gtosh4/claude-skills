@@ -1,7 +1,7 @@
 {
   "title": "Listo Pairing Ledger",
   "eyebrow": "Listonomicon 10.2 · two-player Lone Wolf",
-  "lede": "A four-chassis template showing every field the format supports. <b>The numbers here are illustrative, not a scored roster</b> — copy this file, delete these chassis and author your own against <code>listo-build/references/axis-rubrics.md</code>. The pre-rebuild 26-chassis roster is archived beside this file as <code>ledger-v1-roster.json</code>; it predates the ten-axis model and will not validate.",
+  "lede": "A four-chassis template showing every field the format supports. <b>The numbers here are illustrative, not a scored roster</b> — copy this file, delete these chassis and author your own against <code>listo-build/references/axis-rubrics.md</code>.",
   "facts": [
     "4 chassis",
     "level cap 20",

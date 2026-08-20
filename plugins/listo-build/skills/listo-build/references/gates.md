@@ -192,6 +192,24 @@ proficiency; **there is a no-check route** — sacrificing knowledge of the *Nec
 gives a guaranteed +2, at the cost of Forbidden Knowledge from Act I; and the buff **raises a
 score to 24**, not merely above 20.
 
+**The Mirror is per character, and it is not scored.** bg3.wiki: *"Each character, including
+hirelings, may obtain bonuses from the mirror independently"* — one attempt each, and the +2 lands
+on whoever rolled, so a single strong Religion body clears it for itself alone. That would make it
+the only personal check in the run. It is nonetheless **excluded from the Skills axis**, because
+it is trivially bought: the same source documents respeccing at Withers into **Rogue 11 / Knowledge
+Cleric 1** for Religion Expertise and Guidance, passing, then respeccing back *"retaining the
+Mirror of Loss stat enhancement"*. Withers is recruitable from the Dank Crypt and charges 100 gold.
+A check any chassis can rent its way past measures the wallet, not the chassis.
+
+**The same test disqualifies less than it first appears.** Hag's Hair is not rentable — the
+dialogue fires on Ethel's surrender at the end of her fight, so a rented build has to win that
+fight. What weakens the named gates instead is that **each has a no-check route to the same
+ability point**: taking Ethel's deal yields the hair and costs Mayrina, and Araj can be killed and
+looted. Passing buys the secondary prize — Mayrina alive, Araj alive for *Unstable Blood* — not
+the +1 or +2. The durable half of the axis is the untelegraphed one: **traps and hidden caches
+(Perception 15–25), secret doors and switches (Investigation 15–20), and routine town dialogue at
+the act's own DC band**, none of which can be prepared for and none of which announce themselves.
+
 **Anointed in Splendour is per character and Sweet Stone Features is not.** Both bodies can be
 anointed; only one can be the statue. +2 to all saves for gold is the cheapest Saves rung in the
 run and should be assumed for both bodies unless the run is broke.

@@ -3,24 +3,56 @@
   "bases": {
     "cleric/Life": {
       "verdict": "candidate",
-      "scores": [2, 2, 3, 2, 2, 2, 5, 1, null, 2],
-      "prof": ["wis", "cha"],
+      "scores": [
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        5,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "wis",
+        "cha"
+      ],
       "armour": "heavy",
       "shield": true,
       "primary": "wis",
       "concentration": true,
-      "why": "The rescue ceiling of the list; nothing else on its table clears competent."
+      "why": "The rescue ceiling of the list; nothing else on its table clears competent.",
+      "boosters": []
     },
     "fighter/Battle Master": {
       "verdict": "candidate",
-      "scores": [4, 1, 4, 4, 3, 0, 0, 1, null, 5],
-      "prof": ["str", "con"],
+      "scores": [
+        4,
+        1,
+        4,
+        4,
+        3,
+        0,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "str",
+        "con"
+      ],
       "armour": "heavy",
       "shield": true,
       "primary": "str",
       "concentration": false,
       "why": "Three attacks at 11 with superiority dice on the short-rest clock; no outward answer at all.",
-      "uncertain": ["Whether Listo's manoeuvre list matches the 2024 rules is not stated in the class file."]
+      "uncertain": [
+        "Whether Listo's manoeuvre list matches the 2024 rules is not stated in the class file."
+      ],
+      "boosters": []
     },
     "cleric/Dream": {
       "verdict": "dupe",

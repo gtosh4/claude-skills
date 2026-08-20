@@ -27,6 +27,7 @@ Every string is emitted as HTML, so inline `<b>`, `<em>` and `<code>` work.
 | Every number in a variation line | from the pairing itself — you write only the clause after it |
 | Roster order | by the best score that chassis reaches anywhere |
 | Order within a pairing | higher delivered damage first, then higher total axis value, then the id alphabetically — see `scoring-model.md` §10 |
+| The pairing's heading | `<lead> & <partner>`, from the selection — an authored `name` that disagrees is a **hard error**, not an override |
 
 **This list is the point of the format.** Hand-written variation figures were the
 single largest source of stale numbers in the previous ledger: a re-score moved
@@ -68,7 +69,7 @@ because they do not exist until render time.
 
   "entries": {                              // keyed by CHASSIS id, not by pairing
     "Bombard": {
-      "name":    "Bombard & Fervor",
+      "name":    "Bombard & Fervor",   // must match the computed pairing exactly, or the render fails
       "tag":     "caster blood hunter + weapon-cleric support",
       "verdict": "Reads as. …",
       "cost":    "Costs. …",
@@ -97,6 +98,88 @@ Control is **two axes**, split crowd-versus-boss exactly as damage already is �
 `axis-rubrics.md` §5 and §6, and `scoring-model.md` §3. It is the only axis that gained a split;
 §7 there records why Rescue, Saves and Durability did not.
 
+## Everything addressable has a stable id
+
+| target | id | linked from |
+|---|---|---|
+| section | `method` `field` `entries` `roster` `caveats` | its own `<h2>` |
+| entry | `e-<chassis, lowercased>` | its `<h3>`, its rank number, and the entry chip in the field table |
+| roster card | `r-<chassis, lowercased>` | its `<h3>` and the members line on every entry |
+
+**Section ids are authored, never slugged from the heading text.** The method and caveats headings
+are configurable in the ledger data, so an id derived from prose would change the moment somebody
+reworded a title and would silently break every link anyone had saved.
+
+Headings are themselves the anchor rather than carrying a separate marker, so the link target is
+the thing being read. The `#` sigil appears on hover only.
+
+## The field table shows tempo and rest per act
+
+Both halves of the score move between acts, so both are broken out. Rest was originally a single
+averaged column, which was an inconsistency rather than a decision: measured across the field, a
+pairing's rest varies **7.2pp** between its best and worst act at the median against tempo's
+**8.2pp**, and 70% of pairings move at least 5pp. The averaged column hid that — most visibly on
+Skills, which can swing a full rung between Act I and Act III.
+
+Column headers carry `title=` help generated from `KEYS` / `LABELS` / `KINDS` / `KIND_MAX`, so a
+tooltip cannot drift from the arithmetic it describes. Do not hand-write axis tooltips.
+
+## `vars` always swaps the partner, never the headliner
+
+An entry exists to be about one chassis — the one it headlines — so a variant keeps that body and
+replaces the **partner**. `{"partner": "Coda"}` on the `Dawnblind & Silvercrit` entry means
+*Dawnblind beside Coda*, with Silvercrit leaving.
+
+The renderer used to print this as a bare `+ Coda`, which left the reader to guess which half of
+the heading was being swapped out. It now names the body going out and the body coming in:
+**"Silvercrit &rarr; Coda"**. The retained chassis is the heading's other half and is not
+repeated. Nothing changes in the authored data — only the rendering — but two authoring
+mistakes are now hard errors rather than confusing output:
+
+| authored | why it fails |
+|---|---|
+| `{"partner": "<the current partner>"}` | a variant that swaps in the body already there says nothing |
+| `{"partner": "<the headlining chassis>"}` | the headliner never leaves; pairing it with itself is not a pairing |
+
+A free-form alternative uses `{"text": "<b>Heading</b>: …"}` instead and is rendered verbatim.
+
+## The skills axis is authored as modifiers, not a number
+
+Index 7 is **derived** too, from `skills` — a modifier map per act. Same reason as saves: the
+rubric is written in terms of which checks a pair can actually clear, and a bare 0–5 cannot be
+re-checked from outside.
+
+```jsonc
+"skills": {
+  "II": {"Perception": 9, "Investigation": -1, "Persuasion": 4, "Deception": 8}
+}
+```
+
+Each value is the **finished number the body rolls** — ability modifier + proficiency bonus +
+Expertise + reliable permanent bonuses. **Proficiency bonus is pinned at +3 / +4 / +5 by act**;
+do not derive it from character level.
+
+**Three skills are mandatory in every act, even at a negative modifier:**
+
+    Perception      traps and hidden caches, DC 15–25
+    Investigation   secret doors and switches, DC 15–20
+    Persuasion      routine town dialogue, DC 10–15 / 15–18 / 18–22 by act
+
+These carry the axis because they are the checks that **cannot be prepared for**. Everything
+telegraphed can be bought: Withers charges 100 gold, and bg3.wiki documents respeccing into
+Rogue 11 / Knowledge Cleric 1 to pass the Mirror of Loss at DC 25, then respeccing back
+*"retaining the Mirror of Loss stat enhancement"*. A check any chassis can rent its way past
+measures the wallet. **An absent value for one of these three is an evidence gap, not "untrained",
+and the renderer raises rather than reading it as hopeless.**
+
+The named gates — Hag's Hair on Deception or Intimidation, Free Us, the Araj pickpocket on Sleight
+of Hand — may be omitted when the body genuinely has nothing on them, because there absence *is*
+the answer. They are also the weaker half: each has a no-check route to the same ability point, so
+passing buys the secondary prize rather than the +1 or +2. **Religion is no longer read at all.**
+
+Rerolls are credited on the named gates only. Traps roll automatically with no prompt, so there is
+nothing to spend Inspiration on, and four charges do not stretch across a run of town dialogue.
+
 ## The saves axis is authored as a set, not a number
 
 Index 8 is **derived** and must be authored as `null`. Every other axis is a judgement against
@@ -121,7 +204,9 @@ and **Diamond Soul** (Monk 14, adds all six).
 
 `boosters` — numeric or advantage effects that apply across saves without granting proficiency.
 Three tiers: **blanket** buys the rung the table trades a proficiency for; **partial** covers only
-part of the save set or costs a resource, and **two partials count as one blanket**; the third tier
+part of the save set or costs a resource, and **two partials count as one blanket — but only if
+together they cover at least two of Wisdom, Constitution and Dexterity**, since those are the
+saves a duo actually loses to; the third tier
 is documented but buys no rung on its own.
 
 Advantage against *spells and magical effects* counts as blanket — in this list almost every save
@@ -145,6 +230,13 @@ that decides a fight comes off one, so the condition is nearly always met.
 | `fanatical-focus` | Zealot — one reroll on a failed save per Rage | self | partial |
 | `gift-of-will` | Trickster — +Cha and half level to the **partner's** Wisdom saves | **pair** | partial |
 | `flash-of-genius` | Artificer 7 — +Int to an ally's save, costs a reaction | **pair** | partial |
+| `indomitable` | Fighter 9 — reroll a failed save, 1–3 per long rest | self | partial |
+| `supernatural-defense` | Monster Slayer 7 — +1d6 on every save your prey forces | self | partial |
+| `cosmic-omen` | Star Druid 6 — ±1d6 on a save, recharging on a short rest in Listo | self | partial |
+| `legendary-resistance` | Paragon 15 — automatically succeed a save | self | partial |
+| `soul-of-artifice` | Artificer 20 — +1 to every save while holding an infused item | self | partial |
+| `danger-sense` | Barbarian 2 — advantage on Dexterity saves, unconditional | self | partial |
+| `bladesong` | Bladesinging 2 — +2/+3/+4 to Constitution saves | self | partial |
 | `war-caster` | advantage on concentration saves only | self | no rung |
 
 `war-caster` stays a legal id because it is worth recording; its value is already priced by
@@ -222,6 +314,15 @@ cannot score something correctly must not produce a number for it.
 - an unknown `boosters` id
 - an entry whose chassis survives the `entry_limit` cut but has no prose
 - a variation naming a partner the chassis has no pairing with
+- **an entry whose `name` disagrees with the pairing selection actually made**
+
+That last one is newer than the others and was added after it bit. The heading used to print the
+authored `name` while the members line beside it printed the *computed* pair, so the two could
+disagree silently. When a selection rule changed — capping how many entries one chassis may
+partner — eleven entries kept a heading and a body of prose written about the partner they no
+longer had, sitting above numbers computed from a different pairing. Prose about the wrong
+pairing is worse than no prose, so the heading is derived and a contradicting `name` stops the
+render.
 
 The last two are the ones that bite. A chassis that rises into the cut needs prose
 before the ledger will build, which is what stops the entries and the field

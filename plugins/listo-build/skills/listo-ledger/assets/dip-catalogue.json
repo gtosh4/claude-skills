@@ -1,6 +1,5 @@
 {
   "provenance": "What each class contributes to a split, as parts. Transcribed from each class file's `## Dip value` section plus its subclass table. WORKED EXAMPLE ONLY — Rogue and Fighter are populated so the shape can be checked; the other fifteen classes are not yet written. Composition feeds the split *filter*, never a published number: see SKILL.md.",
-
   "schema": {
     "id": "`<class>/<levels>` for the class-generic part, `<class>/<levels>/<subclass>` for a subclass-specific one. A build takes the generic part AND at most one subclass part at the same level.",
     "as_first": "Applies only when this class is the character's LEVEL 1 class. Exactly one class in a split is first. Saving throws and the good armour come from here and nowhere else.",
@@ -11,7 +10,6 @@
     "conflicts": "Tags this part competes for. Two parts sharing a tag do not stack — the larger delta applies and the smaller is dropped. `bonus-action-attack` is capped by Lone Wolf's two Bonus Actions; `extra-attack` never stacks.",
     "exit": "What the class gives up by stopping at N levels instead of 20. Keyed by the level stopped at. Applied to the PRIMARY class only, since a dip never had those levels to lose."
   },
-
   "conflict_tags": {
     "extra-attack": "Extra Attack does not stack from two sources.",
     "bonus-action-attack": "Lone Wolf grants two Bonus Actions; a third source has nowhere to go.",
@@ -19,113 +17,5598 @@
     "heavy-armour": "Proficiency is binary.",
     "sneak-attack": "One Sneak Attack per turn regardless of source."
   },
-
   "parts": {
     "rogue/1": {
-      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
-                              "skills": 4, "expertise": 2},
-                   "deltas": {"skl": 2}},
-      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
-                              "skills": 1, "expertise": 0},
-                   "deltas": {}},
-      "requires": null, "conflicts": ["expertise"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "int"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 4,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {}
+      },
+      "requires": null,
+      "conflicts": [
+        "expertise"
+      ],
       "note": "The Expertise argument is about Rogue 1, not the dip. Multiclassing *into* Rogue grants light armour and one skill, no Expertise."
     },
     "rogue/2": {
-      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
-                              "skills": 4, "expertise": 2},
-                   "deltas": {"skl": 2, "act": 1}},
-      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
-                              "skills": 1, "expertise": 0},
-                   "deltas": {"act": 1}},
-      "requires": null, "conflicts": [],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "int"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 4,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
       "note": "Cunning Action: Dash / Disengage / Hide as a Bonus Action."
     },
     "rogue/3": {
-      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
-                              "skills": 4, "expertise": 2},
-                   "deltas": {"skl": 2, "act": 1, "st": 1}},
-      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
-                              "skills": 1, "expertise": 0},
-                   "deltas": {"act": 1, "st": 1}},
-      "requires": null, "conflicts": ["sneak-attack"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "int"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 4,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2,
+          "act": 1,
+          "st": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "act": 1,
+          "st": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "sneak-attack"
+      ],
       "note": "The standard Rogue dip: Cunning Action plus a subclass. Sneak Attack 2d6."
     },
     "rogue/3/Thief": {
-      "deltas": {"act": 1}, "requires": null, "conflicts": ["bonus-action-attack"],
+      "deltas": {
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "bonus-action-attack"
+      ],
       "note": "A second Bonus Action, on top of Lone Wolf's extra one. The strongest three-level dip in the list."
     },
     "rogue/3/Assassin": {
-      "deltas": {"st": 1}, "requires": null, "conflicts": [],
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
       "note": "Action and Bonus Action restored at the start of combat; guaranteed crits on the surprised."
     },
     "rogue/3/Swashbuckler": {
-      "deltas": {"st": 1}, "requires": null, "conflicts": ["sneak-attack"],
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "sneak-attack"
+      ],
       "note": "Sneak Attack with no advantage and no adjacent ally required."
     },
     "rogue/3/Inquisitive": {
-      "deltas": {"st": 1, "skl": 1}, "requires": null, "conflicts": ["sneak-attack"],
+      "deltas": {
+        "st": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "sneak-attack"
+      ],
       "note": "Insightful Fighting as a repeatable Sneak Attack enabler."
     },
     "rogue/5": {
-      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
-                              "skills": 4, "expertise": 2},
-                   "deltas": {"skl": 2, "act": 1, "st": 1, "dur": 1, "ctrl_s": 1}},
-      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
-                              "skills": 1, "expertise": 0},
-                   "deltas": {"act": 1, "st": 1, "dur": 1, "ctrl_s": 1}},
-      "requires": null, "conflicts": ["sneak-attack"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "int"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 4,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2,
+          "act": 1,
+          "st": 1,
+          "dur": 1,
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "act": 1,
+          "st": 1,
+          "dur": 1,
+          "ctrl_s": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "sneak-attack"
+      ],
       "note": "Extends the dip to Uncanny Dodge and Cunning Strike."
     },
     "rogue/9": {
-      "as_first": {"grants": {"prof": ["dex", "int"], "armour": "light", "shield": false,
-                              "skills": 4, "expertise": 4},
-                   "deltas": {"skl": 3, "act": 1, "st": 2, "dur": 2, "ctrl_s": 1, "end": 1}},
-      "as_dip":   {"grants": {"prof": [], "armour": "light", "shield": false,
-                              "skills": 1, "expertise": 2},
-                   "deltas": {"act": 1, "st": 2, "dur": 2, "ctrl_s": 1, "end": 1}},
-      "requires": null, "conflicts": ["sneak-attack"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "int"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 4,
+          "expertise": 4
+        },
+        "deltas": {
+          "skl": 3,
+          "act": 1,
+          "st": 2,
+          "dur": 2,
+          "ctrl_s": 1,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 2
+        },
+        "deltas": {
+          "act": 1,
+          "st": 2,
+          "dur": 2,
+          "ctrl_s": 1,
+          "end": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "sneak-attack"
+      ],
       "note": "Sneak Attack 5d6, Evasion at 7, second Expertise pair at 6, subclass feature at 9. At-will damage, so endurance rises."
     },
-
     "fighter/1": {
-      "as_first": {"grants": {"prof": ["str", "con"], "armour": "heavy", "shield": true,
-                              "skills": 2, "expertise": 0},
-                   "deltas": {"dur": 2, "end": 1}},
-      "as_dip":   {"grants": {"prof": [], "armour": "heavy", "shield": true,
-                              "skills": 0, "expertise": 0},
-                   "deltas": {"dur": 2, "end": 1}},
-      "requires": null, "conflicts": ["heavy-armour"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
       "note": "Heavy armour and shields even as a dip; Second Wind. Str+Con saves only when first."
     },
     "fighter/2": {
-      "as_first": {"grants": {"prof": ["str", "con"], "armour": "heavy", "shield": true,
-                              "skills": 2, "expertise": 0},
-                   "deltas": {"dur": 2, "end": 1, "act": 2}},
-      "as_dip":   {"grants": {"prof": [], "armour": "heavy", "shield": true,
-                              "skills": 0, "expertise": 0},
-                   "deltas": {"dur": 2, "end": 1, "act": 2}},
-      "requires": null, "conflicts": ["heavy-armour"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "act": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "act": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
       "note": "Action Surge. The single best two levels for action economy in the list."
     },
     "fighter/11": {
-      "as_first": {"grants": {"prof": ["str", "con"], "armour": "heavy", "shield": true,
-                              "skills": 2, "expertise": 0},
-                   "deltas": {"dur": 2, "end": 2, "act": 2, "st": 3}},
-      "as_dip":   {"grants": {"prof": [], "armour": "heavy", "shield": true,
-                              "skills": 0, "expertise": 0},
-                   "deltas": {"dur": 2, "end": 2, "act": 2, "st": 3}},
-      "requires": null, "conflicts": ["heavy-armour", "extra-attack"],
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 2,
+          "act": 2,
+          "st": 3
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 2,
+          "act": 2,
+          "st": 3
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "extra-attack"
+      ],
       "note": "Improved Extra Attack — three attacks per Action, six per round under Lone Wolf — plus the off-cadence feat at 11."
     },
     "fighter/11/Battle Master": {
-      "deltas": {"ctrl_s": 1, "st": 1}, "requires": null, "conflicts": [],
+      "deltas": {
+        "ctrl_s": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
       "note": "Superiority dice on the short-rest clock; manoeuvres carry riders and control."
     },
-
+    "cleric/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 1,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 1,
+          "end": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Wis+Cha saves only when first; light/medium/shields, Wis casting and the domain's whole level-1 kit from any position, but Goon's fix means a Cleric multiclass grants NO skills."
+    },
+    "cleric/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 2,
+          "end": 1,
+          "ctrl_a": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 2,
+          "end": 1,
+          "ctrl_a": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Channel Divinity (1 charge, short rest) plus Turn Undead — the level to stop at when the domain's Channel Divinity is the reason for the dip."
+    },
+    "cleric/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 2,
+          "end": 2,
+          "ctrl_a": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 2,
+          "end": 2,
+          "ctrl_a": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Feat-neutral under Listo's cadence, but buys only level-2 slots and the level-3 domain spell pair."
+    },
+    "cleric/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 3,
+          "end": 2,
+          "ctrl_a": 2,
+          "aoe": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 3,
+          "end": 2,
+          "ctrl_a": 2,
+          "aoe": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Destroy Undead and level-3 spells — the first level the Cleric's own spell list carries area control rather than riding the domain."
+    },
+    "cleric/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 4,
+          "end": 2,
+          "ctrl_a": 2,
+          "aoe": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 4,
+          "end": 2,
+          "ctrl_a": 2,
+          "aoe": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Second Channel Divinity charge on the short-rest clock plus the domain's tier-2 feature; the last level that reads as a dip rather than a commitment."
+    },
+    "cleric/1/Tempest": {
+      "deltas": {
+        "dur": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour, martial weapons and Wrath of the Storm — the classic one-level dip for a Dex-light caster (the dur rung stands in for the domain's heavy-armour grant, which the class-generic part cannot carry).",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Life": {
+      "deltas": {
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour plus Disciple of Life, which boosts every healing spell the character casts from any source.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/War": {
+      "deltas": {
+        "dur": 1,
+        "st": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "bonus-action-attack"
+      ],
+      "note": "Heavy armour, martial weapons and War Priest's bonus-action attack, 3 per long rest.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Zeal": {
+      "deltas": {
+        "dur": 1,
+        "st": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "bonus-action-attack"
+      ],
+      "note": "Strictly a wider offer than War 1 for a dip: same heavy armour and martial weapons, but the bonus-action attack has Wis-modifier uses and needs no level-6 Extra Attack to pay off.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Order": {
+      "deltas": {
+        "dur": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour, and Voice of Authority turns every buff or heal on your partner into a free weapon attack from them.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Peace": {
+      "deltas": {
+        "st": 1,
+        "skl": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "No armour upgrade, but Emboldening Bond is a permanent d4 on both characters' attacks, checks and saves in a two-body party."
+    },
+    "cleric/1/Forge": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour and a long-rest +1 AC or +1 weapon blessing; the real payoff (+1 AC in heavy, then physical resistance) is six and seventeen levels deep.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Inquisition": {
+      "deltas": {
+        "dur": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour, martial weapons and Witch Hunter's Strike — +1d8 force, doubled with temp HP against a concentrating caster.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Twilight": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour, martial weapons, 90m darkvision and a +3 initiative touch; the domain's real offer sits at level 2.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Grave": {
+      "deltas": {
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Circle of Mortality maximises healing on a downed character and gives free bonus-action Spare the Dying — a cheap answer to the duo's drop-and-lose failure mode."
+    },
+    "cleric/1/Arcana": {
+      "deltas": {
+        "st": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Two wizard cantrips that count as Cleric cantrips plus Arcana proficiency; Counterspell only arrives with the level-5 domain spells."
+    },
+    "cleric/1/Nature": {
+      "deltas": {
+        "dur": 1,
+        "st": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "The only domain with built-in Shillelagh access, so a Wisdom melee build pays no feat tax — heavy armour and a nature skill on top.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Death": {
+      "deltas": {
+        "st": 1,
+        "aoe": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Martial weapons and Reaper, which makes a single-target cantrip hit two creatures; no heavy armour."
+    },
+    "cleric/1/Strength": {
+      "deltas": {
+        "dur": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour, a druid cantrip and a physical skill, but no martial weapons; Haste on the domain list needs Cleric 5.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "cleric/1/Knowledge": {
+      "deltas": {
+        "skl": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "Double proficiency bonus in two of Arcana/History/Nature/Religion — Expertise in all but name, and the only thing the domain sells at one level."
+    },
+    "cleric/1/Light": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Warding Flare imposes disadvantage on an attack for a reaction, and Lone Wolf's spare reaction means it costs nothing already spoken for."
+    },
+    "cleric/2/Twilight": {
+      "deltas": {
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Twilight Sanctuary is a per-round temp-HP tap on both characters plus a charm/fright cleanse, for one short-rest Channel Divinity charge."
+    },
+    "cleric/2/Inquisition": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Spell Shield hands a creature temp HP with spell resistance and advantage on spell saves while they hold — in a duo that covers half the party."
+    },
+    "cleric/2/Grave": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Path to the Grave gives the target vulnerability to all damage on the next hit, timed onto your partner's biggest swing."
+    },
+    "cleric/2/Tempest": {
+      "deltas": {
+        "st": 1,
+        "aoe": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Destructive Wrath maximises thunder and lightning damage, and Goon moved the trigger to when damage lands so the charge is never wasted."
+    },
+    "cleric/2/Zeal": {
+      "deltas": {
+        "st": 1,
+        "aoe": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Consuming Fervor maximises fire or thunder — with Fireball on the domain list from level 5 this is the biggest single Channel Divinity payout."
+    },
+    "cleric/2/Peace": {
+      "deltas": {
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Balm of Peace heals 2d6 + Wis to everything you walk past without provoking."
+    },
+    "cleric/2/Eldritch": {
+      "deltas": {
+        "ctrl_a": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Prophecy of Doom is the widest crowd control in the domain list from one charge, but the effect rolled is random."
+    },
+    "cleric/2/Strength": {
+      "deltas": {
+        "st": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Feat of Strength adds +10 to a Strength roll and Avatar of Battle I is a 3-turn +1d4 damage transform."
+    },
+    "cleric/6/War": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "CCC gives War Domain true Extra Attack at 6, and War Priest stacks on top of it."
+    },
+    "cleric/6/Grave": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Sentinel at Death's Door turns a critical hit on either character into a normal hit, Wis-modifier times per long rest, for a reaction Lone Wolf leaves spare."
+    },
+    "cleric/6/Forge": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Soul of the Forge adds fire resistance and +1 AC in heavy armour, which is the level Forge starts paying for itself."
+    },
+    "cleric/6/Order": {
+      "deltas": {
+        "act": 1,
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Embodiment of the Law casts an enchantment spell as a bonus action, Wis-modifier times per long rest."
+    },
+    "ranger/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 4,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "skl": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The cheapest Str+Dex save pair in the game and only as the level-1 class; martial weapons, medium armour, shields, Favored Foe and a Favoured Enemy pick (which can instead be heavy armour via Ranger Knight or a short-rest Find Familiar) survive a late dip, but the skill grant drops from 3 to 1."
+    },
+    "ranger/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 4,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "skl": 1,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "skl": 1,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Archery (+2 to ranged attacks) or another Fighting Style, plus half-caster entry with two always-prepared spells — the cheapest fighting style outside Fighter."
+    },
+    "ranger/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 4,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "skl": 1,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "skl": 1,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Feat-neutral under Listo's cadence: a full conclave and the level-3 feat for three levels."
+    },
+    "ranger/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 4,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "skl": 1,
+          "rsc": 1,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "skl": 1,
+          "rsc": 1,
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack and Summon Beast; rarely correct unless the other class has no Extra Attack of its own."
+    },
+    "ranger/3/Beast Master": {
+      "deltas": {
+        "act": 1,
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Expansion moves Companion's Bond to level 3, so three levels buy a PB-scaled third body that saves like a PC and can Help — revive or grant advantage — as a bonus action."
+    },
+    "ranger/3/Gloom Stalker": {
+      "deltas": {
+        "st": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Dread Ambusher's +3 initiative and first-round extra attack with +1d8, plus short-rest Umbral Shroud invisibility."
+    },
+    "ranger/3/Monster Slayer": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Slayer's Prey is a +1d6 rider that uses no concentration, so it stacks with Hunter's Mark, and it re-designates on a short rest."
+    },
+    "ranger/3/Hunter": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Hunter's Prey — Colossus Slayer's +1d8, Giant Killer's reaction attack or Horde Breaker's second target; the AoE (Volley) is eight levels later."
+    },
+    "ranger/3/Swarmkeeper": {
+      "deltas": {
+        "st": 1,
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Gathered Swarm is a once-per-round 1d6, a status (Moths' Blind is a full attack shutdown) or a free reposition, and it wants Hunter's Mark up permanently."
+    },
+    "ranger/3/Drakewarden": {
+      "deltas": {
+        "act": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "A drake third body whose Infused Strikes adds 1d6 to your partner's weapon attacks as well as your own; the author warns it may need a fresh playthrough."
+    },
+    "ranger/3/Fey Wanderer": {
+      "deltas": {
+        "skl": 2,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Otherworldly Glamour adds your Wisdom modifier to every Charisma check, making the Ranger the party face without Charisma investment, plus a +1d4 psychic rider."
+    },
+    "ranger/3/Horizon Walker": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Planar Warrior converts all of an attack's damage to Force and adds +1d8, which deletes Listo's resistance-heavy enemy design as a problem."
+    },
+    "ranger/3/Primeval Guardian": {
+      "deltas": {
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Guardian Soul is temp HP every turn and +5 ft reach for a crippling drop to 5 ft of movement — a bow build, never a charging one."
+    },
+    "ranger/3/Snowlight Conclave": {
+      "deltas": {
+        "ctrl_s": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Glaring Frost blinds on any Cold or Radiant damage you deal, plus Cold resistance — the hardest control conclave, but it needs a Cold or Radiant damage source in gear to function at all."
+    },
+    "ranger/3/Conclave of the Dawnstriders": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Valkyrie is a leaping Action attack that grants an Extra Attack on landing and disadvantage on attacks against you, with Radiant or Fire conversion on every weapon hit."
+    },
+    "paragon/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "As the opener it returns two feats (Moderately and Heavily Armoured), three from zero armour proficiency, on top of Con+Cha saves; a late dip loses the heavy armour, the saves and the skills but keeps shields, martial weapons and two short-rest Willpower Dice."
+    },
+    "paragon/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "rsc": 1,
+          "st": 1,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 1,
+          "st": 1,
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Fighting Style from the widened UA menu plus Actions Speak Louder, which puts Help and Distract on a Bonus Action."
+    },
+    "paragon/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "rsc": 1,
+          "st": 1,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 1,
+          "st": 1,
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Feat-neutral and works from any position: a full Heroic Title, Fighting Style, Actions Speak Louder and 2 Willpower Dice."
+    },
+    "paragon/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "rsc": 2,
+          "st": 3,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "rsc": 2,
+          "st": 3,
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "extra-attack"
+      ],
+      "note": "Extra Attack, the Willpower Die up to d6, and the Taunting and Feinting Blades; only matters on a chassis without Extra Attack."
+    },
+    "paragon/3/Lionheart": {
+      "deltas": {
+        "act": 1,
+        "dur": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Banner Lord's Cha-modifier charges buy an ally reaction attack, a free ally dash or +Cha AC — but they stay on the long-rest clock until Paragon 6, which makes the full package a commitment rather than a dip."
+    },
+    "paragon/3/Nighthawk": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Searing Blade strips all resistances for 3 turns on a failed Con save, which makes your partner's damage type stop mattering."
+    },
+    "paragon/3/Prodigy": {
+      "deltas": {
+        "dur": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Innate Mastery's +1 attack and damage plus Sheer Will's temp HP and flat damage reduction, which compounds with Lone Wolf's already-halved incoming numbers."
+    },
+    "paragon/3/Regent": {
+      "deltas": {
+        "st": 1,
+        "act": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Shifting Court swaps your position with the target's on a Help or Distract, pulling the fragile partner out of a pack, and Oberon's Favor adds a Willpower Die of Psychic per attack."
+    },
+    "paragon/3/Spellblade": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Scholar's Armament makes a main-hand weapon use Charisma for attack and damage — a Hexblade-shaped dip no other class in the list provides — plus two elemental Focuses and Arcana expertise; Will Over Weave is ten levels past this."
+    },
+    "paragon/3/Sword Saint": {
+      "deltas": {
+        "st": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Falling Rain is a free-action weapon attack riding on every Willpower Die you spend, so more Actions convert directly into more attacks."
+    },
+    "bloodhunter/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "ctrl_s": 1,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "ctrl_s": 1,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Martial weapons, medium armour, shields and two short-rest Blood Curses that mostly have no saving throw, so a low-Intelligence body still gets nearly full value; Int+Dex saves only when first."
+    },
+    "bloodhunter/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "ctrl_s": 1,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "ctrl_s": 1,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "A Fighting Style and Crimson Rite — a permanent-until-long-rest elemental rider on a weapon for a one-time self-hit, which is close to free damage for any martial."
+    },
+    "bloodhunter/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "ctrl_s": 1,
+          "rsc": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "ctrl_s": 1,
+          "rsc": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Feat-neutral: an Order plus a third Blood Maledict charge."
+    },
+    "bloodhunter/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "dex"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "ctrl_s": 1,
+          "rsc": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "ctrl_s": 1,
+          "rsc": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack and the hemocraft die up to 1d6; redundant if the base class already has Extra Attack."
+    },
+    "bloodhunter/3/Order of the Ghostslayer": {
+      "deltas": {
+        "st": 1,
+        "dur": 1,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The highest-value 3-level dip in the class: a fourth Radiant Rite, Necrotic resistance, a fourth Blood Maledict and curses that ignore the Bloodless restriction."
+    },
+    "bloodhunter/3/Order of the Lycan": {
+      "deltas": {
+        "st": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "bonus-action-attack"
+      ],
+      "note": "Hybrid Transformation 3/short rest gives non-magical physical resistance, +1 AC, Dex-scaling unarmed strikes and a bonus-action strike — at the cost of a Bloodlust save that can turn you on your partner below half HP."
+    },
+    "bloodhunter/3/Order of the Mutant": {
+      "deltas": {
+        "st": 1,
+        "dur": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "A short-rest Mutagen charge and four formulae; Potency and Celerity are +3 to a raw ability score with Listo's cap removed, but every resistance mutagen hands out a matching vulnerability."
+    },
+    "bloodhunter/3/Order of the Profane Soul": {
+      "deltas": {
+        "rsc": 1,
+        "ctrl_s": 1
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Pact Magic off Intelligence on short-rest slots — one level-1 slot at Blood Hunter 3, so it needs real Intelligence investment and never becomes a primary caster."
+    },
+    "inquisitor/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "str"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "rsc": 1
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "The best Wisdom-save opener that also brings martial weapons, medium armour, shields, a +1/+1 deity weapon and 2 short-rest Judgment charges; the multiclass node itself is undocumented, so the as_dip grants are the file's best guess and only the saves are certainly level-1-locked."
+    },
+    "inquisitor/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "str"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "rsc": 2,
+          "act": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "rsc": 2,
+          "act": 1,
+          "skl": 1
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "The sweet spot on a Wisdom body: Righteous Vigilance stacks Wis onto initiative on top of Dex, plus half-caster entry and Monster Lore."
+    },
+    "inquisitor/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "str"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "rsc": 2,
+          "act": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "rsc": 2,
+          "act": 1,
+          "skl": 2
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Feat-neutral: permanent Detect Thoughts via Interrogative Mind plus a full subclass feature."
+    },
+    "inquisitor/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "str"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "dur": 1,
+          "rsc": 3,
+          "act": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "dur": 1,
+          "rsc": 3,
+          "act": 1,
+          "skl": 2
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack, Sanctified Slayer and a third Judgment charge — past this the file says take it as a main class or not at all."
+    },
+    "inquisitor/3/Tactics Inquisition": {
+      "deltas": {
+        "act": 1,
+        "dur": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Shared Judgment gives your one partner every active Judgment on a short-rest clock, and Tempered Champion upgrades the copy they get."
+    },
+    "inquisitor/3/Vengeance Inquisition": {
+      "deltas": {
+        "st": 2,
+        "skl": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "Monster Tactician is Expertise plus double Wisdom modifier on one Intelligence skill, and Divine Scourge turns every Judgment into a personal upgrade against your Quarry."
+    },
+    "inquisitor/3/Zeal Inquisition": {
+      "deltas": {
+        "dur": 2,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "In-combat fast healing, a delayed damage pool that also buys saves, and Wrathful Taunt giving Judged enemies disadvantage attacking anyone but you — long-rest-free sustain in a 120-supply economy."
+    },
+    "sorcerer/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {}
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The multiclass node grants nothing at all — no saves, no armour, no skills, no weapons — so Sorcerer 1 as a dip buys only the bloodline's level-1 feature."
+    },
+    "sorcerer/1/Draconic Bloodline": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Unarmoured AC 13 and +1 HP per Sorcerer level — the only thing in the class that patches the d6 and the no-armour problem."
+    },
+    "sorcerer/1/Shadow Magic": {
+      "deltas": {
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Strength of the Grave: on reaching 0 HP regain 1 instead of going down, which on a duo is a fight that does not end."
+    },
+    "sorcerer/1/Favored Soul": {
+      "deltas": {
+        "dur": 2,
+        "end": 1,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Medium armour, shields and a Cleric domain's spells as Charisma Sorcerer spells at level 1 — healing and Revivify that Metamagic can Twin."
+    },
+    "sorcerer/1/Aberrant Mind": {
+      "deltas": {
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Psionic Spells off-list and free of the known-spells budget, plus a Frighten rider on crits."
+    },
+    "sorcerer/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 1,
+          "rsc": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Font of Magic: slots to sorcery points and back, both bonus actions — a spell-slot battery bolted onto another caster."
+    },
+    "sorcerer/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 2,
+          "act": 2,
+          "dur": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 2,
+          "act": 2,
+          "dur": 1,
+          "ctrl_s": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Three Metamagic picks: Twinned turns every single-target buff into a party-wide one on a two-person party, and Quickened is the only reliable third cast in a turn."
+    },
+    "sorcerer/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 3,
+          "act": 2,
+          "dur": 2,
+          "aoe": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 3,
+          "act": 2,
+          "dur": 2,
+          "aoe": 2,
+          "ctrl_s": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Third-level slots: Fireball, Haste, and Twinned Haste covering the whole duo for one point per slot level."
+    },
+    "sorcerer/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 3,
+          "act": 2,
+          "dur": 2,
+          "aoe": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 3,
+          "act": 2,
+          "dur": 2,
+          "aoe": 2,
+          "ctrl_s": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Same generic package as 5 plus six sorcery points; the tier-2 bloodline feature is what level 6 actually sells."
+    },
+    "sorcerer/6/Draconic Bloodline": {
+      "deltas": {
+        "st": 2,
+        "dur": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Elemental Affinity adds Charisma modifier to every hit of your ancestry's damage type — with the expanded ancestries that now includes Force, Radiant, Necrotic and Psychic."
+    },
+    "sorcerer/6/Aberrant Mind": {
+      "deltas": {
+        "dur": 2,
+        "rsc": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Psychic resistance plus Advantage against Charmed and Frightened, and Psionic Sorcery casts the whole psionic list off points with no verbal or somatic components."
+    },
+    "sorcerer/6/Favored Soul": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack on a full-caster chassis that already has medium armour and shields."
+    },
+    "sorcerer/6/Wild Magic": {
+      "deltas": {
+        "ctrl_s": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Bend Luck spends a reaction and 2 points to swing any visible creature's attack, check or save by 1d4 either way — and Lone Wolf grants a spare reaction to spend on it."
+    },
+    "sorcerer/6/Storm Sorcery": {
+      "deltas": {
+        "aoe": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Heart of the Storm chips every nearby enemy on Lightning/Thunder casts and adds resistance to both, on top of level 1's bonus-action flight."
+    },
+    "sorcerer/11": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "con",
+            "cha"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 3,
+          "rsc": 4,
+          "act": 2,
+          "dur": 2,
+          "aoe": 3
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 4,
+          "act": 2,
+          "dur": 2,
+          "aoe": 3,
+          "ctrl_s": 2
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Sixth-level slots, a fourth Metamagic at 10, eleven sorcery points, and the tier-3 bloodline feature — the deepest split a Sorcerer is worth holding as the minority class."
+    },
+    "bard/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "skl": 2,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Three skills from an eighteen-skill list and Dex + Cha saves only when first; a later dip gets light armour, one skill and an instrument."
+    },
+    "bard/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "skl": 3,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "skl": 1,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Jack of All Trades covers every skill you did not pick, and Song of Rest is a party-wide short rest in a run where long rests cost 120+ supplies."
+    },
+    "bard/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 4,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "The headline dip: a College, Expertise x2, and a feat-neutral cost under Listo's every-three-levels cadence."
+    },
+    "bard/3/College of Lore": {
+      "deltas": {
+        "skl": 2,
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Three extra skill proficiencies on top of Bard's own three, plus Cutting Words as a reaction debuff on any enemy attack, check or damage roll."
+    },
+    "bard/3/College of Swords": {
+      "deltas": {
+        "st": 1,
+        "dur": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Medium armour, scimitars, a Fighting Style from Listo's widened list, and Blade Flourishes with Goon's interrupt versions that spend a spare reaction."
+    },
+    "bard/3/College of Valour": {
+      "deltas": {
+        "dur": 2,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The only College handing out shields plus martial weapons — the cheapest way to make a Charisma caster durable without a martial dip."
+    },
+    "bard/3/College of Eloquence": {
+      "deltas": {
+        "ctrl_s": 1,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Unsettling Words is a cheap pre-rolled save debuff you can see the number on before committing the control spell."
+    },
+    "bard/3/College of Dance": {
+      "deltas": {
+        "st": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Dexterity unarmed attacks scaling off the Inspiration die, plus a free kick every time you inspire your partner; note it never gets Extra Attack."
+    },
+    "bard/3/College of Tragedy": {
+      "deltas": {
+        "rsc": 1,
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Poetry in Misery can refund an Inspiration every turn off natural 1s, and Sorrowful Fate rewrites a save into a Charisma save."
+    },
+    "bard/3/College of Stormcalling": {
+      "deltas": {
+        "aoe": 1,
+        "ctrl_a": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The only blaster College: a Thunder cantrip and Concussion, which strips enemy reactions and caps them to one action."
+    },
+    "bard/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 4,
+          "rsc": 3,
+          "end": 3,
+          "dur": 2,
+          "ctrl_s": 2,
+          "aoe": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2,
+          "rsc": 3,
+          "end": 3,
+          "dur": 2,
+          "ctrl_s": 2,
+          "aoe": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "Font of Inspiration moves Bardic Inspiration to the short-rest clock and the die to d8, and third-level slots bring Hypnotic Pattern and Haste — the real Bard breakpoint, not 3."
+    },
+    "bard/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 4,
+          "rsc": 3,
+          "end": 3,
+          "dur": 3,
+          "ctrl_s": 2,
+          "aoe": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 2
+        },
+        "deltas": {
+          "skl": 2,
+          "rsc": 3,
+          "end": 3,
+          "dur": 3,
+          "ctrl_s": 2,
+          "aoe": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "Countercharm gives both characters Advantage on Charmed and Frightened saves, and the second College feature lands here."
+    },
+    "bard/6/College of Lore": {
+      "deltas": {
+        "rsc": 2,
+        "ctrl_s": 1,
+        "aoe": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Magical Secrets four levels early — two spells from any list the modlist installs, on a six-level chassis."
+    },
+    "bard/6/College of Swords": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack on the martial Bard, stacking with Lone Wolf's extra Action."
+    },
+    "bard/6/College of Valour": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack on top of shields and martial weapons."
+    },
+    "bard/6/College of Eloquence": {
+      "deltas": {
+        "rsc": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Unfailing Inspiration refunds the die whenever the roll it was spent on fails, which on a duo is almost always your partner's roll."
+    },
+    "bard/6/College of Stormcalling": {
+      "deltas": {
+        "aoe": 1,
+        "st": 1,
+        "act": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Conductor plus bonus-action Staccato Lightning gives a Charisma-scaled second cast every turn while concentrating."
+    },
+    "bard/10": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 4
+        },
+        "deltas": {
+          "skl": 5,
+          "rsc": 5,
+          "end": 3,
+          "dur": 4,
+          "ctrl_s": 4,
+          "aoe": 3,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 1,
+          "expertise": 4
+        },
+        "deltas": {
+          "skl": 3,
+          "rsc": 5,
+          "end": 3,
+          "dur": 4,
+          "ctrl_s": 4,
+          "aoe": 3,
+          "act": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "Magical Secrets x2, which `Automatic Magical Secrets Extender` widens to every list the modlist installs — the single largest grant in the build space — plus a d10 die, a second Expertise pair and fifth-level slots."
+    },
+    "artificer/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Medium armour and shields from either position — worth two feats to a caster — while Int + Con saves, two skills and the weapon proficiencies only come from the level-1 node."
+    },
+    "artificer/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Two Infusion Slots and four known infusions: Enhanced Weapon, Enhanced Defense, Enhanced Arcane Focus and the Homunculus, all permanent stat for a gear-poor pair."
+    },
+    "artificer/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The weak stop: feat-neutral and it buys a subclass, but the base feature is a thieves'-tools conjure and every subclass is back-loaded."
+    },
+    "artificer/3/Alchemist": {
+      "deltas": {
+        "end": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Experimental Elixirs twice per long rest, extendable by burning spell slots."
+    },
+    "artificer/3/Armorer": {
+      "deltas": {
+        "dur": 2,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Arcane Armor grants Heavy Armour proficiency plus built-in Thunder Gauntlets or a Lightning Launcher that work with empty hands.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "artificer/3/Artillerist": {
+      "deltas": {
+        "act": 1,
+        "aoe": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The Eldritch Cannon is a resummonable extra body with Flamethrower, Force Ballista and Protector modes."
+    },
+    "artificer/3/Battle Smith": {
+      "deltas": {
+        "st": 2,
+        "act": 1,
+        "dur": 1
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Battle Ready puts Intelligence on attack and damage with any magical weapon — which the class's own Enhanced Weapon supplies — plus martial weapons and the Steel Defender."
+    },
+    "artificer/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 2,
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 2,
+          "ctrl_s": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Second-level slots, and the level where Armorer and Battle Smith collect Extra Attack."
+    },
+    "artificer/5/Armorer": {
+      "deltas": {
+        "st": 2,
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack",
+        "heavy-armour"
+      ],
+      "note": "Extra Attack on the heavy-armoured artificer.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "artificer/5/Battle Smith": {
+      "deltas": {
+        "st": 2,
+        "act": 1,
+        "dur": 1
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Extra Attack with Intelligence driving attack, damage, spell DC and saves off one stat."
+    },
+    "artificer/5/Artillerist": {
+      "deltas": {
+        "st": 1,
+        "act": 1,
+        "aoe": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Arcane Firearm adds 1d8 to a damage roll on every spell you cast, a flat floor that needs no resource."
+    },
+    "artificer/5/Alchemist": {
+      "deltas": {
+        "st": 1,
+        "end": 2
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Alchemical Savant adds Intelligence to a roll of any healing or acid/fire/necrotic/poison spell."
+    },
+    "artificer/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 1
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 3,
+          "ctrl_s": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 1
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 1,
+          "act": 1,
+          "rsc": 3,
+          "ctrl_s": 1,
+          "skl": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "A third Infusion Slot, six infusions known, and Expertise in the free Sleight of Hand proficiency."
+    },
+    "artificer/11": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 3,
+          "expertise": 1
+        },
+        "deltas": {
+          "dur": 4,
+          "st": 2,
+          "act": 2,
+          "rsc": 4,
+          "ctrl_s": 2,
+          "skl": 1,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 1,
+          "expertise": 1
+        },
+        "deltas": {
+          "dur": 4,
+          "st": 2,
+          "act": 2,
+          "rsc": 4,
+          "ctrl_s": 2,
+          "skl": 1,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [
+        "expertise"
+      ],
+      "note": "Flash of Genius at 7 adds Intelligence to your partner's checks and saves off a reaction, and Spell-Storing Item at 11 hands the other character Int-mod castings of a spell they could never cast."
+    },
+    "barbarian/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "st": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "st": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "rage"
+      ],
+      "note": "Str + Con saves, the d12 and armour proficiency only when first; a late dip grants weapons and shields only, but Rage's +2 damage and physical resistance land from any position."
+    },
+    "barbarian/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "st": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "rage"
+      ],
+      "note": "Reckless Attack as a toggle that Goon's extends to thrown attacks — near-permanent Advantage for a Str attacker — plus Danger Sense's Advantage on Dex saves."
+    },
+    "barbarian/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 2,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "st": 2,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "rage"
+      ],
+      "note": "Feat-neutral: a subclass plus a third Rage charge, but only the front-loaded paths pay off here."
+    },
+    "barbarian/3/Path of the Zealot": {
+      "deltas": {
+        "st": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Divine Fury is +1d6 + half Barbarian level on the first hit each turn, and Warrior of the Gods lets the partner revive you without a scroll."
+    },
+    "barbarian/3/Path of the Revenant": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "no-healing"
+      ],
+      "note": "Heavy armour proficiency and flat damage reduction 2 on top of physical resistance at level 3, at the cost of being unhealable while raging — the `no-healing` tag marks that clash with a healer partner.",
+      "grants": {
+        "armour": "heavy",
+        "shield": true
+      }
+    },
+    "barbarian/3/Path of Ginnungagap": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Advantage on saves against spells patches the class's Wis/Cha hole, plus one reaction crit-downgrade per Rage."
+    },
+    "barbarian/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "con"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "st": 3,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "st": 3,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "rage",
+        "extra-attack"
+      ],
+      "note": "Extra Attack and Fast Movement; the file argues past 3 the class wants to be the main, so this is a majority split rather than a dip."
+    },
+    "paladin/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "end": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour"
+      ],
+      "note": "Heavy armour and the Wis + Cha saves come only from the level 1 class; a late dip gets light/medium and shields, plus Channel Oath on the short rest and Lay on Hands either way."
+    },
+    "paladin/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "st": 2,
+          "rsc": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "end": 1,
+          "st": 2,
+          "rsc": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "divine-smite"
+      ],
+      "note": "Divine Smite converts any spell slot from any class into burst weapon damage, plus half-caster slots of its own."
+    },
+    "paladin/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "st": 2,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "end": 1,
+          "st": 2,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "divine-smite"
+      ],
+      "note": "Oath features, oath spells and a second Channel Oath option — feat-neutral, so better shaped than Paladin 2."
+    },
+    "paladin/3/Oath of Devotion": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Sacred Weapon and Holy Rebuke; the safe pick whose real payoff is the charm-immunity aura at 7."
+    },
+    "paladin/3/Oath of Vengeance": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Vow of Enmity is single-target Advantage on a short-rest charge, worth more with Lone Wolf's extra Action to spend it on."
+    },
+    "paladin/3/Oath of the Crown": {
+      "deltas": {
+        "dur": 1,
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "A taunt-and-tank Channel Oath that pulls attacks onto the armoured half of the duo."
+    },
+    "paladin/3/Oathbreaker": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "divine-smite"
+      ],
+      "note": "Spiteful Suffering and Dreadful Aspect, but Listo replaces Divine Smite outright with Unholy Smite — all-necrotic damage, a straight downgrade through Act 2."
+    },
+    "paladin/3/Oath of Conquest": {
+      "deltas": {
+        "st": 1,
+        "ctrl_a": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Conquering Presence is an AoE Wisdom-save fear and Guided Strike is +10 to an attack roll chosen after seeing it."
+    },
+    "paladin/3/Oath of the Bleak Walkers": {
+      "deltas": {
+        "st": 1,
+        "dur": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Black Flames as a Bonus Action rider that stacks with Divine Smite, Death's Maw's proficiency-bonus damage reduction near a corpse, and Expertise in Intimidation from level 1."
+    },
+    "paladin/3/Oath of the Moon": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Divine Guardian halves all damage on the other character for 10 turns off a short-rest Channel Oath charge."
+    },
+    "paladin/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "st": 3,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 1,
+          "end": 1,
+          "st": 3,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "heavy-armour",
+        "divine-smite",
+        "extra-attack"
+      ],
+      "note": "Extra Attack, which doubles the number of hits a stored spell slot can be smited into."
+    },
+    "paladin/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0,
+          "boosters": [
+            "aura-of-protection"
+          ]
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "st": 3,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "aura-of-protection"
+          ]
+        },
+        "deltas": {
+          "dur": 1,
+          "end": 1,
+          "st": 3,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "heavy-armour",
+        "divine-smite",
+        "extra-attack"
+      ],
+      "note": "Aura of Protection adds the Charisma modifier to both characters' saving throws at Listo's 9m radius — registered as a booster, not a rung."
+    },
+    "paladin/7": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "heavy",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0,
+          "boosters": [
+            "aura-of-protection"
+          ]
+        },
+        "deltas": {
+          "dur": 3,
+          "end": 1,
+          "st": 3,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "aura-of-protection"
+          ]
+        },
+        "deltas": {
+          "dur": 2,
+          "end": 1,
+          "st": 3,
+          "rsc": 1,
+          "ctrl_s": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "heavy-armour",
+        "divine-smite",
+        "extra-attack"
+      ],
+      "note": "The oath aura stacks a second party-wide effect on Aura of Protection; the file calls 7 the natural stopping point before committing further."
+    },
+    "paladin/7/Oath of the Ancients": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Aura of Warding gives both characters resistance to spell damage at 9m — the damage type Listo's revamped enemy casters lean on hardest."
+    },
+    "paladin/7/Oath of the Moon": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Aura of Moonlight cuts every hit on either character by the Charisma modifier and stacks with resistance."
+    },
+    "paladin/7/Oath of the Bleak Walkers": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "A stacking crit-range reduction that applies to both characters, compounding with Lone Wolf's extra Action."
+    },
+    "paladin/7/Oath of Devotion": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Aura of Devotion extends charm immunity to the partner at 9m."
+    },
+    "paladin/7/Oath of Conquest": {
+      "deltas": {
+        "aoe": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Aura of Conquest deals half your paladin level in psychic to frightened creatures, so it is only as good as your Wisdom-save landing rate."
+    },
+    "druid/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "end": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 1,
+          "end": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "shillelagh"
+      ],
+      "note": "Light/medium armour and shields even as a dip, plus Shillelagh, Goodberry and always-prepared Speak with Animals; Shillelagh keys off your highest spellcasting modifier, so it is not Wisdom-gated."
+    },
+    "druid/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 3,
+          "end": 1,
+          "skl": 1,
+          "act": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 3,
+          "end": 1,
+          "act": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "shillelagh",
+        "wild-shape"
+      ],
+      "note": "The real dip: Wild Shape as a second HP bar that keeps your multiclass features working under the overhaul, the circle's level 2 feature, and Find Familiar always prepared."
+    },
+    "druid/2/Circle of the Moon": {
+      "deltas": {
+        "dur": 2,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "wild-shape"
+      ],
+      "note": "Combat Wild Shape as a Bonus Action twice per short rest, plus Lunar Mend — the tankiest use of two levels in the class."
+    },
+    "druid/2/Circle of the Land": {
+      "deltas": {
+        "rsc": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Natural Recovery is the only in-day slot refund in the class, worth more where a long rest costs 120+ supplies."
+    },
+    "druid/2/Circle of the Spores": {
+      "deltas": {
+        "st": 1,
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Symbiotic Entity buys 4 temp HP per Druid level and +1d6 on weapon hits, with Halo of Spores as a reaction rider; the temp HP scales off Druid level so it is thin on a dip."
+    },
+    "druid/2/Circle of the Stars": {
+      "deltas": {
+        "st": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Starry Form gives Archer's bonus-action radiant, Chalice's free heal rider or Dragon's Concentration floor, plus Guidance."
+    },
+    "druid/2/Circle of the Sea": {
+      "deltas": {
+        "aoe": 1,
+        "ctrl_a": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Wrath of the Sea is a Wisdom-scaled bonus-action cold-and-push aura, the cheapest way to peel something off the partner."
+    },
+    "druid/2/Circle of Stormchasers": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Storm Shift's temp HP is 3x Druid level, so it is a rounding error on a dip and enormous as a main class."
+    },
+    "druid/2/Circle of Winter": {
+      "deltas": {
+        "dur": 1,
+        "st": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Winter Spirit adds Wisdom as cold damage to every damage spell and +1d6 on melee hits, but its 5x-Druid-level temp HP wants a main class."
+    },
+    "druid/2/Circle of the Shepherd": {
+      "deltas": {
+        "dur": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Every Spirit Totem is an aura that buffs the other character — Bear's temp HP, Hawk's reaction advantage, Flumph's shared healing."
+    },
+    "druid/2/Circle of Wildfire": {
+      "deltas": {
+        "act": 1,
+        "aoe": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "A permanent extra body that casts your spells from its own position, giving a two-person party a second point of origin for AoE."
+    },
+    "druid/2/Circle of Wrath": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Aspects of Wrath is a self-contained scaling damage engine with no summon or gear dependency, capped by the Wisdom modifier."
+    },
+    "druid/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 3,
+          "end": 1,
+          "skl": 1,
+          "act": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "dur": 3,
+          "end": 1,
+          "act": 2
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "shillelagh",
+        "wild-shape"
+      ],
+      "note": "Feat-neutral, and adds Summon Beast and Flock of Familiars — worth it only if the build wants bodies."
+    },
+    "druid/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "dur": 3,
+          "end": 1,
+          "skl": 1,
+          "act": 3,
+          "aoe": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "dur": 3,
+          "end": 1,
+          "act": 3,
+          "aoe": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "shillelagh",
+        "wild-shape",
+        "extra-attack"
+      ],
+      "note": "Conjure Animals plus Wild Strike/Extra Attack — the point where the summon economy starts carrying the duo."
+    },
+    "druid/5/Circle of the Spores": {
+      "deltas": {
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Mod 4018 replaces Wild Strike with a real Extra Attack usable outside Wild Shape, which is the whole point since Symbiotic Entity does not work in beast form."
+    },
+    "druid/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": "medium",
+          "shield": true,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "dur": 4,
+          "end": 1,
+          "skl": 1,
+          "act": 3,
+          "aoe": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "medium",
+          "shield": true,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 2,
+          "dur": 4,
+          "end": 1,
+          "act": 3,
+          "aoe": 1
+        }
+      },
+      "requires": null,
+      "conflicts": [
+        "shillelagh",
+        "wild-shape",
+        "extra-attack"
+      ],
+      "note": "The circle's tier-2 feature and the Wild Shape CR bump, both keyed to Druid level rather than character level."
+    },
+    "druid/6/Circle of the Stars": {
+      "deltas": {
+        "rsc": 2,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Star Druid Tweaks moves Cosmic Omen onto the short rest, so it is 3-4 swings of plus-or-minus 1d6 on attacks or saves per rest cycle."
+    },
+    "warlock/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "rsc": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 1,
+          "rsc": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Wis + Cha saves only when first, Eldritch Blast whose beams key off character level, and one short-rest pact slot; the multiclass node grants the same light armour, so a dip frees no armour feat."
+    },
+    "warlock/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "rsc": 2,
+          "end": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "rsc": 2,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "agonizing-blast"
+      ],
+      "note": "Agonizing Blast adds the Charisma modifier to every beam, making two class levels into the list's best at-will damage engine — at-will, so endurance rises with it."
+    },
+    "warlock/1/The Hexblade": {
+      "deltas": {
+        "st": 2
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "cha-to-attack"
+      ],
+      "note": "Hex Warrior puts Charisma on a weapon at level 1 without waiting for Pact of the Blade — the archetypal stat-gated melee dip; `cha-to-attack` marks that a second such source does nothing."
+    },
+    "warlock/1/The Fiend": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Dark One's Blessing is temp HP on every kill, the best defensive level 1 patron before Dark One's Own Luck arrives at 6."
+    },
+    "warlock/1/The Archfey": {
+      "deltas": {
+        "ctrl_a": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Fey Presence is an AoE charm-or-fear on the short-rest clock — real crowd control out of a single level."
+    },
+    "warlock/1/The Great Old One": {
+      "deltas": {
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Mortal Reminder fires on crits, so a multi-beam blaster triggers it far more often than the text implies."
+    },
+    "warlock/1/The Celestial": {
+      "deltas": {
+        "end": 2,
+        "act": 1,
+        "st": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Healing Light is a bonus-action heal that spends no spell slot, plus free Sacred Flame as a save-based answer to high-AC targets — but the pool is on the long-rest clock."
+    },
+    "warlock/1/The Psyker": {
+      "deltas": {
+        "aoe": 1,
+        "dur": -1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Warp detonations are free AoE, but Perils of the Warp drains your own maximum HP with no mitigation until level 10 — the file says avoid it as a dip."
+    },
+    "warlock/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "rsc": 3,
+          "end": 1,
+          "act": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 3,
+          "rsc": 3,
+          "end": 1,
+          "act": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "agonizing-blast"
+      ],
+      "note": "Feat-neutral and the natural dip size: pact boon, 2nd-level pact slots, and Pact of the Chain's familiar as a third body on the initiative order."
+    },
+    "warlock/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "wis",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 4,
+          "rsc": 3,
+          "end": 1,
+          "act": 1,
+          "aoe": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "st": 4,
+          "rsc": 3,
+          "end": 1,
+          "act": 1,
+          "aoe": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "agonizing-blast",
+        "extra-attack"
+      ],
+      "note": "Two 3rd-level slots back on every short rest, a third invocation, and Deepened Pact — Extra Attack for Blade or for the Chain familiar; it breaks the feat block unless the main class also sits on a multiple of three."
+    },
+    "warlock/5/The Celestial": {
+      "deltas": {
+        "end": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Revivify on a short-rest pact slot, which is the other half of the argument for a Charisma healer in a duo."
+    },
+    "wizard/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Multiclassing into Wizard grants literally nothing — no armour, no weapon, no skill, no save; the whole payload is Int spellcasting, 3 cantrips, 1 Arcane Recovery charge and the ability to transcribe Listo's abundant Wizard scrolls into a permanent library."
+    },
+    "wizard/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "The school arrives at 2 and is the entire reason to stop here — the generic half is still just 1st-level slots and Savant's halved scroll-copy cost."
+    },
+    "wizard/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1,
+          "st": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 1,
+          "st": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Feat-neutral under Listo's 3/6/9/12/13/15/18 class-level cadence, but buys only 2nd-level slots."
+    },
+    "wizard/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 2,
+          "st": 1,
+          "aoe": 2,
+          "ctrl_s": 1,
+          "ctrl_a": 1,
+          "act": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 2,
+          "st": 1,
+          "aoe": 2,
+          "ctrl_s": 1,
+          "ctrl_a": 1,
+          "act": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "3rd-level slots: Fireball, Counterspell, Haste and Animate Dead all land at once, which is the single largest jump in the class before 11."
+    },
+    "wizard/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 2,
+          "st": 1,
+          "aoe": 2,
+          "ctrl_s": 1,
+          "ctrl_a": 1,
+          "act": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 2,
+          "st": 1,
+          "aoe": 2,
+          "ctrl_s": 1,
+          "ctrl_a": 1,
+          "act": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Generic progression is flat from 5 to 6 — the level-6 school feature is the whole payload, so this breakpoint is only worth taking with a subclass part attached."
+    },
+    "wizard/11": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 3,
+          "st": 2,
+          "aoe": 3,
+          "ctrl_s": 2,
+          "ctrl_a": 2,
+          "act": 1,
+          "dur": 1,
+          "end": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 3,
+          "st": 2,
+          "aoe": 3,
+          "ctrl_s": 2,
+          "ctrl_a": 2,
+          "act": 1,
+          "dur": 1,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "6th-level slots plus the school capstone at 10; cantrips are on their third scaling step, so a floor of at-will damage finally exists."
+    },
+    "wizard/14": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "int",
+            "wis"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 4,
+          "st": 3,
+          "aoe": 3,
+          "ctrl_s": 2,
+          "ctrl_a": 2,
+          "act": 1,
+          "dur": 1,
+          "end": 1,
+          "skl": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "rsc": 4,
+          "st": 3,
+          "aoe": 3,
+          "ctrl_s": 2,
+          "ctrl_a": 2,
+          "act": 1,
+          "dur": 1,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "int"
+      },
+      "conflicts": [],
+      "note": "Expansion's 7th-level slots at 13 and the tier-4 school feature at 14; the majority-class shape for a Wizard 14 / X 6 split."
+    },
+    "wizard/2/Bladesinging": {
+      "grants": {
+        "armour": "light",
+        "shield": false,
+        "boosters": [
+          "bladesong"
+        ]
+      },
+      "deltas": {
+        "dur": 2,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "shield-use"
+      ],
+      "note": "The one dip worth planning around: light armour, Performance, six martial-adjacent weapons and Bladesong (+2 AC, +2 Con saves, +3 m, advantage on Acrobatics, 2/long rest) — the cheapest AC and concentration package a full caster can buy; the invented `shield-use` tag means Bladesong is off while a shield is equipped, so it does not stack with a shield-granting part."
+    },
+    "wizard/2/Abjuration": {
+      "deltas": {
+        "dur": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Much weaker as a dip than it looks — Arcane Ward resets to wizard level and caps at 2x wizard level, so two levels buy a 4-point shield."
+    },
+    "wizard/6/Bladesinging": {
+      "grants": {
+        "armour": "light",
+        "shield": false,
+        "boosters": [
+          "bladesong"
+        ]
+      },
+      "deltas": {
+        "dur": 3,
+        "st": 2,
+        "act": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack",
+        "shield-use"
+      ],
+      "note": "Bladesong to 3 uses and +3, plus Extra Attack — turns for which you would rather not burn a long-rest slot."
+    },
+    "wizard/6/Abjuration": {
+      "deltas": {
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Projected Ward spends the ward, and Lone Wolf's spare Reaction, on keeping the other character alive."
+    },
+    "wizard/6/Necromancy": {
+      "deltas": {
+        "act": 2,
+        "st": 1,
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "summon-engine"
+      ],
+      "note": "Undead Thralls plus Animate Dead++ (free Animate Dead from 5, no cap on bodies, undead gain wizard-level HP and your proficiency to damage) — the most direct answer to two players against five-body encounters; the invented `summon-engine` tag means a second summon pool adds turn-time, not action economy."
+    },
+    "wizard/6/Divination": {
+      "deltas": {
+        "ctrl_s": 2,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Three Portent dice spent on Lone Wolf's second Reaction as guaranteed enemy-save failures, refunded by Expert Divination's short-rest Prophecies."
+    },
+    "wizard/6/Transmutation": {
+      "deltas": {
+        "dur": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "experimental-alchemy"
+      ],
+      "note": "The Constitution-save Transmuter's Stone is the cheapest concentration insurance in the class and can be handed to the other player; the `experimental-alchemy` tag means the double-brew does not stack with the Artificer's."
+    },
+    "wizard/6/Hierophant": {
+      "deltas": {
+        "end": 2,
+        "dur": 2,
+        "ctrl_a": 1,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The healer answer for a party with no cleric — Erudite Remedy heals as a bonus action and hands the target on-demand elemental resistance, plus short-rest Turn the Otherworldly."
+    },
+    "wizard/11/Abjuration": {
+      "deltas": {
+        "dur": 3,
+        "end": 1,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Improved Abjuration recharges the ward by wizard level on every short rest, which converts Listo's 120-supply long-rest tax into a defensive resource."
+    },
+    "wizard/11/Bladesinging": {
+      "grants": {
+        "armour": "light",
+        "shield": false,
+        "boosters": [
+          "bladesong"
+        ]
+      },
+      "deltas": {
+        "dur": 4,
+        "st": 2,
+        "act": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "extra-attack",
+        "shield-use"
+      ],
+      "note": "Bladesong at +4 AC and +4 Con saves with 4 uses, plus Song of Defence spending slots to subtract 5 damage per slot level."
+    },
+    "wizard/11/Conjuration": {
+      "deltas": {
+        "act": 2,
+        "dur": 2,
+        "ctrl_s": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [
+        "summon-engine"
+      ],
+      "note": "Focused Conjuration makes damage unable to break concentration on a Conjuration spell, so the summons that are your third and fourth combatants cannot be interrupted away."
+    },
+    "wizard/11/Necromancy": {
+      "deltas": {
+        "act": 3,
+        "st": 2,
+        "dur": 2,
+        "end": 2
+      },
+      "requires": null,
+      "conflicts": [
+        "summon-engine"
+      ],
+      "note": "Inured to Undeath blanks Act 2's max-HP reduction while the uncapped undead pool scales with every slot you own."
+    },
+    "wizard/11/Divination": {
+      "deltas": {
+        "ctrl_s": 2,
+        "rsc": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Third Eye's simultaneous darkvision and See Invisibility on top of the Portent pool."
+    },
+    "wizard/11/Enchantment": {
+      "deltas": {
+        "ctrl_s": 3,
+        "ctrl_a": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Split Enchantment doubles Hold Person and Dominate at the level encounters start fielding pairs, and Listo's Hypnotic Gaze also strips the target's concentration."
+    },
+    "wizard/11/Evocation": {
+      "deltas": {
+        "aoe": 2,
+        "st": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The safe default — Sculpt Spells matters more in a duo because your partner is always inside your own fireball, and Empowered Evocation adds Int to the damage."
+    },
+    "wizard/11/Hexcraft": {
+      "deltas": {
+        "dur": 2,
+        "rsc": 2,
+        "end": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The slot-economy school — Warlock spells and three unrestricted Eldritch Invocations, ritual-driven temp HP, and immunity to the whole charm/fear line at 10."
+    },
+    "wizard/11/Hierophant": {
+      "deltas": {
+        "end": 3,
+        "dur": 2,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Miracleworker adds Raise Dead, Planar Binding and Dispel Evil and Good as rituals on top of a scaling bonus-action heal-plus-resistance pool."
+    },
+    "wizard/11/School of Death": {
+      "deltas": {
+        "st": 3,
+        "aoe": 1,
+        "end": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The highest sustained single-target damage of the schools — doubled necrotic cantrips, necrotic resistance ignored, and Arcane Recovery charges converted into damage; it gives no defensive layer at all."
+    },
+    "wizard/14/Abjuration": {
+      "grants": {
+        "boosters": [
+          "spell-resistance"
+        ]
+      },
+      "deltas": {
+        "dur": 4,
+        "end": 1,
+        "rsc": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Expansion's Spell Resistance — resistance to spell damage and advantage on every saving throw against spells and cantrips — on top of a short-rest-recharging ward."
+    },
+    "monk/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 1,
+          "st": 1,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 1,
+          "st": 1,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "unarmoured-defence"
+      ],
+      "note": "The strongest single level for any unarmoured character — 10 + DEX + WIS AC needing no proficiency and no gold at 4x prices, a bonus-action unarmed strike, and Flurry of Blows; it wants Dex and Wis both, which Lone Wolf's +4 can cover."
+    },
+    "monk/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 1,
+          "rsc": 1,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 1,
+          "rsc": 1,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "unarmoured-defence"
+      ],
+      "note": "Unarmoured Movement, Patient Defence, Step of the Wind and Listo's Uncanny Metabolism — rarely worth stopping here rather than pushing to 3."
+    },
+    "monk/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 1,
+          "rsc": 1,
+          "end": 1
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 1,
+          "rsc": 1,
+          "end": 1
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "unarmoured-defence"
+      ],
+      "note": "The standard dip: feat-neutral under Listo's cadence, a full subclass entry, and Deflect Missiles, all on a ki pool that refills on a short rest."
+    },
+    "monk/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 2,
+          "ctrl_s": 2,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 2,
+          "ctrl_s": 2,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "unarmoured-defence",
+        "extra-attack"
+      ],
+      "note": "Extra Attack, the d8 Martial Arts die and Stunning Strike on the WIS-driven Ki Save DC; expensive as a dip and only worth it where Monk is the main class."
+    },
+    "monk/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 2,
+          "ctrl_s": 2,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 2,
+          "act": 2,
+          "st": 2,
+          "ctrl_s": 2,
+          "rsc": 1,
+          "end": 2
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "unarmoured-defence",
+        "extra-attack"
+      ],
+      "note": "Ki-Empowered Strikes makes unarmed damage magical and the tier-2 subclass feature lands; the generic half adds little over 5."
+    },
+    "monk/11": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "str",
+            "dex"
+          ],
+          "armour": null,
+          "shield": false,
+          "skills": 2,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "act": 2,
+          "st": 3,
+          "ctrl_s": 2,
+          "rsc": 2,
+          "end": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": null,
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "dur": 3,
+          "act": 2,
+          "st": 3,
+          "ctrl_s": 2,
+          "rsc": 2,
+          "end": 2
+        }
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "unarmoured-defence",
+        "extra-attack"
+      ],
+      "note": "The d10 Martial Arts die, Evasion and Stillness of Mind from 7, and the tier-3 subclass feature — the first of the two real payoff levels."
+    },
+    "monk/3/Way of the Friar": {
+      "grants": {
+        "shield": true,
+        "boosters": [
+          "friars-blessing"
+        ]
+      },
+      "deltas": {
+        "dur": 2,
+        "end": 1,
+        "act": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "concentration"
+      ],
+      "note": "Built for exactly this run — per-turn temp HP for both characters, a free teleport to your partner, shield proficiency that still allows Unarmoured Defence plus advantage on concentration checks, and Friar's Blessing's +1d4 to attacks and saves; the invented `concentration` tag means Friar's Bond occupies the concentration slot a caster wanted."
+    },
+    "monk/3/Way of Mercy": {
+      "deltas": {
+        "end": 2,
+        "st": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Free healing folded into Flurry plus Hands of Harm, and two skill proficiencies chosen from a list to cover gates the partner cannot roll."
+    },
+    "monk/3/Way of the Long Death": {
+      "deltas": {
+        "dur": 1,
+        "end": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Touch of Death stacks WIS + monk level temp HP on every kill; the class-defining Mastery of Death is at 11, not here."
+    },
+    "monk/3/Way of the Astral Self": {
+      "deltas": {
+        "st": 1,
+        "dur": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "The single-stat Monk — the astral arms use WIS for attack and damage at +5 ft reach, so DEX and STR can both stay low and points go to CON."
+    },
+    "monk/3/Way of the Kensei": {
+      "deltas": {
+        "dur": 1,
+        "st": 1,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Makes Monk a weapon character in a list with an enormous weapon pool and a thin unarmed one; Agile Parry's +2 AC comes free on nearly every turn."
+    },
+    "monk/3/Way of the Open Hand": {
+      "deltas": {
+        "ctrl_s": 2
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Topple, Push and Stagger ride every Flurry on the Ki Save DC — control that costs no extra action, which is worth more than raw damage in a two-body party."
+    },
+    "monk/3/Way of Shadow": {
+      "deltas": {
+        "skl": 2,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Covers the scouting role a two-person party has no body for — Hide, party-wide Pass Without Trace, Darkness and Shadow Step off one short-rest pool."
+    },
+    "monk/3/Way of the Sun Soul": {
+      "deltas": {
+        "st": 1,
+        "end": 1
+      },
+      "requires": {
+        "primary": "dex"
+      },
+      "conflicts": [],
+      "note": "The only Way that makes a Monk a genuine ranged character, but Radiant Sun Bolt scales on DEX and so gains nothing from Listo's WIS-based Ki Save DC."
+    },
+    "monk/3/Way of the Ascendant Dragon": {
+      "deltas": {
+        "aoe": 2,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Breath of the Dragon is real cone/line AoE from a class that normally has none, without spending the Bonus Action, plus a Charisma-check advantage toggle."
+    },
+    "monk/3/Warrior of the Elements": {
+      "deltas": {
+        "ctrl_s": 1,
+        "st": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Elemental Strikes replace the default unarmed attack so even opportunity attacks carry extended range and a push/pull rider, and damage type is selectable against resistant enemies."
+    },
+    "monk/6/Way of the Friar": {
+      "grants": {
+        "shield": true,
+        "boosters": [
+          "friars-blessing"
+        ]
+      },
+      "deltas": {
+        "dur": 2,
+        "end": 1,
+        "act": 1,
+        "ctrl_a": 2,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [
+        "concentration"
+      ],
+      "note": "Adds quarterstaff Reach, Guiding Strike handing your partner advantage on a target, and Pacifying Sweep's arc knockback plus a Pacified rider."
+    },
+    "monk/6/Way of Mercy": {
+      "deltas": {
+        "end": 3,
+        "st": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Physician's Touch folds condition removal — blinded, deafened, paralysed, poisoned, stunned, or all diseases — into the same free Flurry heal."
+    },
+    "monk/6/Way of the Long Death": {
+      "deltas": {
+        "dur": 1,
+        "end": 1,
+        "ctrl_a": 2
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Hour of Reaping frightens everything within 30 ft on a failed WIS save, though the implementation only blocks movement toward you."
+    },
+    "monk/6/Way of the Astral Self": {
+      "deltas": {
+        "st": 1,
+        "dur": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Visage adds 120 ft darkvision through magical darkness and advantage on Insight and Intimidation, folded into the Arms bonus action."
+    },
+    "monk/6/Way of the Kensei": {
+      "deltas": {
+        "dur": 1,
+        "st": 2,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Kensei weapons count as magical and Deft Strike spends 1 ki to add a Martial Arts die to the first hit, stacking with interrupts like Sneak Attack."
+    },
+    "monk/11/Way of the Long Death": {
+      "deltas": {
+        "dur": 4,
+        "end": 2
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Mastery of Death is the strongest single line in the class for a two-person Lone Wolf run — 1 ki, no action, converts a drop to 0 HP into 1 HP, repeatably, from a short-rest pool."
+    },
+    "monk/11/Way of Mercy": {
+      "deltas": {
+        "end": 4,
+        "st": 2,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Flurry of Healing and Harm makes every Flurry strike a free full-power heal and Hands of Harm free on top, costing only short-rest ki."
+    },
+    "monk/11/Way of the Astral Self": {
+      "deltas": {
+        "st": 2,
+        "dur": 3,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Deflect Energy reduces six damage types by 1d10 + WIS on a reaction — the best user in the class of Lone Wolf's extra Reaction — plus Empowered Arms."
+    },
+    "monk/11/Way of the Ascendant Dragon": {
+      "deltas": {
+        "aoe": 3,
+        "dur": 2,
+        "ctrl_a": 1,
+        "skl": 1
+      },
+      "requires": {
+        "primary": "wis"
+      },
+      "conflicts": [],
+      "note": "Aspect of the Wyrm is the only Way here that hands the other character a defensive buff, an elemental resistance aura, and the breath moves to three Martial Arts dice."
+    },
+    "monk/11/Way of the Kensei": {
+      "deltas": {
+        "dur": 1,
+        "st": 3,
+        "skl": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Sharpen the Blade spends up to 3 ki for +X attack and damage for a minute, but does nothing on a weapon that already carries an enchantment bonus."
+    },
+    "mesmerist/1": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0
+        },
+        "deltas": {
+          "ctrl_s": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Hypnotic Stare is a permanent bonus-action -1 to one enemy's saves with no resource cost, improving every control spell the duo aims at that target; whether a mid-run dip still grants the light armour, finesse weapons and skills is undocumented by the mod `(unverified)`."
+    },
+    "mesmerist/2": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 1,
+          "rsc": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 1,
+          "rsc": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "The real dip — Towering Ego adds Cha modifier to Wisdom saves and half Cha to Intelligence saves permanently, scaling with Charisma rather than class level, so two levels buy +5 Wis at Cha 20; it shuts off while you are already under a mind-affecting condition, so it prevents rather than cures."
+    },
+    "mesmerist/3": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 1,
+          "rsc": 1,
+          "st": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 1,
+          "rsc": 1,
+          "st": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Feat-neutral under Listo's cadence and buys an Aspect, though every archetype's level-3 payload is modest and Gift of Will is out of reach until 7."
+    },
+    "mesmerist/5": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 1,
+          "st": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 1,
+          "st": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Hypnotic Stare goes to 2 stacks and 2nd-level Bard-list spells arrive on the half-caster table."
+    },
+    "mesmerist/6": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 2,
+          "st": 1,
+          "dur": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 2,
+          "rsc": 2,
+          "st": 1,
+          "dur": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "The Stare pierces mind-affecting immunity at 50% and Feint drops the target's attack rolls by 2."
+    },
+    "mesmerist/7": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 3,
+          "rsc": 2,
+          "st": 1,
+          "dur": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 3,
+          "rsc": 2,
+          "st": 1,
+          "dur": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "The second real breakpoint — Tier-2 archetype picks unlock here, which is where Gift of Will and Psychic Inception live."
+    },
+    "mesmerist/11": {
+      "as_first": {
+        "grants": {
+          "prof": [
+            "dex",
+            "cha"
+          ],
+          "armour": "light",
+          "shield": false,
+          "skills": 3,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 3,
+          "rsc": 2,
+          "st": 2,
+          "dur": 1,
+          "skl": 2
+        }
+      },
+      "as_dip": {
+        "grants": {
+          "prof": [],
+          "armour": "light",
+          "shield": false,
+          "skills": 0,
+          "expertise": 0,
+          "boosters": [
+            "towering-ego"
+          ]
+        },
+        "deltas": {
+          "ctrl_s": 3,
+          "rsc": 2,
+          "st": 2,
+          "dur": 1
+        }
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Stare to 3 stacks, Phasic Challenge, and a Tier-any archetype pick; half-caster slots mean this contributes only half to a multiclass slot table."
+    },
+    "mesmerist/3/Aspect of the Trickster": {
+      "deltas": {
+        "dur": 1,
+        "rsc": 1,
+        "act": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Two Tier-1 Tricks implanted on yourself or the partner and six short-rest Hypnotic Bonds, firing as a free action on their trigger — Mesmeric Mirror alone is a guaranteed miss on the other character."
+    },
+    "mesmerist/3/Aspect of the Eyebiter": {
+      "deltas": {
+        "ctrl_s": 1,
+        "st": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "One Tier-1 Bold Stare riding the Hypnotic Stare for its whole duration — Sundering pushes the save penalty onto AC, Disorientation onto attack and damage."
+    },
+    "mesmerist/3/Aspect of the Daredevil": {
+      "deltas": {
+        "st": 1,
+        "ctrl_s": 1
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Two Panache and one Tier-1 Dazzling Feint; Panache only returns on a crit or kill with a one-handed piercing weapon, otherwise on a long rest, which is the expensive rest in this run."
+    },
+    "mesmerist/5/Aspect of the Daredevil": {
+      "deltas": {
+        "st": 2,
+        "act": 1,
+        "ctrl_s": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Daredevil's Deeds grants Extra Attack while you hold at least 3 Panache — dedicating Panache to Improved or Greater Feints can drop you back below the threshold."
+    },
+    "mesmerist/6/Aspect of the Eyebiter": {
+      "deltas": {
+        "st": 2,
+        "ctrl_s": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Painful Stare adds 2d6 psychic once per turn whenever you damage the Stare target."
+    },
+    "mesmerist/7/Aspect of the Trickster": {
+      "deltas": {
+        "dur": 2,
+        "act": 1,
+        "rsc": 1,
+        "ctrl_s": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "Gift of Will adds Cha modifier plus half Mesmerist level to the partner's Wisdom save — the only partner-facing save bonus in the class, and the self-exclusion is irrelevant because Towering Ego already covers you; Compel Alacrity is a 2-round Haste on top."
+    },
+    "mesmerist/7/Aspect of the Eyebiter": {
+      "deltas": {
+        "ctrl_s": 3,
+        "st": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Psychic Inception makes the Hypnotic Stare work at full strength on normally-resistant creatures, closing the undead and construct immunity hole."
+    },
+    "mesmerist/7/Aspect of the Daredevil": {
+      "deltas": {
+        "st": 2,
+        "act": 1,
+        "dur": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Parry and Riposte auto-Feints against anyone who misses you for 3 Panache, and a Tier-2 Dazzling Feint arrives."
+    },
+    "mesmerist/11/Aspect of the Trickster": {
+      "deltas": {
+        "dur": 3,
+        "ctrl_s": 2,
+        "act": 1,
+        "rsc": 2,
+        "end": 1
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [],
+      "note": "The strongest archetype for this run — three simultaneous implants, Expansive Trick covering both characters on one implant, and Tier-3 picks like Cursed Sanction, all off a short-rest Bond pool."
+    },
+    "mesmerist/11/Aspect of the Eyebiter": {
+      "deltas": {
+        "ctrl_s": 4,
+        "st": 3,
+        "dur": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "The boss-lockdown option — Sapped Magic and Withering form a standing anti-caster package and Oscillation redirects a boss onto you, which needs the Resistance boon on a d8 light-armour chassis."
+    },
+    "mesmerist/11/Aspect of the Daredevil": {
+      "deltas": {
+        "st": 3,
+        "act": 2,
+        "dur": 2,
+        "ctrl_s": 2
+      },
+      "requires": {
+        "primary": "cha"
+      },
+      "conflicts": [
+        "extra-attack"
+      ],
+      "note": "Evasion, Uncanny Dodge and a third reaction at 9 while holding 5 Panache, plus once-per-short-rest Tier-3 Feints; Superior Defense adds Charisma to AC while unarmoured."
+    },
     "exit": {
-      "fighter": {"17": {"st": -1}, "14": {"st": -1, "end": -1}, "11": {"st": -1, "end": -1}},
-      "rogue":   {"17": {"skl": -1}, "14": {"skl": -1, "st": -1}, "11": {"skl": -2, "st": -1}}
+      "fighter": {
+        "17": {
+          "st": -1
+        },
+        "14": {
+          "st": -1,
+          "end": -1
+        },
+        "11": {
+          "st": -1,
+          "end": -1
+        }
+      },
+      "rogue": {
+        "17": {
+          "skl": -1
+        },
+        "14": {
+          "skl": -1,
+          "st": -1
+        },
+        "11": {
+          "skl": -2,
+          "st": -1
+        }
+      },
+      "cleric": {
+        "17": {
+          "rsc": -1
+        },
+        "14": {
+          "rsc": -1,
+          "dur": -1,
+          "end": -1
+        },
+        "11": {
+          "rsc": -2,
+          "dur": -1,
+          "end": -1,
+          "st": -1,
+          "ctrl_a": -1
+        }
+      },
+      "ranger": {
+        "17": {
+          "st": -1
+        },
+        "14": {
+          "st": -1,
+          "dur": -1
+        },
+        "11": {
+          "st": -1,
+          "dur": -1,
+          "skl": -1,
+          "rsc": -1
+        }
+      },
+      "paragon": {
+        "17": {
+          "st": -2,
+          "dur": -1
+        },
+        "14": {
+          "st": -3,
+          "dur": -2,
+          "rsc": -1
+        },
+        "11": {
+          "st": -3,
+          "dur": -2,
+          "rsc": -1,
+          "act": -1
+        }
+      },
+      "bloodhunter": {
+        "17": {
+          "st": -1,
+          "dur": -1
+        },
+        "14": {
+          "st": -2,
+          "dur": -1
+        },
+        "11": {
+          "st": -2,
+          "dur": -1,
+          "rsc": -1
+        }
+      },
+      "inquisitor": {
+        "17": {
+          "st": -1,
+          "rsc": -1
+        },
+        "14": {
+          "st": -1,
+          "rsc": -2,
+          "dur": -1
+        },
+        "11": {
+          "st": -2,
+          "rsc": -2,
+          "dur": -1
+        }
+      },
+      "sorcerer": {
+        "17": {
+          "rsc": -1,
+          "dur": -1
+        },
+        "14": {
+          "rsc": -2,
+          "dur": -1,
+          "act": -1
+        },
+        "11": {
+          "rsc": -2,
+          "dur": -1,
+          "act": -1,
+          "aoe": -1
+        }
+      },
+      "bard": {
+        "17": {
+          "rsc": -2,
+          "ctrl_s": -1
+        },
+        "14": {
+          "rsc": -2,
+          "ctrl_s": -1,
+          "dur": -1,
+          "aoe": -1
+        },
+        "11": {
+          "rsc": -3,
+          "ctrl_s": -2,
+          "dur": -1,
+          "aoe": -1,
+          "skl": -1
+        }
+      },
+      "artificer": {
+        "17": {
+          "dur": -1,
+          "st": -1
+        },
+        "14": {
+          "dur": -1,
+          "st": -1,
+          "rsc": -1
+        },
+        "11": {
+          "dur": -2,
+          "st": -1,
+          "rsc": -2
+        }
+      },
+      "barbarian": {
+        "17": {
+          "st": -1,
+          "rsc": -1
+        },
+        "14": {
+          "st": -2,
+          "rsc": -1
+        },
+        "11": {
+          "st": -2,
+          "dur": -2,
+          "rsc": -1
+        }
+      },
+      "paladin": {
+        "17": {
+          "st": -1,
+          "dur": -1
+        },
+        "14": {
+          "st": -1,
+          "dur": -1,
+          "rsc": -1
+        },
+        "11": {
+          "st": -2,
+          "dur": -2,
+          "rsc": -1
+        }
+      },
+      "druid": {
+        "17": {
+          "rsc": -1
+        },
+        "14": {
+          "st": -1,
+          "aoe": -1,
+          "rsc": -2
+        },
+        "11": {
+          "st": -1,
+          "dur": -1,
+          "aoe": -2,
+          "rsc": -2
+        }
+      },
+      "warlock": {
+        "17": {
+          "rsc": -1
+        },
+        "14": {
+          "st": -1,
+          "aoe": -1,
+          "rsc": -1
+        },
+        "11": {
+          "st": -1,
+          "aoe": -1,
+          "ctrl_s": -1,
+          "rsc": -2
+        }
+      },
+      "wizard": {
+        "17": {
+          "rsc": -2,
+          "st": -1,
+          "end": -1
+        },
+        "14": {
+          "rsc": -3,
+          "st": -2,
+          "aoe": -1,
+          "ctrl_s": -1,
+          "end": -1
+        },
+        "11": {
+          "rsc": -4,
+          "st": -2,
+          "aoe": -2,
+          "ctrl_s": -2,
+          "ctrl_a": -1,
+          "end": -1
+        }
+      },
+      "monk": {
+        "17": {
+          "st": -1,
+          "rsc": -1
+        },
+        "14": {
+          "st": -2,
+          "dur": -1,
+          "ctrl_s": -1,
+          "rsc": -1
+        },
+        "11": {
+          "st": -2,
+          "dur": -2,
+          "ctrl_s": -1,
+          "rsc": -1,
+          "end": -1
+        }
+      },
+      "mesmerist": {
+        "17": {
+          "dur": -2,
+          "st": -1,
+          "ctrl_s": -1
+        },
+        "14": {
+          "dur": -2,
+          "st": -2,
+          "ctrl_s": -2,
+          "rsc": -1
+        },
+        "11": {
+          "dur": -3,
+          "st": -2,
+          "ctrl_s": -2,
+          "rsc": -1,
+          "act": -1
+        }
+      }
     }
   }
 }

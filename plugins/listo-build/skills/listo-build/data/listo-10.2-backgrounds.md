@@ -80,13 +80,27 @@ score them **where they land**, not at level 20:
 | **Potion of Everlasting Vigour** | **Sleight of Hand**, pickpocket Araj Oblodra | **II** | pickpocket, scales with value | permanent **+2** to an ability |
 | **Mirror of Loss** | **Religion** | **III** | **25** | permanent **+2** to an ability (to 24), optional +1 Cha |
 | **Phalar Aluve +3** | **Sleight of Hand**, pickpocket only | **III** | ~20, scales with value | the upgraded sword |
-| Traps, hidden caches | **Perception** — **passive**, never rolled | all three | 15–25 | avoided damage and lost loot |
+| Traps, hidden caches | **Perception** — rolled **automatically**, with no prompt | all three | 15–25 | avoided damage and lost loot |
 | Secret doors, switches | **Investigation** | all three | 15–20 | routes and caches |
 
 Everything else is **breadth**: it opens dialogue and small XP, and missing it costs nothing
-permanent. **Persuasion is breadth** — no gate in the run runs off it, which is the single most
-common misallocation here. Deception and Intimidation are not: between them they open Hag's Hair,
-*and* they avoid fights, which has its own value under Combat Extender.
+permanent. **Persuasion opens no named gate**, and it was previously called breadth on that
+basis. That was the wrong test. No *named* gate runs off it, but town dialogue runs off it
+constantly, at the routine DCs below, in whatever build happens to be worn — and unlike a named
+gate there is no warning and nothing to prepare. Deception and Intimidation carry Hag's Hair *and*
+avoid fights, which has its own value under Combat Extender; Persuasion carries the long tail.
+
+**The real division is not gate versus breadth — it is telegraphed versus not.** A telegraphed
+check can be prepared for, and the cheapest preparation is a **100-gold respec at Withers**, who
+is recruitable from the Dank Crypt. bg3.wiki documents exactly this for the Mirror of Loss:
+respec into Rogue 11 / Knowledge Cleric 1 for Religion Expertise, pass DC 25, then respec back
+*"retaining the Mirror of Loss stat enhancement"*. What survives that trick is the untelegraphed
+half: traps that fire, caches you walk past, and townspeople who talk to whoever is standing
+there. **That is what this axis should measure.**
+
+Two further reasons the named gates are weaker than they look — every one of them has a no-check
+route to the same reward: taking Ethel's deal gives the hair and costs only Mayrina, and Araj can
+be killed and looted. Passing buys the *secondary* prize, not the ability point.
 
 > **`references/gates.md` owns the full gate list**, including the gates that are not paid in
 > skill checks at all — Awakened, the Tharchiate blessing, Anointed in Splendour and the rest —
@@ -186,10 +200,14 @@ Three consequences worth planning around:
 2. **Reliable Talent turns the Act III gates into formalities and does nothing for Act I.** A
    Rogue 11+ with Expertise and any positive modifier has a floor of `10 + 12 + mod` = **22 or
    better** — every Act III DC 20 passes without rolling. It arrives after Hag's Hair.
-3. **Passive Perception takes none of them.** It is `10 + WIS + proficiency`, doubled with
-   Expertise, and Guidance does not apply. The only way to raise it is Wisdom, proficiency and
-   Expertise — so passive Perception belongs on the **high-Wisdom** character, not on whoever
-   happened to have a spare pick.
+3. **Perception detection takes none of them.** Baldur's Gate 3 does not implement these as
+   tabletop passive checks — bg3.wiki: *"sometimes erroneously referred to as passive perception
+   checks … in Baldur's Gate 3 they are instead implemented as automatic rolls."* They fire when a
+   character walks close enough, with a die roll and a success indicator but **no prompt**, and
+   with no prompt there is nothing to spend Inspiration on. So there is no `10 + WIS` floor: a
+   high-Wisdom character still misses sometimes and a low one still gets there sometimes. The
+   modifier is all that moves the odds, which still argues for putting Wisdom, proficiency and
+   Expertise on one character — just as a matter of odds rather than of certainty.
 
 ### Inspiration — the bank that turns a marginal check into a passed one
 
@@ -229,9 +247,10 @@ single most important one. Three consequences, and they reorder the whole axis:
 2. **Inspiration cannot fix a missing proficiency.** Untrained against a DC 20 is 5–10% a roll;
    the entire bank drags that to 23–41%. **The discriminator is no longer the size of the
    modifier — it is whether any character can roll the check at all.**
-3. **Passive Perception is the one gate the bank cannot reach**, because nothing is rolled. That
-   makes it the axis's most load-bearing number: it must be bought with Wisdom, proficiency and
-   Expertise, on the high-Wisdom character, up front.
+3. **Trap and cache detection is the one check the bank cannot reach.** Not because nothing is
+   rolled — it is — but because the roll happens automatically and never asks. The same is true in
+   practice of routine town dialogue: the bank is four charges for an entire run, and spending it
+   on a shopkeeper is spending it. **Treat the bank as belonging to the named gates only.**
 
 ### Scoring the axis
 
@@ -241,11 +260,26 @@ Score each gate at the act it lands in, **with two Inspiration rerolls assumed**
 
 | Score | The pair |
 |---|---|
-| **5** | Every rolled gate at **≥90% with two rerolls**, every one of them on a **proficient** character, and **passive Perception 21+** |
-| **4** | Every gate has a proficient character, but one needs the **full bank** to clear 90%, or passive Perception is **17–20**, or **Investigation** has no proficient character, or the pair has **no Guidance** for unplanned checks |
-| **3** | **No proficient character on Hag's Hair, the Mirror or either pickpocket**, or passive Perception **≤16** |
-| **2** | Two gates with no proficient character |
-| **1** | Three or more |
+| **5** | Every check clears on a roll of 1 — the routine band of the act is covered outright, and each named gate has a proficient character |
+| **4** | Every check at **≥90%**, counting two Inspiration rerolls on the named gates only |
+| **3** | Every check at least a coin-flip. This is what a deliberate face-plus-scout pair looks like |
+| **2** | Some check is a certainty and others are out of reach — the shape of two bodies built the same way |
+| **1** | One check reachable at all |
+| **0** | Nothing in the act is reachable |
+
+**Rerolls belong to the named gates only.** Traps and caches roll automatically and never prompt,
+and routine dialogue is far too frequent to bank against; four charges do not stretch. Named
+gates are telegraphed and worth the charge.
+
+**Score the pair, not the bodies, and take the better of the two on every check.** `Use Highest
+Modifier in dialogue` puts the host on the party-best skill total, `Use Best Sleight of Hand` does
+the same for pickpocket and trap disarm, and either character can walk into a trap or search a
+wall. Nothing here is personal — the Mirror of Loss was the one personal check in the run, and it
+is no longer scored.
+
+**Two faces are worth less than a face and a scout.** Charisma covers town dialogue and Hag's
+Hair; Wisdom and Intelligence cover traps, caches and secret doors. Doubling either leaves the
+other at nothing, and taking the better of the two means the duplicate contributes almost nothing.
 
 **The failure mode this rubric is built to catch** is a gate nobody can roll. A bad modifier is a
 few reloads; a missing proficiency is a reward you do not get.

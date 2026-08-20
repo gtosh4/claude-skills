@@ -223,3 +223,37 @@ footer {
 /* Pareto frontier: a pairing nothing beats on all four blocks at once. */
 .field tr.front th[scope="row"] { box-shadow: inset 3px 0 0 var(--accent, #7aa2f7); }
 .field tr.front td.b { font-weight: 700; }
+
+/* Column headers carrying a title= explanation. The dotted rule is the only signal a tooltip
+   exists at all; without it the help is there but undiscoverable. */
+th[title] { cursor: help; }
+th[title] > span, .field th[title] {
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 1px;
+}
+
+/* Field table: Tempo and Rest each span their three act columns. */
+.field thead th.grp { text-align:center; padding-bottom:3px; color:var(--ink-2); }
+/* Match td.n exactly — same alignment and same right padding — or the act labels sit off the
+   numbers they head by the difference between the two paddings. */
+.field thead th.sub { text-align:right; padding:2px 9px 6px 5px; font-size:9.5px; opacity:.8; }
+
+/* --- anchors ---
+   Headings and cards are linkable. The anchor is the heading itself rather than a separate
+   marker, so the link target is the thing you are looking at; the sigil only appears on hover
+   and is hidden from assistive tech, which reads the heading text either way.
+   scroll-margin-top keeps a jumped-to target clear of the viewport edge. */
+:target { scroll-margin-top: 24px; }
+.rost, .entry, section > h2 { scroll-margin-top: 24px; }
+a.anchor { color: inherit; text-decoration: none; }
+a.anchor:hover { text-decoration: none; }
+a.anchor::after {
+  content: "#"; margin-left: .38em; font-weight: 400;
+  color: var(--muted); opacity: 0; transition: opacity .12s ease;
+}
+a.anchor:hover::after, a.anchor:focus-visible::after { opacity: .85; }
+.rank a { color: inherit; text-decoration: none; }
+a.ent { text-decoration: none; }
+a.ent:hover, a.ent:focus-visible { background: var(--ok); color: var(--bg); }
+:target.rost, :target.entry { outline: 2px solid var(--ok); outline-offset: 6px; }
+@media (prefers-reduced-motion: reduce) { a.anchor::after { transition: none; } }

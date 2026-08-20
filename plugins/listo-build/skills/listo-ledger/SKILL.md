@@ -17,7 +17,25 @@ scripts/render_ledger.py ledger.json -o ledger.html
 ```
 
 `assets/ledger-schema.md` is the shape. `assets/ledger-example.json` is a
-working ledger to copy.
+working ledger to copy. A published ledger is versioned as `assets/ledger-vN.json`
+with a `ledger-vN-provenance.json` sidecar beside it; only the newest pair is live,
+and superseded versions are deleted rather than kept, since a stale ledger that still
+renders is indistinguishable from the current one.
+
+### The scripts
+
+| script | stage | does |
+|---|---|---|
+| `seed_index.py` | seed | derives the subclass inventory, diffs the seeds, applies the promotion bar |
+| `enumerate_splits.py` | split search | enumerates every split a subclass can express and ranks them |
+| `compose.py` | split search | composes a filter-grade vector from catalogued parts — never publishes a number |
+| `crosscheck.py` | score | checks built bodies against the tier-1 base profiles for omitted effects |
+| `naming.py` | score | resolves chassis ids centrally, after scoring, so parallel agents cannot collide |
+| `merge_routine.py` | evidence | merges a routine-skills evidence pass, with coverage and calibration checks |
+| `merge_prose.py` | prose | merges rewritten entry prose and roster notes, enforcing labels and self-containment |
+| `apply_falls.py` | repair | applies falling-series repairs and refuses to write unless the defect is gone |
+| `pb_sensitivity.py` | audit | measures how far the act III proficiency-bonus convention moves the ranking |
+| `render_ledger.py` | render | every derived number, the field table and the HTML |
 
 ## Discovering the roster
 
@@ -154,6 +172,12 @@ the second would tell a reader the ledger judged a chassis poor when it did not.
 class *is* the identity — Bombard, Volley, Zeal, Chains. Loading the seeds file refuses a
 duplicate name, since two chassis sharing an id would collide as anchors in the rendered ledger.
 
+**Ids are proposed by the agent and resolved centrally, by `naming.py`, after scoring.** Parallel
+agents naming bodies at once cannot see each other's picks; because the merge is a dict
+assignment, a collision does not error, it silently *overwrites* a body — and the overwritten
+subclass then reads as uncovered. That has happened twice, at 8 collisions and at 13, and only the
+larger run was big enough to notice. Resolution is deterministic: same input, same ids, every time.
+
 ### Running the sweep — the brief is the whole trick
 
 157 subclasses is a subagent job. The cost is dominated not by the class files but by **shared
@@ -206,6 +230,47 @@ as unseeded or stale, so a bad batch is re-run alone rather than re-running the 
 reads belong in the ten-axis scoring of the ~30 chassis that actually get promoted, where the
 claim is load-bearing.
 
+### Searching the split space
+
+A seed's `split` is a hypothesis one agent wrote while looking at one class. It is also the most
+consequential thing the pipeline decides — the split moves more score than any single axis
+judgement — and **the stage that picks it cannot evaluate it**, since evaluation needs the
+ten-axis pass that only promoted builds get. So the split is searched rather than guessed.
+
+Two catalogues carry what the search needs, both authored by briefed agents like the sweep is:
+
+| file | is | brief |
+|---|---|---|
+| `assets/subclass-bases.json` | tier-1 base profiles — what each subclass contributes on its own | `base-brief.md`, `grants-brief.md` |
+| `assets/dip-catalogue.json` | what each class sells, split into `as_first` and `as_dip`, with breakpoints | `catalogue-brief.md`, `build-brief.md` |
+
+```sh
+scripts/enumerate_splits.py --limit 2 -o variants.json   # every expressible split, ranked
+scripts/crosscheck.py ledger.json                        # built bodies vs the base profiles
+```
+
+`enumerate_splits.py` walks the primary class from 11 to 20 levels, spends the remainder on
+catalogued dip breakpoints, marks one class level-1, composes a vector from parts via `compose.py`
+and ranks by pair value against the pool of everything enumerated. `--limit N` keeps the best N
+variants per subclass; `--only` takes comma-separated subclass keys for a smoke test. Enumeration
+is wide — one subclass can express thousands of raw variants, most of which collapse to the same
+composed vector — so ranking, not enumeration, is what makes the output usable.
+
+**Composed vectors are filter-grade and are never published.** Composition is coarse on purpose
+and has three known error modes, all documented in `dip-catalogue.json`: **position** (only the
+level-1 class grants saves and good armour), **saturation** (Extra Attack and bonus actions do not
+stack), and **stat conditionality**. It is tuned to *over-admit*, because a filter's only fatal
+error is dropping a real candidate. The scoring pass re-derives every number from the rubric.
+
+`crosscheck.py` is the fail-closed doctrine one level up. `scoring.py` raises on a value it does
+not *recognise* — an unknown booster id, an unknown reach. Nothing checked for one that was simply
+*omitted*: an effect that exists, has a registry id, is reachable at this body's level, and was
+never recorded. That is the same invisible under-score the doctrine exists to prevent, because a
+missing booster scores as nothing and a score that is too low reads exactly like an honest one. A
+built body reaching a subclass must carry at least that subclass's base profile — it may carry
+**more**, since anything extra came from the dip and sibling variants are supposed to differ, so
+this is a subset test and never an equality test.
+
 ### Wire the rejects into the ledger
 
 `--promote` prints the non-promoted seeds grouped by reason, formatted for
@@ -246,7 +311,11 @@ scripts/seed_index.py --assign 8              # only what is unseeded, drifted o
 scripts/seed_index.py --stamp                 # record src + brief hashes on every seed
 scripts/seed_index.py --check                 # five buckets; blocks while any of the first four bite
 scripts/seed_index.py --promote               # the cut
+scripts/enumerate_splits.py --limit 2 -o variants.json   # search the split, don't inherit the guess
 # ... author ten-axis scores for the promoted builds into ledger.json ...
+scripts/crosscheck.py ledger.json             # nothing reachable was left unrecorded
+# ... naming.py resolves proposed ids; merge_routine.py / merge_prose.py land agent passes ...
+scripts/render_ledger.py ledger.json -o ledger.html
 scripts/seed_index.py --stamp --scored "warlock/The Hexblade:front-line,cleric/Life:durability"
 ```
 

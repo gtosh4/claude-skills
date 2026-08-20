@@ -25,7 +25,7 @@ CLASSES = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                        "listo-build", "data", "classes")
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
                                 "listo-build", "scripts"))
-from scoring import KEYS, SAV_IDX                           # noqa: E402
+from scoring import KEYS, SAV_IDX, BOOSTERS                 # noqa: E402
 
 # The niche vocabulary is listo-build SKILL.md §1a's table. Closed, like every
 # other enum in this format.
@@ -324,6 +324,13 @@ def load_bases(path):
         for a in prof:
             _require(a in ABILITIES, f"{k}: unknown ability {a!r} — expected one of {ABILITIES}")
         _require(len(set(prof)) == len(prof), f"{k}: duplicate ability in prof {prof!r}")
+        bo = b.get("boosters")
+        _require(isinstance(bo, list), f"{k}: `boosters` must be a list (empty is fine)")
+        for x in bo:
+            _require(x in BOOSTERS,
+                     f"{k}: unknown booster {x!r} — add it to BOOSTERS with an implemented "
+                     "effect before authoring it, or put the effect in `uncertain`")
+        _require(len(set(bo)) == len(bo), f"{k}: duplicate booster in {bo!r}")
         _require(b.get("armour", "MISSING") in ARMOUR,
                  f"{k}: armour {b.get('armour')!r} — expected one of {ARMOUR}")
         _require(isinstance(b.get("shield"), bool), f"{k}: `shield` must be true or false")

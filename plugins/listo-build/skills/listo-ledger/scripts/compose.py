@@ -36,18 +36,31 @@ def _part(cat, pid, first):
     if "as_first" in p or "as_dip" in p:
         side = p["as_first"] if first else p["as_dip"]
         return side.get("grants", {}), dict(side.get("deltas", {})), p
-    return {}, dict(p.get("deltas", {})), p          # subclass part: deltas only
+    # A subclass part is normally deltas only — its grants come from the generic part at the same
+    # level. But some subclasses genuinely hand out proficiency the base class does not: Favored
+    # Soul's medium armour and shields, College of Valour's martial package, Armorer's heavy
+    # armour. Those are set-valued like any other grant, so they are honoured here rather than
+    # being smuggled in as a durability delta, which would double-count against the armour floor.
+    return p.get("grants", {}), dict(p.get("deltas", {})), p
 
 
-def compose(cat, base, parts, primary=None, primary_levels=20, concentration=False):
+def compose(cat, base, parts, primary=None, primary_levels=20, concentration=False,
+            primary_first=True, primary_ability=None):
     """`base` is the primary subclass's own 20-level vector + grants; `parts` are the dips.
 
-    Each part is `(part_id, is_first)`. Exactly one part in a build may be first, and the
-    primary's own `is_first` is passed in the same way.
+    Each part is `(part_id, is_first)`. **Exactly one class in a build is the level-1 class**, and
+    it is the only one that grants saving throws. When the primary is not first it keeps only the
+    proficiencies its *subclass* hands out later — Slippery Mind at 15, Diamond Soul at 14, Iron
+    Mind at 7 — and loses the class's own level-1 pair. `base["prof_late"]` carries that subset,
+    from the `arrives` map the grants pass produced. Armour is treated the same way.
     """
     v = {k: base["vector"][i] for i, k in enumerate(KEYS)}
-    prof = set(base.get("prof", []))
-    armour = ARMOUR[base.get("armour")]
+    if primary_first:
+        prof = set(base.get("prof", []))
+        armour = ARMOUR[base.get("armour")]
+    else:
+        prof = set(base.get("prof_late", []))
+        armour = ARMOUR[base.get("armour_late")]
     shield = bool(base.get("shield"))
 
     firsts = [p for p, f in parts if f]
@@ -61,10 +74,10 @@ def compose(cat, base, parts, primary=None, primary_levels=20, concentration=Fal
         prof |= set(grants.get("prof", []))
         armour = max(armour, ARMOUR[grants.get("armour")])
         shield = shield or bool(grants.get("shield"))
-        if meta.get("requires", {}) and primary:
+        if meta.get("requires") and primary_ability:
             want = meta["requires"].get("primary")
-            if want and want != primary:
-                deltas = {k: x / 2 for k, x in deltas.items()}   # condition unmet: halved
+            if want and want != primary_ability:
+                deltas = {k: x / 2 for k, x in deltas.items()}   # stat gate unmet: halved
         for tag in meta.get("conflicts") or []:
             best = tagged.get(tag)
             if best is None or sum(deltas.values()) > sum(best.values()):

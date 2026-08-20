@@ -1,0 +1,5179 @@
+{
+  "provenance": "Tier-1 base profiles, swept 19 August 2026 by four agents under assets/base-brief.md. Each record is the subclass at all twenty levels with no multiclassing, scored in Act II: the zero-dip reference point every split is measured against. Grants were corrected by a second pass under assets/grants-brief.md.",
+  "bases": {
+    "artificer/Alchemist": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        1,
+        2,
+        2,
+        1,
+        1,
+        4,
+        3,
+        null,
+        3
+      ],
+      "prof": [
+        "con",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "int",
+      "concentration": false,
+      "why": "Restorative Reagents makes every elixir 2d6 outward temp HP and Lesser Restoration free and unprepared, on top of the base list's Revivify and Mass Healing Word, with Death Ward landing at 13 — and it is the only subclass in the modlist that measurably pays down the 120+ supply cost of long-resting.",
+      "uncertain": [
+        "Chemical Mastery's free Heal and Greater Restoration land at 15, outside Act II, so rsc 4 rests on Revivify + Mass Healing Word + elixir temp HP + Death Ward at 13.",
+        "Artificer slots cap at 3rd tier until 13, which is why both control axes and aoe sit at 1."
+      ],
+      "boosters": [
+        "flash-of-genius"
+      ],
+      "src": "494b30989c65",
+      "base_deps": "42a5696582d4"
+    },
+    "artificer/Armorer": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        3,
+        3,
+        3,
+        2,
+        3,
+        3,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "int"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "int",
+      "concentration": false,
+      "why": "The tankiest Artificer — Arcane Armor grants heavy armour proficiency at 3, Extra Attack at 5 is at-will, Guardian's Thunder Gauntlets impose no-concentration disadvantage on anything that hits you attacking someone else, and Perfected Armor is a reaction that yanks an attacker off the partner.",
+      "uncertain": [
+        "armour is recorded as medium because the contract asks for the level-1 grant; Arcane Armor's heavy proficiency arrives at 3 and is what dur 3 is actually scored on.",
+        "primary int is the class's stated primary and spell DC, but Thunder Gauntlets and Lightning Launcher may key off Str/Dex in this implementation — if so the damage axes are overstated by a rung."
+      ],
+      "boosters": [
+        "flash-of-genius"
+      ],
+      "src": "11739e7bd5dc",
+      "base_deps": "42a5696582d4"
+    },
+    "artificer/Artillerist": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        2,
+        3,
+        1,
+        2,
+        3,
+        3,
+        null,
+        3
+      ],
+      "prof": [
+        "con",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "int",
+      "concentration": false,
+      "why": "Arcane Firearm is +1d8 on every spell cast from 5, the cannon is resummonable without a daily charge and adds a repeatable Flamethrower cone or Force Ballista shot each round, and Fireball is always-prepared from 9; Protector mode temp-HPs the partner off a bonus action.",
+      "uncertain": [
+        "axis-rubrics names the Eldritch Cannon as its worked example of a flat feature that is 'close to irrelevant by Act II' — aoe 3 already applies that discount and leans on Fireball plus the +1d8, not the cannon.",
+        "Fortified Position's second cannon is 15, outside Act II, so act stops at 3."
+      ],
+      "boosters": [
+        "flash-of-genius"
+      ],
+      "src": "3d07cbcb9934",
+      "base_deps": "42a5696582d4"
+    },
+    "artificer/Battle Smith": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        3,
+        4,
+        1,
+        1,
+        4,
+        3,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "int",
+      "concentration": false,
+      "why": "One stat drives attack, damage, spell DC, saves and Arcane Jolt uses; Extra Attack at 5 is at-will, the Steel Defender is a permanent third body that imposes disadvantage on attacks aimed at the partner, and Arcane Jolt is outward healing that rides the attack routine and costs no action.",
+      "uncertain": [
+        "Warding Bond is always-prepared at 5 but redirection never scores above 1 in a duo, so it contributes nothing to rsc 4 — that rung is Arcane Jolt plus Revivify plus Death Ward at 13.",
+        "act 4 counts the Steel Defender and a Homunculus infusion as a multi-body set alongside Extra Attack; without the Homunculus it is a 3."
+      ],
+      "boosters": [
+        "flash-of-genius"
+      ],
+      "src": "414dfff35697",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Base game (Patch 8) — Berserker": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Frenzied Strike is a recurring bonus-action attack on top of Extra Attack and Rage's scaling damage, which is the only thing the L3-L10 kit gives; Retaliation is a 14 feature and is not online at character 12-13.",
+      "uncertain": [
+        "Intimidating Presence scored ctrl_s 2 as an action-cost, no-concentration single-target Frighten; BG3's Frightened is weaker than the tabletop condition and the rubric has no anchor for it."
+      ],
+      "boosters": [],
+      "src": "c61067bdeaa3",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Base game (Patch 8) — Path of the Giant": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Extra Attack plus Elemental Cleaver's rider is rung 3 and no more at 12-13; the throw scaling that defines the line (+8 at 16, Huge at 14) all lands after Act II, and Mighty Impel is not a per-round third attack.",
+      "uncertain": [
+        "Elemental Cleaver's chosen type gives a second damage type against Absolute Wrath, which the st rung cannot express separately from magnitude."
+      ],
+      "boosters": [],
+      "src": "5ed53a9180b0",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Base game (Patch 8) — Path of Wild Magic": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Wild Magic's surges are random and mostly incidental; the real feature, Bolstering Magic, hands the partner a slot or a d3 and lands on no axis this schema carries.",
+      "uncertain": [
+        "Bolstering Magic gifts the partner a 3rd-level slot per rest cycle. That is not prevention, restoration, outward healing or redirection, so rsc is 0 by the ladder's own definition — but it is the subclass's headline duo feature and the schema loses it entirely.",
+        "Goon's Magic Awareness adds proficiency bonus to saves vs spells — a blanket save booster, i.e. rung-4 material on the Saves axis. sav is null by contract, so this is invisible in the profile."
+      ],
+      "boosters": [
+        "magic-awareness"
+      ],
+      "src": "6e1c5abf6a73",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Base game (Patch 8) — Wildheart": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        2,
+        1,
+        1,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Bear Heart's near-blanket resistance stacked on Rage is proportional mitigation on top of medium and shield, which is the whole of the subclass before its 14 capstone.",
+      "uncertain": [
+        "Listo did not pull Goon's v1.2.0.0, so the Crocodile / Honey Badger / Stallion / Tiger / Wolverine aspects are still buggy in this build; scores assume Bear and Elk, the two that work.",
+        "Bear Attunement's taunt and Eagle flight are 14 features and are not counted."
+      ],
+      "boosters": [],
+      "src": "e1ed2d029519",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Ancestral Guardian": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        2,
+        3,
+        0,
+        3,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Spirit Shield is the only outward-facing feature in the whole barbarian file — a reaction that prevents damage on the partner, at-will while raging, and Lone Wolf's second reaction doubles it; Ancestral Protectors is a free no-concentration single-target debuff that lands every turn.",
+      "uncertain": [
+        "Spirit Shield's 3d6 is flat and therefore decays against Act II's x1.96 HP, which is why rsc sits at 3 rather than 4 despite the at-will clock.",
+        "Ancestral Protectors degrades one enemy's offence rather than removing its turn; scored ctrl_s 3 as a no-concentration repeatable rider, not as hard control."
+      ],
+      "boosters": [],
+      "src": "737ff1755941",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Battlerager": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "A 1d4 bonus-action spike is a third attack source in name only at Act II HP, and Reckless Abandon's Con-mod temp HP is a trickle; the medium-metal-armour lock costs Unarmoured Defence for nothing.",
+      "uncertain": [
+        "Grappling Framework is not shipped, so the grapple half of Battlerager Armor falls back to 3 piercing on a Throw. Scores assume the fallback."
+      ],
+      "boosters": [],
+      "src": "08034f6dea74",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Beast": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        3,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Claws add one attack per Attack action, so Lone Wolf's two Actions buy six attacks a round with Rage's rider on each; Infectious Fury's reaction-theft mode is genuine no-concentration turn removal on a proficiency-bonus clock.",
+      "uncertain": [
+        "Claws require an empty hand in both weapon sets, forfeiting shield and dual-wield; dur 3 assumes the shield is kept and one of Bite or Tail is taken instead on defensive fights.",
+        "Call the Hunt, the feature the class file calls the duo payoff, is a 14 feature and is not online at 12-13; rsc is 0 as a result.",
+        "The Beast save DC keys off Constitution while attacks key off Strength; primary is recorded as str."
+      ],
+      "boosters": [],
+      "src": "b2d521910915",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Juggernaut (Critical Role)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Resolute Stance is at-will Disadvantage on every attack against you, which is scale-invariant and does not decay; Thunderous Blows plus Hurricane Strike is a push-and-prone routine that costs no concentration and also manufactures a free reaction attack for the partner.",
+      "uncertain": [
+        "Resolute Stance also gives your own attacks Disadvantage; st 3 assumes it is toggled off on offensive turns rather than paid for.",
+        "Hurricane Strike granting the partner a reaction melee attack is action-economy handed outward, which the act ladder only recognises at rung 5 for a full Action; scored act 3."
+      ],
+      "boosters": [],
+      "src": "988622d31e2d",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Storm Herald": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        3,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Shielding Storm at 10 hands the partner a proportional elemental resistance for free and Tundra streams temp HP at them every turn, which is the only sustained outward mitigation in the class that costs no rest resource; the aura's own damage is far under Act II par.",
+      "uncertain": [
+        "Desert's 4 fire and Tundra's 4 temp HP are flat and trivial against x1.96 enemy HP, so aoe is 2 (repeatable shape at rung-1 magnitude) rather than 3.",
+        "The three auras are mutually exclusive per rage; rsc 3 scores the Tundra/Shielding Storm line and aoe 2 scores Desert, which one build cannot hold simultaneously.",
+        "Storm Aura consumes a bonus action every turn, so act stays at 2 despite the aura being 'free'."
+      ],
+      "boosters": [],
+      "src": "f6363bec89cf",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Zealot": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        2,
+        1,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Divine Fury scales with barbarian level rather than sitting flat, so the rider holds its rung through Act II; Warrior of the Gods makes the partner's pickup free, which is effective HP on this body rather than rescue aimed outward.",
+      "uncertain": [
+        "Warrior of the Gods and Fanatical Focus are self-directed, so they score on dur and (invisibly) on saves rather than rsc; Zealous Presence is one turn of shared advantage per long rest and is too thin to move rsc off 0.",
+        "Fanatical Focus is a save reroll every rage — a blanket booster, rung-4 material on Saves. sav is null by contract so it does not appear.",
+        "Divine Fury is necrotic or radiant, chosen once at 3; radiant is the correct Act II pick and the profile assumes it."
+      ],
+      "boosters": [
+        "fanatical-focus"
+      ],
+      "src": "2423496f8598",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of Ginnungagap": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        2,
+        3,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Magic Syphoning is a counterspell on a reaction against a modlist the balance docs describe as caster-dense, and Spell Eater turns enemy magic into self-sustain at no rest cost; Null Warrior's crit downgrade and spell-save advantage patch the class's worst hole.",
+      "uncertain": [
+        "Magic Syphoning is a raw Constitution check (no proficiency) vs DC 10 + spell level and refreshes only on entering a rage, so it is roughly one successful interrupt per fight; scored ctrl_s 3, not the rung-4 no-concentration clause.",
+        "Advantage on saves vs spells while raging is a blanket booster the null sav field cannot carry.",
+        "Herald of Ginnungagap's Slow is a 14 feature, not online at 12-13, so ctrl_a stays 0."
+      ],
+      "boosters": [
+        "rage-of-ginnungagap"
+      ],
+      "src": "28c846bfc028",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Lightning Vessel": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        3,
+        2,
+        2,
+        1,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "con",
+      "concentration": false,
+      "why": "Electrified Chains puts +2x Con on hits and Fulgurant Strike is a repeatable interrupt burst, which is the rung-4 shape; Lightning Reflexes' +Con to Dexterity checks is the only answer to Act II's Sleight of Hand gate anywhere in this class.",
+      "uncertain": [
+        "Listo applies an unpublished 'CD's nerf patch' that is not in the manifest. Every damage figure above is the unmodified mod's and Listo's are lower by an unknown amount — st 4 and aoe 2 could both be a rung high. This is the one entry in this batch worth confirming in game before it is trusted.",
+        "The whole damage line is Lightning, a commonly resisted type; Absolute Wrath caps st at 4 regardless, so the cap is not binding but the practical value is lower than 4 suggests.",
+        "skl 1 rather than 0 rests on +Con to Dexterity checks partially answering the Araj pickpocket gate without any Sleight of Hand proficiency."
+      ],
+      "boosters": [],
+      "src": "8432b3b3dbe1",
+      "base_deps": "42a5696582d4"
+    },
+    "barbarian/Path of the Revenant": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        2,
+        3,
+        0,
+        0,
+        0,
+        null,
+        4
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Flat DR 2 under physical resistance under Lone Wolf's halving, in heavy armour, is the tankiest configuration in the file against weapon damage; Haunt is a bonus-action no-concentration Frighten that retargets free on a kill.",
+      "uncertain": [
+        "Ghost Armor grants Heavy armour at level 3, so this body wears heavy for the whole of Acts II and III — but the armour field is defined as the level-1 grant, which is medium. The field cannot express this and it materially understates the chassis.",
+        "'Cannot be healed by any means' during the rage is a hard incompatibility with an outward-healing partner and is not expressible on any axis; it is not scored as a penalty anywhere.",
+        "Whether Haunt mirrors pre- or post-mitigation damage is unstated; if post-mitigation the mirror is small under Lone Wolf halving plus DR, which is why st stays 3."
+      ],
+      "boosters": [],
+      "src": "1413a40f4f0c",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Lore (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        4,
+        5,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Three free proficiencies at 3 on top of Bard's own three and Expertise x4, and Additional Magical Secrets at 6 picks two spells from a 221-entry pool four levels early — it clears both Act II skill gates (Araj's pickpocket and passive Perception) on one body, which is what the host-rolls rule requires.",
+      "uncertain": [
+        "Cutting Words is now blocked by Silence, by Deafened targets and by Charm immunity (Goon's overhaul), which is why it buys dur 2 rather than 3."
+      ],
+      "boosters": [],
+      "src": "7ae6e0775df6",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Swords (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        2,
+        3,
+        2,
+        2,
+        4,
+        4,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "medium",
+      "shield": false,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Extra Attack at 6 with a Slashing Flourish rider, plus Goon's interrupt versions of all three Flourishes converting Lone Wolf's spare Reaction into damage — at-will weapon damage under a full Bard slot table and Song of Rest.",
+      "uncertain": [
+        "primary dex because attack and damage ride the finesse weapon, but the spell DC, the Inspiration die and Magical Secrets all ride Charisma; a Swords Bard is genuinely two-stat and this field forces a single answer.",
+        "armour is recorded as light per the level-1 rule; medium armour and scimitars arrive at 3 and are what dur 2 is scored on."
+      ],
+      "boosters": [],
+      "src": "c8544f19c7d0",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Valour (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        4,
+        4,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "cha",
+      "concentration": true,
+      "why": "The cheapest way to make a Charisma caster durable without a martial dip — medium armour, shields and martial weapons at 3, with Combat Inspiration spending the die for AC on demand off a short-rest pool.",
+      "uncertain": [
+        "armour light / shield false are the level-1 grants as the contract requires; the medium-armour-and-shields package lands at 3 and is what dur 3 is actually scored on. This is the profile field that most understates the subclass.",
+        "Battle Magic's bonus-action weapon attack is 14, outside Act II, so act stays at 2."
+      ],
+      "boosters": [],
+      "src": "7d30ec14a7ff",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Glamour (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        2,
+        1,
+        2,
+        3,
+        3,
+        4,
+        4,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Mantle of Inspiration is outward temp HP on the short-rest Inspiration clock and Mantle of Majesty is a repeated Command, but the aggro-shed that justifies the College — Unbreakable Majesty — does not arrive until 14, so Act II is a plain Bard with a bonus action spent.",
+      "uncertain": [
+        "Nothing in this College improves its own damage or durability at all; the 1s are real, not placeholders."
+      ],
+      "boosters": [],
+      "src": "0552032a68b8",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Eloquence": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        2,
+        1,
+        2,
+        3,
+        3,
+        4,
+        4,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Unsettling Words subtracts a rolled d10 from one enemy's next save and shows you the number before you commit the control spell, and Unfailing Inspiration returns the die whenever the partner's roll fails — the most sustained Inspiration economy in the list, and in a duo the die always goes outward.",
+      "uncertain": [
+        "The mod's own Known Issues list says Silver Tongue is not working properly (suspected Reliable Talent inheritance). skl 4 does not depend on it, but it would be a 5 if it worked.",
+        "Infectious Inspiration is 14, outside Act II."
+      ],
+      "boosters": [],
+      "src": "920ffe5a43de",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Dance": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        1,
+        3,
+        2,
+        2,
+        4,
+        4,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": true,
+      "why": "A Dexterity martial with no weapon and no Extra Attack — Bardic Unarmed Attack is at-will and scales with the Inspiration die (d10 by 10), and Agile Strikes hands a free kick every time you inspire the partner, so Lone Wolf's two bonus actions become two free attacks a round.",
+      "uncertain": [
+        "Tandem Footwork, Improved Tandem Footwork and Leading Evasion are described only in images on the mod page and are recorded as unverified; Leading Evasion at 14 would likely be a durability rung if it is Evasion-shaped.",
+        "primary dex is explicit (Dextrous Attacks) but the Inspiration die and spell DC still ride Charisma."
+      ],
+      "boosters": [],
+      "src": "e653bd91976d",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Tragedy": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        2,
+        1,
+        2,
+        3,
+        3,
+        4,
+        4,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Sorrowful Fate converts any save the pair forces into a Charisma save, which is the stat most enemies are worst at, and Poetry in Misery refunds Inspiration on any natural 1 within 9m — a Reaction-hungry College in a run where Lone Wolf grants a second Reaction.",
+      "uncertain": [
+        "Feature names are matched from the Tal'Dorei source (effects verified, names unverified in the class file).",
+        "Sorrowful Fate is NOT an interrupt — it must be pre-cast on the target before the save is forced, which is why it is scored as a rung-3 rider rather than reliable control.",
+        "Nimbus of Pathos is 14 and drops the target to 0 HP when it ends, which in a duo is 50% of the action economy; it is outside Act II and is not scored."
+      ],
+      "boosters": [],
+      "src": "b0fa89c2e947",
+      "base_deps": "42a5696582d4"
+    },
+    "bard/College of Stormcalling": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        1,
+        2,
+        3,
+        3,
+        4,
+        4,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "The only Bard College in the list that is a genuine blaster — Conductor plus a bonus-action Staccato Lightning that adds Charisma against any electrified or concussed target, and Chorus of Thunder buys no-concentration Concussion (prone, no reactions, one action) off the short-rest Inspiration clock.",
+      "uncertain": [
+        "Mechanics come from the DTO author's documentation site, not the pak; Listo added Otherworldly Archetypes 'for testing'.",
+        "Electrifying Aria and Finale! are 14 and are the subclass's real payload — Act II sees none of it, so these scores understate the chassis badly past character 15.",
+        "Lightning/Thunder-locked, so damage caps at 4 under Absolute Wrath regardless."
+      ],
+      "boosters": [],
+      "src": "72944cb26b50",
+      "base_deps": "42a5696582d4"
+    },
+    "bloodhunter/Order of the Ghostslayer": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        3,
+        2,
+        2,
+        0,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Brand of Sundering rolls the Crimson Rite die twice against a branded creature, and the Rite is a scaling rider (1d4 to 1d10 on the hemocraft track) rather than a flat one, so it holds its rung; Rite of the Dawn puts it on Radiant, which is the second-least-resisted type in Act II, and Aether Walk buys an intangibility window each short rest.",
+      "uncertain": [
+        "rsc 0 is deliberate: Blood Hunter has no healing, no revival and nothing aimed outward. Blood Curse of the Exorcist frees a Charmed/Frightened/Possessed ally — condition removal, a rung-3 effect — but it arrives at 15, above the 12-13 judging point.",
+        "MATERIAL: Dark Augmentation (base class, level 10) adds max(1, INT mod) to STR, DEX and CON saves, which is a blanket booster the schema cannot show because sav derives from the level-1 prof pair (Int + Dex, the weakest pair in the game). All four Orders are understated on saves for this reason.",
+        "Crimson Rite is paid in the Blood Hunter's own hit points, which the Endurance axis does not price."
+      ],
+      "boosters": [
+        "dark-augmentation"
+      ],
+      "src": "01fbf2629923",
+      "base_deps": "42a5696582d4"
+    },
+    "bloodhunter/Order of the Lycan": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        4,
+        3,
+        2,
+        1,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Resilient Hide is one of the rubric's named rung-4 durability equivalents — resistance to non-magical bludgeoning, piercing and slashing, proportional and therefore non-decaying — and Lycan Regeneration adds 1 + CON per turn below half; Predatory Strikes give a bonus-action unarmed strike that can carry a Crimson Rite and scales off DEX.",
+      "uncertain": [
+        "MATERIAL: Bloodlust. While transformed, starting a turn below half HP forces a Wisdom save or you lose control and attack the NEAREST creature — which in a two-body party is your partner, at the moment you are already losing. Advantage on that save only arrives at 15 and unlimited transformations at 18, so levels 3-14 carry a structural risk no axis on this schema records.",
+        "st 4 not 5: the Act II rung-5 anchor is Improved Extra Attack (Fighter 11), which no Blood Hunter reaches.",
+        "Dark Augmentation's save booster is invisible to the derived sav, as with every Order."
+      ],
+      "boosters": [
+        "dark-augmentation"
+      ],
+      "src": "0ec1dfa21fa5",
+      "base_deps": "42a5696582d4"
+    },
+    "bloodhunter/Order of the Mutant": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        3,
+        3,
+        2,
+        0,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Cruelty grants an extra attack after any attack, Precision drops the crit range, and Celerity/Potency are +4 to a raw ability score at 11 (+5 at 18) against a modlist that removed the ability cap — all off a short-rest Mutagen charge, with Strange Metabolism adding poison immunity at 7.",
+      "uncertain": [
+        "MATERIAL: every resistance mutagen hands out a matching vulnerability, and Cruelty's cost is Disadvantage on INT/WIS/CHA saves — on a body whose level-1 saves are already Int + Dex. In a two-body party a vulnerability is far more dangerous than in a four-body one, and dur 3 does not price that downside.",
+        "Adrenaline Burst suppresses all side effects, but it is once per LONG rest and lasts 10 turns.",
+        "Only 2 Mutagen charges exist in the Act II band (a third arrives at 15)."
+      ],
+      "boosters": [
+        "dark-augmentation"
+      ],
+      "src": "8bc4b6942dd2",
+      "base_deps": "42a5696582d4"
+    },
+    "bloodhunter/Order of the Profane Soul": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        2,
+        3,
+        4,
+        3,
+        1,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Brand of the Sapping Scar at 11 is the rubric's own Act II rung-4 anchor on single-target control — blanket Disadvantage on the branded creature's saves, delivered by a free interrupt, costing no concentration — and Mystic Frenzy turns a cantrip into a bonus-action weapon attack, all funded by short-rest pact slots.",
+      "uncertain": [
+        "MATERIAL: primary is recorded as dex per the class's PrimaryAbility=2, but Profane Soul is the one Order whose spell DCs matter, and Pact Magic casts off INTELLIGENCE. This body genuinely needs two stats to 20 and the 'primary to 20 by 6, 22 by 18' budget check cannot be met for both. A human should decide whether primary should read int here.",
+        "rsc 1 is patron-dependent: the Celestial patron spends Blood Maledict to heal, which would be repeatable outward healing on a short-rest clock and reads rsc 3. The base profile scores the Order, not a patron choice.",
+        "The spell ceiling is level 4 and reached only at 19, so ctrl_a 3 rests on 3rd-level pact slots (2 per short rest) rather than on tier.",
+        "listo-10.2-spells.md:530 flags whether the Profane Soul patron list stacks with a real Warlock level as unverified."
+      ],
+      "boosters": [
+        "dark-augmentation"
+      ],
+      "src": "c0d2aeb22cd5",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Heavy armour / martial weapon table (the dip-planning summary)": {
+      "verdict": "not-a-subclass",
+      "why": "A heading over the twenty-row proficiency matrix at cleric.md:148-175, not a domain. It exists to summarise which domains grant heavy armour and martial weapons for dip planning; there is nothing to score.",
+      "boosters": [],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "src": "b9a44bfbdd2b",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Death": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        3,
+        2,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Control Undead (16140) converts an enemy into a third body on a Channel Divinity charge, and Death is the one Cleric domain the Valkrana Limited Lists override still feeds, but there is no Extra Attack behind the necrotic Divine Strike.",
+      "uncertain": [
+        "Improved Reaper's two-target necromancy is level 17 (Act III), so it does not lift the Act II aoe or st reading.",
+        "Necrotic Divine Strike is a commonly-resisted type under Absolute Wrath; irrelevant at rung 1 but it caps any later climb at 4."
+      ],
+      "boosters": [],
+      "src": "c48faa0089aa",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Knowledge": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        3,
+        3,
+        4,
+        3,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Double proficiency in two of Arcana/History/Nature/Religion is Expertise x2 on the Wisdom chassis that already casts Guidance, and CCC's Magical Secrets at 6 and 10 buys control off another list that the base 88-spell Cleric pool does not carry.",
+      "uncertain": [
+        "The CCC Magical Secrets pick count and source list are recorded as unverified in cleric.md:197-198; ctrl_s 3 and skl 3 both lean on it. If Magical Secrets is smaller than assumed, ctrl_s falls to 2.",
+        "Religion Expertise is a DC 25 answer, but the Mirror of Loss is an Act III gate and does not raise the Act II skl reading."
+      ],
+      "boosters": [],
+      "src": "92ccdbf1357b",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Life": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        3,
+        2,
+        2,
+        3,
+        5,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The rescue ceiling of the list: Disciple of Life on top of the base Cleric's Revivify, Death Ward, Greater Restoration and Mass Healing Word, with Preserve Life on a short-rest Channel Divinity clock and healing potions nerfed to make it matter.",
+      "uncertain": [
+        "Goon rewrote Blessed Healer to heal only the caster, so the level-6 feature is Durability, not Rescue, and was not scored in rsc.",
+        "Supreme Healing (maximised dice) is level 17 and lands in Act III; the Act II 5 rests on magnitude plus the short-rest Preserve Life clock, not on it."
+      ],
+      "boosters": [],
+      "src": "262546e84a42",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Light": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        4,
+        3,
+        2,
+        2,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Radiance of the Dawn is a repeatable AoE on the short-rest Channel Divinity clock sitting on top of Spirit Guardians and Flame Strike, and Warding Flare fires twice a round on Lone Wolf's spare reaction without giving up an opportunity attack.",
+      "uncertain": [
+        "Warding Flare imposes disadvantage rather than reducing damage; scored as the mitigation layer that carries medium+shield to dur 3, which is a judgement call against the rung-3 heavy-armour anchor.",
+        "Corona of Light's disadvantage-on-fire/radiant-saves is level 17 and does not touch Act II."
+      ],
+      "boosters": [],
+      "src": "d8b23daece5b",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Nature": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        3,
+        2,
+        2,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Heavy armour plus Listo's own Shillelagh grant lets a Wisdom body swing without a feat tax, but the domain adds nothing repeatable — Charm Animals and Plants only reaches beasts and plants, and Master of Nature's third body is level 17.",
+      "uncertain": [
+        "Divine Strike offers cold/fire/lightning choice, which is a real Absolute Wrath hedge, but it does not move a rung-1 single attack.",
+        "Shillelagh is now a level-1 spell rather than a cantrip; whether it still appears in the domain's Acolyte of Nature picker is not stated in the class file."
+      ],
+      "boosters": [],
+      "src": "ec44c3030ab3",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Tempest": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        4,
+        3,
+        2,
+        3,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Destructive Wrath maximises thunder/lightning on a short-rest Channel Divinity clock (Goon moved the trigger to when damage is dealt, so it is never wasted), and Wrath of the Storm is the repeatable no-concentration rider the rubric names by name on the single-target control axis.",
+      "uncertain": [
+        "Wrath of the Storm only fires when the Cleric is hit in melee, so its ctrl_s rung-3 value assumes the body is actually taking melee attacks; a backline Tempest reads ctrl_s 2."
+      ],
+      "boosters": [],
+      "src": "c1d093d4ad89",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Trickery": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        2,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The weakest of the eight vanilla domains here: light/medium only, poison Divine Strike into Absolute Wrath's layered resistances, one Invoke Duplicity decoy in Act II, and the Listo Blessing-of-the-Trickster buff mod the docs recommend is not installed.",
+      "uncertain": [
+        "Improved Duplicity's four decoys at level 17 would lift act to 3-4, but that is Act III."
+      ],
+      "boosters": [],
+      "src": "e166db2688e7",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/War": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        3,
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The only domain with true Extra Attack (CCC at 6) and War Priest's bonus-action strike stacks on top of it, so with Lone Wolf's second Action this is four weapon attacks plus one or two bonus-action strikes a round, all behind heavy armour and martial weapons.",
+      "uncertain": [
+        "st 4 not 5 because Act II's rung 5 is anchored on Improved Extra Attack (Fighter 11), which no Cleric reaches; War Priest charges are a long-rest pool (6 at 11), not a short-rest one, so they read as the repeatable-burst clause rather than a clean third source.",
+        "Divine Strike fires once per turn, so it does not ride every one of those swings."
+      ],
+      "boosters": [],
+      "src": "7a9d93f9abe6",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Arcana": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        3,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The only domain that hands a Cleric native Counterspell, which in a duo has no wizard to hold it, and Lone Wolf's spare reaction pays for it; Arcane Abjuration's level-threshold banish and Otiluke's add real single-target denial off the domain list.",
+      "uncertain": [
+        "Arcane Mastery's 6th-9th wizard spells are level 17 and need 5e Spells; not scored in Act II.",
+        "Potent Spellcasting applying to any cantrip (including the two wizard cantrips) is a rider on a cantrip, which the ladder puts at rung 1 regardless of size."
+      ],
+      "boosters": [],
+      "src": "ce6956972ea1",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Forge": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        4,
+        2,
+        2,
+        3,
+        4,
+        2,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The most durable Cleric in the file — heavy armour and shield, +1 AC from Blessing of the Forge and another +1 from Soul of the Forge, plus fire resistance, and Artisan's Blessing's reaction bypasses physical resistance for either body.",
+      "uncertain": [
+        "dur 4 reads fire resistance as the ladder's 'damage-halving source' on top of the rung-3 armour; it is a narrow resistance and a reader who requires a broad one would score 3.",
+        "Saint of Forge and Fire's non-magical physical resistance is level 17, so it is not in the Act II figure.",
+        "skl 2 credits Sleight of Hand against the Act II Araj gate even though Forge carries no Expertise; a strict reading of the Act II rung-2 row (Expertise x1, or five-plus skills) puts it at 1."
+      ],
+      "boosters": [],
+      "src": "b33df1d45201",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Grave": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        2,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Sentinel at Death's Door turns a critical hit on the partner into a normal hit, Wis-modifier times per long rest, off the reaction Lone Wolf leaves spare — prevention aimed outward, on top of Revivify, Raise Dead, Death Ward and Circle of Mortality's maximised healing at 0 HP.",
+      "uncertain": [
+        "rsc 4 not 5: Grave has prevention and restoration but no no-action outward healing source; Spare the Dying at 30ft still costs a bonus action.",
+        "Path to the Grave's vulnerability-to-all-damage is mostly a multiplier on the partner's biggest hit, so it was scored on neither body's st here — a pair-level effect the base profile cannot express."
+      ],
+      "boosters": [],
+      "src": "b0fcfeb259c7",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Order": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        3,
+        4,
+        3,
+        4,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Voice of Authority buys a free weapon attack from the partner every time a level 1+ spell lands on them, at no resource cost and every turn, and Order's Demand is an AoE charm-plus-disarm off a short-rest Channel Divinity charge with no concentration attached.",
+      "uncertain": [
+        "act 4 not 5: Voice of Authority hands the partner a reaction attack, not an Action, and Embodiment of the Law's bonus-action enchantment casts are Wis-modifier uses per long rest.",
+        "Dominate Person sits at domain spell level 9, i.e. character 17, so ctrl_s 3 rests on Command, Hold Person, Slow and Compulsion instead."
+      ],
+      "boosters": [],
+      "src": "deff890b267b",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Peace": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        2,
+        3,
+        5,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "With exactly two characters Emboldening Bond is permanently online — a no-action d4 on every attack, check and save for both bodies — and it sits on top of Sanctuary, Aid, Beacon of Hope, Greater Restoration and Death Ward, which is prevention, restoration and a no-action outward source all at once.",
+      "uncertain": [
+        "Protective Bond is damage redirection and was deliberately capped: in a duo it moves damage from one half of the party to the other and contributes nothing above rung 1 on its own.",
+        "Emboldening Bond is proficiency-bonus uses per long rest, not permanent, so 'always online' means ~5 ten-minute windows per rest in Act II.",
+        "Light/medium armour is the weakest chassis among the strong domains, which is why dur stays at 2."
+      ],
+      "boosters": [
+        "emboldening-bond"
+      ],
+      "src": "0ed57e7df4f7",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Twilight": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        4,
+        2,
+        2,
+        3,
+        5,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Twilight Sanctuary is the rubric's own rung-4 rescue anchor — 1d6 + Cleric level temporary HP to every creature ending its turn inside, or a charm/fright cleanse, for one Channel Divinity charge a short rest refunds — and it costs no concentration, so it stacks with whatever the body is holding.",
+      "uncertain": [
+        "dur 4 counts Twilight Sanctuary's temp HP aimed at the self (recovery is Durability under the rubric); it is not a flat-reduction or halving source, so a stricter reading is 3.",
+        "The same feature is scored once in dur (self) and once in rsc (partner), which the rubric permits only because the effect genuinely reaches both bodies separately."
+      ],
+      "boosters": [],
+      "src": "0f82f408ebf5",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Strength (Rhonas)": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        2,
+        3,
+        4,
+        2,
+        2,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "The only Cleric domain with Haste on its own list, which is the strongest action-economy spell a two-person party can cast, plus heavy armour and an Avatar of Battle transform carrying non-magical physical resistance.",
+      "uncertain": [
+        "Haste holds this body's one concentration slot, so aoe and ctrl_a were scored WITHOUT Spirit Guardians — that is the trade the profile encodes, and a Strength Cleric who runs Spirit Guardians instead reads aoe 3 / ctrl_a 3 / act 2.",
+        "No martial weapons on a Strength domain is an odd gap and keeps st at 1 alongside no Extra Attack.",
+        "The level-1 druid cantrip may or may not still offer Shillelagh now that Listo made it a level-1 spell (class file flags this unverified)."
+      ],
+      "boosters": [],
+      "src": "8dcf9b8a7071",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Zeal (Hazoret)": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        4,
+        3,
+        4,
+        2,
+        2,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Heavy armour, martial weapons, a Priest of Zeal bonus-action strike from level 1, Haste and Fireball on the domain list, and Consuming Fervor maximising that Fireball twice per short rest — the rubric's named Act II AoE component.",
+      "uncertain": [
+        "As with Strength, Haste holds the concentration slot, so aoe 4 and ctrl_a 2 are scored without Spirit Guardians; the AoE rung rests on Consuming Fervor's maximised burst plus Fireball/Flame Strike/Destructive Wave.",
+        "st 2 not 3: Priest of Zeal gives a bonus-action strike but the domain has no Extra Attack, so there is no multiattack under the rider. Priest of Zeal is Wis-modifier uses per LONG rest.",
+        "act 4 credits Haste on the partner without this body having its own extra attacks, which the ladder's rung 5 requires; 5 was not awarded for that reason."
+      ],
+      "boosters": [],
+      "src": "8b2123ef5ba4",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Inquisition": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        3,
+        2,
+        3,
+        3,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Spell Shield puts 1d10 + Cleric level temp HP, spell-damage resistance and advantage on spell saves onto the partner for a short-rest Channel Divinity charge, Rebuke Invoker punishes enemy casting off Lone Wolf's spare reaction, and Witch Hunter's Strike is a force rider that doubles against anything concentrating.",
+      "uncertain": [
+        "The mod author states Witch Hunter's Strike does not stack with the Divine Strike interrupt from level 8 — both riders require manually using the Divine Strike action — which is why st stays at 1 with no Extra Attack behind it.",
+        "Dominate Person is domain spell level 9 (character 17), so ctrl_s 3 rests on Banishment, Command and Rebuke Invoker in Act II.",
+        "rsc 4 not 5: Spell Shield is prevention on a bonus action, not a no-action outward healing source."
+      ],
+      "boosters": [],
+      "src": "36e7469e3376",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Eldritch": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        4,
+        4,
+        4,
+        2,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Eldritch Contagion is single-target control that costs no concentration and fires as a bonus action off any level 1+ spell cast, and Prophecy of Doom spreads the same effect table over a 5m sphere at 27m for one short-rest Channel Divinity charge — action-economy denial that never competes with the partner's slot.",
+      "uncertain": [
+        "ctrl_a 4 not 5 purely on reliability: the Eldritch Effect is drawn at random from eight outcomes ranging from Silenced and 'move or act, not both, no reactions' down to advantage-on-its-attacks, so it cannot be planned around, and the class file says so.",
+        "skl 2 credits Unpredictable Inspiration's re-selectable any-skill proficiency as coverage; there is no Expertise anywhere, and a strict Act II reading of the rung-2 row puts it at 1.",
+        "The 10d10 psychic on Prophecy of Doom is level 17 and does not touch the Act II aoe."
+      ],
+      "boosters": [],
+      "src": "fa1402fdd3fb",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Night": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        3,
+        2,
+        2,
+        5,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Invocation of Night Blinds every enemy in 9m that fails a Con save for rounds equal to Cleric level, off a short-rest Channel Divinity charge with no concentration — slot-free repeatable area control, which is the top rung's literal definition — and Ward of Shadows fires twice a round on Lone Wolf's second reaction.",
+      "uncertain": [
+        "Blind is deterministic once the save fails, unlike Eldritch's random table, which is the whole reason Night is 5 and Eldritch is 4 on ctrl_a; a reader who prices the Con save harder would put both at 4.",
+        "dur 3 rests on Ward of Shadows plus Veil of Dusk's +1 AC carrying medium+shield to the heavy-armour rung; it fails outright against enemies that cannot be Blinded.",
+        "Sleep's +14 HP of effect and the auto-crit clause at level 8 were read as a control lift, not an aoe one."
+      ],
+      "boosters": [],
+      "src": "50fbeb3c22f5",
+      "base_deps": "42a5696582d4"
+    },
+    "cleric/Dream": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        2,
+        3,
+        4,
+        4,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Deep Slumber is area control at spell level 1 that leaves Torpor behind — quarter movement, no reactions, and only one of attack/action/bonus action — and Inception gives every Int- or Wis-save spell disadvantage on the target's first save, which the rubric prices above a raw DC.",
+      "uncertain": [
+        "Inception consumes the Channel Divinity charge on cast, so it competes with nothing else the domain wants but is limited to two casts a short rest in Act II.",
+        "The DTO page lists no bonus proficiencies for the domain, so light/medium and no martial weapons is recorded as unverified in cleric.md:528-529.",
+        "Third Eye's psychic vulnerability is level 17; the Act II single-target reading is Mind Sliver plus Potent Spellcasting only."
+      ],
+      "boosters": [],
+      "src": "e2a046753f68",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of the Land": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        4,
+        2,
+        3,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Natural Recovery is the only in-day slot refund in the class and the axis it moves is the one Lone Wolf makes worst; otherwise this is the bare druid chassis — a 117-spell prepared list, a maintained summon set, and no body of its own.",
+      "uncertain": [
+        "st 1: a mono Land druid has no multiattack and no melee rider, so it is two scaling cantrips a round and nothing else.",
+        "Land's chosen-terrain circle spells add a second AoE damage type (Fireball/Lightning Bolt on Mountain, Sleet Storm/Slow on Arctic); aoe 3 does not credit the type spread separately."
+      ],
+      "boosters": [],
+      "src": "d09cef94ad8a",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of the Moon": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        4,
+        4,
+        2,
+        3,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Combat Wild Shape is a second full HP bar on a bonus action twice per short rest, with Lunar Mend on top — effective HP bought on a short-rest clock rather than armour, which is what the rubric asks the axis to measure; CR 3 forms with Wild Shape Extra Attack put the multiattack that no other circle has on the body.",
+      "uncertain": [
+        "concentration false because the Moon plan is beast form, which cannot hold a spell; a Moon druid that spends most turns casting instead would flip this and lose the dur 4.",
+        "Druid Wild Shape Overhaul keeps multiclass features working inside beast form, but a mono-20 profile has none to keep, so WSO's headline benefit does not apply to this row.",
+        "The level 10 second Wild Shape Extra Attack is removed under WSO; st 2 reflects one Extra Attack only."
+      ],
+      "boosters": [],
+      "src": "2f6cc0733d6b",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of the Spores": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        4,
+        3,
+        4,
+        2,
+        3,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "The only druid circle with a real Extra Attack (4018) plus Shillelagh, Symbiotic Entity's +1d6 and 48 temp HP, and Spreading Spores as a repeatable at-will area tick under a 5th-tier Cloudkill burst; Fungal Infestation adds four maintained bodies per long rest on top of the class's summon suite.",
+      "uncertain": [
+        "The class file records it as unverified that 4018 and Druid Wild Shape Overhaul resolve to exactly one Extra Attack; st 3 assumes exactly one.",
+        "Dealer's Choice lets Halo, Symbiotic Entity and Spreading Spores each pick Acid, Necrotic or Poison independently, which is the cleanest answer to Absolute Wrath in the druid file and is not separately visible in aoe 4.",
+        "Spores is one of only two lists the Valkrana Limited Lists override still feeds, so its necromancy access is wider than any other circle's — not carried by any axis here."
+      ],
+      "boosters": [],
+      "src": "d3c88d3ece7a",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of the Stars": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        4,
+        3,
+        3,
+        4,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Star Druid Tweaks moves Cosmic Omens to a short rest, so Weal is 12 swings of +1d6 on the partner's saving throws per rest cycle — repeatable no-concentration prevention — and Woe is the same subtraction aimed at an enemy's; Chalice doubles every outward heal and Dragon form floors concentration saves at 10.",
+      "uncertain": [
+        "rsc 4 rests on reading Weal's +1d6 on the partner's saves as prevention on a short-rest clock rather than as a Saves-axis effect; it is the strongest reading but not the only one.",
+        "ctrl_s 3 credits Woe as the repeatable non-concentration rider in the rung-3 clause, by analogy to Hypnotic Stare; -1d6 for one charge is larger per use but finite.",
+        "Archer's bonus-action Luminous Arrow fires twice a round under Lone Wolf but is still 2d8 + Wis; st 2, not 3."
+      ],
+      "boosters": [],
+      "src": "9de0d9b954af",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of the Sea": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        3,
+        4,
+        2,
+        4,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Wrath of the Sea is a bonus-action Wis-scaled damage-and-push every turn that spends no concentration and runs off a Wild Shape charge, sitting under Evard's Black Tentacles and Sleet Storm — the two spells the rubric names at the top of the area-control ladder — plus Stormborn's flight and triple elemental resistance at 10.",
+      "uncertain": [
+        "ctrl_a 4 pairs a no-concentration repeatable push routine with concentration-bound Evard's/Sleet Storm; rung 5 would need the hard control itself to spend no slot.",
+        "Oceanic Gift, the level 14 feature the class file calls the duo payoff, is outside Act II and is not counted.",
+        "concentration false reads Wrath of the Sea as the engine; a Sea druid holding Evard's most fights would flip it."
+      ],
+      "boosters": [],
+      "src": "339102712220",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of Stormchasers": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        4,
+        3,
+        4,
+        2,
+        3,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "The level 10 clause makes Lightning, Thunder and Cold ignore Resistance and treat Immunity as Resistance — the rubric names it by name as one of the few resistance strips in the list, which is what lets an elemental blaster keep scaling under Absolute Wrath; 36 temp HP until long rest for one Wild Shape charge is the cheapest durability in the circle set.",
+      "uncertain": [
+        "Storm's Reach's damage table is locked at the level 12 value and will not scale past 12, so it is at its peak exactly at the judging point and falls thereafter.",
+        "aoe 4 combines Call Lightning's repeatable clock with Cone of Cold as the 5th-tier burst and credits the resistance strip; without the strip it is 3.",
+        "The level 14 Chain Lightning and resistance grant are outside Act II."
+      ],
+      "boosters": [],
+      "src": "08e6a74b217c",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of Winter": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        3,
+        4,
+        2,
+        4,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "The level 10 clause prones every creature that fails a save against a Cold druid spell, and Ice Storm, Cone of Cold and Snilloc's are not concentration — so this is area hard control riding damage that was being cast anyway, at no cost to the pair's two slots; 60 temp HP and +Wis to every damage spell come off one charge.",
+      "uncertain": [
+        "Locked to Cold, a commonly resisted type, with no strip before the level 14 immunity; Absolute Wrath caps st at 4 which is not binding here, but aoe 3 already prices the resistance drag.",
+        "The Winter Spirit bonus damage explicitly does not count as a Cold spell for the level 10 prone, so the control rides the slot casts only.",
+        "Winter Spirit ends when its temp HP runs out, so the buff is consumed by being hit."
+      ],
+      "boosters": [],
+      "src": "9fac91f72eca",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of Dreams": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        4,
+        2,
+        3,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Scored as the bare druid chassis. The Book of Druids pack's levels 2, 6 and 10 features are recorded as unverified and the class file explicitly forbids assuming they match the same author's standalone Circle of Dreams.",
+      "uncertain": [
+        "Every value above is the class chassis, not the circle. If the standard progression does hold — Balm of the Summer Court at 2, Hearth of Moonlight and Shadow at 6, Hidden Paths at 10 — then rsc is 4, not 3, and skl rises. Worth a human confirming in game before the ledger uses this row.",
+        "Walker in Dreams at 14 is documented as 'completely different from the source material' and is outside Act II anyway."
+      ],
+      "boosters": [],
+      "src": "0b00931c5dce",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of the Shepherd": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        5,
+        2,
+        3,
+        4,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "The largest maintained body count the act allows — Conjure Animals and Summon Beast last until long rest and cost no concentration under 13458, Flock of Familiars and Find Familiar stack on top, and Mighty Summoner makes all of them ignore physical resistance — with every Spirit Totem an aura aimed at the other body: Bear's 17 temp HP, Flumph turning every heal into two.",
+      "uncertain": [
+        "act 5 reads the rung-5 clause 'the act's largest body count' as satisfiable without own extra attacks, which this body conspicuously lacks; if the clause is read conjunctively this is 4. The trade is real — st 1 and dur 2 are the price.",
+        "Mighty Summoner's level in this pack is unverified (5e puts it at 6), and Guardian Spirit and Faithful Summons are not named on the mod page at all.",
+        "Automated Summons (10922) handing summon turns to the AI is assumed on, per the rubric."
+      ],
+      "boosters": [],
+      "src": "3ceb17eb7229",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of Wildfire": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        3,
+        2,
+        4,
+        2,
+        3,
+        4,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "A permanent extra body that also casts your spells from its own position — a second point of origin for AoE, which a two-body party cannot otherwise generate — on top of the class summon suite; Warden of Life at 7 plus Revivify at 5 and Mass Cure Wounds at 9 is prevention and restoration in one list.",
+      "uncertain": [
+        "Cauterizing Flames and Blazing Revival levels are unverified (5e puts them at 6 and 14); rsc 4 counts Warden of Life and Revivify only, and Blazing Revival's self-rez would be dur, not rsc, in any case.",
+        "Cauterizing Flames must be activated on your turn rather than as a Reaction, and Blazing Revival waits for the Spirit's turn — both are worse in practice than their descriptions.",
+        "Fire is commonly resisted and the circle has no strip; aoe 3 prices that."
+      ],
+      "boosters": [],
+      "src": "e4138198b129",
+      "base_deps": "42a5696582d4"
+    },
+    "druid/Circle of Wrath": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        4,
+        2,
+        4,
+        2,
+        3,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Four aspects spanning fire/radiant, lightning/thunder, cold/piercing and force/bludgeoning is the broadest damage-type coverage in the circle set and the direct answer to Absolute Wrath's layered resistances, with Revelations as short-rest bursts under scaling cantrips that need no summon and no gear.",
+      "uncertain": [
+        "Only two aspects are held before level 10, so the four-type spread is really three at the judging point; aoe 4 credits the type breadth plus the Wild Shape-clocked revelations, not raw magnitude.",
+        "Mechanics come from the author's documentation site rather than the pak, and the site stops at level 14 — 15 to 20 is unverified.",
+        "Listo added the DTO pack 'for testing' in v9.0.3; treat the whole pack as less settled than the rest."
+      ],
+      "boosters": [],
+      "src": "0c2469e00a45",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Battle Master": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        4,
+        3,
+        1,
+        2,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Improved Extra Attack plus a manoeuvre rider and a Trip/Menacing debuff that costs no concentration, all on the short-rest clock; Commander's Strike hands the partner an off-turn attack.",
+      "uncertain": [
+        "ctrl_s 3 vs 4 — Trip Attack is repeatable no-concentration single-target control, which is the rung-4 clause, but its strength is far below the Act II rung-4 anchor (Brand of the Sapping Scar), so it is scored as a rung-3 rider."
+      ],
+      "boosters": [],
+      "src": "6398a70d9171",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Champion": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Improved Extra Attack under a 19-20 crit range (18-20 from 15) plus Heroic Warrior's free reroll every turn; zero control, zero rescue, zero out-of-combat, and the damage never runs out.",
+      "boosters": [
+        "heroic-warrior"
+      ],
+      "src": "87f2db9f8233",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Eldritch Knight": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        4,
+        3,
+        2,
+        2,
+        0,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": true,
+      "why": "The full Wizard list with all school restrictions removed, spent through War Magic on a heavy-armour body — Shield and Mirror Image buy a real durability rung, but at 12-13 the ceiling is 3rd tier, which is background by Act II on both control axes.",
+      "uncertain": [
+        "concentration true assumes the plan rides Shadow Blade or a Haste/Fire Shield-grade buff; a pure weapon EK holds none.",
+        "Whether the 12070 War Magic passives stack with Expansion's level-18 vanilla Improved War Magic is recorded as unverified in the class file."
+      ],
+      "boosters": [],
+      "src": "daa41be3f0f1",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Arcane Archer": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        3,
+        3,
+        4,
+        1,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Banishing, Grasping and Enfeebling shots are repeatable single-target hard control that spends no concentration and refills on a short rest — roughly ten of them by Act II — on top of three ranged attacks per Action.",
+      "boosters": [],
+      "src": "53a0398925c3",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Banneret (Purple Dragon Knight, 2014)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        4,
+        1,
+        0,
+        3,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Rallying Cry makes Second Wind a short-rest outward heal for full Fighter level and Inspiring Surge converts Action Surge into the partner's reaction attack; it adds nothing at all to its own damage.",
+      "boosters": [],
+      "src": "99cbd0437c8f",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Brute (UA)": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "A resource-free per-hit die on every one of six attacks a round, riding Improved Extra Attack; everything else the subclass does lands on saves, which this schema cannot record.",
+      "uncertain": [
+        "Brutish Durability (+1d6 to EVERY saving throw at 7) is a rung-4 blanket booster under axis-rubrics §9, and it is invisible here because sav is derived from the level-1 prof pair alone. This is the single largest thing the Brute profile understates."
+      ],
+      "boosters": [
+        "brutish-durability"
+      ],
+      "src": "c11cccee88fb",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Cavalier": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        4,
+        3,
+        1,
+        3,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Unwavering Mark is no-concentration soft control plus a conditional bonus-action strike, and Warding Maneuver is a ranged-by-1.5m damage prevention aimed at the partner; Hold the Line at 10 turns Lone Wolf's second reaction into zone denial.",
+      "boosters": [],
+      "src": "f15aa84aafa1",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Psi Warrior": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        4,
+        3,
+        3,
+        1,
+        3,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Ten d10 Psionic dice at Act II proficiency fund Protective Field on either body at 9m, a per-turn force rider, and a repeatable prone/push; Guarded Mind adds psychic resistance on a heavy-armour chassis.",
+      "uncertain": [
+        "Die count is twice proficiency bonus, so the pool is 10 at character 12-13 with one bonus-action refresh per short rest — scored as a long-rest pool with a short-rest trickle, not a short-rest pool."
+      ],
+      "boosters": [],
+      "src": "36bd0f00ec0a",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Rune Knight": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        4,
+        3,
+        3,
+        2,
+        3,
+        2,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "The widest short-rest toolbox in the class — Hill Rune's proportional physical resistance, Fire Rune's restrain, Runic Shield's forced reroll on an attack that hit the partner, and the only Fighter that is handed Sleight of Hand, which is the Act II gate.",
+      "uncertain": [
+        "Rune save DC keys off Constitution, not the primary, so the control rungs assume Con is one of Lone Wolf's two +4 picks.",
+        "Inscription persistence across rests is recorded as partly unverified in the class file."
+      ],
+      "boosters": [
+        "frost-rune"
+      ],
+      "src": "9d7b41a25ba5",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Samurai": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        0,
+        0,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Fighting Spirit is advantage on all six attacks for a bonus action, three times per rest and refilling on initiative — scale-invariant, so it does not decay; it contributes nothing on any other axis.",
+      "uncertain": [
+        "Elegant Courtier at 7 grants a THIRD saving-throw proficiency, which axis-rubrics §9 says is otherwise obtainable only from the level-1 class, Lone Wolf and Resilient. prof is level-1-only by contract, so the profile cannot express it and sav is understated by roughly a rung."
+      ],
+      "boosters": [],
+      "src": "5d53a92c41d4",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Sharpshooter (UA)": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        1,
+        0,
+        0,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Steady Aim is a level-scaling per-hit rider (+2 + half Fighter level) on three ranged attacks per Action, refreshing on a short rest; Careful Eyes at 7 is the only skill contribution and it is passive Perception, not a gate.",
+      "boosters": [],
+      "src": "9ab20fad063f",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Echo Knight": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        4,
+        1,
+        1,
+        2,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Unleash Incarnation adds one melee attack per Attack action taken, so both Lone Wolf Actions and Action Surge each generate an extra swing from a second threatened zone; Shadow Martyr is a short-rest 'eat the hit aimed at my partner'.",
+      "uncertain": [
+        "Legion of One is explicitly not implemented, so Fighter 18-20 gets nothing from the subclass — a mono-20 base profile is the shape that suffers most from this.",
+        "Unleash Incarnation uses = CON modifier, long rest, so the rung-4 act value assumes Con is a Lone Wolf +4 pick."
+      ],
+      "boosters": [],
+      "src": "f998accace1e",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Purple Dragon Knight (2024 UA)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        3,
+        5,
+        1,
+        1,
+        1,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "A permanent third combatant sharing your initiative and acting without a bonus action, plus Rallying Surge turning Action Surge into reaction attacks for the partner and the dragon at once — the largest raw action surplus in the class.",
+      "uncertain": [
+        "The author warns the dragon needs a fresh playthrough, resets its model periodically, and paths badly indoors; the act 5 assumes it actually works.",
+        "Gravity Breath is a flat cone on a 4-5/day pool, so its aoe 2 is already the decayed reading."
+      ],
+      "boosters": [],
+      "src": "6673ef11a8f9",
+      "base_deps": "42a5696582d4"
+    },
+    "fighter/Chronoknight": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        4,
+        3,
+        1,
+        3,
+        0,
+        null,
+        5
+      ],
+      "prof": [
+        "con",
+        "str"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "str",
+      "concentration": false,
+      "why": "Borrowed Time literally hands an Action to the other body, and pointed at an enemy it is no-concentration single-target control (Desynchronized for two turns); Rewind is a short-rest 'you do not fail that save' aimed outward.",
+      "uncertain": [
+        "Mechanics come from the DTO author's documentation site, not the pak — Listo added Otherworldly Archetypes 'for testing'.",
+        "Borrowed Time and Action Surge are mutually exclusive on the same turn and the pool is only 1 + INT modifier per LONG rest, which is why act is 4 rather than 5.",
+        "Sorcery points scale on Intelligence while the weapon routine scales on Strength; primary str assumes the damage engine wins the stat race."
+      ],
+      "boosters": [],
+      "src": "a0fd6e86164e",
+      "base_deps": "42a5696582d4"
+    },
+    "inquisitor/Tactics Inquisition": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        3,
+        2,
+        1,
+        5,
+        2,
+        null,
+        3
+      ],
+      "prof": [
+        "str",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Structurally the duo subclass: Shared Judgment copies ALL your active Judgments onto the one ally you have, and the shared Resiliency upgrade is temp HP equal to your Inquisitor level every turn plus physical resistance from 11 — a no-action outward source — on top of Saving Grace's reaction reroll of the partner's failed save and Vindicator's Shield's transferable +3 AC and saves.",
+      "uncertain": [
+        "Battle Acumen's '+1 per ally within 9m' caps at +1 in a duo (+2 at 20) unless summons count, which the class file flags as unverified — the subclass's own scaling feature is nearly dead here.",
+        "Shared Judgment is once per SHORT REST until 15, when it becomes once per combat; the rsc 5 assumes it is up in most fights, which the short-rest clock supports but does not guarantee.",
+        "Inquisitor is a half-caster whose 4th-level slots arrive at class 13, so Death Ward and Vindicator's Shield are only just online at the judging point."
+      ],
+      "boosters": [],
+      "src": "714f71fcac56",
+      "base_deps": "42a5696582d4"
+    },
+    "inquisitor/Vengeance Inquisition": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        2,
+        3,
+        1,
+        3,
+        3,
+        null,
+        3
+      ],
+      "prof": [
+        "str",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Divine Scourge is named in the rubric as an Act II rung-3 single-target control anchor, and Studied Combat gives the first attack each round advantage AND rolls all damage against that creature with advantage; Monster Tactician stacks Expertise in an Intelligence skill with a doubled Wisdom modifier on it.",
+      "uncertain": [
+        "st 4 is scored on multipliers — advantage on damage rolls plus the Justice crit-threshold Judgment — rather than on a literal third attack source, which is what the rung-4 ladder text asks for. A strict reading is 3.",
+        "skl 3 is Act II. Monster Tactician's real payoff is Act III: the rubric says it clears the Mirror of Loss DC 25 outright, which would be rung 5 material there.",
+        "Mark of Justice's no-save stacking -1 to all ability scores is subclass spell level 4, i.e. class 13, exactly at the judging point.",
+        "Inquisitor's Edge's reaction pair (contest an incoming attack with Insight, reroll a failed save) is level 15, top of the band."
+      ],
+      "boosters": [],
+      "src": "e607e5a523ac",
+      "base_deps": "42a5696582d4"
+    },
+    "inquisitor/Zeal Inquisition": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        2,
+        2,
+        1,
+        4,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "str",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Crusader's Conviction is fast healing for your full Inquisitor level at the end of every turn from level 9, unblockable by anti-healing, and Unyielding Resolve holds up to 25% of max HP as a delayed pool that excess healing can erase before it ever lands — long-rest-free sustain against a 120-supply camp cost.",
+      "uncertain": [
+        "MATERIAL: Ardent Protector absorbs 100% of damage dealt to a linked ally, which is exactly the damage redirection the brief caps at rung 1 — it moves damage from one half of the pair to the other. rsc 4 rests instead on Wrathful Taunt (Judged enemies have disadvantage attacking anyone but you: no-action, always-on prevention) plus the Lesser/Greater Restoration built into Crusader's Conviction at 9/15. A reader who credits Ardent Protector would go higher; one who discounts Wrathful Taunt as a taunt rather than prevention would go to 3.",
+        "dur 4 on medium armour and a shield: the rung-3 anchor is heavy armour, and Zeal Inquisition reaches the rung purely on recovery volume and the damage buffer. It also self-heals INTO the pool, which is why this is Durability and not Rescue.",
+        "Guardian's Counterstrike and the persist-while-incapacitated regeneration are level 15, the top of the Act II band."
+      ],
+      "boosters": [],
+      "src": "a06d16f30378",
+      "base_deps": "42a5696582d4"
+    },
+    "mesmerist/Aspect of the Trickster — the support/buff archetype": {
+      "verdict": "candidate",
+      "scores": [
+        1,
+        1,
+        3,
+        4,
+        4,
+        3,
+        5,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Hypnotic Bonds are 3 + class level (15-16 at the judging point) refreshed on a SHORT rest, and tricks implanted on the partner fire as FREE ACTIONS when their trigger hits - so this body delivers prevention (Mesmeric Mirror auto-misses the triggering attack; Gift of Will adds Cha mod + half level to the partner's Wisdom save; Astounding Avoidance grants them Evasion), restoration (Touch Treatment Minor and Major are Lesser and Greater Restoration at 18 m with no trigger needed) and outward temp HP (the Healing Bond boon) without ever spending a turn. Compel Alacrity hands the partner Haste for two rounds off the same pool, which is the Actions axis's top clause. Its own damage is negligible.",
+      "uncertain": [
+        "Its combat contribution is almost entirely other-facing: st 1 and aoe 1 are real, not placeholders, and this row should not be read as a carry.",
+        "The mesmerist's maximum spell level is unverified (probably 5th on the standard half-caster table); custom spells are documented only for levels 1-3."
+      ],
+      "boosters": [
+        "gift-of-will",
+        "towering-ego"
+      ],
+      "src": "df17f93592a9",
+      "base_deps": "42a5696582d4"
+    },
+    "mesmerist/Aspect of the Eyebiter — the debuff/damage archetype": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        1,
+        5,
+        2,
+        2,
+        2,
+        null,
+        5
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": false,
+      "why": "The clearest boss-lockdown body in this set and the only one whose control costs nothing at all. Hypnotic Stare is at-will, permanent on one target, bonus action, no resource and no concentration, and by 11 it is -3 to that creature's saves; every Bold Stare rides along on it, so by the judging point three of them stack at once - Sundering also applies the penalty to AC, Disorientation to attack and damage rolls, Sluggishness makes it save every turn or be Slowed, Sapped Magic extends it to the target's own spell DCs, and Withering makes it pass DC 20 Wis to cast at you at all. Psychic Inception at 7 closes the undead and construct immunity hole. The Resistance boon reaches resistance to ALL damage while Staring, which sits on top of Lone Wolf's halving; Manifold Stare turns Painful Stare into a multi-proc at-will rider. Nothing here runs on a clock, which is why Endurance is at the top.",
+      "uncertain": [
+        "The boons are exclusive picks - two by class 8 - so Resistance, Manifold Stare and Vital Pinpoint compete; the profile assumes Resistance plus Manifold Stare.",
+        "Painful Stare's progression was nerfed in v2.2.0.",
+        "Psychic is a commonly resisted type; Vital Pinpoint answers that but costs the other boon slot."
+      ],
+      "boosters": [
+        "towering-ego"
+      ],
+      "src": "19f9b25e4f49",
+      "base_deps": "42a5696582d4"
+    },
+    "mesmerist/Aspect of the Daredevil — the melee/skirmisher archetype": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        2,
+        4,
+        1,
+        3,
+        3,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "dex"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": false,
+      "why": "The Superior Defense boon adds Charisma to AC on top of Dexterity while unarmoured, plus +1 per five levels, which puts a Charisma primary to work twice and takes AC past what light armour could reach; Evasion, Uncanny Dodge and an extra reaction all arrive at 9 gated on holding 5 Panache. Extra Attack at 5 and the Feint riders are at-will and cost no concentration, and the Tier 3 Feints are once-per-short-rest hard control - Crippling Feint is Blinded, Slowed and Silenced for two rounds on a Con save. Expertise in every Dex skill at 13 covers the Act II Araj pickpocket gate outright.",
+      "uncertain": [
+        "SEVERE: Panache only returns on a crit or a kill with a one-handed piercing weapon; otherwise it is LONG REST only, and dedicating 3 or 6 to Improved or Greater Feints can drop the pool below the thresholds that grant Extra Attack (3) and Evasion/Uncanny Dodge (5). This body can lose its multiattack mid-adventuring-day, which is why `end` sits at 3 rather than at the martial floor.",
+        "Expertise in all Dex skills lands at class 13, the top half of the judging band."
+      ],
+      "boosters": [
+        "towering-ego"
+      ],
+      "src": "24d86719bfac",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Open Hand (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        3,
+        5,
+        3,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Stunning Strike is already the best no-concentration single-target control in the game - repeatable off a short-rest pool of 13-14 ki, and Stunned removes the whole turn - and Open Hand Technique adds Topple, Push and Stagger free on every Flurry strike, keyed to the same Ki Save DC (8 + PB + Wis) rather than a Maneuver DC. `1411` also adds split First/Second Strike versions so the techniques spread across two targets, which is where the area value comes from. Control that costs no extra action is worth more here than raw damage.",
+      "uncertain": [
+        "Two Ways in this set reach ctrl_s 5; Open Hand earns it on Stunning Strike plus a second free rider layer, not on Stunning Strike alone, which every Monk has.",
+        "Diamond Soul (all six saves proficient) lands at 14, above the judging point; the str/dex level-1 pair is the weakest in the class list until then."
+      ],
+      "boosters": [],
+      "src": "0a6cdd170d7b",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of Shadow (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        4,
+        3,
+        4,
+        3,
+        0,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Shadow Arts buys Hide, Pass Without Trace and Darkness out of the ki pool, so stealth, repositioning and party-wide concealment all refill on a short rest - a duo has no dedicated scout otherwise. Darkness is repeatable non-concentration area denial and doubles as personal mitigation on top of Evasion and AC 20 from Unarmoured Defence. Stunning Strike carries the single-target axis as on every Monk.",
+      "uncertain": [
+        "Way of Shadow Revised is NOT in Listo - only its katana add-on - so this is the vanilla feature set with Opportunist added at 17.",
+        "Darkness cuts both ways against enemies with Devil's Sight."
+      ],
+      "boosters": [],
+      "src": "19b6fc822171",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Four Elements (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        3,
+        3,
+        4,
+        2,
+        0,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Elemental disciplines are the only thing that gives a Monk repeatable AoE off a short-rest clock, and Expansion fills the level-17 table with 21 entries and fixed the inability to swap disciplines after 17. The cost is that ki funds the disciplines, the Flurries and Stunning Strike out of one pool, so the endurance that is this class's best axis drops a rung.",
+      "uncertain": [
+        "The class file itself says this Way is superseded in almost every respect by Warrior of the Elements, which is a separate subclass rather than a replacement - take it only for the vanilla discipline list."
+      ],
+      "boosters": [],
+      "src": "7a55f4afff0e",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Ascendant Dragon": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        4,
+        3,
+        4,
+        3,
+        3,
+        2,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Breath of the Dragon replaces one attack of the Attack action with a cone or line for two Martial Arts dice (three at 11) on a Dex save against the Ki Save DC, costing no bonus action - real repeatable AoE from a class that structurally has none. Aspect of the Wyrm at 11 is the only Monk feature that hands the other character a defensive buff: a resistance aura covering allies, or Frightful Presence as free area control. Draconic Presence also buys advantage on a Charisma check, which is the Act I Hag's Hair route.",
+      "uncertain": [
+        "Breath is PB uses per long rest and then 2 ki each, and Aspect of the Wyrm is 1/long rest then 3 ki, so the ki pool is doing double duty and `end` drops.",
+        "Frightful Presence's implementation blocks movement toward you only, not all movement.",
+        "Ascendant Aspect's Blindsight requires `Tasha's Fighting Styles RAW`, which is not in the 10.2 list - treat as non-functional."
+      ],
+      "boosters": [],
+      "src": "a6ab34cf43b9",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Astral Self": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        4,
+        3,
+        4,
+        1,
+        0,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "The single-stat Monk: the arms use Wisdom for attack and damage, and Wisdom already drives Unarmoured Defence and the Ki Save DC, so Dex and Str both stay low and the points go into Constitution. Damage lands as Force, the least-resisted type, and Empowered Arms adds a Martial Arts die once per turn as a rider on an eight-strike round. Deflect Energy (1d10 + Wis off six damage types) is per-round reaction mitigation and this is the best user of Lone Wolf's second reaction in the class.",
+      "uncertain": [
+        "Requires Script Extender for the Wisdom-based attack conversion.",
+        "Body of the Astral Self at 11 needs Arms AND Visage both up, which is two bonus actions and 2 ki of setup per fight unless folded."
+      ],
+      "boosters": [],
+      "src": "2b5fa39e41da",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Kensei": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        4,
+        3,
+        4,
+        1,
+        0,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "The Way that makes a Monk a weapon character, which matters because Listo's weapon pool is enormous and its unarmed pool is not - so this is the Monk that can actually carry an attuned Legendary. Agile Parry is +2 AC on nearly every turn for free, on top of Unarmoured Defence and Evasion, and Deft Strike adds a Martial Arts die to the first hit for 1 ki.",
+      "uncertain": [
+        "SEVERE: Sharpen the Blade, the level-11 feature and the largest single number in the kit, has NO effect on a weapon that already carries an enchantment bonus - and by Act II essentially every weapon worth wielding does. Treat that feature as dead unless a specific unenchanted weapon is planned.",
+        "Damage bonuses do not show on weapon tooltips; read the combat log.",
+        "Kensei leans on Dex or Str for the weapon attack while Wis still drives AC and the Ki Save DC, so it is the most MAD Way here even after Lone Wolf's +4 covers two abilities."
+      ],
+      "boosters": [],
+      "src": "734b835ab3be",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Long Death": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        5,
+        3,
+        4,
+        3,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Mastery of Death at 11 is the strongest single line in the Monk file for this run: reduced to 0 HP, spend 1 ki and no action to drop to 1 instead, toggleable, repeatable, out of a pool that refills on a short rest. Losing either body usually ends the fight, and this converts that loss into the cheapest resource the class has. Touch of Death stacks Wis + monk level temp HP on every kill on top. Hour of Reaping is a repeatable no-concentration area fear. The whole offensive half of the subclass waits until 17.",
+      "uncertain": [
+        "Hour of Reaping's implementation blocks movement toward you only, not all movement, so it is denial rather than a turn removal.",
+        "dur 5 is scored on death-denial rather than on stacked mitigation layers, which is a different shape from the rung-5 anchor; the body still has no armour, no shield and no item slots for defensive affixes."
+      ],
+      "boosters": [],
+      "src": "807e92f3dfe8",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of Mercy": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        3,
+        4,
+        1,
+        4,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Flurry of Healing and Harm at 11 is named in the rubric for a reason: every Flurry strike can be swapped for a free Hands of Healing aimed outward, and Lone Wolf's second bonus action buys two Flurries a round, so outward healing rides the attack routine instead of competing with it. Physician's Touch adds condition removal - blinded, deafened, paralysed, poisoned, stunned - to the same free cast. Implements of Mercy is two chosen skill proficiencies to spend on gates the partner cannot roll.",
+      "uncertain": [
+        "No prevention layer (no Death Ward equivalent, no temp-HP aura), which is what holds this below the top rescue rung; Hand of Ultimate Mercy's in-combat rez is 17 and out of band.",
+        "The pak grants SelectSkills(...,2) rather than a fixed Insight+Medicine pair; the contents of that skill list were not enumerated, so which gates it can cover is unconfirmed."
+      ],
+      "boosters": [],
+      "src": "8a1f77e553cb",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Sun Soul": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "The only Way that makes a Monk a genuine ranged character without leaving the class, and the only one with a real AoE engine: Searing Arc Strike is Burning Hands as a bonus action upcastable to half monk level for extra ki, every round, and Searing Sunburst at 11 is a 20 m-radius Con save at up to 150 ft scaling to 8d6. Radiant is the second-least-resisted type in Act II. In a duo, one body that contributes at range without moving is a real answer to the action economy.",
+      "uncertain": [
+        "This Way scales on DEX, not WIS - it is the odd one out in a Listo Monk lineup and gets nothing from the Ki Save DC change, which is why `primary` is dex here and wis on every other Way.",
+        "Playing at range gives up Stunning Strike, the class's whole single-target control axis; ctrl_s is scored assuming the body still closes sometimes.",
+        "Both AoE features are paid in ki out of the same pool as Flurry, so `end` drops."
+      ],
+      "boosters": [],
+      "src": "d24299d61b05",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Warrior of the Elements (PHB2024 rework of Four Elements)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        3,
+        3,
+        4,
+        3,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "wis",
+      "concentration": false,
+      "why": "Elemental Strikes can be set to replace the default unarmed attack, which also makes Attacks of Opportunity carry the extended range, the chosen element and the push/pull rider - control landing on the enemy's turn, for free, is the cheapest action economy available to a two-person party. Damage-type selection answers Absolute Wrath's layered resistances without swapping gear, and v2.1 confirmed the offensive abilities scale off the Wisdom spellcasting modifier.",
+      "uncertain": [
+        "SEVERE: the mod page defers every number for Elemental Burst (6), Stride of the Elements (11) and Elemental Epitome (17) to in-game screenshots, so `aoe` in particular is a placeholder - Elemental Burst could plausibly move it two rungs.",
+        "Listo ships v2.2.1 against Nexus 2.3.0; the delta is only a 'Beckon Air' action.",
+        "Elementalism is explicitly not RAW - it is the author's interpretation."
+      ],
+      "boosters": [],
+      "src": "a118cb095906",
+      "base_deps": "42a5696582d4"
+    },
+    "monk/Way of the Friar": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        3,
+        4,
+        4,
+        5,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con",
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": null,
+      "shield": true,
+      "primary": "wis",
+      "concentration": true,
+      "why": "Built for exactly this run. Friar's Bond covers the entire party from level 3 in a duo - the Kin gets temp HP equal to your Wis modifier at the start of every turn with no action spent, plus a blessing that is either +1d4 to their attacks and saves or resistance to psychic, necrotic and radiant. Cleansing Wave is a full-condition strip (poison, blind, paralysis, disease, charm, petrify, stun, curse) on you and the partner once per battle. Guardian of Light is the one Monk that keeps Unarmoured Defence while carrying a shield, and grants advantage on Concentration checks - and Guidance always prepared is the piece every other Monk's Skills rung is missing. Pacifying Sweep is repeatable no-concentration area hard control off the ki pool.",
+      "uncertain": [
+        "Friar's Bond is CONCENTRATION, and it is the feature the entire subclass hangs on - this is the only Monk in the set that spends one of the pair's two concentration slots, and it does so every fight.",
+        "Shared Resolve (11) and Community (17) bond a second and third ally and are dead weight in a duo.",
+        "No revival, so the top rescue rung is earned on prevention plus restoration plus no-action outward temp HP rather than on a heal ceiling."
+      ],
+      "boosters": [
+        "friars-blessing"
+      ],
+      "src": "1368a0c8d600",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of Devotion": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        2,
+        1,
+        0,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "The bare paladin chassis with a charm-immunity aura bolted on: Improved Divine Smite is the scaling rider that holds st at rung 3, Revivify plus Lay on Hands is the rescue floor, and nothing here adds a third attack source or any area answer.",
+      "uncertain": [
+        "Aura of Devotion's charm immunity is prevention aimed at the partner, but narrow enough that it does not clear the rung-4 clause; rsc stays 3.",
+        "Aura of Protection (+Cha to the partner's saves) is the largest pair-level Saves effect in the game and is invisible here — sav is null by contract and the rubric says auras are a pair flag, not this body's score. True of every entry in this batch.",
+        "Purity of Spirit (15) and Holy Nimbus (20) are outside Act II and are not counted."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "2b9b74646447",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of the Ancients": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        4,
+        2,
+        2,
+        2,
+        4,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Aura of Warding is proportional resistance to spell damage covering both bodies at 9m, which is simultaneously this body's mitigation layer above heavy-and-shield and unconditional prevention aimed at the partner — the damage type this modlist's rebuilt casters lean on hardest.",
+      "uncertain": [
+        "Ice Storm and Stoneskin arrive with the 13 oath spells and 4th-tier slots at Paladin 13, right at the edge of the 12-13 judging point; aoe 2 assumes they are just online.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema.",
+        "Listo's global aura patch nominally normalises paladin auras to 9m/15m; scores assume it applies."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "75bdac2d7c79",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of Vengeance": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        4,
+        2,
+        1,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Haste on the partner at Paladin 9 is the Actions ladder's rung-5 clause bought on a half-caster, and Vow of Enmity is blanket Advantage on a short-rest charge — scale-invariant, and worth more with Lone Wolf's doubled attack count than in a normal party.",
+      "uncertain": [
+        "act 4 rather than 5 because Haste costs the one concentration slot and there is no Action Surge or summon set under it; the same slot is what stops ctrl_s rising, since Hold Person and Banishment want it too.",
+        "Vow of Enmity is accuracy rather than damage; st 4 reads it as the 'repeatable burst channel' clause on a short-rest clock and could defensibly be 3.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "11b24bf8dedb",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of the Crown": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        3,
+        2,
+        2,
+        3,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Spirit Guardians on a heavy-armour body is the rubric's own Act II anchor for repeatable AoE and moving area denial at once, and Champion Challenge is a no-concentration area taunt on a short-rest charge that pulls fire off the squishier half.",
+      "uncertain": [
+        "Crown's vanilla oath spell list was not in the read set; Spirit Guardians and Aura of Vitality at oath level 9 are taken from standard BG3 Crown and drive aoe 3, ctrl_a 3 and the concentration flag. If they are not on the list here, aoe drops to 1 and ctrl_a to 2.",
+        "Divine Allegiance is damage redirection, which the rubric caps at rung 1 in a duo and which actively hurts this body; it is not scored above the baseline anywhere.",
+        "Royal Decree cantrip from mod.io is recorded as unverified in the class file and is not scored.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "9e7ae37cab8a",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oathbreaker": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        2,
+        3,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Spiteful Suffering is a per-turn damage channel that also hands out Advantage, stacked under Improved Unholy Smite and Aura of Hate, and Animate Dead at 9 plus Control Undead is real body count; Dreadful Aspect is area Frighten off a short-rest charge with no concentration.",
+      "uncertain": [
+        "Every smite is Necrotic and never Radiant — a straight downgrade against exactly the shadow-cursed and undead population of Act II. st 4 rests on the physical attack routine and Aura of Hate, not on the smite payload, and 3 is defensible.",
+        "Aura of Hate buffs 'you and nearby fiends and undead', so a normal partner gets nothing; it is scored as this body's damage only.",
+        "StackId means Animate Dead replaces rather than accumulates, so act 3 counts one maintained body, not several.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "204ce26cc8e2",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of Conquest": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        3,
+        3,
+        3,
+        4,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Conquering Presence is area hard control on a short-rest charge that spends no concentration — the rung-4 clause outright — and Aura of Conquest then taxes everything it lands on; Spiritual Weapon adds the bonus-action attack the class otherwise lacks and Guided Strike guarantees the one roll that must land.",
+      "uncertain": [
+        "The aura's speed-reduction-to-0 clause does nothing in BG3 per the mod author, so Aura of Conquest is only the psychic tick; aoe 2 prices it as far under Act II par in magnitude while repeatable in shape.",
+        "ctrl_a 4 rests on BG3's Frightened being worth a rung, which is weaker than the tabletop condition; if Frightened is read as a soft debuff this is 3.",
+        "Invincible Conqueror, the capstone the class file rates highest for a duo, is level 20 and outside Act II.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "87ce010937ac",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of the Bleak Walkers": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        4,
+        2,
+        3,
+        3,
+        3,
+        2,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Black Flames is a repeatable burst channel on a short-rest charge that also Sickens the target's Constitution saves, Death's Maw is a proficiency-bonus flat reduction that lasts until long rest, and Expertise in Intimidation at level 1 is the only Skills rung anywhere in this batch — it clears Act I's Hag's Hair gate outright on a stat the oath already maxes.",
+      "uncertain": [
+        "Death's Maw's damage reduction requires standing within 2m of a corpse; dur 4 assumes that is trivially satisfied after the first kill, which is true in most but not all fights, and the reduction is flat and therefore boss-weighted-act unfriendly.",
+        "The level 7 crit-range aura buffs the partner's offence, which lands on no axis this schema carries for this body.",
+        "Feature names come from the mod's prose and changelog rather than the pak; the oathbreaking behaviour is recorded as unverified.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "3cceb8066c68",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of the Moon (Selûne-inspired)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        4,
+        2,
+        2,
+        4,
+        4,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": true,
+      "why": "The only oath carrying prevention in two forms at once — Aura of Moonlight's flat -Cha on every hit either body takes, and Divine Guardian halving all damage on the partner for ten turns off a short-rest charge — with Full Moon as slot-free area Blind-and-Slow under it and Spirit Guardians at 9.",
+      "uncertain": [
+        "dur 4 rather than 5: the oath supplies both a flat reduction and a halving without spending a feat, but the rubric reserves Act II rung 5 for a Shield Master plus Tough stack, which this profile does not assume.",
+        "Lunar Champion's party-wide save bonus and extra Reaction are level 20 and outside Act II.",
+        "Aura radius under Listo's global aura patch is recorded as unverified for a v10.0-era subclass.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection",
+        "lunar-champion"
+      ],
+      "src": "e110539817eb",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Oath of Illumination": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        2,
+        1,
+        0,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Scored as the bare paladin chassis, because that is all that is verifiable: the oath layer has no published level-by-level feature list anywhere, and Listo added the pack 'for testing'.",
+      "uncertain": [
+        "Every value above is the class chassis, not the oath. The only feature name recoverable is Aura of Brilliance and its mechanics are unknown. Do not read any of these ten as a claim about the oath.",
+        "The pitch is a ranged radiant paladin. If that holds, aoe and st are both understated and the body takes no reach discount on single-target damage — a materially different shape from every other entry. Worth a human confirming in game before the ledger uses this row.",
+        "Aura of Protection is a pair-level Saves effect not carried by this schema."
+      ],
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "src": "18688035cd28",
+      "base_deps": "42a5696582d4"
+    },
+    "paladin/Supporting library": {
+      "verdict": "not-a-subclass",
+      "why": "This heading is the Oath Framework (6493) note — an API for custom paladin mods to declare oathbreaking and redemption triggers, not player-facing content and not selectable. The class file records that nothing in the 10.2 paladin set is confirmed to use it: Bleak Walkers removed its Oath Framework files, Conquest piggybacks on Vengeance's oathbreaking and Moon on Devotion's.",
+      "boosters": [
+        "aura-of-protection"
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "src": "8eacdfa9003d",
+      "base_deps": "42a5696582d4"
+    },
+    "paragon/Lionheart": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        4,
+        4,
+        1,
+        0,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Banners count as attacks for Extra Attack, so post-5 you banner AND swing: Red hands the partner a reaction attack with a Willpower Die on it, Yellow moves +CHA AC onto the squishier half, and level 6 puts the whole pool on the short-rest clock. Vanguard's Charge at 9 is blanket Disadvantage on attacks against you.",
+      "uncertain": [
+        "dur 4 reads Vanguard's Charge's blanket Disadvantage as the ladder's 'damage-halving source' on top of heavy armour and shield; it only applies after your first turn in combat, so the opening round is rung 3.",
+        "act 4 not 5: Red Banner hands the partner a Reaction attack, not an Action, and Banner Charges are only CHA-modifier many per short rest from level 6.",
+        "Legendary Banner's free-attack-every-turn is level 17 and does not touch Act II."
+      ],
+      "boosters": [],
+      "src": "cac29bccbed0",
+      "base_deps": "42a5696582d4"
+    },
+    "paragon/Nighthawk": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        3,
+        3,
+        3,
+        0,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Searing Blade strips ALL resistances for 3 turns on a failed Con save — the rubric names Paragon Nighthawk as one of the list's resistance strips — and Supernatural Dampening then blocks the target's healing and treats it as sunlit, while Iron Filings stacks 1d4 Fire per turn and Scorching Rebuke burns whoever hits you.",
+      "uncertain": [
+        "Nighthawk's own damage is locked to Fire, which Absolute Wrath caps at 4 from Act II; the subclass escapes the cap only by stripping the resistance first, so st 4 is contingent on Searing Blade's Con save landing.",
+        "ctrl_s 3 rests on Bird Cage, which arrives at 13 — the exact judging level — and is a leash (stay within 6m or take 1d10) rather than a lockdown.",
+        "rsc 3: Vigilant Aegis puts Protection from Evil and Good on the partner through Help, which is prevention, but there is no healing or revival anywhere in the class."
+      ],
+      "boosters": [],
+      "src": "d3267582871a",
+      "base_deps": "42a5696582d4"
+    },
+    "paragon/Prodigy": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        4,
+        3,
+        1,
+        0,
+        3,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Sheer Will's temp HP carries a flat -2 damage from every source at Paragon 9, which lands AFTER Lone Wolf's halving and is therefore worth double, and Training From Hell adds non-magical physical resistance at 13; Competitive Streak refunds Willpower Dice off the partner's natural 20s, so the pool is fed by someone else's rolls.",
+      "uncertain": [
+        "dur 4 not 5: the Act II rung-5 row wants roughly flat -6 after halving plus Evasion-grade AoE mitigation, and Prodigy reaches -2 plus one proportional layer. The flat half is crowd-facing and worth less in a boss-weighted act, per the rubric's own note.",
+        "Innate Mastery's +1/+2 to attack and damage is flat and slips against the HP curve, so st stays at 3.",
+        "Echo of the Soul's ally-count scaling is nearly dead in a duo (+1d10, not +5d10) and is level 17 regardless."
+      ],
+      "boosters": [],
+      "src": "f49bc0d72194",
+      "base_deps": "42a5696582d4"
+    },
+    "paragon/Regent": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        3,
+        3,
+        0,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Shifting Court swaps your position with the partner's on a Willpower Die, which is the direct answer to a duo's worst failure mode, and Fairy's Curse strips a crit target's Bonus Actions and Reactions and halves its movement — action-economy denial that costs no concentration.",
+      "uncertain": [
+        "rsc 3: the position swap is close to the damage-redirection pattern the brief caps at rung 1 — it moves the danger from one half of the pair to the other. It scored above 1 only because the armoured body genuinely eats it better and it is repositioning rather than damage transfer. A human may want to force this to 1.",
+        "ctrl_s 3 not 4: Fairy's Curse is crit-gated, and although Strike Of The Butterflies drops the crit threshold by 2 at level 9 it is still not a per-turn effect.",
+        "Oberon's Favor consumes one stack per weapon attack against a CHA-mod stack pool, so it does not ride every swing of a four-attack Lone Wolf round without spending dice."
+      ],
+      "boosters": [],
+      "src": "3af553ed5dd7",
+      "base_deps": "42a5696582d4"
+    },
+    "paragon/Spellblade — the exception the skill suspected, but not a caster": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        3,
+        3,
+        3,
+        0,
+        2,
+        2,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Scholar's Armament makes the main-hand melee weapon use Charisma for attack and damage, which is the only genuinely single-stat body in the class, and Spell Sword attacks count as cantrips that work with Extra Attack — six Focuses by 17 means six damage types against Absolute Wrath's layered resistances, with Arcane Surge scaling them off Willpower Dice.",
+      "uncertain": [
+        "ctrl_s 3 rests on Will Over Weave, a slot-free Counterspell on a short-rest die, which arrives at exactly 13 — the judging level. At 12 this reads 1.",
+        "aoe 2: the Force and Thunder Focuses (Slashing Blades, Shattering Slam) hit enemies around the target at will, which is repeatable, but at 1d6+CHA it is far under the Act II rung-3 anchor.",
+        "Potent Robe adds Charisma to cantrip damage and Spell Sword attacks are 'considered cantrips' — the equipment file flags whether the robe actually fires on them as unverified. If it does, st is understated."
+      ],
+      "boosters": [
+        "magic-resistance"
+      ],
+      "src": "10b41dd2c7bc",
+      "base_deps": "42a5696582d4"
+    },
+    "paragon/Sword Saint": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        3,
+        4,
+        1,
+        0,
+        2,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "heavy",
+      "shield": true,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Falling Rain is a FREE-ACTION melee attack riding every Willpower Die you already spend, so Lone Wolf's second Action doubles the Blade Skills and therefore doubles the free attacks; Disciple of Steel and Strategy refunds dice off your own natural 20s, which makes the loop close on itself.",
+      "uncertain": [
+        "Falling Rain uses 1d4 in place of the weapon's damage dice, so each free attack is small — st 4 is scored on attack count and rider stacking, not on the size of the extra swings.",
+        "act 4 not 5: free-action attacks are an unbounded extra attack source but not an Action handed to the other body, which is the rung-5 clause.",
+        "Wisdom of Void wants 6 Willpower Dice, exactly the level-17 pool, so the auto-crit round is Act III and pairs with Beyond All Limits at 18."
+      ],
+      "boosters": [],
+      "src": "46cf8a2ca96e",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Beast Master (base game + `Expansion`)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        2,
+        4,
+        1,
+        1,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Expansion moves Companion's Bond to level 3 and adds a Panther that uses your proficiency bonus, is proficient in all saving throws, takes your ASIs and can Help as a bonus action — a permanent third body on a short-rest re-summon, on top of the Conjure Animals set every Ranger gets at 9.",
+      "uncertain": [
+        "act 4 assumes Conjure Animals is the non-concentration-until-long-rest version the rubric attributes to mod 13458; if that mod does not reach the Ranger list it is concentration and act falls to 3.",
+        "The companion's Help action can stand a downed partner back up, which is arguably Rescue; it was left out of rsc because it spends the companion's action, not this body's."
+      ],
+      "boosters": [],
+      "src": "40608f25f274",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Gloom Stalker (base game + `Expansion`)": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        3,
+        1,
+        2,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "str",
+        "wis"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Stalker's Flurry at 11 re-attacks free on every miss, which is a third attack source on top of Extra Attack and Hunter's Mark, and Shadowy Dodge plus Umbral Shroud convert Lone Wolf's spare reaction into mitigation the medium-armour chassis otherwise lacks.",
+      "uncertain": [
+        "MATERIAL: Iron Mind at level 7 grants Wisdom AND Intelligence saving throw proficiency, which patches the Ranger's worst structural weakness — but `prof` records only the level-1 class grant, so this profile's derived sav understates Gloom Stalker by two disjoint saves including Wisdom. A human should decide whether the schema needs to carry subclass-granted saves.",
+        "Dread Ambusher's extra attack and +3 initiative are first-turn only and were not scored in act."
+      ],
+      "boosters": [],
+      "src": "be7257e1b7ae",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Hunter (base game + `Expansion`)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        5,
+        3,
+        3,
+        1,
+        1,
+        3,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Volley at 11 is the rubric's own Act II rung-5 AoE anchor — full weapon damage to every target, no save, no resource — and Lone Wolf's second Action fires it twice a round; Defensive Tactics and Superior Hunter's Defense add mitigation on top.",
+      "uncertain": [
+        "Colossus Slayer's +1d8 is a flat rider and slips against Combat Extender's HP curve, which is why st stays at 3.",
+        "Superior Hunter's Defense (Evasion or Uncanny Dodge) lands at 15, the very top of the Act II band, so dur 3 is scored on Multiattack Defence rather than on it."
+      ],
+      "boosters": [],
+      "src": "26a5e9648501",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Swarmkeeper (base game, Patch 8 + `Expansion`)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        3,
+        3,
+        2,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Gathered Swarm fires once per round after any attack with no resource and no concentration, and the Flurry of Moths option applies Blind — a repeatable free single-target lockdown — while the teleport option is the answer to being focused when there is no third body to peel.",
+      "uncertain": [
+        "ctrl_s 3 rests on the Moths Blind rider; a Swarmkeeper who picks Jellyfish or Bees for the damage instead reads ctrl_s 1.",
+        "The swarm is 1d6 rising to 1d8 at 11 — flat and small, so it adds nothing above the rung-3 st reading.",
+        "Web off long-rest slots is explicitly background by Act II, hence ctrl_a 2."
+      ],
+      "boosters": [],
+      "src": "a55aa703c257",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Drakewarden": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        3,
+        4,
+        1,
+        1,
+        3,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "The drake is a permanent third body whose Infused Strikes adds 1d6 of its essence type when ANY creature within 30ft hits with a weapon attack — so it buffs the partner too — and Reflexive Resistance is a second life-saving reaction Lone Wolf makes affordable.",
+      "uncertain": [
+        "end 3 rather than 4: Drake's Breath, the free re-summon and Reflexive Resistance are all long-rest pools, which is heavier long-rest dependence than the other conclaves carry.",
+        "Reflexive Resistance reaches the drake or the Ranger, NOT the partner, so it scored in dur and not in rsc.",
+        "The mod author warns a new playthrough may be needed for the drake to animate correctly."
+      ],
+      "boosters": [],
+      "src": "d659da3ef36f",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Fey Wanderer": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        2,
+        4,
+        3,
+        1,
+        3,
+        3,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Otherworldly Glamour adds the Wisdom modifier to every Charisma check plus a Charisma skill proficiency, which makes the Ranger the party face with no Charisma investment at all; Counterspell arrives at class 9 and Fey Reinforcements is a free Summon Fey from 11.",
+      "uncertain": [
+        "skl 3 is scored on breadth plus a doubled modifier rather than true Expertise, and the rubric's Act II rung-2 row says a broad list with no Expertise is rung 1 — the doubled Wisdom modifier is what carries it, by analogy to Vengeance's Monster Tactician.",
+        "Fey Reinforcements' non-concentration variant is behind a toggle with a 1-minute duration; act 4 assumes the toggle is on.",
+        "Misty Wanderer (15) only resolves reliably in turn-based mode per the class file."
+      ],
+      "boosters": [],
+      "src": "99210b00d6d9",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Horizon Walker": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        1,
+        3,
+        4,
+        2,
+        1,
+        3,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Planar Warrior converts ALL of an attack's damage to Force and adds 2d8 from 11, which deletes Absolute Wrath's layered resistances outright, and it costs a bonus action rather than concentration — so Haste at class 9 is free to sit in the concentration slot; Distant Strike is a genuine third attack whenever three enemies are present.",
+      "uncertain": [
+        "act 4 credits Haste on the partner; the ladder's rung 5 additionally wants this body's own extra attacks plus a summon set, which Horizon Walker does not have.",
+        "Distant Strike's third attack requires attacking two different creatures first, so it is not available in a single-target boss round.",
+        "Ethereal Step is wasted outside turn-based mode per the class file."
+      ],
+      "boosters": [],
+      "src": "c2a50d2a0068",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Monster Slayer": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "The only conclave whose damage rider costs no concentration, so Slayer's Prey stacks with Hunter's Mark, and Magic-User's Nemesis is a slot-free counterspell-equivalent on a short-rest clock — with Hunter's Sense turning one hit per use into a full resistance and immunity bypass.",
+      "uncertain": [
+        "Supernatural Defense (+1d6 on every save the prey forces) and Slayer's Counter (auto-succeed a save on a hit) are large save effects that the schema cannot express, because sav is derived from the level-1 prof pair alone. This understates Monster Slayer's boss-fight resilience.",
+        "Hold Monster is subclass spell level 17 and Banishment 13, so ctrl_s 3 rests on Magic-User's Nemesis in Act II."
+      ],
+      "boosters": [],
+      "src": "8eb8cba193ed",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Primeval Guardian (UA)": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        3,
+        1,
+        2,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "The only Ranger that is a tank: guardian form gives temp HP equal to half Ranger level every turn and +2 max HP per Ranger level from 7, all at no action and no resource — bought with a movement speed of 5 ft, which is a steep price this profile does not otherwise register.",
+      "uncertain": [
+        "Guardian Aura at 15 heals a hurt partner half your Ranger level every turn with no action — a rung-4 Rescue effect landing at the very top of the Act II band. Judged at 12-13 it is not yet online, so rsc reads 3; at 15 it is 4.",
+        "Rooted Defense is difficult terrain, which the ladder pins at rung 1, so it did not lift ctrl_a above the Entangle/Grasping Vine reading.",
+        "dur 3 not 4: the temp HP and max HP layers are effective HP, not the flat-reduction or halving source the rung-4 clause names."
+      ],
+      "boosters": [],
+      "src": "fb7562cd70f9",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Snowlight Conclave": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        2,
+        3,
+        3,
+        4,
+        4,
+        3,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "Glaring Frost forces a Con save vs your spell DC for Blind on EVERY instance of Cold or Radiant damage, at no resource and no concentration, so a Ranger making four-plus attacks a round under Lone Wolf blinds a room; Snow Blindness then taxes every action those blinded enemies take.",
+      "uncertain": [
+        "MATERIAL: both control scores are entirely gear-conditional — the conclave needs a Cold or Radiant damage source to function at all, and the class file says so outright. With no such weapon this reads ctrl_s 1 / ctrl_a 1. This is the widest swing in my set.",
+        "ctrl_a 4 is the no-concentration clause applied to a multi-attack blind routine; the true area version, Snowborn Anthelion, is level 15.",
+        "Snow Blindness's 1d6 radiant per enemy action is flat and small, so aoe stays at 2."
+      ],
+      "boosters": [],
+      "src": "3156709391b3",
+      "base_deps": "42a5696582d4"
+    },
+    "ranger/Conclave of the Dawnstriders": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        2,
+        3,
+        3,
+        1,
+        1,
+        3,
+        1,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "str"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": true,
+      "why": "The highest raw damage ceiling of the eleven: Extra Attack plus Valkyrie's landing attack, Zeal's extra attack every seven swings, and Divine Flurry's five extra attacks at a reduced crit threshold off a 3rd-level slot — with Herald of the Sun converting weapon damage to Radiant or Fire to dodge physical resistance.",
+      "uncertain": [
+        "st 4 not 5 because Act II's rung 5 is anchored on Improved Extra Attack (Fighter 11); Divine Flurry was read as the 'repeatable burst channel' clause of rung 4 instead.",
+        "Divine Flurry leaves you Faded (-2 attack rolls per stack) until the end of your next turn, which in a party with no third body is a real cost — it is a fight-ending button, not a rotation.",
+        "The mod author swapped Zeal and Valkyrie in 1.2.0.66, so the level-3 pick in 10.2 is Valkyrie."
+      ],
+      "boosters": [],
+      "src": "d1e633514abe",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Thief": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        3,
+        3,
+        2,
+        0,
+        0,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Fast Hands is a second Bonus Action, so with Lone Wolf this body has three - three off-hand strikes a round on top of the two Action attacks, which is the third attack source the Rogue chassis otherwise lacks. Supreme Sneak is short-rest invisibility and Use Magic Device at 13 ignores every item requirement in a list stuffed with branded gear. Sneak Attack is at-will with no clock, which is the top of Endurance by definition.",
+      "uncertain": [
+        "Thief's Reflexes (17) is Act III and the author warns it breaks in inescapable combats and misbehaves with shared ally turns - exactly the situation a two-player party is in.",
+        "Fast Hands does not stack with the Thief's Apprentice feat.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "5aefa2d32370",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Assassin": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        2,
+        2,
+        0,
+        0,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Alacrity restores an Action and a Bonus Action at combat start and Assassinate grants advantage against anything that has not acted, which Listo's d10+Dex initiative makes reliable. But all of it is round one: against Combat Extender's +126% regular and +170% boss HP, fights last long enough that an opener is a smaller share of the total than it reads, and Assassin contributes least in the long reinforced fights where the duo is most at risk.",
+      "uncertain": [
+        "Death Strike and Imposter are 17 and 13; the 13 piece is in band but is an out-of-combat setup tool rather than a combat rung.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "bdaa6a9611d3",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Arcane Trickster": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        3,
+        2,
+        4,
+        3,
+        0,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": true,
+      "why": "The only Rogue with a control list. Magical Ambush at 9 gives every one of its spells disadvantage on the target's saves while Hiding, and Cunning Action Hide makes that a bonus-action at-will condition rather than a setup - disadvantage-on-saves is the form that does not decay. Shadow Blade, Hold Person, Hypnotic Pattern, Fear and Enemies Abound are all in reach by spell level 3. The cost is Int competing with Dex on a third-caster slot table.",
+      "uncertain": [
+        "Third-caster progression puts spell level 3 at class 13, so at the low end of the judging band the control list is still 2nd tier.",
+        "Spell Thief (17) is script-extender implemented and may fail to register on AoE, cone and line spells."
+      ],
+      "boosters": [],
+      "src": "f577b45d0c74",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Swashbuckler": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        1,
+        3,
+        2,
+        0,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "The only Rogue that gets Sneak Attack without a setup body, which is the exact hole a two-character party has - there is often no second melee to flank with. Dirty Tricks are at-will Disarm, Blind and attack-disadvantage riders costing no concentration, and Panache is a repeatable contested charm that catches bystanders. Cha-based tricks also make it the natural party face.",
+      "uncertain": [
+        "SEVERE for a mono-20 read: Swashbuckler has no subclass features at all from 13 to 20, and the RAW Rakish Sneak Attack rework in Goon's 2.x is absent from the 1.2.2.0 build Listo ships. The Act II value here is close to its permanent ceiling.",
+        "Dirty Tricks DCs key off Charisma, which is not this body's primary."
+      ],
+      "boosters": [],
+      "src": "f4891b31de34",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Inquisitive": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        1,
+        2,
+        0,
+        0,
+        5,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "The out-of-combat ceiling of the class. Steady Eye is flat advantage on Perception and Investigation with the 5e half-movement restriction dropped, Ear for Deceit puts a floor of 8 on the Insight die, and Reliable Talent plus four Expertise picks means passive Perception sits in the 20s and Sleight of Hand clears Araj - both named Act II gates on one body, which is what rung 5 is. Insightful Fighting is also a repeatable no-ally Sneak Attack enabler.",
+      "uncertain": [
+        "No Guidance (no spell list), which the Skills rungs from 3 up assume; scored on gates cleared rather than on the literal rung text.",
+        "Unerring Eye's uses scale on Wisdom, which a Dex/Con Rogue will not have.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "e55590abd26a",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Mastermind": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        1,
+        2,
+        0,
+        3,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Master of Tactics turns Help into a Bonus Action, and in a duo Help is how you pick the other half of your action economy up off the floor - doing it without spending an Action, at will, on a body that has two Bonus Actions, is a better clock than Revivify has. It also hands the partner advantage as a bonus action, which feeds smites and big single hits. Misdirection is redirection and is priced as such.",
+      "uncertain": [
+        "Insightful Manipulator's save penalty scales on Wisdom, a poor fit for a Dex build.",
+        "Misdirection needs a body within 2 m, which in a duo means aiming the hit at your only partner - net zero at best.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "6b34d691f6fa",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Phantom": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        1,
+        4,
+        1,
+        2,
+        0,
+        0,
+        5,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Whispers of the Dead grants proficiency in every skill of a chosen ability once per short rest, on demand, which combined with four Expertise picks and Reliable Talent clears the Act II gates whichever ability they turn out to sit behind. Wails from the Grave is the only Rogue answer to two targets at once. Ghost Walk at 13 is disadvantage on every attack against you for the fight, on top of Evasion and Uncanny Dodge, and Soul Trinkets fund it from kills rather than rests - which is the currency Listo actually charges for.",
+      "uncertain": [
+        "Wails from the Grave is PB uses per long rest plus trinkets; it is a second-target rider, not area damage, so it stays at the incidental rung.",
+        "The Cunning Strike compatibility patch was authored against Book of Rogues 1.0.0.2 while Listo ships 1.0.0.3, and its author states he did not test the level 17 features.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "3a48878b7c18",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Scout": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        1,
+        2,
+        0,
+        0,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Survivalist is two free Expertise picks, taking the body to six, and Ambush Master at 13 is +5 initiative plus a first-round mark that gives everyone advantage on that target - a party-wide buff is worth double when the party is two. Skirmisher gives the spare reaction a use. Otherwise this is the base Rogue chassis; its own combat surplus arrives at 17 with Sudden Strike.",
+      "uncertain": [
+        "Alert is only +Proficiency Bonus in this list, which is what makes a flat +5 competitive; that comparison is act-dependent.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "faca771d6499",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Soulknife": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        0,
+        3,
+        1,
+        2,
+        0,
+        0,
+        4,
+        null,
+        5
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "The most self-sufficient Rogue: weapon, accuracy fix, mobility and invisibility all come out of one pool, so it needs no gear and no ally. Homing Strikes is miss-insurance that only spends the die on a hit, which matters disproportionately when one body's turn is a quarter of the round. Psi-Bolstered Knack lifts skill checks off the same pool.",
+      "uncertain": [
+        "SEVERE: the number and size of Psionic Energy Dice and their recovery rate are not stated anywhere the class file could read - Restore Psionic Energy exists as an activated ability but its clock is unknown. Every Soulknife feature is priced in that currency, so `end` and `dur` here are the Rogue chassis, not a reading of the subclass economy.",
+        "Psychic is one of the more commonly resisted damage types late, and Psychic Blades deal psychic rather than weapon damage.",
+        "Single-target control is Cunning Strike only - a repeatable non-concentration Prone/Poison/Disarm rider with no control spell under it. Scored at the rung-2 band because Prone is not turn-removal against Act II bodies."
+      ],
+      "boosters": [],
+      "src": "81d84afd10b7",
+      "base_deps": "42a5696582d4"
+    },
+    "rogue/Seeker": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        0,
+        4,
+        2,
+        4,
+        0,
+        0,
+        4,
+        null,
+        4
+      ],
+      "prof": [
+        "dex",
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "dex",
+      "concentration": false,
+      "why": "Arcane Strike is a Sneak Attack that always qualifies and lands as Force, the least-resisted type in the list, and Brilliant Edge at 13 adds Intelligence as Force to every weapon attack and makes that Force pierce Resistance. Auspicious Parry - take 1 damage instead of the hit - is the best survival reaction on any Rogue, and Lone Wolf's second reaction means you parry and still Uncanny Dodge. Spell Siphon and Disrupt are the enemy-caster answer a duo otherwise has no body to spare for.",
+      "uncertain": [
+        "The whole kit runs on Sorcery Points: a pool of only 1 + Int modifier on a long rest, topped up only when enemies actually cast spells. Against a fight with no casters this body reverts to a plain Rogue, which is why `end` sits below the class floor.",
+        "Int on top of Dex is genuine MAD, and the free-off-hand plus light-armour requirement rules out dual-wielding and shields."
+      ],
+      "boosters": [],
+      "src": "8b72cec42a4c",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Draconic Bloodline (vanilla) + Draconic Bloodline Expanded": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        4,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Elemental Affinity now reaches Force (Amethyst, Cobalt, Eyrie Force), so Charisma modifier rides every dart and every damage instance of a type almost nothing resists — a per-hit rider on a scaling engine, and the only bloodline that also fixes the d6 die and the naked AC.",
+      "uncertain": [
+        "st 4 and the Absolute Wrath cap both assume a Force ancestry; a Fire or Cold ancestry is locked to a commonly-resisted type and caps at 4 anyway, but loses a rung of realised damage.",
+        "rsc 0 ignores the Hallow ancestry's Sanctuary, which would be rung-2 prevention — taking it costs the damage identity the score is built on."
+      ],
+      "boosters": [],
+      "src": "23d2f5bc2494",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Wild Magic (vanilla) + Wild Magic Subclass - Additional Spells": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "The 14228 spell list finally gives Wild Magic a control spine (Tasha's, Hypnotic Pattern, Confusion, Dominate Person) castable off sorcery points via Arcane Chaos, and Bend Luck is a two-reaction, non-concentration swing on any save in the fight — Mirror Image and Blink are what carry its durability.",
+      "uncertain": [
+        "Every Arcane Chaos cast forces a surge, and a surge that Banishes or Confuses the caster removes half a two-body party; the scores treat the surge as neutral, which is optimistic for a duo."
+      ],
+      "boosters": [],
+      "src": "41c4812e7bed",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Storm Sorcery (vanilla)": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        4,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Heart of the Storm bolts a free area rider onto every Lightning or Thunder cast, on top of the full Sorcerer pool's Call Lightning and Chain Lightning; the bonus-action fly is durability by never being reachable, and Lone Wolf's second bonus action removes its clash with Quickened.",
+      "uncertain": [
+        "Locked to Lightning/Thunder, so under Absolute Wrath the damage axes cap at 4 from Act II without a resistance strip or a second type."
+      ],
+      "boosters": [],
+      "src": "f7c277314e52",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Shadow Magic (vanilla) + Shadow Magic Expanded - Umbral Form": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        3,
+        0,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Hound of Ill Omen is the rung-4 shape on a short-rest clock — a summoned third body that imposes disadvantage on one target's saves and costs no concentration, so it never competes with the partner's slot; Strength of the Grave is a repeating refusal to go down on a d6 chassis.",
+      "uncertain": [
+        "Umbral Form is shipped twice (15855 and Expansion) at level 18 and the interaction is unverified; it lands outside Act II either way.",
+        "True Darkness is not installed, so no darkness-cheese durability."
+      ],
+      "boosters": [],
+      "src": "49116be029ea",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Aberrant Mind": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        3,
+        3,
+        4,
+        1,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Psionic Sorcery casts Evard's Black Tentacles, Hunger of Hadar and Dominate Person for sorcery points equal to their level with no verbal or somatic components, turning the point pool into a second, cheaper casting clock; Psychic resistance and advantage on Charm and Fright saves patch the two effects most likely to remove a body.",
+      "uncertain": [
+        "ctrl_a 4 rests on Evard's being repeatable off points rather than costing no concentration — it still holds concentration, so it is the Act II rung-5 named spell on a rung-3 clock. 3 is defensible.",
+        "Summon Beholderkin at L7 is a genuine extra body but only one, so act stops at 3."
+      ],
+      "boosters": [],
+      "src": "965ad2249bc0",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Favored Soul": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "cha",
+        "con"
+      ],
+      "armour": "medium",
+      "shield": true,
+      "primary": "cha",
+      "concentration": true,
+      "why": "The only Charisma caster that gets Cleric healing at level 1 as Sorcerer spells, so Metamagic applies — Twinned Death Ward and Twinned Greater Restoration cover a two-body party outright, and Revivify plus Raise Dead answer the duo's worst failure mode; medium armour and shields at level 1 fix the class's naked-AC problem.",
+      "uncertain": [
+        "rsc 4 not 5: it has prevention and restoration but no no-action outward source (no Twilight-Sanctuary-grade aura).",
+        "dur 3 on a d6 hit die is a judgement call — medium + shield + magic AC + self-healing is the mitigation actually applied, but the hit die is the joint-lowest in the game.",
+        "Scores assume a Life or Peace domain; Tempest or Light trades the rescue rung for aoe."
+      ],
+      "boosters": [],
+      "src": "5fa285e05159",
+      "base_deps": "42a5696582d4"
+    },
+    "sorcerer/Wretched Soul": {
+      "verdict": "none",
+      "why": "No published feature list, levels or progression; the class file marks the whole subclass unverified and listo-rules.md omits it from the surviving-subclass list. Listo added it for testing.",
+      "src": "1faccf012fbd",
+      "base_deps": "42a5696582d4"
+    },
+    "warlock/The Archfey": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        1,
+        2,
+        3,
+        4,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Fey Presence is area charm-or-fear off a short-rest charge with no concentration — the rung-4 clause — and Dominate Person at patron 9 lands on a short-rest pact slot rather than a long-rest one, so the control clock is the best in the patron set; nothing here is aimed at the partner and light armour with no shield is the floor.",
+      "uncertain": [
+        "Archfey gets no 14th-level feature from Expansion and the class file records it as unverified whether another mod fills the gap; nothing was scored for it.",
+        "end 4 rather than the rubric's explicit 'Warlock 11 = 9 units' rung-2 anchor: Eldritch Blast is at-will with no clock, which is the rung-5 definition, and the 9 units fund everything else. The tension is real and applies to all five non-Psyker patrons here."
+      ],
+      "boosters": [],
+      "src": "b918d76ab07e",
+      "base_deps": "42a5696582d4"
+    },
+    "warlock/The Fiend": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        4,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "The only patron whose expanded list gives a real burst under Eldritch Cone — Fireball, Wall of Fire, Flame Strike — and the only one whose defensive kit is proportional: Fiendish Resilience is a resistance you re-pick every rest, on top of Dark One's Own Luck as a short-rest reroll.",
+      "uncertain": [
+        "The burst half of aoe 4 is all Fire, a commonly resisted type; Eldritch Cone's Force is the unresisted half and it stops scaling at character 10, so this row is at its peak exactly at the judging point.",
+        "Hurl Through Hell is a 14 feature and is not counted.",
+        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note; Eldritch Blast's at-will clock is what carries it."
+      ],
+      "boosters": [],
+      "src": "177b11ada830",
+      "base_deps": "42a5696582d4"
+    },
+    "warlock/The Great Old One": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        2,
+        2,
+        3,
+        4,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": true,
+      "why": "Evard's Black Tentacles at patron 7 comes off a short-rest pact slot, which is the rubric's top-of-ladder area control on a repeatable clock, and Mortal Reminder's area fear fires far more often than its text suggests because six Eldritch Blast beams a round make six crit checks; Entropic Ward spends the spare Reaction Lone Wolf hands over.",
+      "uncertain": [
+        "ctrl_a 4 not 5 because Evard's still spends the one concentration slot; Mortal Reminder is the free layer under it but is crit-gated.",
+        "Create Thrall is a 14 feature and is not counted.",
+        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note."
+      ],
+      "boosters": [],
+      "src": "ea5dee09ae76",
+      "base_deps": "42a5696582d4"
+    },
+    "warlock/The Hexblade": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        3,
+        2,
+        3,
+        3,
+        3,
+        0,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": false,
+      "why": "The one patron that turns the chassis melee at level 1 — Hex Warrior puts Charisma on the weapon without waiting for Pact of the Blade — and Eldritch Smite off a short-rest pact slot is the rubric's named rung-4 repeatable burst channel under Thirsting Blade's Extra Attack and Hexblade's Curse's crit range; Accursed Spectre is a maintained third body.",
+      "uncertain": [
+        "concentration false because Curse plus smites needs none, which is unusual for a caster and is the patron's quiet advantage in a pair holding only two slots.",
+        "Warlock grants no shield proficiency, so dur 2 rests on the Shield spell and Blur against a three-slot budget the rubric warns will not support casting Shield most rounds; 1 is defensible.",
+        "Master of Hexes is a 14 feature and is not counted. Mizora's Rewards modifies Hexblade's Pact alongside Pact of the Blade; the interaction was not in the read set.",
+        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note."
+      ],
+      "boosters": [],
+      "src": "3b4fe2c740c6",
+      "base_deps": "42a5696582d4"
+    },
+    "warlock/The Celestial": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        4,
+        2,
+        2,
+        3,
+        3,
+        4,
+        1,
+        null,
+        4
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": false,
+      "why": "The only Warlock with any outward rescue at all, and it is the good kind: Healing Light is a bonus-action heal spending no slot, so Lone Wolf's second bonus action buys two a turn alongside a full Action, and Revivify at patron 5 plus Greater Restoration at 9 both ride the short-rest pact clock rather than a long-rest one. Free Sacred Flame is also the save-based radiant answer to the high-AC targets Eldritch Blast's attack roll misses.",
+      "uncertain": [
+        "rsc 4 rather than 3 rests on the clock rather than the ladder's literal rung-4 clause: there is no Death Ward or Sanctuary here, so no true prevention, but restoration on a short-rest clock plus bonus-action outward healing is what rung 4 exists to reward.",
+        "Healing Light's own pool is long-rest, so it is a per-day budget, not a per-fight one.",
+        "Searing Vengeance is a 14 feature and is not counted.",
+        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note."
+      ],
+      "boosters": [],
+      "src": "54ffcdb60aa7",
+      "base_deps": "42a5696582d4"
+    },
+    "warlock/The Psyker": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        4,
+        1,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "cha",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "cha",
+      "concentration": false,
+      "why": "Warp turns every Eldritch Blast beam into a 3d10 Force detonation in a 3m radius, which is a genuinely repeatable at-will area engine in the least-resisted damage type — and Perils of the Warp pays for it in max hit points every turn, which is the one resource a duo cannot spare and the reason Endurance is the lowest in this whole assignment.",
+      "uncertain": [
+        "end 2, not 4, is the load-bearing judgement here: the damage is at-will but the engine drains max HP (1d8 per turn of remaining duration at level 11+), and the rubric says hit points force more long rests than slots do. Gellar's Field is once per short rest and only blocks Perils for 2 turns.",
+        "It is explicitly unverified whether Warp detonations count as Eldritch Blast for Agonizing Blast or Mizora's IsEldritchBlastAlike rider system. If they do not, aoe 4 holds but st 3 and ctrl_s 3 are both a rung high.",
+        "Chaos Rift is a 14 feature and is not counted.",
+        "Listo added the DTO pack 'for testing'; the class file says to treat this patron as less settled than the rest."
+      ],
+      "boosters": [],
+      "src": "181faf7327e9",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Abjuration": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        3,
+        2,
+        3,
+        3,
+        3,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Arcane Ward (cap 2x wizard level, ~26 at char 13) refilling for wizard level on every short rest is the only thing that makes a d6 robe survivable; Projected Ward spends the spare Lone Wolf reaction to eat the partner's damage on a short-rest clock, which is repeatable outward prevention rather than redirection. Offence is the generic wizard list.",
+      "uncertain": [
+        "Spell Resistance lands at wizard 14, the top edge of the Act II band; scored at 12-13 without it, so the Act II value understates the back half of the act."
+      ],
+      "boosters": [
+        "spell-resistance"
+      ],
+      "src": "f7c03f236e02",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Bladesinging": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        4,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": "light",
+      "shield": false,
+      "primary": "int",
+      "concentration": false,
+      "why": "The only Wizard with a real defensive floor: light armour plus +4 AC and +4 Con saves from Bladesong at 9, Song of Defence converting a slot into flat 5-per-level reduction, and Extra Attack at 6 for turns that should not cost a slot. Rescue is nil and the whole package is a long-rest resource (4 uses), which is exactly the clock Listo taxes.",
+      "uncertain": [
+        "Bladesong, Extra Attack and cantrips are all concentration-free, so `concentration` is false on the subclass plan; a Bladesinger who wants Blur or Shadow Blade re-acquires the cost.",
+        "Song of Victory (+Int to weapon damage, the piece that would move `st` to 3) lands at 14, above the judging point."
+      ],
+      "boosters": [],
+      "src": "cdbd24c58f13",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Conjuration": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        1,
+        4,
+        3,
+        3,
+        2,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Focused Conjuration at 10 makes damage unable to break concentration on a Conjuration spell, and the L6 off-list pick reaches the druid/cleric summon pool, so this is the Wizard that fields a summon set that cannot be knocked over. The bonus-action item conjurer is a small repeatable AoE and a trickle of outward potions; Ultimate Transposition extracts the partner. No defensive layer of its own.",
+      "uncertain": [
+        "Whether Conjure Animals picked off-list inherits `13458`'s non-concentration-until-long-rest change is not confirmed; if it does not, `act` is 3 rather than 4.",
+        "The mod places its features at 3 and 6 against vanilla's 2 and 6 and the class file records the level-2 slot as unverified."
+      ],
+      "boosters": [],
+      "src": "1b52c066cd39",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Divination": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        2,
+        4,
+        3,
+        3,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Portent replaces an attack roll or saving throw outright, and Expert Divination refunds dice on short rests, so it is a short-rest pool of guaranteed outcomes spent through the spare Lone Wolf reaction. That converts a slot control spell into no-fail single-target lockdown, blanks an incoming attack, and can be aimed at the partner's save, which is prevention rather than healing.",
+      "uncertain": [
+        "Greater Portent at 14 is listed in Expansion's changelog but the class file flags it as unverified; not scored."
+      ],
+      "boosters": [],
+      "src": "8f402b40589f",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Enchantment": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        2,
+        4,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Hypnotic Gaze is charm-plus-incapacitate on one creature costing no slot and no concentration, and in this list it also strips the target's concentration; Split Enchantment doubles Hold Person and Dominate at the level encounters start fielding pairs. Instinctive Charm gives the spare reaction a job. Nothing outward, nothing durable.",
+      "uncertain": [
+        "Listo enemies are markedly more save-capable than vanilla and bosses carry magic resistance, so a pure save-DC lockdown school is worth less here than the feature text reads."
+      ],
+      "boosters": [],
+      "src": "358c2e50f92e",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Evocation": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        4,
+        1,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": false,
+      "why": "Empowered Evocation puts Intelligence on every evocation damage roll, which is a rider on every cast rather than a flat bonus, and Sculpt Spells matters more in a duo than a four-party because the partner is always inside the fireball. Slot count supports several 4th-5th tier AoE casts a fight. Zero rescue, zero durability, and the AoE is fire-and-cold heavy against Absolute Wrath's layered resistances.",
+      "uncertain": [
+        "Overchannel's maximised burst arrives at 14, above the judging point."
+      ],
+      "boosters": [],
+      "src": "8984e8f51ece",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Illusion": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "The thinnest base school. Illusory Self is a genuine once-per-rest 'this attack misses' on a d6 body and See Invisibility is short-rest, but a bonus-action Minor Illusion has little pull against Listo's reworked enemies and there is no scaling feature at all. Everything above the floor here comes from the wizard list, not the school.",
+      "uncertain": [],
+      "boosters": [],
+      "src": "9645eaaaec06",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Necromancy": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        5,
+        3,
+        3,
+        0,
+        1,
+        null,
+        2
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": false,
+      "why": "Animate Dead++ removes the undead cap entirely, upcasts two more bodies per slot, moves the free Animate Dead to 5 and extends Undead Thralls' HP and proficiency-bonus damage to every undead owned; none of it costs concentration, so it stacks on top of Haste handed to the partner. That is the largest action-economy answer in the list. Inured to Undeath also blanks the max-HP-reduction effects Act II leans on. Grim Harvest is self-healing, so it sits in Durability.",
+      "uncertain": [
+        "The undead are long-rest-bound bodies; `Necromancy Heals Undead` tops them up mid-fight but the pool itself does not refresh on a short rest.",
+        "Command Undead at 14 is in Expansion's changelog only and the class file flags it unverified."
+      ],
+      "boosters": [],
+      "src": "e99b0c5daf33",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Transmutation": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        1,
+        2,
+        3,
+        3,
+        3,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "con",
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "The Transmuter's Stone is one of very few cross-character buffs a Wizard can simply leave on the other player - Constitution save proficiency or a damage resistance, permanent, no action, which is prevention rather than healing. Everything else is thin: Experimental Alchemy does not stack with other sources and Shapechanger is a blue jay. The stone cannot be on both bodies at once.",
+      "uncertain": [],
+      "boosters": [],
+      "src": "b6a95c3eaa5e",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/War Magic": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "A reaction-based AC and save spike plus an initiative bonus on a robe chassis, which uses the spare Lone Wolf reaction the way Bladesinging uses armour. Scored as the generic wizard list plus one mitigation reaction, because that is all the class file can confirm.",
+      "uncertain": [
+        "The per-level feature table is images-only on the mod page: the actual numbers for Arcane Deflection, Tactical Wit, Power Surge and Durable Magic are unverified. Power Surge in particular could move `st` to 3 and Durable Magic could move `dur` to 3."
+      ],
+      "boosters": [],
+      "src": "21372dbbdf37",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Order of Scribes": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        1,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Formulaic Attunement ignores resistance to the attuned damage type and adds damage on top, which is the rubric's named exemption from the one-damage-type cap under Absolute Wrath and matters more here than its size suggests. The Spectral Mind is both a body and a remote casting position, which is real cover for a chassis with no third party member to block for it.",
+      "uncertain": [
+        "Levels for Wizardly Quill and Awakened Spellbook and the exact Formulaic Attunement damage bonus are unverified (mod-page tables are images).",
+        "Attunement cannot be changed during combat, so the resistance-strip only covers the type you guessed before the fight."
+      ],
+      "boosters": [],
+      "src": "ecc9967c0a58",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Hexcraft": {
+      "verdict": "candidate",
+      "scores": [
+        3,
+        3,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Four invocations by wizard 10 on an Intelligence chassis, and the Warlock-copying clause means Eldritch Blast with Agonising Blast is available - at-will single-target damage with a per-beam rider, which no other Wizard has. Ritual completion pays temp HP equal to ritual level plus wizard level, and level 10 is flat immunity to the charm and fear line, which is worth a great deal when losing either body ends the run. The slot-economy school in a 120-supply-per-long-rest game.",
+      "uncertain": [
+        "Eldritch Blast is 1d8 per beam here, not 1d10, so the at-will engine is smaller than any outside math suggests.",
+        "Heart of Darkness's slot regeneration lands at 14, above the judging point.",
+        "Invocations cannot be changed once picked."
+      ],
+      "boosters": [],
+      "src": "fb61ded2c1fa",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/Hierophant": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        4,
+        2,
+        2,
+        3,
+        4,
+        5,
+        1,
+        null,
+        3
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "The rescue ceiling of the class and the only cross-list subclass actually wired in 10.2. By character 12-13 it holds all three rescue forms at once: prevention (Erudite Remedy grants the partner a chosen damage resistance as a bonus action at 18 m, pre-appliable before a known hit), restoration (Lesser and Greater Restoration always prepared, Raise Dead as a ritual at 10), and repeatable outward healing (Mass Healing Word plus a wizard-level pool of d6). Spirit Guardians is real repeatable area denial and Guardian of Faith is a zone that costs no concentration.",
+      "uncertain": [
+        "Erudite Remedy refreshes on a long rest only; Turn the Otherworldly and Warding Rejuvenation are the short-rest pieces and Warding Rejuvenation lands at 14."
+      ],
+      "boosters": [],
+      "src": "aab7fd552d58",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/School of Death": {
+      "verdict": "candidate",
+      "scores": [
+        4,
+        3,
+        1,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": false,
+      "why": "The highest sustained single-target damage of the schools and the only one that converts Arcane Recovery charges into damage: Touch of Death is 5 + twice wizard level necrotic for two charges, roughly three times per long rest, on top of Negative Energy Infusion's per-turn 1d8 and doubled necrotic cantrips from Reaper. Inescapable Destruction strips necrotic resistance, which is the clause that keeps a mono-type body off the Absolute Wrath cap. It gives no defensive layer at all.",
+      "uncertain": [],
+      "boosters": [],
+      "src": "4bc66c55b0c7",
+      "base_deps": "42a5696582d4"
+    },
+    "wizard/School of Bombardment": {
+      "verdict": "candidate",
+      "scores": [
+        2,
+        3,
+        1,
+        2,
+        3,
+        3,
+        0,
+        1,
+        null,
+        1
+      ],
+      "prof": [
+        "int",
+        "wis"
+      ],
+      "armour": null,
+      "shield": false,
+      "primary": "int",
+      "concentration": true,
+      "why": "Scored as the bare Wizard chassis - full list access, robe durability, no subclass uplift - because that is the only part of this school that can be defended from source. The published identity is long-range ordnance, so the real profile is probably an AoE and single-target lift over this floor.",
+      "uncertain": [
+        "SEVERE: every mechanic of this subclass is unverified. The per-level feature list is published only as images and the mod.io mirror is JavaScript-gated, so no feature, level or number was read. The scores here are a chassis floor, not a reading of the subclass; anyone comparing rows should treat this one as unscored until it is read off the level-up screen."
+      ],
+      "boosters": [],
+      "src": "5a748420eeaf",
+      "base_deps": "42a5696582d4"
+    }
+  },
+  "arrives": {
+    "artificer/Alchemist": {
+      "flash-of-genius": 7
+    },
+    "artificer/Armorer": {
+      "flash-of-genius": 7,
+      "armour": 3
+    },
+    "artificer/Artillerist": {
+      "flash-of-genius": 7
+    },
+    "artificer/Battle Smith": {
+      "flash-of-genius": 7
+    },
+    "barbarian/Base game (Patch 8) — Path of Wild Magic": {
+      "magic-awareness": 3
+    },
+    "barbarian/Path of the Zealot": {
+      "fanatical-focus": 6
+    },
+    "barbarian/Path of Ginnungagap": {
+      "rage-of-ginnungagap": 3
+    },
+    "barbarian/Path of the Revenant": {
+      "armour": 3
+    },
+    "bard/College of Swords (vanilla)": {
+      "armour": 3
+    },
+    "bard/College of Valour (vanilla)": {
+      "armour": 3,
+      "shield": 3
+    },
+    "bloodhunter/Order of the Ghostslayer": {
+      "dark-augmentation": 10
+    },
+    "bloodhunter/Order of the Lycan": {
+      "dark-augmentation": 10
+    },
+    "bloodhunter/Order of the Mutant": {
+      "dark-augmentation": 10
+    },
+    "bloodhunter/Order of the Profane Soul": {
+      "dark-augmentation": 10
+    },
+    "fighter/Champion": {
+      "heroic-warrior": 10
+    },
+    "fighter/Brute (UA)": {
+      "brutish-durability": 7
+    },
+    "fighter/Rune Knight": {
+      "frost-rune": 3
+    },
+    "fighter/Samurai": {
+      "wis": 7
+    },
+    "mesmerist/Aspect of the Trickster — the support/buff archetype": {
+      "towering-ego": 2,
+      "gift-of-will": 7
+    },
+    "mesmerist/Aspect of the Eyebiter — the debuff/damage archetype": {
+      "towering-ego": 2
+    },
+    "mesmerist/Aspect of the Daredevil — the melee/skirmisher archetype": {
+      "towering-ego": 2
+    },
+    "monk/Way of the Open Hand (vanilla)": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of Shadow (vanilla)": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Four Elements (vanilla)": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Ascendant Dragon": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Astral Self": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Kensei": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Long Death": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of Mercy": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Sun Soul": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Warrior of the Elements (PHB2024 rework of Four Elements)": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14
+    },
+    "monk/Way of the Friar": {
+      "con": 14,
+      "int": 14,
+      "wis": 14,
+      "cha": 14,
+      "shield": 3,
+      "friars-blessing": 3
+    },
+    "paladin/Oath of Devotion": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oath of the Ancients": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oath of Vengeance": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oath of the Crown": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oathbreaker": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oath of Conquest": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oath of the Bleak Walkers": {
+      "aura-of-protection": 6
+    },
+    "paladin/Oath of the Moon (Selûne-inspired)": {
+      "aura-of-protection": 6,
+      "lunar-champion": 20
+    },
+    "paladin/Oath of Illumination": {
+      "aura-of-protection": 6
+    },
+    "paladin/Supporting library": {
+      "aura-of-protection": 6
+    },
+    "paragon/Spellblade — the exception the skill suspected, but not a caster": {
+      "magic-resistance": 9
+    },
+    "ranger/Gloom Stalker (base game + `Expansion`)": {
+      "wis": 7,
+      "int": 7
+    },
+    "rogue/Thief": {
+      "wis": 15
+    },
+    "rogue/Assassin": {
+      "wis": 15
+    },
+    "rogue/Arcane Trickster": {
+      "wis": 15
+    },
+    "rogue/Swashbuckler": {
+      "wis": 15
+    },
+    "rogue/Inquisitive": {
+      "wis": 15
+    },
+    "rogue/Mastermind": {
+      "wis": 15
+    },
+    "rogue/Phantom": {
+      "wis": 15
+    },
+    "rogue/Scout": {
+      "wis": 15
+    },
+    "rogue/Soulknife": {
+      "wis": 15
+    },
+    "rogue/Seeker": {
+      "wis": 15
+    },
+    "wizard/Abjuration": {
+      "spell-resistance": 14
+    },
+    "wizard/Bladesinging": {
+      "armour": 2
+    },
+    "wizard/Transmutation": {
+      "con": 6
+    }
+  }
+}

@@ -378,37 +378,81 @@ Four things count, and they are not equal in a duo:
 
 ## 8. Skills
 
-Out-of-combat coverage. Judge against the **named gates that exist in that act**, not a
-proficiency count — this axis is the most strongly act-gated of the ten.
+**Not authored.** This axis is derived from `skills` — the finished modifier a body rolls on each
+check, per act — and `scoring.py` owns the arithmetic. There is no 0–5 judgement to make here.
+Record the modifiers; the rung falls out.
 
-**`gates.md` owns the gate list** — every act, DC, cost and reward, and which mods change them.
-The rows below name only the gates that are *paid in a skill check*; most gates are not, and what
-they buy usually lands on another axis. Do not restate a gate's numbers here.
+### What it measures, and why it changed
 
-| | |
-|---|---|
-| **0** | Two or three skills, no Expertise, and the dump stat sits behind them. |
-| **1** | Four or more skills, no Expertise. |
-| **2** | Expertise ×1, or a broad list with a real ability behind it. |
-| **3** | Expertise ×2 plus Guidance at will. |
-| **4** | Expertise ×2, Guidance, and all but one of the act's named gates cleared. |
-| **5** | Every named gate in that act cleared. |
+It used to score the run's **named gates**: Hag's Hair, the Araj pickpocket, the Mirror of Loss.
+That was the wrong target, for two independent reasons.
 
-| rung | I | II | III |
+**The named gates are buyable.** Withers charges 100 gold and sits in the Dank Crypt from Act I.
+bg3.wiki documents respeccing into Rogue 11 / Knowledge Cleric 1 for Religion Expertise, passing
+the Mirror at DC 25, then respeccing back *"retaining the Mirror of Loss stat enhancement"*. A
+check any chassis can rent its way past is not a chassis property, so **the Mirror is no longer
+scored at all**.
+
+**The named gates are also bypassable.** Each has a no-check route to the same ability point —
+taking Ethel's deal yields the hair and costs only Mayrina, and Araj can simply be killed and
+looted. Passing buys the *secondary* prize, not the +1 or +2.
+
+What survives both objections is the untelegraphed half of the run, scored every act:
+
+| check | skill | DC |
+|---|---|---|
+| traps and hidden caches | **Perception** | 15–25 |
+| secret doors and switches | **Investigation** | 15–20 |
+| routine town dialogue | **Persuasion** | **I** 10–15, **II** 15–18, **III** 18–22 |
+
+These fire without warning, in whatever build is worn. Nothing prepares for them, so they measure
+the chassis. Hag's Hair and the Araj pickpocket are still scored alongside them, at lower weight
+in practice because they are one check each against three recurring ones.
+
+### How the rung is computed
+
+Each check takes the pair's **better body** — `Use Highest Modifier in dialogue` puts the host on
+the party-best skill total, `Use Best Sleight of Hand` does the same for pickpocket and trap
+disarm, and either character can walk into a trap. Nothing here is personal.
+
+**Inspiration applies to the named gates only.** Traps roll automatically with no prompt, so there
+is nothing to spend a charge on, and four charges do not stretch across a run of town dialogue.
+
+The rung is then the **mean clear probability** across the act's checks, capped by its worst:
+
+| mean | rung |  | cap |
 |---|---|---|---|
-| **skill gates** | **Hag's Hair, DC 20** — **Deception or Intimidation**, one per run | **Potion of Everlasting Vigour** — pickpocket Araj (Sleight of Hand); plus passive Perception for hidden content | **Mirror of Loss, Religion DC 25**, and the **pickpocket-only** second Phalar Aluve music box in the Circus (Sleight of Hand) |
-| **2 =** | Expertise ×1, or five-plus skills behind a 16+ ability | The same plus Guidance at will — a broad list with no Expertise is now rung 1 | The same; with no answer to a DC 25 a body **cannot exceed 2**, however many proficiencies it holds |
-| **3 =** | Expertise ×2 (Bard/Rogue 3) + Guidance | + **Reliable Talent** (Rogue 11) or Lore's Peerless Skill — floor-raising, not just bonus-raising | + **Elevated Mind** (illithid: Expertise *and* proficiency in every skill of one ability, re-selectable) |
-| **4 =** | Expertise ×2 + Guidance + **Hag's Hair cleared** on the host body | + a Sleight of Hand body for Araj and passive Perception in the 20s | All but one of the act's named gates — typically the Mirror or the Circus box |
-| **5 =** | Expertise ×2 (Bard/Rogue 3) + Guidance + a check that clears DC 20 | + a Sleight of Hand body + passive Perception in the 20s | + an Intelligence skill that clears DC 25, or Forbidden Knowledge spent to bypass it |
+| ≥ 0.75 | **5** |  | worst check < 0.10 → rung ≤ **2** |
+| ≥ 0.65 | **4** |  | worst check < 0.25 → rung ≤ **3** |
+| ≥ 0.55 | **3** |  | |
+| ≥ 0.40 | **2** |  | |
+| ≥ 0.25 | **1** |  | |
+| below | **0** |  | |
+
+The mean asks how much of the act's check load the pair handles. The caps preserve what an
+`all`-quantifier was protecting: **a check nobody can roll is a different failure from a check
+everyone rolls badly**, and it must not average away.
+
+> **Rung 5 is unreachable, and that is the finding.** The best pair in a 34,980-pairing field
+> averages **0.79**, and Perception against the 15–25 trap band peaks at **0.60** for anyone in the
+> roster. A two-character Lone Wolf party cannot cover this run's detection load. Expect a good
+> duo at 3–4 in Act I and 1–2 by Act III, and read a 4 as excellent rather than adequate.
+
+**Two faces are worth less than a face and a scout.** Charisma covers town dialogue and Hag's
+Hair; Wisdom and Intelligence cover traps, caches and doors. Because every check takes the better
+body, a duplicate contributes almost nothing — disjoint-class pairs average 6.80 across the three
+acts against 5.70 for pairs sharing a class.
 
 > **Persuasion does not open Hag's Hair** — the check is Deception or Intimidation, and Fighters
 > and Barbarians get an easier **Intimidation DC 15 with advantage** instead. **Stern Gaze**
 > (Inquisitor) lets Intimidation use **Wisdom instead of Charisma**, the only non-Charisma route
 > in the list. Vengeance's **Monster Tactician** grants Expertise in an Intelligence skill *and*
-> double Wisdom modifier on it, which clears the Mirror's DC 25 outright.
+> double Wisdom modifier on it — put it on **Investigation** and it is the strongest answer in the
+> roster to secret doors and switches. It used to be described here as the clean answer to the
+> Mirror of Loss; the Mirror is no longer scored, and the feature only ever reached that DC on a
+> body with the Intelligence to back it.
 
-> **The gate rows above assume the host makes the roll.** `Use Highest Modifier in dialogue` and
+> **Dialogue checks assume the host makes the roll.** `Use Highest Modifier in dialogue` and
 > `Use Best Sleight of Hand` hand the party-best total to `GetHostCharacter()` only, so a gate
 > cleared by the non-host body is not cleared at all. The ability and the proficiency must still
 > sit on the *same* body, and the flat bonus does **not** carry proficiency — **Reliable Talent**
