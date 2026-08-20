@@ -213,13 +213,22 @@ not duplicate the brief; there is one copy of each, in `assets/`.
 157 subclasses is a subagent job. The cost is dominated not by the class files but by **shared
 reference material**: `listo-build/SKILL.md`, `axis-rubrics.md` and `listo-rules.md` are ~32k
 tokens together, and an agent that opens them pays that toll *per agent*. Seventeen agents reading
-freely costs upward of 690k tokens; the same sweep briefed properly costs about 137k at two agents
-and 183k at four.
+freely costs upward of 690k tokens; the same sweep briefed properly costs about 111k at two agents
+and 145k at four.
+
+The sweep is **one variable cost plus a fixed cost per agent**, which is the whole reason agent
+count is the dial:
+
+    total ≈ 77k + 16.9k × agents
+
+77k is the class line ranges, which somebody has to read whatever the batching. The 16.9k is paid
+again by every agent added: ~12.4k of shared `## Dip value` sections, ~4.0k of `sweep-brief.md`,
+~0.5k of agent spec.
 
 Three rules produce that difference:
 
 1. **`assets/sweep-brief.md` is the agent's only *prose* reference.** It compresses those ~32k
-   into ~2.6k — verdicts, split rules, the rung-4/5 anchors for all ten axes, the niche
+   into ~4.0k — verdicts, split rules, the rung-4/5 anchors for all ten axes, the niche
    vocabulary and the traps. Name its path in every `listo-build:listo-sweep` assignment; the
    agent reads it first, and its spec forbids opening the files it compresses.
 
@@ -227,7 +236,7 @@ Three rules produce that difference:
    worth recording as a mistake. A seed's split names two classes and an agent is assigned one,
    so it cannot invent what the other sells. A hand-written dip menu covered which class to *dip*
    into at levels 1-6 and said nothing that supports a `Cleric 12 / Fighter 8`. Every agent
-   therefore reads all seventeen **`## Dip value`** sections — ~10.6k, authoritative, emitted in
+   therefore reads all seventeen **`## Dip value`** sections — ~12.4k, authoritative, emitted in
    the assignment by `--assign`. The seed's split stays **provisional**: it is a hypothesis for
    the scoring pass, which revisits it with both classes' full text.
 2. **Assignments come from `--assign`, never by hand.**
@@ -240,18 +249,19 @@ Three rules produce that difference:
    read — at-a-glance plus the subclass section, ~77k across all seventeen classes against ~148k
    for whole files — and the exact seed keys, verbatim. Keys copied from here cannot be mistyped,
    which is the difference between a clean `--check` and an afternoon of reconciliation.
-3. **Batch to 4 agents or fewer.** Everything paid per agent — overhead, the brief, and now the
-   ~10.6k shared dip set — dominates, so agent count is the sweep's main dial:
+3. **Batch to 4 agents or fewer.** Everything paid per agent — the ~12.4k shared dip set, the
+   brief, the spec — dominates, so agent count is the sweep's main dial. Read-set figures are
+   `--assign`'s own, plus brief and spec per agent:
 
    | agents | total | subclasses each |
    |---:|---:|---:|
-   | 2 | ~137k | 78 |
-   | 4 | ~183k | 39 |
-   | 8 | ~276k | 19 |
-   | 17 | ~484k | 9 |
+   | 2 | ~111k | 78 |
+   | 4 | ~145k | 39 |
+   | 8 | ~212k | 19 |
+   | 17 | ~363k | 9 |
 
-   Four is the balance point: ~39 subclasses and ~30k of reading per agent, which is one
-   comfortable pass, at a little over half what eight costs.
+   Four is the balance point: ~39 subclasses and ~36k per agent, which is one comfortable pass,
+   at a little over two-thirds of what eight costs.
 
 Agents return **raw JSON only**, one object of seed records. Merge them into
 `assets/chassis-seeds.json`, then `--check`. Anything an agent skipped or mistyped surfaces there
