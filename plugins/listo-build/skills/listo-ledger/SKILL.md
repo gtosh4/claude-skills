@@ -178,6 +178,36 @@ assignment, a collision does not error, it silently *overwrites* a body — and 
 subclass then reads as uncovered. That has happened twice, at 8 collisions and at 13, and only the
 larger run was big enough to notice. Resolution is deterministic: same input, same ids, every time.
 
+### The agents
+
+Every subagent pass in this skill has a spec in `listo-build/agents/`, invoked as
+`listo-build:<name>`. Use them rather than a general-purpose agent: the spec pins the tools, names
+the brief, and carries the invariants a brief cannot enforce — return raw JSON, write no files,
+and for the seed and catalogue passes, do not touch the paks.
+
+**Model is chosen by whether a script checks the output**, not by how hard the pass looks. Five of
+the eight are verified downstream and run on Sonnet; the three that nothing checks inherit the
+session's model, because their failure mode is a value that is quietly too low, and a score that
+is too low reads exactly like an honest one.
+
+| agent | brief | what checks it | model |
+|---|---|---|---|
+| `listo-sweep` | `sweep-brief.md` | `seed_index.py --check` — skipped or mistyped keys surface as unseeded or stale | sonnet |
+| `listo-catalogue` | `catalogue-brief.md`, `build-brief.md` | filter-grade by design; composed vectors are never published | sonnet |
+| `listo-grants` | `grants-brief.md` | `crosscheck.py` subset test | sonnet |
+| `listo-evidence` | `evidence-brief.md` | `scoring.py` raises on unknown booster and reach ids | sonnet |
+| `listo-routine-skills` | `routine-skills-brief.md` | `merge_routine.py` coverage and calibration checks | sonnet |
+| `listo-base` | `base-brief.md`, `grants-brief.md` | **nothing** — it *is* the floor `crosscheck.py` tests against | inherits |
+| `listo-variant` | `variant-brief.md` | **nothing** — the split search cannot evaluate a variant | inherits |
+| `listo-score` | `scoring-brief.md` | **nothing** — this pass *is* the ledger | inherits |
+
+The assignment still carries the brief's path, the read set and the verbatim keys. The spec does
+not duplicate the brief; there is one copy of each, in `assets/`.
+
+> **If you change a Sonnet pass's brief, re-run one batch on both models and diff the output**
+> before trusting the cheaper one — `listo-sweep` especially, since the roster is selected from
+> seeds and pool sampling already biases against specialist chassis.
+
 ### Running the sweep — the brief is the whole trick
 
 157 subclasses is a subagent job. The cost is dominated not by the class files but by **shared
@@ -190,7 +220,8 @@ Three rules produce that difference:
 
 1. **`assets/sweep-brief.md` is the agent's only *prose* reference.** It compresses those ~32k
    into ~2.6k — verdicts, split rules, the rung-4/5 anchors for all ten axes, the niche
-   vocabulary and the traps. Paste it into every agent prompt.
+   vocabulary and the traps. Name its path in every `listo-build:listo-sweep` assignment; the
+   agent reads it first, and its spec forbids opening the files it compresses.
 
    It does **not** compress the cross-class material, and an earlier version's attempt to is
    worth recording as a mistake. A seed's split names two classes and an agent is assigned one,
