@@ -8,7 +8,12 @@
     "deltas": "The genuinely additive part, in axis rungs. Summed across parts, then clamped to 0-5. These are FILTER-GRADE estimates.",
     "requires": "Condition on the rest of the build, or null. `{\"primary\": \"cha\"}` means the part is worth its deltas only on a Charisma body; otherwise deltas are halved.",
     "conflicts": "Tags this part competes for. Two parts sharing a tag do not stack — the larger delta applies and the smaller is dropped. `bonus-action-attack` is capped by Lone Wolf's two Bonus Actions; `extra-attack` never stacks.",
-    "exit": "What the class gives up by stopping at N levels instead of 20. Keyed by the level stopped at. Applied to the PRIMARY class only, since a dip never had those levels to lose."
+    "exit": "What the class gives up by stopping at N levels instead of 20. Keyed by the level stopped at. Applied to the PRIMARY class only, since a dip never had those levels to lose.",
+    "skill_lists": "Which skills a class's level-1 list offers. The pick COUNT is on each part's `grants.skills`; this says what the picks may be spent on. Scoring the axis off a count alone credits a Cleric dip with Investigation it can never take.",
+    "backgrounds": "The twelve fixed background pairs, minus Dark-Urge-only Haunted One. Two proficiencies every body has. No background and no race grants Investigation.",
+    "subclass_levels": "A dip at level N takes EVERY row its subclass has at or below N, folded by `compose.fold_subclass`. Deltas fold by MAX per axis because the rows are cumulative; grants union forward, since only the shallowest row carries the domain's armour.",
+    "deltas_skl": "`deltas.skl` is now IGNORED by `compose`. Skills became a derived axis — `skills_pair` scores off modifiers, not rungs — so a subclass's out-of-combat value has to be stated as `grants.skills`/`grants.expertise` against `skill_lists` to reach the score. The remaining `skl` deltas are inert and have not been audited.",
+    "skill_list": "Optional on a part's `grants`: the skills THAT grant may be spent on, when the feature names a narrower list than the class's. Absent means the class list."
   },
   "conflict_tags": {
     "extra-attack": "Extra Attack does not stack from two sources.",
@@ -706,7 +711,14 @@
       },
       "requires": null,
       "conflicts": [],
-      "note": "Two wizard cantrips that count as Cleric cantrips plus Arcana proficiency; Counterspell only arrives with the level-5 domain spells."
+      "note": "Two wizard cantrips that count as Cleric cantrips plus Arcana proficiency; Counterspell only arrives with the level-5 domain spells.",
+      "grants": {
+        "skills": 1,
+        "expertise": 0,
+        "skill_list": [
+          "Arcana"
+        ]
+      }
     },
     "cleric/1/Nature": {
       "deltas": {
@@ -723,7 +735,14 @@
       "note": "The only domain with built-in Shillelagh access, so a Wisdom melee build pays no feat tax — heavy armour and a nature skill on top.",
       "grants": {
         "armour": "heavy",
-        "shield": true
+        "shield": true,
+        "skills": 1,
+        "expertise": 0,
+        "skill_list": [
+          "Animal Handling",
+          "Nature",
+          "Survival"
+        ]
       }
     },
     "cleric/1/Death": {
@@ -747,7 +766,15 @@
       "note": "Heavy armour, a druid cantrip and a physical skill, but no martial weapons; Haste on the domain list needs Cleric 5.",
       "grants": {
         "armour": "heavy",
-        "shield": true
+        "shield": true,
+        "skills": 1,
+        "expertise": 0,
+        "skill_list": [
+          "Animal Handling",
+          "Athletics",
+          "Nature",
+          "Survival"
+        ]
       }
     },
     "cleric/1/Knowledge": {
@@ -758,7 +785,17 @@
       "conflicts": [
         "expertise"
       ],
-      "note": "Double proficiency bonus in two of Arcana/History/Nature/Religion — Expertise in all but name, and the only thing the domain sells at one level."
+      "note": "Double proficiency bonus in two of Arcana/History/Nature/Religion — Expertise in all but name, and the only thing the domain sells at one level.",
+      "grants": {
+        "skills": 2,
+        "expertise": 2,
+        "skill_list": [
+          "Arcana",
+          "History",
+          "Nature",
+          "Religion"
+        ]
+      }
     },
     "cleric/1/Light": {
       "deltas": {
@@ -1701,7 +1738,18 @@
       "conflicts": [
         "expertise"
       ],
-      "note": "Monster Tactician is Expertise plus double Wisdom modifier on one Intelligence skill, and Divine Scourge turns every Judgment into a personal upgrade against your Quarry."
+      "note": "Monster Tactician is Expertise plus double Wisdom modifier on one Intelligence skill, and Divine Scourge turns every Judgment into a personal upgrade against your Quarry.",
+      "grants": {
+        "skills": 1,
+        "expertise": 1,
+        "skill_list": [
+          "Arcana",
+          "History",
+          "Investigation",
+          "Nature",
+          "Religion"
+        ]
+      }
     },
     "inquisitor/3/Zeal Inquisition": {
       "deltas": {
@@ -2138,7 +2186,11 @@
       },
       "requires": null,
       "conflicts": [],
-      "note": "Three extra skill proficiencies on top of Bard's own three, plus Cutting Words as a reaction debuff on any enemy attack, check or damage roll."
+      "note": "Three extra skill proficiencies on top of Bard's own three, plus Cutting Words as a reaction debuff on any enemy attack, check or damage roll.",
+      "grants": {
+        "skills": 3,
+        "expertise": 0
+      }
     },
     "bard/3/College of Swords": {
       "deltas": {
@@ -2297,7 +2349,11 @@
         "primary": "cha"
       },
       "conflicts": [],
-      "note": "Magical Secrets four levels early — two spells from any list the modlist installs, on a six-level chassis."
+      "note": "Magical Secrets four levels early — two spells from any list the modlist installs, on a six-level chassis.",
+      "grants": {
+        "skills": 3,
+        "expertise": 0
+      }
     },
     "bard/6/College of Swords": {
       "deltas": {
@@ -4679,7 +4735,15 @@
         "primary": "wis"
       },
       "conflicts": [],
-      "note": "Free healing folded into Flurry plus Hands of Harm, and two skill proficiencies chosen from a list to cover gates the partner cannot roll."
+      "note": "Free healing folded into Flurry plus Hands of Harm, and two skill proficiencies chosen from a list to cover gates the partner cannot roll.",
+      "grants": {
+        "skills": 2,
+        "expertise": 0,
+        "skill_list": [
+          "Insight",
+          "Medicine"
+        ]
+      }
     },
     "monk/3/Way of the Long Death": {
       "deltas": {
@@ -5609,6 +5673,235 @@
           "act": -1
         }
       }
+    },
+    "cleric/2/Light": {
+      "deltas": {
+        "aoe": 2
+      },
+      "requires": null,
+      "conflicts": [],
+      "note": "Radiance of the Dawn: a repeatable radiant AoE on the short-rest Channel Divinity clock, no concentration and no slot - the rubric's rung-3 shape on an axis most Wisdom melee bodies sit at 1. Falls off against Act III hit points."
     }
-  }
+  },
+  "skill_lists": {
+    "artificer": [
+      "Arcana",
+      "History",
+      "Investigation",
+      "Perception",
+      "Medicine",
+      "Nature"
+    ],
+    "barbarian": [
+      "Animal Handling",
+      "Athletics",
+      "Intimidation",
+      "Nature",
+      "Survival",
+      "Perception"
+    ],
+    "bard": [
+      "Acrobatics",
+      "Animal Handling",
+      "Arcana",
+      "Athletics",
+      "Deception",
+      "History",
+      "Insight",
+      "Intimidation",
+      "Investigation",
+      "Medicine",
+      "Nature",
+      "Perception",
+      "Performance",
+      "Persuasion",
+      "Religion",
+      "Sleight of Hand",
+      "Stealth",
+      "Survival"
+    ],
+    "bloodhunter": [
+      "Acrobatics",
+      "Arcana",
+      "Athletics",
+      "History",
+      "Insight",
+      "Investigation",
+      "Religion",
+      "Survival"
+    ],
+    "cleric": [
+      "History",
+      "Insight",
+      "Medicine",
+      "Persuasion",
+      "Religion"
+    ],
+    "druid": [
+      "Arcana",
+      "Animal Handling",
+      "Insight",
+      "Medicine",
+      "Nature",
+      "Perception",
+      "Religion",
+      "Survival"
+    ],
+    "fighter": [
+      "Acrobatics",
+      "Animal Handling",
+      "Athletics",
+      "History",
+      "Insight",
+      "Intimidation",
+      "Perception",
+      "Survival"
+    ],
+    "inquisitor": [
+      "Arcana",
+      "Athletics",
+      "History",
+      "Investigation",
+      "Nature",
+      "Perception",
+      "Religion",
+      "Survival"
+    ],
+    "mesmerist": [
+      "Arcana",
+      "Deception",
+      "History",
+      "Intimidation",
+      "Insight",
+      "Investigation",
+      "Perception",
+      "Performance",
+      "Persuasion",
+      "Sleight of Hand",
+      "Stealth"
+    ],
+    "monk": [
+      "History",
+      "Insight",
+      "Religion",
+      "Acrobatics",
+      "Stealth",
+      "Athletics"
+    ],
+    "paladin": [
+      "Athletics",
+      "Insight",
+      "Intimidation",
+      "Medicine",
+      "Persuasion",
+      "Religion"
+    ],
+    "paragon": [
+      "Athletics",
+      "History",
+      "Investigation",
+      "Insight",
+      "Medicine",
+      "Survival",
+      "Intimidation",
+      "Persuasion"
+    ],
+    "ranger": [
+      "Animal Handling",
+      "Athletics",
+      "Insight",
+      "Investigation",
+      "Nature",
+      "Perception",
+      "Stealth",
+      "Survival"
+    ],
+    "rogue": [
+      "Acrobatics",
+      "Athletics",
+      "Deception",
+      "Insight",
+      "Intimidation",
+      "Investigation",
+      "Perception",
+      "Performance",
+      "Persuasion",
+      "Sleight of Hand",
+      "Stealth"
+    ],
+    "sorcerer": [
+      "Arcana",
+      "Deception",
+      "Insight",
+      "Intimidation",
+      "Persuasion",
+      "Religion"
+    ],
+    "warlock": [
+      "Arcana",
+      "Deception",
+      "History",
+      "Intimidation",
+      "Investigation",
+      "Nature",
+      "Religion"
+    ],
+    "wizard": [
+      "Arcana",
+      "History",
+      "Investigation",
+      "Insight",
+      "Medicine",
+      "Religion"
+    ]
+  },
+  "backgrounds": {
+    "Acolyte": [
+      "Insight",
+      "Religion"
+    ],
+    "Charlatan": [
+      "Deception",
+      "Sleight of Hand"
+    ],
+    "Criminal": [
+      "Deception",
+      "Stealth"
+    ],
+    "Entertainer": [
+      "Acrobatics",
+      "Performance"
+    ],
+    "Folk Hero": [
+      "Animal Handling",
+      "Survival"
+    ],
+    "Guild Artisan": [
+      "Insight",
+      "Persuasion"
+    ],
+    "Noble": [
+      "History",
+      "Persuasion"
+    ],
+    "Outlander": [
+      "Athletics",
+      "Survival"
+    ],
+    "Sage": [
+      "Arcana",
+      "History"
+    ],
+    "Soldier": [
+      "Athletics",
+      "Intimidation"
+    ],
+    "Urchin": [
+      "Sleight of Hand",
+      "Stealth"
+    ]
+  },
+  "race_skills": [
+    "Perception"
+  ]
 }

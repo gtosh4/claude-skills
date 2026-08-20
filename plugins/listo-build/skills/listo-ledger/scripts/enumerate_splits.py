@@ -19,7 +19,8 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "listo-build", "scripts"))
 import compose as CO                                              # noqa: E402
 import seed_index as SI                                           # noqa: E402
-from scoring import KEYS, SAV_IDX, derive_saves, score_bodies     # noqa: E402
+from scoring import (KEYS, SAV_IDX, derive_saves, derive_skills,   # noqa: E402
+                     score_bodies)
 
 MIN_PRIMARY = 11          # a majority of twenty; below this the subclass is not the subject
 MAX_CLASSES = 3
@@ -55,8 +56,27 @@ def parts_by_class(cat):
     return out
 
 
-def dip_sets(pbc, primary, remainder):
-    """Every legal way to spend `remainder` levels on at most two other classes."""
+def subclasses_by_class(cat):
+    """`{class: {subclass: [part_id, ...]}}`, so a dip can take every row at or below its level."""
+    out = collections.defaultdict(lambda: collections.defaultdict(list))
+    for pid in cat["parts"]:
+        if pid == "exit":
+            continue
+        bits = pid.split("/")
+        if len(bits) == 3:
+            out[bits[0]][bits[2]].append(pid)
+    return out
+
+
+def dip_sets(pbc, primary, remainder, sbc=None):
+    """Every legal way to spend `remainder` levels on at most two other classes.
+
+    A subclass is offered when it has ANY row at or below the dip's level, and it brings all of
+    them. Requiring a row at exactly `remainder` dropped the level-1 grants off every deeper dip
+    and made Cleric 2 (Light) — a domain whose entire payload is its level-2 Channel Divinity —
+    impossible to express.
+    """
+    sbc = sbc or {}
     if remainder == 0:
         yield ()
         return
@@ -66,10 +86,11 @@ def dip_sets(pbc, primary, remainder):
             if lv == remainder:
                 for pid in pbc[c][lv]:
                     if len(pid.split("/")) == 2:          # generic part
-                        subs = [p for p in pbc[c][lv] if len(p.split("/")) == 3]
                         yield ((c, lv, pid, None),)
-                        for sp in subs:
-                            yield ((c, lv, pid, sp),)
+                        for sub, pids in sorted(sbc.get(c, {}).items()):
+                            chain = tuple(p for p in pids if int(p.split("/")[1]) <= lv)
+                            if chain:
+                                yield ((c, lv, pid, (sub, chain)),)
     for ca, cb in itertools.combinations(others, 2):
         for la in pbc[ca]:
             lb = remainder - la
@@ -82,12 +103,20 @@ def dip_sets(pbc, primary, remainder):
                     yield ((ca, la, pa, None), (cb, lb, pb, None))
 
 
-def enumerate_for(key, base, cat, pbc, cls_of):
+def _picks(cat, pid, first):
+    """How many skill proficiencies one generic part hands over, and how much Expertise."""
+    p = cat["parts"].get(pid) or {}
+    side = p.get("as_first" if first else "as_dip", {})
+    g = side.get("grants", {})
+    return g.get("skills", 0), g.get("expertise", 0)
+
+
+def enumerate_for(key, base, cat, pbc, cls_of, sbc=None):
     """Every composed variant of one subclass, as `[(label, vector, meta)]`."""
     primary = cls_of[key]
     out = []
     for p in range(MIN_PRIMARY, 21):
-        for dips in dip_sets(pbc, primary, 20 - p):
+        for dips in dip_sets(pbc, primary, 20 - p, sbc):
             if len(dips) + 1 > MAX_CLASSES:
                 continue
             firsts = [None] + [d[0] for d in dips]        # primary first, or a dip class first
@@ -96,35 +125,69 @@ def enumerate_for(key, base, cat, pbc, cls_of):
                 for c, lv, gen, sub in dips:
                     parts.append((gen, first == c))
                     if sub:
-                        parts.append((sub, False))
+                        parts.append((sub[1], False))     # every row the subclass has by `lv`
                 try:
                     # `requires` gates on the body's primary ABILITY, not its class. A Hexblade
                     # dip is transformative on a Charisma body and near-worthless on a Strength
                     # one, and that is the main thing stopping a three-class split from being
                     # good at everything for free.
-                    vec, prof = CO.compose(cat, base, parts, primary=primary,
-                                           primary_ability=base.get("primary"),
-                                           primary_levels=p,
-                                           concentration=base.get("concentration", False),
-                                           primary_first=(first is None))
+                    vec, prof, picked = CO.compose(
+                        cat, base, parts, primary=primary,
+                        primary_ability=base.get("primary"), primary_levels=p,
+                        concentration=base.get("concentration", False),
+                        primary_first=(first is None))
                 except Exception:
                     continue
-                bits = [f"{primary.title()} {p}"] + [f"{c.title()} {lv}" for c, lv, _g, _s in dips]
+                # Skills, which the search could not see at all until now. Each class may only
+                # spend its picks on its own level-1 list, so the budget is per class, not a
+                # total — and `compose` already collected what every dip part hands over. Only
+                # the primary's own level-1 picks have to be added here, since it is not a part.
+                pn, pe = _picks(cat, f"{primary}/1", first is None)
+                budgets = [(primary, pn, None)] + picked["skills"]
+                expertise = ([(None, pe)] if pe else []) + picked["expertise"]
+                skills = CO.compose_skills(cat, budgets, base.get("primary"),
+                                           {primary.title()} | {c.title() for c, *_ in dips},
+                                           expertise)
+                bits = [f"{primary.title()} {p}"] + [
+                    f"{c.title()} {lv}" + (f" ({s[0]})" if s else "") for c, lv, _g, s in dips]
                 label = " / ".join(bits) + ("" if first is None else f"  [{first.title()} first]")
                 out.append((label, vec, {"primary": primary, "primary_levels": p,
-                                         "dips": [(c, lv, g, s) for c, lv, g, s in dips],
-                                         "first": first or primary, "prof": prof}))
+                                         "dips": [(c, lv, g, s[0] if s else None)
+                                                  for c, lv, g, s in dips],
+                                         "first": first or primary, "prof": prof,
+                                         "skills": skills,
+                                         "classes": sorted({primary.title()}
+                                                           | {c.title() for c, *_ in dips})}))
     return out
 
 
-def to_chassis(vec, prof, boosters, concentration, reach="hybrid"):
-    """A composed variant in the shape `score_bodies` wants."""
+def to_chassis(vec, prof, boosters, concentration, reach="hybrid", skills=None, split="",
+               classes=()):
+    """A composed variant in the shape `score_bodies` wants.
+
+    `skills` is not optional in practice: `skills_pair` scores off modifiers, so a body handed
+    none contributes nothing to an axis carrying 23% of the non-tempo half.
+    """
     sc = list(vec)
     sc[SAV_IDX] = None
-    return {"_id": "v", "reach": reach, "concentration": concentration,
-            "scores": {a: list(sc) for a in ("I", "II", "III")},
+    skills = skills or {a: {} for a in ("I", "II", "III")}
+    cls = set(classes)
+    per_act = {}
+    for a in ("I", "II", "III"):
+        row = list(sc)
+        row[KEYS.index("skl")] = derive_skills(skills.get(a, {}), a, cls)
+        per_act[a] = row
+    return {"_id": "v", "reach": reach, "concentration": concentration, "split": split,
+            "skills": skills,
+            "scores": per_act,
             "saves": {a: {"prof": list(prof), "boosters": list(boosters)}
                       for a in ("I", "II", "III")}}
+
+
+def _skl_key(meta):
+    """The skill map flattened, so `dedupe` can tell two otherwise identical vectors apart."""
+    sk = meta.get("skills") or {}
+    return [sk.get(a, {}).get(s, 0) for a in ("I", "II", "III") for s in sorted(CO.SKILL_ABILITY)]
 
 
 def pair_value(a, b):
@@ -149,28 +212,43 @@ def main():
     cls_of = {f"{c}/{s}": c for c, subs in inv.items() for s in subs}
     keys = [k for k in bases if not a.only or k in a.only.split(",")]
     pbc = parts_by_class(cat)
+    sbc = subclasses_by_class(cat)
 
     per, allv = {}, []
     for k in keys:
-        vs = enumerate_for(k, bases[k], cat, pbc, cls_of)
-        d = CO.dedupe([(f"{k}::{lab}", v) for lab, v, _m in vs])
+        vs = enumerate_for(k, bases[k], cat, pbc, cls_of, sbc)
+        # Two variants are only indistinguishable if their SKILL modifiers match too — the pair
+        # score reads those directly, not the composed rung.
+        d = CO.dedupe([(f"{k}::{lab}", v + _skl_key(m)) for lab, v, m in vs])
+        d = [(vid, vec[:len(KEYS)], merged) for vid, vec, merged in d]
         meta = {f"{k}::{lab}": m for lab, _v, m in vs}
         per[k] = (d, meta)
         allv += d
     print(f"{len(keys)} subclasses -> {sum(len(v) for v, _ in per.values())} distinct variants "
           f"(from {sum(1 for k in per for _ in per[k][0])} kept after dedupe)", file=sys.stderr)
 
-    pool = allv if not a.pool_cap else allv[:a.pool_cap]
+    # A prefix is every variant of the first subclass and none of the rest, which is not a pool.
+    # Stride-sample instead, so a cap still spans the whole enumerated space.
+    if a.pool_cap and len(allv) > a.pool_cap:
+        step = len(allv) / a.pool_cap
+        pool = [allv[int(i * step)] for i in range(a.pool_cap)]
+    else:
+        pool = allv
     pool_ch = [(vid, to_chassis(v, per[vid.split("::")[0]][1][vid]["prof"],
-                               bases[vid.split("::")[0]]["boosters"],
-                               bases[vid.split("::")[0]]["concentration"]))
+                                bases[vid.split("::")[0]]["boosters"],
+                                bases[vid.split("::")[0]]["concentration"],
+                                skills=per[vid.split("::")[0]][1][vid]["skills"],
+                                split=vid.split("::", 1)[1],
+                                classes=per[vid.split("::")[0]][1][vid]["classes"]))
                for vid, v, _m in pool]
     print(f"pool: {len(pool_ch)} bodies", file=sys.stderr)
 
     out = {}
     for i, (k, (d, meta)) in enumerate(sorted(per.items()), 1):
         cand = [(vid, to_chassis(v, meta[vid]["prof"], bases[k]["boosters"],
-                                 bases[k]["concentration"])) for vid, v, _m in d]
+                                 bases[k]["concentration"], skills=meta[vid]["skills"],
+                                 split=vid.split("::", 1)[1],
+                                 classes=meta[vid]["classes"])) for vid, v, _m in d]
         ranked = []
         for vid, ch in cand:
             s = sorted((pair_value(ch, pc) for pid, pc in pool_ch if pid != vid), reverse=True)

@@ -233,7 +233,7 @@ def derive_skills(mods, act, classes=None):
     for sk in mods:
         _require(sk in RECORDED_SKILLS,
                  f"unknown skill {sk!r} — expected one of {RECORDED_SKILLS}")
-    return _rung(_gate_odds(mods, act, classes))
+    return _rung(_gate_odds_cached(mods, act, classes))
 
 
 # ── damage-type redundancy ───────────────────────────────────────────────────
@@ -377,7 +377,27 @@ def _saves_block_ok(prof, boosters):
 
 _SAVES_OK_CACHE = {}
 _SAVES_CACHE = {}
+_GATES_CACHE = {}
+_SKILLS_OK_CACHE = {}
 _MISS = object()
+
+
+def _skills_block_bad(keys):
+    """Cached: the first unrecorded skill name in a modifier map, or None."""
+    hit = _SKILLS_OK_CACHE.get(keys, _MISS)
+    if hit is _MISS:
+        hit = _SKILLS_OK_CACHE[keys] = next((k for k in keys if k not in RECORDED_SKILLS), None)
+    return hit
+
+
+def _gate_odds_cached(mods, act, classes):
+    """`_gate_odds` on content. Same shape of hot path as the saves cache above: the odds a body
+    rolls do not depend on its partner, and the split search asks for them a million times."""
+    key = (tuple(sorted(mods.items())), act, tuple(sorted(classes)) if classes else None)
+    hit = _GATES_CACHE.get(key, _MISS)
+    if hit is _MISS:
+        hit = _GATES_CACHE[key] = tuple(_gate_odds(mods, act, classes))
+    return hit
 
 
 def _validate_saves_block(block, who, act):
@@ -475,8 +495,17 @@ def saves_pair(ca, cb, act):
     return out["a"], out["b"], warnings
 
 
+_CLASSES_CACHE = {}
+
+
 def _classes(split):
-    """The set of class names in a split string, for the contention proxy."""
+    """The set of class names in a split string, for the contention proxy.
+
+    Cached on the string: `score_bodies` parses both bodies' splits four times per pairing, and
+    the split search asks for the same few hundred strings a million times over."""
+    hit = _CLASSES_CACHE.get(split)
+    if hit is not None:
+        return hit
     import re as _re
     out = set()
     for part in split.split("/"):
@@ -484,6 +513,7 @@ def _classes(split):
         m = _re.match(r"^(.+?)\s+\d{1,2}$", part)
         if m:
             out.add(m.group(1).strip())
+    _CLASSES_CACHE[split] = out
     return out
 
 
@@ -499,11 +529,11 @@ def skills_pair(ca, cb, act):
     mb = (cb.get("skills") or {}).get(act, {})
     for who, m in ((ca["_id"], ma), (cb["_id"], mb)):
         _require(isinstance(m, dict), f"{who} {act}: `skills` must be a modifier map")
-        for sk in m:
-            _require(sk in RECORDED_SKILLS,
-                     f"{who} {act}: unknown skill {sk!r} — expected one of {RECORDED_SKILLS}")
-    oa = _gate_odds(ma, act, _classes(ca.get("split", "")))
-    ob = _gate_odds(mb, act, _classes(cb.get("split", "")))
+        bad = _skills_block_bad(tuple(sorted(m)))
+        _require(bad is None,
+                 f"{who} {act}: unknown skill {bad!r} — expected one of {RECORDED_SKILLS}")
+    oa = _gate_odds_cached(ma, act, _classes(ca.get("split", "")))
+    ob = _gate_odds_cached(mb, act, _classes(cb.get("split", "")))
     return _rung([(sa or sb, max(pa, pb)) for (sa, pa), (sb, pb) in zip(oa, ob)])
 
 
