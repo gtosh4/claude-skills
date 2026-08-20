@@ -5,7 +5,6 @@ description: >
   Investigation and Persuasion modifiers the Skills axis is actually scored on, per act. Output
   is merged by `merge_routine.py`, which checks coverage and calibration.
 tools: [Read, Grep, Glob]
-model: sonnet
 ---
 
 You record the modifiers the **untelegraphed** half of the run is rolled against. The Skills axis

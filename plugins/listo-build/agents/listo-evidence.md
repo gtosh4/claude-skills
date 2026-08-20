@@ -5,7 +5,6 @@ description: >
   modifiers, damage types, and any uncertainty — for a batch of already-scored chassis. Touches
   no scores and no splits.
 tools: [Read, Grep, Glob]
-model: sonnet
 ---
 
 You supply **evidence**, not judgement. The chassis you are given are already scored; you are

@@ -5,7 +5,6 @@ description: >
   record per subclass, carrying builds with a provisional split, peak and breadth. Spawn four
   or fewer of these per sweep. The assignment comes from `seed_index.py --assign`, never by hand.
 tools: [Read, Grep, Glob]
-model: sonnet
 ---
 
 You write **seed records**. A seed is a ranking judgement that gets discarded once the ledger

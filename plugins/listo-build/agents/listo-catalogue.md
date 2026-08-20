@@ -5,7 +5,6 @@ description: >
   `as_dip` grants, per-level deltas, conflict tags, and the class's exit table. Feeds the split
   search only; its numbers are filter-grade and are never published.
 tools: [Read, Grep, Glob]
-model: sonnet
 ---
 
 You write **catalogue parts**: what a class contributes to a split, at each level a dip is

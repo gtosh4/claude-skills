@@ -185,28 +185,32 @@ Every subagent pass in this skill has a spec in `listo-build/agents/`, invoked a
 the brief, and carries the invariants a brief cannot enforce — return raw JSON, write no files,
 and for the seed and catalogue passes, do not touch the paks.
 
-**Model is chosen by whether a script checks the output**, not by how hard the pass looks. Five of
-the eight are verified downstream and run on Sonnet; the three that nothing checks inherit the
-session's model, because their failure mode is a value that is quietly too low, and a score that
-is too low reads exactly like an honest one.
+**Every pass inherits the session's model.** No spec pins one, and the column below is not a
+routing rule — it records where the verification actually is, which is worth knowing whether or
+not it decides anything.
 
-| agent | brief | what checks it | model |
-|---|---|---|---|
-| `listo-sweep` | `sweep-brief.md` | `seed_index.py --check` — skipped or mistyped keys surface as unseeded or stale | sonnet |
-| `listo-catalogue` | `catalogue-brief.md`, `build-brief.md` | filter-grade by design; composed vectors are never published | sonnet |
-| `listo-grants` | `grants-brief.md` | `crosscheck.py` subset test | sonnet |
-| `listo-evidence` | `evidence-brief.md` | `scoring.py` raises on unknown booster and reach ids | sonnet |
-| `listo-routine-skills` | `routine-skills-brief.md` | `merge_routine.py` coverage and calibration checks | sonnet |
-| `listo-base` | `base-brief.md`, `grants-brief.md` | **nothing** — it *is* the floor `crosscheck.py` tests against | inherits |
-| `listo-variant` | `variant-brief.md` | **nothing** — the split search cannot evaluate a variant | inherits |
-| `listo-score` | `scoring-brief.md` | **nothing** — this pass *is* the ledger | inherits |
+| agent | brief | what checks its output |
+|---|---|---|
+| `listo-sweep` | `sweep-brief.md` | `seed_index.py --check` — skipped or mistyped keys surface as unseeded or stale |
+| `listo-catalogue` | `catalogue-brief.md`, `build-brief.md` | filter-grade by design; composed vectors are never published |
+| `listo-grants` | `grants-brief.md` | `crosscheck.py` subset test |
+| `listo-evidence` | `evidence-brief.md` | `scoring.py` raises on unknown booster and reach ids |
+| `listo-routine-skills` | `routine-skills-brief.md` | `merge_routine.py` coverage and calibration checks |
+| `listo-base` | `base-brief.md`, `grants-brief.md` | **nothing** — it *is* the floor `crosscheck.py` tests against |
+| `listo-variant` | `variant-brief.md` | **nothing** — the split search cannot evaluate a variant |
+| `listo-score` | `scoring-brief.md` | **nothing** — this pass *is* the ledger |
 
 The assignment still carries the brief's path, the read set and the verbatim keys. The spec does
 not duplicate the brief; there is one copy of each, in `assets/`.
 
-> **If you change a Sonnet pass's brief, re-run one batch on both models and diff the output**
-> before trusting the cheaper one — `listo-sweep` especially, since the roster is selected from
-> seeds and pool sampling already biases against specialist chassis.
+> **A cheaper model was tried on the checked five and did not pay.** One 24-subclass batch
+> (monk + paladin + inquisitor) run on both, three-wayed against the incumbent seeds: **24/24
+> verdict agreement** on every run, both schema-clean against `load()`. The cheaper run cost
+> **more** — 84.0k tokens and 24 tool calls against 76.7k and 7 — because it re-read the same
+> ranges in smaller pieces. Its two measurable deficits were `breadth` collapsing to a constant
+> 3 on 16 of 18 builds, and finding **no second niche** where the stronger run found two. That
+> second one is the loss the niche-keyed `builds` object exists to prevent, so it is the number
+> to re-measure if the question comes back.
 
 ### Running the sweep — the brief is the whole trick
 

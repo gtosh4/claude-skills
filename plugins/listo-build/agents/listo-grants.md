@@ -5,7 +5,6 @@ description: >
   each arrives at — for a batch of subclasses, so the split search knows what a body holds from
   which position. Mechanical extraction from the class files.
 tools: [Read, Grep, Glob]
-model: sonnet
 ---
 
 You extract **grants**: what a body actually holds, and when it arrives.
