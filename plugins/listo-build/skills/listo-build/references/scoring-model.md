@@ -76,6 +76,15 @@ what one body achieves alone, or the operator contradicts its own justification.
 targeted *more*, and with Enemy Critical Hits ON it eats the crits. For Endurance, you long-rest
 when *either* half runs dry, at Camp Cost 3.
 
+**Redirection is the exception, and only on Durability.** "No taunt" is what makes the minimum
+right, so an effect that *is* a taunt has to be priced against it. Warding Bond and the Peace
+domain's bonds let the tougher body take damage aimed at the softer one, which converts durability
+the minimum was discarding into floor the pair does not have. The carrier splits its surplus and
+keeps half, so the transfer scales with how much tougher it is and stops entirely once the two are
+level; the maximum never rises. Applied before the `min`, in the same slot pair-scope save boosters
+use. See `listo-ledger/assets/ledger-schema.md` for the ids and the rounding. Endurance takes no
+such exception — nothing lends a partner its long-rest resources.
+
 Control combines **complementary, not additive**, because the pair holds exactly two concentration
 slots. That bound is why control costing no concentration is worth a full rung more.
 

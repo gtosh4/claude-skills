@@ -193,8 +193,8 @@ A body that is merely competent peaks at 3. Be willing to write 2.
 
 | key | axis | **4 =** | **5 =** |
 |---|---|---|---|
-| `st` | single-target | standard multiattack + rider + a third attack source or repeatable burst | max attack count, rider on every hit, **and** a bonus-action attack — Fighter 11 + Crimson Rite/Smite/Sneak + War Priest |
-| `aoe` | AoE | repeatable AoE **plus** a burst or a second damage type | best repeatable AoE twice a round + second type — Ranger 11 Volley, Warlock 9 Cone, maximised Fireball ×2 |
+| `st` | single-target | **computed, not judged** — ratio to par (48 / 61 / 76): 4 = 1.5–2.0× | 5 = ≥ 2.0× par |
+| `aoe` | AoE | **computed, not judged** — ratio to par (22 / 28 / 32): 4 = 2.0–3.0× | 5 = ≥ 3.0× par |
 | `dur` | durability | heavy armour + shield + one flat-reduction or halving source | + everything the act's feats stack — Heavy Armour Master, Shield Master Block, Tough |
 | `act` | actions | multiattack + bonus-action attack + a third Action, or a multi-body summon set | an Action handed to the **other** body (Haste, Twinned Haste, Commander's Strike) on top of own extra attacks |
 | `ctrl_s` | control, single | single-target control costing **no concentration** that does not decay as saves scale | + slot-free hard control on a short-rest clock — Brand of the Sapping Scar, Chains of Carceri |

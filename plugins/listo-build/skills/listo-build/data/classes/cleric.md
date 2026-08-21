@@ -361,6 +361,10 @@ Inquisition. **Five grant both:** Tempest, War, Twilight, Zeal, Inquisition.
   **Aura of Purity (Mystra's — not installed)**/Otiluke's Resilient Sphere (7), Greater
   Restoration/Dispel Evil and Good (9). L2 Channel Divinity **Balm of Peace** — move your full
   speed without provoking, healing **2d6 + Wis** to each creature you pass within 1.5m.
+  **Peace 3 is the Cleric's only Warding Bond**, and the earliest access in the game — a pak sweep
+  found no other Cleric domain, and no base-Cleric list, carrying the spell. Knowledge's Magical
+  Secrets does not reach it either: CCC's `BardMagicalSecrets` selectors at 6 and 10 draw from
+  lists that do not contain it. Peace also stacks two more outward answers on top of the spell:
   L6 **Protective Bond** — when a bonded creature is about to take damage, another bonded creature
   within 9m can use its **reaction to teleport adjacent and take all the damage instead**.
   L8 Potent Spellcasting. L17 **Expansive Bond**: range to 18m, and the interceptor takes the

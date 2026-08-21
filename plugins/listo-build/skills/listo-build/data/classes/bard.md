@@ -76,6 +76,12 @@ long rest.
 **Magical Secrets:** Goon adds "a lot of vanilla spells" to the list, and the page defers to
 `Automatic Magical Secrets Extender` for the rest.
 
+**Warding Bond is in the pool, but only from 14.** The merged Magical Secrets lists that carry it
+(`95f80109`, `cd83187f` — many mods `MergedInto` them) are the ones `Expansion`'s selectors use at
+**14** and **18**. The level-**10** picks draw from a different list and cannot reach it. So the
+Bard is the latest of the five classes that get Warding Bond at all, and pays a Magical Secrets
+pick for what Peace Cleric has at 3 and Battle Smith at 5.
+
 ### Expansion (`279`) — levels 13–20
 - **File pulled:** `Expansion-279-1-7-3-6-1780876532.zip` (**v1.7.3.6**; Nexus is on **1.7.3.10**).
 - Adds for the base class: **Bardic Inspiration d12 at 15th**, **Magical Secrets at 14th and

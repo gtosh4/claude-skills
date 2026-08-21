@@ -52,7 +52,9 @@ because they do not exist until render time.
       "reach":   "hybrid",                  // ranged | hybrid | mobile | static
       "split":   "Blood Hunter 14 (Order of the Profane Soul) / Wizard 6 (Evocation)",
       "meta":    "Int 22 · 7 feats",
-      "note":    "Prose. What the chassis is and what it gives up.",
+      "note":     "Prose. What the chassis is and what it gives up.",
+      "strength": "Why it is worth playing *in this run* — two bodies, Lone Wolf, Listo's inflated encounters.",
+      "wants":    "What it needs from the other half of the duo, stated as a capability, not a class.",
       "concentration": false,               // does this body's plan ride a concentration spell?
       "saves": {                            // source of truth for the saves axis — see below
         "I":   {"prof": ["int","wis","dex","con"], "boosters": []},
@@ -88,6 +90,28 @@ because they do not exist until render time.
   }
 }
 ```
+
+### `note`, `strength` and `wants` do different jobs — write all three
+
+The score matrix says *how much*; it cannot say *why you would pick this body* or *who it needs
+beside it*. Those are the two questions a roster card exists to answer, and neither is derivable
+from ten integers.
+
+| field | answers | keep it to |
+|---|---|---|
+| `note` | what the body **is**, and what it gave up to be that | 1–2 sentences |
+| `strength` | what makes it strong **for this scenario** — two characters, Lone Wolf's doubled economy and halved damage, Absolute Wrath's resistances, a 120-supply long rest | 1–2 sentences |
+| `wants` | what it needs from **the other half of the duo** | 1 sentence |
+
+**`strength` must be scenario-specific.** "Good damage" is not an answer — a four-body party would
+say the same. What earns the line is the thing that is true *here*: a second Action doubling a
+bonus-action engine, an aura that covers a party of two entirely, a short-rest clock against
+expensive long rests, a damage type that sidesteps layered resistances.
+
+**`wants` names a capability, not a class.** "Wants a Cleric" is unusable — every duo can respec.
+"Wants a body that holds the pair's one concentration slot, because this one never will" tells a
+reader which half of the field to look in. Where the split rule bites — 5 + 0 is worse than 3 + 3 —
+say which axis is at 0 and needs covering.
 
 **Axis order is fixed** and every `scores` array must have **ten** entries:
 
@@ -278,8 +302,8 @@ Every other class of bug in this format announces itself; this one does not.
 So the checking is reactive rather than an ongoing tax. You do not have to remember to audit
 boosters before every render. You have to fix a crash when you author something new, once.
 
-**Every enum in this format is closed** — `role`, `reach`, `prof` abilities, `boosters` ids, act
-keys, axis kinds. Unknown member, raise. Do not add a permissive branch to any of them.
+**Every enum in this format is closed** — `role`, `reach`, `prof` abilities, `boosters` ids,
+`redirect` ids, act keys, axis kinds. Unknown member, raise. Do not add a permissive branch to any of them.
 
 **Before authoring a value with special handling, confirm the renderer implements it.** The
 registry in `render_ledger.py` is the authority; the tables in this file mirror it. Adding a
@@ -301,6 +325,78 @@ different sources and both apply. Two Auras of Protection are one Aura — the s
 renderer warns by name, and the levels that bought it are wasted. That is the commonest way a pair
 throws away six levels, and it is now checked for every pair-scope id rather than only for Aura.
 
+### Redirection raises the pair's floor
+
+`dur` is Personal — the pair is its weaker body, because that is the one that dies. Everything the
+tougher body carries above that minimum is discarded. **Redirection is the one effect that argues
+with the operator**: a body that can take damage aimed at its partner converts durability it was
+not using into floor the pair does not have.
+
+```jsonc
+"redirect": {
+  "I":   [],                    // the bond is not online yet
+  "II":  ["warding-bond"],
+  "III": ["expansive-bond"]     // Peace 17 — and now it lands at resistance
+}
+```
+
+Optional, and **absent means no bond** — unlike `skills`, most bodies genuinely have none and the
+empty case has to stay cheap to author. A *present* block must state every act, because a bond
+arrives at a level.
+
+| id | what | tier |
+|---|---|---|
+| `warding-bond` | Peace Cleric 3 · Battle Smith 5 · Oath of the Moon 5 · Favored Soul (Peace) at Sorcerer 3 · Bard Magical Secrets 14/18 | 1 |
+| `protective-bond` | Cleric Peace 6 — reaction, teleport adjacent, take **all** of it instead | 1 |
+| `expansive-bond` | Cleric Peace 17 — 18m, and the interceptor takes it **with resistance** | 2 |
+
+**Paladin access is per-oath, not class-wide.** `listo-10.2-spells.md` names Warding Bond among the
+notables the expanded Paladin list gained, which would have made all 15 Paladin chassis carriers.
+It does not: a sweep of all 810 paks found the only Paladin route is **Oath of the Moon's** own
+list, `Target_Moonbeam;Target_WardingBond`, granted by the `MoonOath` progression at 5. No base
+Paladin progression references a list containing the spell. Author it on Moon Paladins only.
+
+Three near-misses that look like access and are not, each verified inert: the "Cleric War Domain
+Enhanced Paladin SLevel 2" list (`Spells Extra`) contains the spell but **no progression references
+it**; the five `5e Spells` lists carrying it have zero references anywhere in the load; and the BG3
+Community Library's Bard Magical Secrets SLevel 5–9 lists are superseded by the merged
+`ListoPFSpells` pool. Knowledge Cleric's `BardMagicalSecrets` selectors at 6 and 10 draw from lists
+that do not contain it. Wish (`ATT_WISH_SPELLS_2`) does grant it, off a 9th-level slot.
+
+**Twinned Spell is irrelevant here**, whatever the class docs imply. `Target_WardingBond_UCL`
+(Utut's Core Library, the base every copy inherits) gates targeting on `not Self()`, and its
+`RequirementConditions` refuse the cast outright while the caster already holds `WARDING_BOND` or
+`WARDING_BOND_CASTER` — one bond per caster, ever. In a duo the partner is the only legal target
+and there is no second one for Twinned to reach. Twinned genuinely doubles Cure Wounds, Death Ward
+and Greater Restoration, because those can be aimed at the caster; this one it cannot help.
+
+**Mesmerist Reflection is not on this list**, though it reads like it should be and is literally
+built out of Warding Bond — `EYEBITER_WARDING_BOND` in `BoldStares.txt` is `using "WARDING_BOND"`.
+The bond goes on **self**, and its source is the *stared enemy*: `RedirectDamage(1,Psychic,true)`
+reflects damage onto the thing you are staring at. `Target_EndHypnoticStare` clears it with
+`RemoveStatus(SELF,EYEBITER_WARDING_BOND)`, which fixes the direction beyond doubt, and nothing in
+the pak applies a status to an ally. The Eyebiter Mirror boon is real but is **self** durability —
+`BOLDSTARE_MIRROR_GENERAL` boosts `DamageReduction(All,Flat,1)` — so it belongs in that body's
+authored `dur` rung, not here. A body cannot share a floor it only has itself.
+
+Only the **tougher** body's bond counts. The carrier is the one eating the damage, and a bond
+running the other way lowers the floor it was meant to raise. It splits the surplus — the gap is
+what it has spare and it keeps half, rounding down at tier 1 and up at tier 2:
+
+```
+tank 5 + partner 2   ->  3   (tier 1)      4  (tier 2)
+tank 3 + partner 2   ->  2                 3
+tank 5 + partner 5   ->  5                 5      nothing spare to move
+```
+
+So the transfer scales with how much tougher the carrier actually is: a rung-3 body compensates for
+half of what a rung-5 body does, and a body whose partner is already its equal transfers nothing.
+**The maximum never rises.** This relocates durability; it cannot manufacture it.
+
+This does **not** touch `rsc`. `axis-rubrics.md` caps redirection at rung 1 there and is right to —
+a bond does not pick up a body that already went down. That cap prices it as *rescue*; this prices
+it as *transfer*, which is a different question about a different axis.
+
 ## Errors the renderer raises rather than papering over
 
 These are **fatal, by design** — see "Anything with special handling fails closed". A render that
@@ -312,6 +408,7 @@ cannot score something correctly must not produce a number for it.
 - a chassis with no `saves` block, or one missing an act
 - a `prof` entry outside `str dex con int wis cha`, or a duplicate within one act
 - an unknown `boosters` id
+- an unknown `redirect` id, or a `redirect` block that is present but missing an act
 - an entry whose chassis survives the `entry_limit` cut but has no prose
 - a variation naming a partner the chassis has no pairing with
 - **an entry whose `name` disagrees with the pairing selection actually made**

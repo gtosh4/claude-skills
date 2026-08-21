@@ -98,9 +98,13 @@ Acts: **I** = characters 3–8, **II** = 9–15, **III** = 16–20.
 ## Act-relative scoring — where the last run went wrong
 
 A 5 in Act I means "as good as a body can be at character 8", not "as good as a body ever gets".
-**Most axes should not move between acts.** A body with Extra Attack and a rider is "the act's
-standard multiattack plus a rider" at 8 and still that at 18 — a 3 in every act. It has not got
-worse; the world moved with it.
+**Most axes should not move between acts.** A body whose armour, saves or rescue kit does not
+improve holds its rung at 8 and at 18 alike. It has not got worse; the world moved with it.
+
+**`st` and `aoe` are the exception.** They are computed as a ratio to a par that carries the act's
+enemy-HP multiplier, so a chassis that stops growing slides on purpose — Extra Attack plus a flat
+1d6 rider reads **3 / 2 / 2**. See `axis-rubrics.md`, "The two damage axes are computed, not
+judged".
 
 The previous run produced **883 rises and 34 falls**. That is not what the run looks like; it is
 what an absolute ladder looks like. Movement should be roughly symmetric:

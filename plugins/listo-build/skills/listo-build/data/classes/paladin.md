@@ -342,6 +342,12 @@ Nine selectable oaths. Five vanilla (all still present), four added by mods.
   Moon Paladins"* — those patches are Listo-internal files, not Nexus mods. Optional dependency
   `Dialogue and Reactivity Tags (DART) Framework` (`17561`) is present, so the custom dialogue
   should work.
+- **Warding Bond is here and nowhere else in the class.** A pak sweep of the whole load found
+  exactly one Paladin route to it — this oath's own list, `Target_Moonbeam;Target_WardingBond`,
+  granted by the `MoonOath` progression at **5**. The expanded Paladin list does **not** carry it,
+  despite `listo-10.2-spells.md` naming it among that list's notables; no other oath grants it, and
+  no base-Paladin progression references a list containing it. A Warding Bond duo built on a
+  Paladin has to be a Moon Paladin.
 - **Mechanics:**
   - **Oath spells:** 1 Guidance · 3 Faerie Fire, Sanctuary, **Lunar Smite** · 5 Moonbeam, Warding
     Bond · 9 Remove Curse, Spirit Guardians · 13 Dimension Door, **Fount of Moonlight** · 17 Hold

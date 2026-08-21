@@ -23,6 +23,10 @@ Consequence: **act scores are not comparable across acts.** A 4 in Act I is not 
 Act III — both mean "near the best available then". Summing the three acts averages a chassis's
 standing across the run, which is the intended reading.
 
+> **§1 and §2 are the exception.** The two damage axes are computed as a ratio to a fixed reference
+> body, so their act scores *are* comparable and a declining row means the chassis is being outrun.
+> Everything below applies to §3 through §10.
+
 ### The ladder is the shape; the act table is the threshold
 
 Each axis below carries two things, and they do different jobs:
@@ -61,7 +65,9 @@ act band — character 8 / 15 / 20:
 - **Fixed-magnitude effects decay.** A flat 1d6 rider holds about **two-thirds** of its relative
   value from the end of Act I to the end of Act III (1.54⁄2.26 against ordinary enemies,
   1.74⁄2.70 against bosses). That is a one-rung slide for a body whose contribution is purely flat,
-  and it is the main reason a chassis can fall between acts.
+  and it is the main reason a chassis can fall between acts. **On §1 and §2 this is already in the
+  ratio** — par carries the HP multiplier, so a flat rider slides on its own. Apply the rule of
+  thumb only to §3 through §10.
 - **Scale-invariant effects hold.** Advantage and Disadvantage, Lone Wolf's halving, proportional
   resistance, and attack counts — which ride weapon dice, stat and gear — do not decay.
 - The clearest worked case is the **Eldritch Cannon**: 20 HP and a flat 2d8 is excellent at
@@ -116,62 +122,197 @@ to *two* abilities with save proficiency in both, **from level 1**. Score what t
 
 ---
 
+## The two damage axes are computed, not judged
+
+§1 and §2 are **ratios to a fixed reference body**, not configuration checklists. The old ladders
+counted components — multiattack, rider, bonus-action strike — as if each were worth the same. They
+are not: Improved Extra Attack adds about half a body's damage, Hex adds under a tenth of it by
+Act III, and the old rungs scored both as one step. Worse, a level-gated rider (Monk's Martial Arts
+die at 1/5/11/17, Rogue's Sneak Attack die every two levels) is invisible to a checklist, so a
+split that stops one level short of a breakpoint paid no price.
+
+### Constants
+
+| | value | note |
+|---|---|---|
+| hard fight | **4 rounds** | |
+| hit chance `h` | **0.65** | a **convention, not a measurement**. Enemy AC is not recoverable from the manifest: `Character.txt` declares `Armor` for only 245 of 1,548 entries and carries no `Equipment` field at all, so real AC lives in root-template gear. `h` cancels between chassis and par wherever both roll attacks, which is why the convention is safe. |
+| save-fail chance `s` | **0.55** | act-invariant — our DC rises +4 across the run against +2 to +3 on enemy saves |
+| save-for-half multiplier | `s + (1−s)/2` = **0.775** | |
+| AoE targets | **4** | act-invariant. `scoring-model.md` §5's crowd/boss coefficients already carry fight shape; scaling target count here as well would double-count it. |
+
+### Par
+
+Par is the act's **reference body**: Extra Attack, two attacks per Action, no rider, no damage
+feat, a mundane 2d6 weapon, primary at the act's required score. Its configuration never improves.
+What changes is the enemy.
+
+| | I (char 8) | II (char 15) | III (char 20) |
+|---|---|---|---|
+| attacks per round (Lone Wolf ×2 Actions) | 4 | 4 | 4 |
+| primary / damage per hit | 20 / 12 | 20 / 12 | 22 / 13 |
+| enemy HP multiplier | ×1.54 | ×1.96 | ×2.26 |
+| **par — single-target** | **48** | **61** | **76** |
+| **par — AoE** | **22** | **28** | **32** |
+
+Single-target par is `attacks × damage per hit`, multiplied by that act's enemy HP relative to
+Act I's. AoE par is one **Fireball** (8d6) per fight on four targets, save for half, spread over
+the fight — `28 × 0.775 × 4 ÷ 4 = 22` — scaled the same way.
+
+Damage is carried **raw**, before `h`. Multiply by `h` only where a chassis resolves differently
+from par: a save-based single-target effect takes `0.775/0.65`, an attack-roll AoE takes
+`0.65/0.775`.
+
+> **§1 and §2 are comparable across acts. No other axis is.** The unit is pace against Act I's
+> baseline, so a frozen chassis reads 2 / 1 / 1 and that decline is real information — it is being
+> outrun. The act-relative rule at the top of this file still governs §3 through §10.
+
+### Four rules
+
+1. **No items.** Mundane weapons, no attunement, no Legendary. A rented capability is not a chassis
+   property — the same objection that removed the Mirror of Loss from §8.
+2. **Lone Wolf floor economy only** — 2 Actions and 2 Bonus Actions. **Exclude Action Surge,
+   summons and extra bodies.** Those are §4, and `scoring-model.md` §6 applies Actions as a *cap* on
+   deployable tempo; counting them here as well scores them twice.
+3. **One configuration.** Score the build as actually played, never the union of its options.
+   Mutually exclusive picks — which Friar Blessing, Kensei versus unarmed, the single concentration
+   slot — must be chosen before scoring and named in the chassis note.
+4. **Resistance is a multiplier, not a cap.** Absolute Wrath is on. A body locked to one commonly
+   resisted damage type multiplies by **0.5** on the share of encounters that resist it — assume
+   **half** from Act II — unless it carries a resistance strip, Elemental Adept, or a second damage
+   type. Force is least resisted, then Radiant in Act 2.
+
+### Spending resources
+
+**Three hard fights per long-rest cycle, four rounds each — twelve combat rounds.** The constant is
+§10's own arithmetic: two short rests per long rest, so a short-rest pool is spent three times per
+cycle.
+
+What one fight has to spend:
+
+| resource | refresh | available per fight |
+|---|---|---|
+| ki, pact slots, Channel Divinity, superiority dice | short rest | **the full pool** |
+| levelled spell slots, Second Wind, anything once per long rest | long rest | **pool ÷ 3** |
+| illithid charges — `2.5 + 0.5 × powers`, half back on a short rest | mixed | **2 × pool ÷ 3** |
+| once per battle (Cleansing Wave) | per fight | the full allowance |
+
+```
+spend per fight  = min(available per fight, what four rounds of actions can consume)
+damage per round = at-will damage + (spend per fight × damage per unit) / 4
+```
+
+**The action cap usually binds before the pool does.** A Monk 12 holds 12 ki, but two Flurries a
+round across four rounds consumes 8 — the constraint is bonus actions, not ki. A full caster holds
+far more slots than 2 Actions × 4 rounds can cast. Compute both and take the smaller.
+
+Where a strong *configuration* still scores a rung lower is the other direction, when the pool
+binds first: **a Monk 5 has 5 ki against the 8 that double Flurry wants**, so it delivers about
+six attacks a round, not eight.
+
+> **Do not key the fight count to the body's own §10 rung.** An earlier draft did, and it inverts:
+> two chassis holding the same twenty slots would amortize differently because one of them has
+> out-of-combat healing, and the *worse*-supplied body would book the larger per-fight burst.
+> Endurance asks whether the pool covers the run. §1 and §2 ask what the pool yields per round. Same
+> pool, two different questions, one shared constant — and no circular reference between the axes.
+
+**One pool, one axis.** A slot spent on Fireball is not available for Hold Monster or Death Ward.
+Rule 3 applies: name the split in the chassis note. Absent a note the default is **half the levelled
+slots to damage**, half to §5/§6/§7. A damage effect that holds concentration — Spirit Guardians —
+occupies one of the pair's two slots, so §5/§6 may not also claim it.
+
+---
+
 ## 1. Single-target
 
 Damage into one priority target per round, with both Lone Wolf Actions spent on it.
 
-| | |
-|---|---|
-| **0** | A cantrip or one weapon attack per Action, no rider. |
-| **1** | One attack per Action with a small per-hit rider, or a character-level-scaling cantrip. |
-| **2** | The act's standard multiattack, no rider. |
-| **3** | The act's standard multiattack plus a per-hit rider. |
-| **4** | The above plus a third attack source every round, or a repeatable burst channel. |
-| **5** | The act's maximum attack count, with a rider on every hit **and** a bonus-action attack. |
+`ratio = damage per round ÷ single-target par`
 
-| rung | I (char 3–8) | II (9–15) | III (16–20) |
+| rung | ratio | reads as |
+|---|---|---|
+| **0** | < 0.5 | not a damage body |
+| **1** | 0.5 – 0.8 | being outrun |
+| **2** | 0.8 – 1.15 | par |
+| **3** | 1.15 – 1.5 | ahead |
+| **4** | 1.5 – 2.0 | a damage chassis |
+| **5** | ≥ 2.0 | the act's ceiling |
+
+Worked anchors, raw damage per round over par:
+
+| configuration | I (par 48) | II (par 61) | III (par 76) |
 |---|---|---|---|
-| **2 =** | Extra Attack (class 5) — 2 per Action, 4 per round. A body still on one attack per Action by act's end is rung 0–1 | 2 per Action, no rider. Improved Extra Attack exists now, so this is merely par | 2 per Action with no rider **and** no attuned weapon falls to **1**; par is 3 per Action, or 2 with Legendary attunement |
-| **3 =** | Extra Attack + a per-hit rider — Crimson Rite, Divine Smite, Hex, Hunter's Mark, Sneak Attack | The same, but a **flat** rider (1d4/1d6) is now worth two-thirds of its Act I value; a rider that scales with level or dice count (Sneak Attack, Improved Divine Smite at Paladin 11) holds the rung, a flat one slips | 3 per Action with a scaling rider, or 2 per Action with a scaling rider **plus** one damage feat |
-| **4 =** | Rung 3 plus a third attack source — Action Surge (Fighter 2), a Thief bonus action, a bonus-action strike | Rung 3 plus Improved Extra Attack (Fighter 11) **or** a repeatable burst channel — Eldritch Smite, Consuming Fervor | Rung 3 plus a 9th-tier burst, or Concentrated Blast / Psionic Overload at IMR 4–5 |
-| **5 =** | Extra Attack (class 5) + rider (Crimson Rite, Divine Smite, Hex, Sneak Attack) + a bonus-action strike (War Priest, Martial Arts, Priest of Zeal) | **Improved Extra Attack (Fighter 11)** — 3 per Action, 6 per round — + rider + bonus-action strike | The Act II ceiling plus a damage feat (Great Weapon Master, Sharpshooter, Savage Attacker) and attuned gear |
+| Extra Attack, no rider | 48 → 1.00 → **2** | 48 → 0.79 → **1** | 52 → 0.68 → **1** |
+| Extra Attack + flat 1d6 rider (Hex, Crimson Rite) | 62 → 1.29 → **3** | 62 → 1.02 → **2** | 66 → 0.87 → **2** |
+| Improved Extra Attack (Fighter 11), no rider | — | 72 → 1.18 → **3** | 78 → 1.03 → **2** |
+| Sneak Attack ×2 (turn + one reaction) + 4 attacks | 59 → 1.23 → **3** | 80 → 1.31 → **3** | 112 → 1.47 → **3** |
+| Monk: Extra Attack + double Flurry, Martial Arts die | 45 → 0.94 → **2** | 76 → 1.25 → **3** | 84 → 1.11 → **2** |
+| Improved Extra Attack + scaling rider + 2 bonus strikes | — | 124 → 2.03 → **5** | 132 → 1.74 → **4** |
 
-> Eldritch Blast is **1d8 per beam here, not 1d10** (v10.0 nerf); beams at character 5/10/17, 4th
-> from `Expansion`. Any damage math from outside Listo is overstated.
->
-> **Absolute Wrath is ON**, so ordinary enemies carry layered resistances, not just bosses. A body
-> locked to one commonly-resisted damage type **caps at 4 from Act II** unless it carries a
-> resistance strip (Paragon Nighthawk, Circle of Stormchasers 10, School of Death 6), Elemental
-> Adept, or a second weapon of another type. Force is least-resisted, then Radiant in Act 2.
+> **Improved Extra Attack almost exactly cancels the run's HP inflation.** +50% attacks against
+> +47% enemy HP from Act I to Act III. Fighter 11's signature feature buys *pace*, not advantage —
+> which is why a bare Fighter 11 reads 2, not 5. It still outscores an equivalent two-attack body
+> in every act, which is the ordering that matters.
+
+> **A flat rider decays and the arithmetic shows it** — 1d6 on four attacks is 1.29× par in Act I
+> and 0.87× in Act III with nothing having changed. Do not also apply a hand-written decay rule;
+> that would charge for it twice. Riders that scale with level or dice count (Sneak Attack,
+> Improved Divine Smite) hold their ratio.
+
+> **Cantrips scale on character level, not class level.** Eldritch Blast is **1d8 per beam here,
+> not 1d10** (v10.0 nerf), with beams at **character** 5/10/17 and a fourth from `Expansion`;
+> Booming Blade and Green-Flame Blade likewise (`data/listo-10.2-spells.md:142`). **A two-level
+> Warlock dip on a character-20 body fires four full beams** — 4 × (1d8 + Cha) × 2 Actions ≈ 60
+> raw, or 0.79× par, from two levels. Magic Initiate buys a martial a character-level-scaling melee
+> rider for one feat. Configuration ladders could not see any of this; ratios must.
 
 ## 2. AoE
 
-Damage delivered to a group per round, and how often it is available. Priced against **+126%
-enemy HP at 20** — repeatability outranks per-cast size, increasingly so as the run goes on.
+Damage delivered to a group per round, and how often it is available. Same unit as §1, against a
+par of one Fireball per fight on four targets.
 
-| | |
+`ratio = damage per round across all targets ÷ AoE par`
+
+The bands are **wider than §1's** because at-will area damage delivered twice a round outruns a
+once-per-fight burst by far more than any single-target engine outruns another.
+
+| rung | ratio |
 |---|---|
-| **0** | Nothing that hits more than one target. |
-| **1** | An incidental multi-hit — cleave, a thrown item, a cantrip that catches two. |
-| **2** | One levelled AoE per fight out of long-rest slots. |
-| **3** | A **repeatable** AoE on an at-will or short-rest clock. |
-| **4** | A repeatable AoE **plus** a burst, a maximised burst, or two AoE damage types. |
-| **5** | The act's best repeatable AoE delivered twice a round, plus a second damage type or a maximised burst. |
+| **0** | < 0.35 |
+| **1** | 0.35 – 0.7 |
+| **2** | 0.7 – 1.3 |
+| **3** | 1.3 – 2.0 |
+| **4** | 2.0 – 3.0 |
+| **5** | ≥ 3.0 |
 
-| rung | I (4th tier) | II (8th tier) | III (9th tier) |
+Worked anchors:
+
+| configuration | I (par 22) | II (par 28) | III (par 32) |
 |---|---|---|---|
-| **2 =** | One Fireball / Shatter / Ice Knife per fight out of long-rest slots | A single 3rd-tier AoE is now background — par is a 4th–5th tier cast (Ice Storm, Cone of Cold) once per fight | 6th-tier and up once per fight (Chain Lightning, Sunburst, Freezing Sphere); a lone Fireball is rung **1** |
-| **3 =** | A **repeatable** source — Breath of the Dragon (Monk 3, replaces one attack), a cleave routine, Consuming Fervor's maximised Fireball ×2 per short rest (Cleric 6) | Eldritch Cone (Warlock 9) or Spirit Guardians as moving denial. ⚠ **Eldritch Cone stops scaling at character 10** and so slides to rung 2 in Act III | An at-will weapon AoE (Volley / Whirlwind), or Cull the Weak's overkill spread at IMR 4–5 |
-| **4 =** | Repeatable **plus** a slot burst, or two damage types against early resistances | Repeatable plus a 5th–6th tier burst, or a maximised burst on a short-rest clock | The at-will engine plus a 9th-tier burst, **or** the engine plus a second damage type |
-| **5 =** | Fireball/Shatter from slots **plus** a repeatable source — Breath of the Dragon (Monk 3, replaces one attack, costs no bonus action) | **Volley/Whirlwind** (Ranger 11 — at-will full weapon damage to every target, no save, no resource) ×2 rounds, or Eldritch Cone (Warlock 9), plus Consuming Fervor's maximised Fireball ×2 per short rest | The Act II at-will engine **plus** a 9th-tier burst and a second damage type against layered resistances |
+| an incidental cleave or two-target cantrip | 8 → 0.36 → **1** | 8 → 0.29 → **0** | 9 → 0.28 → **0** |
+| one Fireball (8d6) per fight | 22 → 1.00 → **2** | 22 → 0.79 → **2** | 22 → 0.69 → **1** |
+| one Cone of Cold (8d8) per fight | — | 28 → 1.00 → **2** | 28 → 0.88 → **2** |
+| one Chain Lightning (10d8) per fight | — | — | 35 → 1.09 → **2** |
+| Spirit Guardians, at-will while concentration holds | — | 42 → 1.50 → **3** | 42 → 1.31 → **3** |
+| Volley / Whirlwind (Ranger 11), ×2 Actions | — | 49 → 1.75 → **3** | 55 → 1.72 → **3** |
+| Breath of the Dragon (Monk 3), ×2, net of the replaced attack | 41 → 1.86 → **3** | — | — |
+| Consuming Fervor: maximised Fireball ×2 per short rest | 74 → 3.4 → **5** | 74 → 2.6 → **4** | 74 → 2.3 → **4** |
+| Eldritch Cone (Warlock 9), at-will, ×2 Actions | — | 102 → 3.6 → **5** | 102 → 3.2 → **5** |
 
-> **Eldritch Cone / Line does not scale past character 10.** `Zone_EldritchCone` reads
-> `LevelMapValue(EldritchZoneDamage)` — 1d10 at 1–4, 2d10 at 5–9, **3d10 from 10, where it ends** —
-> and its `SpellSuccess` never checks `AgonizingBlast`. A cone chassis peaks in Act II and **drops a
-> rung in Act III** as enemy HP keeps climbing.
->
+> **The old note that Eldritch Cone "drops a rung in Act III" was wrong, and the arithmetic is why.**
+> `Zone_EldritchCone` reads `LevelMapValue(EldritchZoneDamage)` — 1d10 at 1–4, 2d10 at 5–9, **3d10
+> from 10, where it ends** — and its `SpellSuccess` never checks `AgonizingBlast`, so the effect is
+> frozen at 16.5 average from character 10. It **does** decay: 3.6× par to 3.2×. It does not decay
+> across a band, because at-will four-target save-for-half damage twice a round is the strongest
+> area engine in the list and a 14% slide does not touch that. Record the decay; do not invent a
+> rung drop.
+
+> **Repeatability outranks per-cast size, and the amortization is where it shows.** A 9th-tier
+> burst spread over four rounds is a fifth of its headline number. This is the same principle the
+> axis always claimed; it is now arithmetic rather than assertion.
+
 > Consuming Fervor is `MinimumRollResult(Damage,20)` on Fire **or Thunder**, Channel Divinity, twice
-> per short rest at Cleric 6.
+> per short rest at Cleric 6 — effectively a maximised 8d6.
 
 ## 3. Durability
 
@@ -467,9 +608,9 @@ body that holds concentration**, since a broken concentration is a lost body one
 | | |
 |---|---|
 | **0** | Two proficient saves, both low-value (Str, Int), no booster. |
-| **1** | Two proficient saves, one of them Wis / Con / Dex. |
-| **2** | Three **disjoint** proficient saves including one of Wis / Con / Dex. |
-| **3** | Four disjoint proficient saves covering two of Wis / Con / Dex. |
+| **1** | Two or more proficient saves, one of them Wis / Con / Dex. |
+| **2** | Three or more **disjoint** proficient saves including one of Wis / Con / Dex. |
+| **3** | Four or more disjoint proficient saves covering two of Wis / Con / Dex. |
 | **4** | Four or more disjoint saves covering **all three** of Wis / Con / Dex, or a blanket booster. |
 | **5** | The act's best available blanket coverage on top of a disjoint four. |
 
@@ -585,19 +726,20 @@ Astral Stillness discounting every cast by 1, it becomes a genuine repeatable en
    Act I on what it has at character 7, whatever it ends up as.
 2. Score each body against **that act's row in the axis table**, ignoring its partner entirely.
    Rungs 0–1 have no act row; every rung from 2 up does, and a capability that was rung 3 in Act I
-   is often rung 2 in Act III without anything having changed about the chassis.
+   is often rung 2 in Act III without anything having changed about the chassis. **§1 and §2 are
+   computed instead** — take the ratio to that act's par and read the band.
 3. **Check the budget.** Total the feats and levels the 4s and 5s imply against that act's
    allowance — **2 feats in Act I, 5–6 by Act II, 7–8 by Act III**. If they exceed it, or leave the
    primary below 20-by-6 / 22-by-18, lower a score rather than hand-wave it. Act I is the binding
    band: two feats cannot buy two 5s.
 4. Watch what **loses** a rung across acts:
-   - anything **flat-magnitude** — a 1d6 rider keeps about two-thirds of its relative value from
-     the end of Act I to the end of Act III;
-   - **Eldritch Cone** AoE, which stops scaling at character 10 outright;
-   - anything locked to **one damage type** once Absolute Wrath's layered resistances appear;
    - a **three-disjoint save set** with no booster, as boss DCs climb;
    - **flat-only mitigation** in a boss-weighted act.
 
-   And what does **not**: Advantage/Disadvantage, proportional mitigation, attack counts, summons
-   (allies scale too), at-will damage — and **save-DC control**, which the old version of this list
-   wrongly included. See the correction under "What actually drifts".
+   And what does **not**: Advantage/Disadvantage, proportional mitigation, summons (allies scale
+   too) — and **save-DC control**, which the old version of this list wrongly included. See the
+   correction under "What actually drifts".
+
+   **Do not apply any of this to §1 or §2.** Flat-magnitude decay, Eldritch Cone's frozen scaling
+   and Absolute Wrath's resistances are all priced inside the ratio already; applying a rule of
+   thumb on top charges for them twice.

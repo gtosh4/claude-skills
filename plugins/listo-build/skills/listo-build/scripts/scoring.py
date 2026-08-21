@@ -31,6 +31,7 @@ LABELS = ["Single-target", "AoE", "Durability", "Action economy",
 AXES = ["Single", "AoE", "Durab.", "Actions", "Ctrl-S", "Ctrl-A",
         "Rescue", "Skills", "Saves", "Endur."]
 SAV_IDX = KEYS.index("sav")
+DUR_IDX = KEYS.index("dur")
 
 # `skl` and `sav` are both DERIVED, and for opposite reasons. Saves are personal: each body rolls
 # its own, so the pair is its weakest link. Skills are shared: the host is boosted to the party
@@ -312,6 +313,37 @@ BOOSTERS = {
 }
 
 
+# ── outward durability ───────────────────────────────────────────────────────
+# `dur` is Personal: the pair is its weaker body, because that is the one that dies. Redirection
+# is the one effect that argues with the operator. A body that can eat damage aimed at its partner
+# converts durability it was *not using* — everything above the min was being discarded — into
+# floor the pair does not have. Under a minimum that is not the zero-sum trade the rescue rubric
+# calls it: `axis-rubrics.md` caps redirection at rung 1 on `rsc` and is right to, because a bond
+# does not pick up a body that already went down. That cap prices it as *rescue*. This prices it
+# as *transfer*, which is a different question about a different axis.
+#
+# Two rungs of registry, because Peace does it strictly better than a spell slot does:
+#   1  the carrier takes the damage instead, at full   — Warding Bond and its copies
+#   2  ...with resistance, so the pair's total drops   — Expansive Bond
+REDIRECT = {
+    "warding-bond":    {"tier": 1},   # Five routes, all confirmed against the paks: Peace domain 3,
+                                      # Battle Smith 5, Oath of the Moon 5, Favored Soul (Peace) at
+                                      # Sorcerer 3, Bard Magical Secrets at 14/18. NOT the base
+                                      # Paladin list — see the sweep note in ledger-schema.md.
+    "protective-bond": {"tier": 1},   # Cleric Peace 6 — reaction, teleport in, take ALL of it
+    "expansive-bond":  {"tier": 2},   # Cleric Peace 17 — 18m, and the interceptor takes it
+                                      # *with resistance*: the pair's total damage actually falls
+}
+# **Mesmerist Reflection is not one of these.** It reads like Warding Bond and is built out of it —
+# `EYEBITER_WARDING_BOND` in `BoldStares.txt` is `using "WARDING_BOND"` — but the bond is placed on
+# SELF and its source is the *stared enemy*, so `RedirectDamage(1,Psychic,true)` reflects onto the
+# enemy, not onto a partner. `Target_EndHypnoticStare` confirms the direction: it clears the bond
+# with `RemoveStatus(SELF,EYEBITER_WARDING_BOND)`. Nothing in the pak applies a status to an ally.
+# The Eyebiter Mirror boon is real and is *self* durability — `BOLDSTARE_MIRROR_GENERAL` boosts
+# `DamageReduction(All,Flat,1)` on the Mesmerist — so it belongs in that body's authored `dur`
+# rung, which is where the ledger already carries it. It buys the pair no floor it can share.
+
+
 # ── combining ────────────────────────────────────────────────────────────────
 def combine_axis(x, y, kind):
     """Two bodies -> one pair value, on the raw authored 0-5 scale.
@@ -442,11 +474,15 @@ def derive_saves(prof, boosters, concentration):
         v = 5
     elif (n >= 4 and covers_key) or blanket:
         v = 4
-    elif n == 4 and nkey >= 2:
+    # Thresholds, not exact counts. `n == 4` read the rubric's "four disjoint saves" literally and
+    # made the rung table non-monotone: five proficient saves covering Dex and Con but not Wisdom
+    # matched no branch and scored 0, below the rung 2 its own three-save subset earned. A superset
+    # of proficiencies can never be worse than the set it contains.
+    elif n >= 4 and nkey >= 2:
         v = 3
-    elif n == 3 and nkey >= 1:
+    elif n >= 3 and nkey >= 1:
         v = 2
-    elif n == 2 and nkey >= 1:
+    elif n >= 2 and nkey >= 1:
         v = 1
     else:
         v = 0
@@ -493,6 +529,35 @@ def saves_pair(ca, cb, act):
         boosters = list(dict.fromkeys(list(blk["boosters"]) + shared))
         out[who] = derive_saves(blk["prof"], boosters, c.get("concentration", False))
     return out["a"], out["b"], warnings
+
+
+def _redirect_tier(c, act):
+    """Best redirection rung this body has live in `act`, or 0. Fails closed on an unknown id."""
+    ids = (c.get("redirect") or {}).get(act, ())
+    for x in ids:
+        _require(x in REDIRECT, f"{c['_id']} {act}: unknown redirect {x!r}")
+    return max((REDIRECT[x]["tier"] for x in ids), default=0)
+
+
+def redirect_pair(ca, cb, act, da, db):
+    """Durability after redirection, for one act. Applied before the Personal `min`.
+
+    Only the *tougher* body's bond counts: the carrier is the one eating the damage, and a bond
+    running the other way lowers the floor it was supposed to raise. It splits the surplus — the
+    gap is what it has spare, and it keeps half — so the transfer scales with how much tougher the
+    carrier actually is. A rung-3 body compensates for half of what a rung-5 body does, and a body
+    whose partner is already as tough as it is transfers nothing, because there is no surplus to
+    move. The maximum never rises: this cannot manufacture durability, only relocate it.
+    """
+    hi, lo = (ca, cb) if da >= db else (cb, ca)
+    dh, dl = max(da, db), min(da, db)
+    tier = _redirect_tier(hi, act)
+    if not tier or dh == dl:
+        return da, db
+    gap = dh - dl
+    give = gap // 2 if tier == 1 else -(-gap // 2)   # tier 2 keeps the odd rung, not the partner
+    dl += give
+    return (dh, dl) if da >= db else (dl, dh)
 
 
 _CLASSES_CACHE = {}
@@ -603,6 +668,20 @@ def validate_chassis(cid, c):
                      f"doors and town dialogue recur through every act and cannot be respecced "
                      f"for, so they carry the axis — an absent value would be read as hopeless "
                      f"rather than as the evidence gap it is. Record it, even if untrained.")
+    # Unlike `skills`, an absent `redirect` is not an evidence gap: most bodies have no bond, and
+    # the empty case has to stay cheap to author. What must fail closed is a *present* one that is
+    # misspelled or half-filled, which would silently transfer nothing.
+    rd = c.get("redirect")
+    if rd is not None:
+        _require(isinstance(rd, dict), f"{cid}: `redirect` must be an object keyed by act")
+        for act in ACTS:
+            _require(act in rd, f"{cid}: `redirect` is present but missing act {act} — a bond "
+                                f"arrives at a level, so every act states whether it is live")
+            _require(isinstance(rd[act], list),
+                     f"{cid} {act}: `redirect` must be a list of effect ids")
+            for x in rd[act]:
+                _require(x in REDIRECT,
+                         f"{cid} {act}: unknown redirect {x!r} — expected one of {tuple(REDIRECT)}")
     ty = c.get("types")
     _require(isinstance(ty, list) and ty,
              f"{cid}: `types` missing — two bodies sharing one damage type have no answer when "
@@ -687,6 +766,8 @@ def score_bodies(ca, cb):
         va, vb, warns = saves_pair(ca, cb, act)
         sa[SAV_IDX], sb[SAV_IDX] = va, vb
         rec["warnings"] += warns
+        # Both derived pair effects land here, before `combine` takes its minimums.
+        sa[DUR_IDX], sb[DUR_IDX] = redirect_pair(ca, cb, act, sa[DUR_IDX], sb[DUR_IDX])
 
         pair = combine(sa, sb)
         pair["skl"] = skills_pair(ca, cb, act)      # derived from modifiers, not from the rungs

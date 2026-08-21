@@ -45,7 +45,10 @@ they matter. Anything not read from a source is marked `(unverified)`.
 ### The chassis is untouched
 No mod in the list rewrites Wizard's core: hit die, proficiencies, Arcane Recovery's
 formula/cadence, and prepared-caster mechanics are all as bg3.wiki describes. Plan AC and
-concentration from **Shield, Mage Armour, Warding Bond, Blur, Mirror Image, gear and a dip** —
+concentration from **Shield, Mage Armour, Blur, Mirror Image, gear and a dip** — **Warding Bond is
+not on the Wizard list**; a pak sweep found it on Peace Cleric 3, Battle Smith 5, Oath of the Moon
+5, Favored Soul (Peace) at Sorcerer 3 and Bard Magical Secrets 14/18, so a Wizard reaches it only
+through the dip or an item —
 `listo-10.2-equipment.md` confirms **no mod in the list adds medium armour with caster
 benefits**.
 

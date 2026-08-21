@@ -80,8 +80,46 @@ def fold_subclass(cat, pids):
     return grants, deltas, {"conflicts": list(dict.fromkeys(conflicts)), "requires": None}
 
 
+def _exit_key(name):
+    return name.lower().replace(" ", "")
+
+
+def exit_cost(cat, primary, primary_levels, primary_subclass=None):
+    """What the primary gives up by stopping at `primary_levels`, as a list of delta dicts.
+
+    **Rows are MARGINAL and consumption is CUMULATIVE.** A row keyed `N` is what level N itself
+    grants, so the cost of capping at P is the sum of every row above P. A level that grants
+    nothing worth a rung has no row, which is the common case — that is the whole reason to write
+    them this way. It also makes summation the *intended* operation: the old tables were written
+    cumulatively from 20 with exactly one row allowed to apply, and the one bug this file has
+    had was a loop that summed them anyway.
+
+    Two tables stack, because the losses genuinely have two sources. `exit_levels[class]` is the
+    generic back half — spell-slot tiers, feats, Empty Body. `exit_levels_subclass["class/Sub"]`
+    is what that subclass alone loses, which is the only place a question like "is this capstone
+    worth anything in a duo?" can be answered: Way of the Friar's Community at 17 bonds a second
+    and third ally and is dead weight here, while Open Hand's Quivering Palm at the same level is
+    not, and one table keyed by class cannot say both.
+
+    `exit` (cumulative, banded at 11/14/17) is the OLD format and is read only for classes with
+    no `exit_levels` row yet, so the migration can go one class at a time.
+    """
+    levels = cat["parts"].get("exit_levels", {}).get(_exit_key(primary))
+    if levels is None:
+        table = cat["parts"].get("exit", {}).get(_exit_key(primary), {})
+        bands = [lvl for lvl in sorted(int(x) for x in table) if lvl <= primary_levels]
+        return [table[str(bands[-1])]] if bands else []
+
+    out = [row for lvl, row in levels.items() if int(lvl) > primary_levels]
+    if primary_subclass:
+        sub = cat["parts"].get("exit_levels_subclass", {}).get(
+            f"{_exit_key(primary)}/{primary_subclass}", {})
+        out += [row for lvl, row in sub.items() if int(lvl) > primary_levels]
+    return out
+
+
 def compose(cat, base, parts, primary=None, primary_levels=20, concentration=False,
-            primary_first=True, primary_ability=None):
+            primary_first=True, primary_ability=None, primary_subclass=None):
     """`base` is the primary subclass's own 20-level vector + grants; `parts` are the dips.
 
     Each part is `(part_id, is_first)`, where `part_id` may also be a **tuple of ids** — a
@@ -143,17 +181,8 @@ def compose(cat, base, parts, primary=None, primary_levels=20, concentration=Fal
         if deltas is not None:
             pending.append(deltas)
 
-    # Exit cost: the primary stopped short of 20 and lost the top of its own table.
-    # The rows are written CUMULATIVELY from 20 — bard 17 is `rsc -2`, 14 is `rsc -2` again plus
-    # more, 11 is `rsc -3` — so exactly ONE row applies, the deepest band the level falls into.
-    # The old loop walked the keys downward taking every `primary_levels <= lvl` row, which both
-    # summed the bands and read them backwards: Monk 14 paid the 17 row on top of its own and
-    # came out at `st 0` instead of 1, biasing the whole search against low-primary splits.
     if primary and primary_levels < 20:
-        table = cat["parts"].get("exit", {}).get(primary.lower().replace(" ", ""), {})
-        bands = [lvl for lvl in sorted(int(x) for x in table) if lvl <= primary_levels]
-        if bands:
-            pending.append(table[str(bands[-1])])
+        pending += exit_cost(cat, primary, primary_levels, primary_subclass)
 
     for d in pending + list(tagged.values()):
         for k, x in d.items():
@@ -282,14 +311,37 @@ def dominates(a, b):
     return all(x >= y for x, y in zip(a, b)) and any(x > y for x, y in zip(a, b))
 
 
-def frontier(vectors):
-    """Indices of the non-dominated vectors. Ten-axis and weight-free, so it over-admits."""
-    keep = []
-    for i, v in enumerate(vectors):
-        if any(dominates(vectors[j], v) for j in range(len(vectors)) if j != i):
+def frontier(vectors, groups=None):
+    """Indices of the non-dominated vectors. Ten-axis and weight-free, so it over-admits.
+
+    Culling to this is **lossless for ranking**, because `score_bodies` is monotone
+    non-decreasing in every rung: `add`, `comp` and `per` all are, `action_factor` is monotone in
+    `act`, and more rungs mean fewer `HOLE` charges, fewer idle-body flags and less chance of
+    tripping `LONE_RESCUE`'s `min(rsc) == 0`. A dominated vector therefore cannot beat the one
+    dominating it against any partner, so it can never place above it and never needs scoring.
+
+    `groups[i]` is an optional set per vector, and domination then also requires the dominator's
+    set to be a SUBSET. That is here for the one term of the pair score that is not read off the
+    vector: `same_class` charges `SAME_CLASS` when the pair shares a class, so a variant whose
+    dips bring fewer classes is penalised against fewer partners, and a vector that loses on the
+    rungs can still win on contention. Subset domination closes that; without it the cull is a
+    little larger and slightly lossy.
+
+    Sorted by descending rung sum, so a dominator is always seen before anything it dominates and
+    each candidate is tested against the kept frontier rather than the whole set — `dominates` is
+    the hot call at this size and the naive sweep is quadratic on the full list.
+    """
+    order = sorted(range(len(vectors)), key=lambda i: -sum(vectors[i]))
+    keep, seen = [], set()
+    for i in order:
+        v = vectors[i]
+        key = tuple(v)
+        if key in seen:
             continue
-        if any(vectors[j] == v for j in keep):
+        if any(dominates(vectors[j], v) and (groups is None or groups[j] <= groups[i])
+               for j in keep):
             continue
+        seen.add(key)
         keep.append(i)
     return keep
 
@@ -297,10 +349,16 @@ def frontier(vectors):
 def dedupe(variants):
     """Collapse variants that compose to the same vector.
 
-    Two variants with an identical composed vector are indistinguishable to the filter — it
-    ranks on pair value, and pair value is a function of the vector alone. So scoring both is
+    Two variants with an identical key are indistinguishable to the filter, so scoring both is
     wasted, and pairing both is wasted quadratically: the pool is every distinct variant, and
     the ranking step is |variants| x |pool|.
+
+    **Pair value is NOT a function of the composed vector alone**, whatever this docstring used
+    to claim. `to_chassis` rebuilds both derived axes at score time — Saves from the proficiency
+    SET, Skills from the modifier map and the class set — and `same_class` reads the class set
+    too. The key the caller passes must therefore carry those derived inputs, and any it leaves
+    out is an approximation that is not free. `enumerate_splits.cull` no longer calls this: it
+    dedupes on `dom_key`, which carries the save and skills inputs itself.
 
     Measured on a simulated enumeration, 31% of variants collapse. That is 31% off the candidate
     count *and* off the pool, so roughly half the pairing work.

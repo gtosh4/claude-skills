@@ -474,8 +474,13 @@ Seven playable, and one Metamagic-adjacent note. All confirmed present.
   casters with healing** in the list (with Bard and Celestial Warlock — see
   `references/listo-rules.md`), and unlike either of them it gets its healing **at level 1**,
   **off the Cleric list**, **as Sorcerer spells**, meaning **Metamagic applies**. **Twinned
-  Cure Wounds, Twinned Death Ward, Twinned Warding Bond and Twinned Greater Restoration cover
-  100% of a two-person party for one Metamagic pick.** Raise Dead and Revivify on the *Sorcerer*
+  Cure Wounds, Twinned Death Ward and Twinned Greater Restoration cover 100% of a two-person party
+  for one Metamagic pick.** **Warding Bond is not one of them** — `Target_WardingBond_UCL` gates
+  targeting on `not Self()` and refuses a second cast while the caster holds `WARDING_BOND_CASTER`,
+  so in a duo the partner is the only legal target and Twinned has nothing to reach. The spell
+  itself is real and this is the class's **only** route to it: `LHB_FavoredSoul_Domain_Peace`
+  carries `IF(ClassLevelHigherOrEqualThan(3,'Sorcerer')):UnlockSpell(Target_WardingBond,...)`, so
+  **Favored Soul — Peace, at Sorcerer 3**, and no other bloodline. Metamagic is what does nothing. Raise Dead and Revivify on the *Sorcerer*
   chassis solves the duo's worst failure mode — one character down means the other is alone. On
   top of that it fixes the class's two structural weaknesses at level 1 (**medium armour and
   shields** on a no-armour class, saving you a feat and roughly 4–5 AC) and adds **Extra Attack at

@@ -25,7 +25,9 @@ For each chassis in your assignment, one object keyed by its `chassis` id:
   "reach": "hybrid",
   "split": "Blood Hunter 14 (Order of the Profane Soul) / Wizard 6 (Evocation)",
   "meta":  "Int 22 · 7 feats",
-  "note":  "One or two sentences: what the body is and what it gives up.",
+  "note":     "One or two sentences: what the body is and what it gives up.",
+  "strength": "One or two sentences: why it is strong FOR THIS RUN — two bodies, Lone Wolf, Listo's encounters.",
+  "wants":    "One sentence: what it needs from the other half of the duo, as a capability not a class.",
   "concentration": false,
   "saves": {
     "I":   {"prof": ["int","dex"], "boosters": []},
@@ -47,6 +49,23 @@ classes summing to 20, joined by ` / `, each class named once with its total and
 parentheses. No arrows, no repeated class. The parentheticals are what lets a reader rebuild the
 body — never strip them.
 
+### `note`, `strength` and `wants` — all three are required
+
+Ten integers say *how much*. They cannot say why you would pick this body, or who it needs beside
+it, and those are the two questions the roster card exists to answer.
+
+- **`note`** — what the body is, and what it gave up. 1–2 sentences.
+- **`strength`** — what makes it strong **in this scenario specifically**: two characters, Lone
+  Wolf's 2 Actions / 2 Bonus Actions / 2 Reactions and halved damage, Absolute Wrath's layered
+  resistances, +126% enemy HP, a long rest costing 120+ supplies. "Good damage" is not an answer —
+  a four-body party would say the same. Name the thing that is only true *here*: a second Action
+  doubling a bonus-action engine, an aura that covers the whole party because the party is two, a
+  short-rest clock against expensive long rests, a damage type nothing resists.
+- **`wants`** — what it needs from the **other** body, phrased as a capability, never a class.
+  "Wants a Cleric" is unusable; every duo can respec. "Wants a body that will hold the pair's one
+  concentration slot, because this one never can" is usable. Where an axis sits at 0, say so —
+  `listo-build`'s split rule is that 5 + 0 is worse than 3 + 3, so a hole is what the partner is for.
+
 ### `scores` — ten values per act, in this order
 
     st, aoe, dur, act, ctrl_s, ctrl_a, rsc, skl, sav, end
@@ -65,10 +84,15 @@ feats and 4th-level slots while Act III has seven feats and 9th. `axis-rubrics.m
 per-act ceiling row under every axis table — read the row for the act you are scoring, not the
 axis table's headline.
 
-**The consequence people miss: most axes should not move at all.** A body with Extra Attack and a
-rider is "the act's standard multiattack plus a rider" at character 8 and still that at character
-18 — a 3 in every act. It has not got worse; the world moved with it. Only a body whose *standing
-relative to its peers* changes should move.
+**The consequence people miss: most axes should not move at all.** A body whose heavy armour,
+save set or rescue kit does not improve holds its rung; it has not got worse, the world moved with
+it. Only a body whose *standing relative to its peers* changes should move.
+
+**`st` and `aoe` are the exception and are meant to move.** Both are now computed as a ratio to a
+fixed par that carries the act's enemy-HP multiplier (`axis-rubrics.md`, "The two damage axes are
+computed, not judged"). Extra Attack plus a flat 1d6 rider is 1.29× par in Act I and 0.87× in
+Act III — **3 / 2 / 2** — because a flat rider genuinely is being outrun. Do not flatten those
+rows to match the other eight.
 
 The last scoring run produced **883 rises and 34 falls** across 150 chassis. That is not what the
 run looks like; it is what an absolute ladder looks like. Movement is meant to be roughly

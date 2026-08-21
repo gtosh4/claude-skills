@@ -276,7 +276,11 @@ All four gain always-prepared spells at 3/5/9/13/17. Only **Alchemist** has extr
   **Martial Weapon proficiency**. The **Steel Defender** is summoned via the same
   `Target_RangersCompanion` template; it has a **Deflect Attack** ability that imposes disadvantage
   on an attack aimed at someone other than itself. Always-prepared: Heroism, Shield.
-- **L5 — Extra Attack.** Always-prepared: Branding Smite, Warding Bond.
+- **L5 — Extra Attack.** Always-prepared: Branding Smite, **Warding Bond**. This is the Artificer's
+  only route to the spell and the only one in the game that costs no preparation slot and no
+  subclass-specific domain — the Listo Master Spells Patch list `5b5aa11f` ("BattleSmith spells at
+  5th") hands it over outright. Five classes reach Warding Bond at all; this is the cheapest of
+  them for a body that wanted Battle Smith anyway.
 - **L9 — Arcane Jolt.** On hitting with a magic weapon attack, deal an extra **2d6 Force** or
   **heal 2d6** to a creature or construct you can see. Uses per long rest =
   **Intelligence modifier + Proficiency Bonus** (read from the passive's own condition formula).

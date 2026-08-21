@@ -171,6 +171,8 @@ def roster_block(key, ch, disp):
 <p class="chassis">{split}{meta}</p>
 <p class="chassis reachline">reach: <b>{REACH_LABEL[ch["reach"]]}</b></p></header>
 {f'<p class="note">{ch["note"]}</p>' if ch.get("note") else ""}
+{f'<p class="note lede-strength"><b>Strong because</b> {ch["strength"]}</p>' if ch.get("strength") else ""}
+{f'<p class="note lede-wants"><b>Wants a partner who</b> {ch["wants"]}</p>' if ch.get("wants") else ""}
 <div class="scroll"><table class="matrix"><thead><tr><th>Act</th>{head}
 <th class="tot"><span>Sum</span></th></tr></thead><tbody>{rows}</tbody></table></div></article>'''
 

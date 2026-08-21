@@ -69,21 +69,57 @@ Emit an entry for each level a dip is genuinely taken at — the `## Dip value` 
 Typically 1, 2, 3, 5, 6, and sometimes 9, 11 or 12 where a real breakpoint sits. Do not emit an
 entry per level; emit them where the class has something to sell.
 
-## `exit` — what the class gives up by stopping short
+## `exit_levels` — what the class gives up by stopping short
 
-The other half of a split is the levels the **primary** class no longer has. Emit one exit table
-per class, keyed by the level it stops at, as negative deltas relative to its full twenty:
+The other half of a split is the levels the **primary** class no longer has.
+
+**Write one row per level, and write what THAT LEVEL grants** — not a running total. Consumption is
+cumulative: the cost of capping at P is the sum of every row above P, so the totals take care of
+themselves. **A level that grants nothing worth a rung gets no row**, and most levels won't.
 
 ```jsonc
-"exit": {"paragon": {"17": {"st": -1},
-                     "14": {"st": -1, "act": -1},
-                     "11": {"st": -2, "act": -1, "dur": -1}}}
+"exit_levels": {"paragon": {"20": {"st": -1, "act": -1},   // the all-or-nothing capstone
+                            "17": {"st": -1},              // 18 and 19 grant nothing here
+                            "12": {"dur": -1}}}
 ```
 
-This is where a strong capstone shows up. Paragon's own file says the level-20 capstone is
-reachable only by pure Paragon 20 and calls the class all-or-nothing in both directions — that
-should read as a heavy exit cost. A class with a weak back half should read as a light one.
-Use levels **17, 14 and 11** — 11 is the minimum a majority class can hold.
+Cover levels **12 through 20** — 11 is the minimum a majority class can hold, so nothing below 12
+is ever lost. Do not write a row you cannot name a feature for; an absent row is the honest answer
+and is much better than a guess, because a spurious rung here does not cost one split, it biases
+every split of every subclass of that class.
+
+> The **old** `exit` tables were cumulative-from-20 and banded at 11/14/17 only, with exactly one
+> band applying. Two things went wrong with that and both are fixed by the format above. Levels
+> snapped down — a primary at 16 paid the 14 band, so shaving one level was charged as three, and
+> it is why the ledger holds 161 splits at primary 17 and 14 at primary 14. And re-stating a
+> running total across bands is what produced this file's one real bug, where the consumer summed
+> the bands it was supposed to choose between. `exit` is still read for any class that has no
+> `exit_levels` row yet, so the two can coexist while the tables are rewritten class by class.
+
+## `exit_levels_subclass` — the half that is not generic
+
+Same format, keyed `<class>/<Subclass>`, and **summed on top of the class table**. The class table
+carries the generic back half — spell-slot tiers, feats, Empty Body. This one carries what the
+subclass alone loses, and it exists because that is the only place a duo question can be asked:
+
+```jsonc
+"exit_levels_subclass": {"monk/Way of the Open Hand": {"17": {"st": -1}},   // Quivering Palm
+                         "monk/Way of the Friar": {}}                       // Community: nothing
+```
+
+Way of the Friar's level-17 Community bonds a second and third ally and is **dead weight in a
+duo**; Open Hand's Quivering Palm at the same level is not. A table keyed by class cannot say
+both, and until now charged Friar for a capstone it does not want.
+
+**Most classes need no subclass table at all.** Check where the subclass actually finishes: Wizard's
+school capstone is at 10, Druid's circle at 10, Bard's College at 14, and those never reach the
+levels a split gives up. The six that need one are **Monk, Cleric and Rogue** (17), **Fighter and
+Sorcerer** (18), and **Paladin** (the oath capstone at 20).
+
+Note also what this format still cannot say: it speaks only in axis rungs, so it cannot express
+losing a *booster*, a proficiency or an armour tier. Oath of the Moon's Lunar Champion at 20 is a
+pair-scope save booster, and a Paladin capped at 17 loses it invisibly. Flag any such loss in
+`note` rather than trying to spend a rung on it.
 
 ## Fields
 
