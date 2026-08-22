@@ -39,7 +39,13 @@ the one place in the pipeline where being conservative is the failure rather tha
   the subclass adds nothing after level 1. An *omitted* map is an evidence gap: nothing downstream
   can tell "adds nothing later" from "was not looked at", and a dip judged not to reach a grant it
   does reach understates the heaviest-weighted axis in the model.
-- **Do not write files.** Your final message is the return value: raw JSON. No prose, no fences.
+- **Write one file per class, the moment that class is finished.** Your assignment names the
+  directory. Holding the whole batch to return at the end makes the final message both the data
+  and the thing subject to the turn's output limit — and to the session limit, which is how a run
+  of this pass reached its last class and lost all thirty-nine subclasses it had scored. The
+  no-write rule this replaces existed to stop parallel agents colliding on shared state, and a
+  path no other agent uses collides with nothing. Never the live `subclass-bases.json`, never a
+  class file, never a brief. Your final message is *status*, not data.
 
 Everything you could not establish from the sources goes in `uncertain`, named specifically. A
 flagged uncertainty is cheap; a confident wrong rung propagates into every split of that subclass.
