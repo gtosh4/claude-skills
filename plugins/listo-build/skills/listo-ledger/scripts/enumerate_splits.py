@@ -242,7 +242,11 @@ def enumerate_for(key, base, cat, pbc, cls_of, sbc=None):
                                            expertise)
                 bits = [f"{primary.title()} {p}"] + [
                     f"{c.title()} {lv}" + (f" ({s[0]})" if s else "") for c, lv, _g, s in dips]
-                label = " / ".join(bits) + ("" if first is None else f"  [{first.title()} first]")
+                # The split string stays parseable by `seed_index.check_split`, because a chosen
+                # variant's split is written straight into a seed. Which class is taken at level 1
+                # is carried by `meta["first"]`, where it always was; appending it to the label as
+                # well made every three-class variant unwritable and duplicated the fact.
+                label = " / ".join(bits)
                 out.append((label, vec, {"primary": primary, "primary_levels": p,
                                          "dips": [(c, lv, g, s[0] if s else None)
                                                   for c, lv, g, s in dips],
