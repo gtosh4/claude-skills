@@ -1,7 +1,8 @@
 # Chassis scoring brief
 
-You score a batch of **chassis** for a two-player Lone Wolf Baldur's Gate 3 ledger. Your output
-is JSON, one object per chassis, merged straight into `ledger.json` and rendered.
+You score a batch of **chassis** for a two-player Lone Wolf Baldur's Gate 3 ledger. Your output is
+one validated JSON file per chassis, merged into `ledger.json` and rendered. Nothing downstream
+re-derives your numbers.
 
 ## Read set — in this order, in full
 
@@ -18,10 +19,19 @@ files, `listo-rules.md`, `listo-build/SKILL.md`, the manifest, or any `.pak`.
 
 ## What you emit
 
-For each chassis in your assignment, one object keyed by its `chassis` id:
+**One file per chassis, written through `scripts/result_store.py put`** — not one JSON object at
+the end of the turn. The final message used to be both the data and the thing subject to the
+turn's output limit, so a long batch was lost whole and had to be hand-split to fit. Author 5-10
+chassis per turn and stop; the result directory is what makes the next turn cheap.
+
+Each record is keyed by its **build address** — `<class>/<subclass heading>:<niche>`, the same key
+the seeds file uses — and carries the name you would give the body as `proposed_id`. Names are
+*proposals*: `naming.py` resolves them centrally afterwards, because parallel agents cannot see
+each other's picks and a collision used to silently overwrite a body.
 
 ```json
-"Bombard": {
+{
+  "proposed_id": "Bombard",
   "reach": "hybrid",
   "split": "Blood Hunter 14 (Order of the Profane Soul) / Wizard 6 (Evocation)",
   "meta":  "Int 22 · 7 feats",
@@ -43,6 +53,11 @@ For each chassis in your assignment, one object keyed by its `chassis` id:
   "uncertain": ["anything you had to guess, one line each — omit if empty"]
 }
 ```
+
+`put` validates the record before it lands: the split against your assignment, the score rows
+against their length and sentinels, the damage types and reach against the closed registries. A
+rejection names the field. Fix it and put again — a rejected record is never written, so nothing
+half-formed reaches the merge.
 
 Keep the `split` **exactly** as your assignment gives it, parenthesised subclasses and all, unless
 the class text proves it wrong; if you change it, say so in `uncertain`. Splits are 1–3 distinct

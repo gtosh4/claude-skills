@@ -1,0 +1,199 @@
+"""One file per chassis, so an interrupted scoring turn costs a turn and not a batch.
+
+The old contract made the agent's final message both the data and the thing subject to the turn's
+output limit. A batch that ran long was lost whole; one had to be hand-split into halves to fit.
+These tests pin the properties that removes: resume skips valid work, `.tmp` files are never read
+as results, two addresses that slug identically get distinct paths, and a stale result is only
+replaced by a candidate that validates.
+"""
+import copy, json, os, shutil, sys, tempfile, unittest
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LEDGER = os.path.join(ROOT, "skills", "listo-ledger")
+sys.path.insert(0, os.path.join(LEDGER, "scripts"))
+import result_store as RS  # noqa: E402
+import merge_results as MR  # noqa: E402
+import score_deps as SD  # noqa: E402
+import seed_index as SI  # noqa: E402
+
+A1 = "cleric/Death:action-economy"
+S1 = "Cleric 17 (Death) / Fighter 3 (Battle Master)"
+A2 = "cleric/Life:durability"
+S2 = "Cleric 14 (Life) / Paladin 6 (Oath of Devotion)"
+
+
+def record(split, note="A body.", **over):
+    rec = {"proposed_id": "Testbody", "split": split, "reach": "hybrid",
+           "concentration": True, "types": ["necrotic"],
+           "saves": {a: {"prof": ["wis", "cha"], "boosters": []} for a in RS.ACTS},
+           "scores": {a: [3, 2, 3, 2, 2, 1, 0, 3, None, 4] for a in RS.ACTS},
+           "note": note, "strength": "Two actions.", "wants": "Concentration.",
+           "uncertain": []}
+    rec.update(over)
+    return rec
+
+
+class Store(unittest.TestCase):
+
+    def setUp(self):
+        self.run = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.run)
+        self.man = RS.write_manifest(self.run, "score-001", [(A1, S1), (A2, S2)])
+
+    def test_status_starts_empty_and_tracks_progress(self):
+        st = RS.status(self.run, "score-001")
+        self.assertEqual((st["completed"], st["remaining"]), (0, 2))
+        RS.put(self.run, "score-001", A1, record(S1))
+        st = RS.status(self.run, "score-001")
+        self.assertEqual(st["valid"], [A1])
+        self.assertEqual(st["missing"], [A2])
+
+    def test_an_interrupted_turn_loses_nothing(self):
+        """The acceptance gate: put one, drop a half-written file, resume."""
+        RS.put(self.run, "score-001", A1, record(S1))
+        res = os.path.join(self.run, "results", "score-001")
+        with open(os.path.join(res, RS.filename(A2) + ".tmp"), "w") as fh:
+            fh.write('{"format": 1, "record": {"note": "half a th')
+        st = RS.status(self.run, "score-001")
+        self.assertEqual(st["valid"], [A1], "completed work must survive the interruption")
+        self.assertEqual(st["missing"], [A2], "the half-written file is not a result")
+        self.assertEqual(len(st["interrupted"]), 1)
+        self.assertEqual(st["problems"], [])
+        RS.put(self.run, "score-001", A2, record(S2))
+        self.assertEqual(RS.status(self.run, "score-001")["remaining"], 0)
+
+    def test_a_corrupt_temp_file_is_never_merged(self):
+        for addr, split in ((A1, S1), (A2, S2)):
+            RS.put(self.run, "score-001", addr, record(split))
+        res = os.path.join(self.run, "results", "score-001")
+        with open(os.path.join(res, RS.filename(A1) + ".tmp"), "w") as fh:
+            fh.write("not json at all")
+        got, problems = RS.read_results(self.run, "score-001")
+        self.assertEqual(sorted(got), sorted([A1, A2]))
+        self.assertEqual(problems, [])
+
+    def test_addresses_that_slug_alike_get_distinct_paths(self):
+        a = "fighter/Banneret (Purple Dragon Knight, 2014):front-line"
+        b = "fighter/Banneret Purple Dragon Knight 2014:front-line"
+        self.assertEqual(RS.filename(a).split("--")[0], RS.filename(b).split("--")[0],
+                         "the readable half is expected to be lossy — that is why the digest exists")
+        self.assertNotEqual(RS.filename(a), RS.filename(b))
+
+    def test_a_valid_result_is_not_rewritten(self):
+        path = RS.put(self.run, "score-001", A1, record(S1, note="first"))
+        RS.put(self.run, "score-001", A1, record(S1, note="second"))
+        with open(path) as fh:
+            self.assertEqual(json.load(fh)["record"]["note"], "first")
+
+    def test_a_stale_result_is_replaced_only_by_a_valid_candidate(self):
+        path = RS.put(self.run, "score-001", A1, record(S1, note="first"))
+        # Move a recorded dependency, the way editing the secondary class would.
+        with open(path) as fh:
+            doc = json.load(fh)
+        doc["deps"]["judgment_rules"] = "0" * 12
+        with open(path, "w") as fh:
+            json.dump(doc, fh)
+        st = RS.status(self.run, "score-001")
+        self.assertEqual(st["stale"], [A1])
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, record(S1, types=[]))
+        with open(path) as fh:
+            self.assertEqual(json.load(fh)["record"]["note"], "first",
+                             "a rejected candidate must not destroy the result it would replace")
+        RS.put(self.run, "score-001", A1, record(S1, note="second"))
+        with open(path) as fh:
+            self.assertEqual(json.load(fh)["record"]["note"], "second")
+
+    def test_an_address_outside_the_assignment_is_refused(self):
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", "wizard/Evocation:lockdown", record(S1))
+
+    def test_a_split_that_disagrees_with_the_assignment_is_refused(self):
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, record(S2))
+
+    def test_validation_rejects_an_authored_saves_rung(self):
+        rec = record(S1)
+        rec["scores"]["II"] = [3, 2, 3, 2, 2, 1, 0, 3, 4, 4]
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, rec)
+
+    def test_validation_rejects_a_null_skills_rung(self):
+        rec = record(S1)
+        rec["scores"]["II"] = [3, 2, 3, 2, 2, 1, 0, None, None, 4]
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, rec)
+
+
+class Merge(unittest.TestCase):
+
+    def setUp(self):
+        self.run = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.run)
+        RS.write_manifest(self.run, "score-001", [(A1, S1), (A2, S2)])
+        self.seeds = SI.load(os.path.join(LEDGER, "assets", "chassis-seeds.json"))
+
+    def _ledger(self):
+        """A two-chassis stand-in for the published ledger, carrying an evidence-pass field."""
+        ids = MR.existing_ids(self.seeds)
+        return {"chassis": {ids[A1]: {"split": S1, "note": "old", "skills":
+                                      {a: {"Perception": 5, "Investigation": 1, "Persuasion": 4}
+                                       for a in RS.ACTS}}}}, ids
+
+    def test_a_missing_address_refuses_to_merge(self):
+        RS.put(self.run, "score-001", A1, record(S1))
+        with self.assertRaises(RS.StoreError):
+            MR.merge(self.run)
+        _ledger, _ids = self._ledger()
+        report = MR.merge(self.run, partial=True)[1]
+        self.assertEqual(report["missing"], [A2])
+
+    def test_published_ids_stay_put_and_unowned_fields_survive(self):
+        ledger, ids = self._ledger()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "ledger.json")
+            with open(path, "w") as fh:
+                json.dump(ledger, fh)
+            RS.put(self.run, "score-001", A1, record(S1, note="new"))
+            merged, report = MR.merge(self.run, into=path, partial=True)
+        cid = ids[A1]
+        self.assertIn(cid, merged["chassis"], "a re-score must not orphan the published id")
+        self.assertEqual(merged["chassis"][cid]["note"], "new")
+        self.assertIn("skills", merged["chassis"][cid],
+                      "`skills` belongs to the evidence passes and must survive a re-score")
+        self.assertEqual(report["changed"][cid]["note"], ["old", "new"])
+        self.assertEqual(report["evidence_gaps"], [])
+
+    def test_a_chassis_with_no_skills_map_is_reported_as_an_evidence_gap(self):
+        RS.put(self.run, "score-001", A1, record(S1))
+        report = MR.merge(self.run, partial=True)[1]
+        self.assertEqual(report["evidence_gaps"], [A1])
+
+    def test_a_stale_result_blocks_the_merge(self):
+        path = RS.put(self.run, "score-001", A1, record(S1))
+        with open(path) as fh:
+            doc = json.load(fh)
+        doc["deps"]["schema"] = "0" * 12
+        with open(path, "w") as fh:
+            json.dump(doc, fh)
+        with self.assertRaises(RS.StoreError):
+            MR.merge(self.run, partial=True)
+
+    def test_a_hand_written_file_under_the_wrong_name_is_a_problem(self):
+        RS.put(self.run, "score-001", A1, record(S1))
+        res = os.path.join(self.run, "results", "score-001")
+        with open(os.path.join(res, RS.filename(A1))) as fh:
+            doc = json.load(fh)
+        # A1's document, dropped in under A2's filename. The filename is derived from the
+        # address, so the two disagreeing means something wrote by hand.
+        forged = copy.deepcopy(doc)
+        with open(os.path.join(res, RS.filename(A2)), "w") as fh:
+            json.dump(forged, fh)
+        got, problems = RS.read_results(self.run, "score-001")
+        self.assertEqual(len(problems), 1)
+        self.assertIn(A1, problems[0])
+        self.assertNotIn(A2, got, "a forged result must not stand in for the address it names")
+
+
+if __name__ == "__main__":
+    unittest.main()

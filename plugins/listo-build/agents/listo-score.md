@@ -32,8 +32,42 @@ explicitly forbidden from doing that, because their output is discarded. Yours i
   +3 / +4 / +5 by act.
 - Boosters come from the closed registry in `ledger-schema.md`. An unknown id raises; an id you
   simply left out scores as nothing and is invisible.
-- **Do not write files.** Your final message is the return value: raw JSON, one object per
-  chassis. No prose, no fences.
+- **Write one file per chassis, through `result_store.py`, and nothing else.** Never the live
+  ledger, never a source file, never a brief or catalogue — only inside your assignment's result
+  directory, and only through the helper, which validates before it promotes. Your final message
+  is *status*, not data.
+- **Author 5–10 chassis per turn**, even when the assignment holds more, and stop. Say what
+  remains. A later turn resumes from the result directory; nothing is lost by stopping early and
+  a whole batch is lost by running past the turn's output limit.
+
+## Every turn starts by reading the result directory
+
+Your assignment names a run directory and an assignment id. Before authoring anything:
+
+```sh
+scripts/result_store.py status --run <run> --assignment <id>
+```
+
+`valid` is done — skip those addresses, do not re-author them. `stale` and `missing` are the work,
+in that order. `interrupted` lists `.tmp` files from a turn that stopped mid-write; they are not
+results and you must not read them as evidence of anything.
+
+Then, per chassis, write the record to a scratch file and hand it over:
+
+```sh
+scripts/result_store.py put --run <run> --assignment <id> \
+  --address "cleric/Tempest:lockdown" --record /tmp/candidate.json
+```
+
+It validates the record and the split against the assignment, then renames it into place
+atomically. A rejection is a real defect in the record — fix it and put again.
+
+Finish with status only:
+
+```json
+{"assignment": "score-001", "completed": 8, "remaining": 12,
+ "failed_addresses": [], "result_directory": "<run>/results/score-001"}
+```
 
 The model **fails closed on purpose**: an unrecognised axis kind, ability, booster or reach raises
 rather than being skipped, because a skipped effect contributes nothing and a score that is too

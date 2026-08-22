@@ -30,6 +30,8 @@ renders is indistinguishable from the current one.
 | `enumerate_splits.py` | split search | enumerates every split a subclass can express and ranks them |
 | `compose.py` | split search | composes a filter-grade vector from catalogued parts — never publishes a number |
 | `score_deps.py` | score | the complete dependency set behind one chassis's score, and what has moved since |
+| `result_store.py` | score | one validated result file per chassis: manifest, atomic put, resume status |
+| `merge_results.py` | score | merges a result directory into a candidate ledger with a field-level change report |
 | `crosscheck.py` | score | checks built bodies against the tier-1 base profiles for omitted effects |
 | `naming.py` | score | resolves chassis ids centrally, after scoring, so parallel agents cannot collide |
 | `merge_routine.py` | evidence | merges a routine-skills evidence pass, with coverage and calibration checks |
@@ -196,8 +198,14 @@ larger run was big enough to notice. Resolution is deterministic: same input, sa
 
 Every subagent pass in this skill has a spec in `listo-build/agents/`, invoked as
 `listo-build:<name>`. Use them rather than a general-purpose agent: the spec pins the tools, names
-the brief, and carries the invariants a brief cannot enforce — return raw JSON, write no files,
-and for the seed and catalogue passes, do not touch the paks.
+the brief, and carries the invariants a brief cannot enforce — return raw JSON, and for the seed
+and catalogue passes, do not touch the paks.
+
+**`listo-score` is the one pass that writes files**, and only through `result_store.py`, only
+inside its own assignment's result directory. That is not a relaxation of the no-write rule: the
+rule existed to stop parallel agents colliding on shared state, and an assignment-scoped result
+directory collides with nothing. What it removes is the failure where a batch too large for the
+turn's output limit was lost whole.
 
 **Every pass inherits the session's model.** No spec pins one, and the column below is not a
 routing rule — it records where the verification actually is, which is worth knowing whether or
@@ -386,8 +394,10 @@ scripts/seed_index.py --stamp                 # record src + brief hashes on eve
 scripts/seed_index.py --check                 # seven buckets; blocks while any of the first four bite
 scripts/seed_index.py --promote               # the cut
 scripts/enumerate_splits.py --limit 2 -o variants.json   # search the split, don't inherit the guess
-# ... author ten-axis scores for the promoted builds into ledger.json ...
-scripts/crosscheck.py ledger.json             # nothing reachable was left unrecorded
+scripts/result_store.py manifest --run RUN --assignment score-001 --addresses @batch-1.txt
+# ... listo-score authors 5-10 chassis per turn, `result_store.py put` per chassis, and resumes ...
+scripts/merge_results.py --run RUN --into assets/ledger-v6.json -o candidate.json --report r.json
+scripts/crosscheck.py candidate.json          # nothing reachable was left unrecorded
 # ... naming.py resolves proposed ids; merge_routine.py / merge_prose.py land agent passes ...
 scripts/render_ledger.py ledger.json -o ledger.html
 scripts/seed_index.py --stamp --enumerated all   # these splits came from the current catalogues
@@ -495,6 +505,32 @@ Failing closed makes the check reactive instead of a standing tax. You do not au
 before each render. You fix one crash the first time you author something new. Never add a
 permissive branch, a default, or a warn-and-continue to any of these — see
 `assets/ledger-schema.md`, "Anything with special handling fails closed".
+
+### Running the scoring pass, and surviving an interrupted turn
+
+Scoring is the expensive pass and the one whose output *is* the ledger, so it is the one that must
+not lose work. It writes one file per chassis into a run directory:
+
+```text
+<run>/assignments/score-001.json                     addresses, splits, filenames, dependency set
+<run>/results/score-001/<slug>--<hash>.json          one validated result per chassis
+```
+
+The filename is a locator, never a key. Its readable half is a slug, which is lossy — two headings
+differing only in punctuation slug identically — so a digest of the exact address is appended and
+the document's own `address` field stays authoritative.
+
+**A result is keyed by `(address, deps)`**, the same staleness rule as everything else here, not a
+separate immutability protocol. `status` sorts the assignment into `valid` (skip), `stale` (a
+dependency moved; may be replaced once a new candidate validates), `missing`, and `interrupted`
+(`.tmp` files from a turn that stopped mid-write, which are never read as results). An agent
+resuming re-reads that and continues; nothing valid is re-authored and nothing is lost.
+
+`merge_results.py` is what turns the directory into a candidate ledger. It refuses to publish an
+incomplete roster, resolves proposed ids centrally through `naming.py` while leaving already
+published ids alone, carries forward every field the scoring pass does not own — `skills` above
+all, which the evidence passes author — and emits a field-level change report. It writes a
+*candidate* beside the published ledger and never over it.
 
 ## Verify before you score
 
