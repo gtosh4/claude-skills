@@ -23,6 +23,11 @@ HERE   = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
 CLASSES = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                        "listo-build", "data", "classes")
+# What an assignment calls the class files. Derived from CLASSES rather than written out, because
+# it was written out — as `listo-build/data/classes/` — and the plugin has a `skills/listo-build`
+# segment the literal was missing, so every agent spent a round of failed reads finding that out.
+CLASSES_REL = os.path.relpath(CLASSES, os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.dirname(HERE)))))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
                                 "listo-build", "scripts"))
 from scoring import KEYS, SAV_IDX, BOOSTERS                 # noqa: E402
@@ -601,7 +606,7 @@ def base_assignments(inv, n, bases=None):
             if not picked:
                 continue
             r = "  ".join(f"{k} {v[0]}-{v[1]}" for k, v in spans.items())
-            lines.append(f"Read ONLY these ranges of listo-build/data/classes/{cls}.md: {r}")
+            lines.append(f"Read ONLY these ranges of {CLASSES_REL}/{cls}.md: {r}")
             lines.append(f"Profile these {len(picked)} keys, verbatim:")
             lines += [f"  {cls}/{x}" for x in picked]
             lines.append("")
@@ -712,7 +717,7 @@ def main():
                 for c, (lo, hi) in dips.items())
             shared = ("Shared read set — EVERY agent reads all of these. They are what a split's\n"
                       "second class must be justified from:\n"
-                      + "".join(f"  listo-build/data/classes/{c}.md  dip value {lo}-{hi}\n"
+                      + "".join(f"  {CLASSES_REL}/{c}.md  dip value {lo}-{hi}\n"
                                for c, (lo, hi) in dips.items()))
             work = {c: [x for x in subs if f"{c}/{x}" in todo] for c, subs in inv.items()}
             work = {c: subs for c, subs in work.items() if subs}
@@ -729,7 +734,7 @@ def main():
                     spans, _ = ranges(cls)
                     where = "  ".join(f"{k} {lo}-{hi}" for k, (lo, hi) in sorted(spans.items()))
                     print(f"Read ONLY these ranges of "
-                          f"listo-build/data/classes/{cls}.md: {where}")
+                          f"{CLASSES_REL}/{cls}.md: {where}")
                     print(f"Seed these {len(work[cls])} keys, verbatim:")
                     for sub in work[cls]:
                         print(f"  {cls}/{sub}")
