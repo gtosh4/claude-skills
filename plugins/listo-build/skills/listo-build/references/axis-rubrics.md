@@ -139,6 +139,7 @@ breakpoint must pay for it. A ratio prices both.
 | save-for-half multiplier | `s + (1−s)/2` = **0.775** | |
 | AoE targets | **4** | act-invariant. `scoring-model.md` §5's crowd/boss coefficients already carry fight shape; scaling target count here as well would double-count it. |
 | gear constant `k`, per damage instance | **+3 / +5 / +8** | what the act's kit adds to **one damage roll**, under the 5-attunement cap. Like `h`, a convention that cancels between chassis and par wherever both deliver the same way. See "Gear is per instance" below. |
+| advantage multiplier | **×1.35** | `h` cancels only where **both** sides roll the same way. A body with repeatable advantage does not: `1 − (1 − h)² = 0.8775`, and `0.8775 ÷ 0.65 = 1.35`. Par has no accuracy buff, so this is one of the few things that genuinely does not cancel. Apply it to the attack-roll portion of the raw only, and only where the advantage is routine rather than situational — Reckless Attack every turn qualifies, a once-a-fight opener does not. Disadvantage is the mirror at **×0.65**, since `h² ÷ h` is just `h`. |
 
 ### Gear is per instance, and that is the whole of the correction
 
