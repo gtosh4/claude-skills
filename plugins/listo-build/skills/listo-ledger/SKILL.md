@@ -40,6 +40,7 @@ renders is indistinguishable from the current one.
 | `pb_sensitivity.py` | audit | measures how far the act III proficiency-bonus convention moves the ranking |
 | `rank_vec.py` | split search | the same pair score as `scoring.py`, restated over arrays for the sweep |
 | `merge_bases.py` | tier 1 | merges a fused base/grants pass into `subclass-bases.json`, validating both maps |
+| `read_cost.py` | measure | the scoring pass's read set, split into per-agent and paid-once terms |
 | `work_plan.py` | plan | composes every stage's audit into one machine-readable work plan |
 | `render_ledger.py` | render | every derived number, the field table, the HTML, and `--selection` |
 
@@ -559,6 +560,36 @@ Failing closed makes the check reactive instead of a standing tax. You do not au
 before each render. You fix one crash the first time you author something new. Never add a
 permissive branch, a default, or a warn-and-continue to any of these — see
 `assets/ledger-schema.md`, "Anything with special handling fails closed".
+
+### What scoring costs to read, and what that rules out
+
+The sweep's cost model is `total ≈ 77k + 16.9k × agents`, and agent count is its dial. Scoring had
+no equivalent, so every proposal to make it cheaper was an argument about a number nobody had.
+`read_cost.py` measures the half that needs no run:
+
+```sh
+scripts/read_cost.py --agents 4
+```
+
+Across the 163 promoted builds, on the current tree:
+
+| term | bytes | tokens (estimated, bytes/4) | paid |
+|---|---|---|---|
+| shared reference set | 132,078 | ~33.0k | **per agent** |
+| assigned class sections, union | 296,562 | ~74.1k | once |
+
+So the read side is `≈ 74k + 33k × agents`. At eight agents that is ~338k estimated read tokens,
+of which **264k — 78% — is the same five files read eight times**: `scoring-model.md`,
+`axis-rubrics.md`, `gates.md`, `ledger-schema.md` and `scoring-brief.md`.
+
+Two things follow. Fewer, fatter agents is the lever on the scoring pass, exactly as it was on the
+sweep. And **evidence packets cannot be**: a packet caches authoritative excerpts of the *class*
+text, which is the term that is already paid once and already read by exact line range. Packets do
+not touch the shared set at all.
+
+Bytes are measured; tokens are an estimate at four bytes each, which is a rule of thumb for prose
+and wrong for tables and JSON. Agent output, tool-call overhead and retries are not measured here
+and only a real run produces them — the full model needs two runs at different agent counts.
 
 ### Running the scoring pass, and surviving an interrupted turn
 
