@@ -938,11 +938,21 @@ def audit_roster(C):
     AoE saturated (130 of 298 at rung 5 once par was corrected) and single-target had *no* chassis
     at rung 5 across 298, so the top rung was decorative.
     """
+    # The rungs are DERIVED. Reading `scores` raw sees `null` on every v7 chassis, so the guard
+    # skipped the whole roster and reported clean — which is how it behaved the first time it was
+    # run against a derived roster. It was written against the authored shape and shipped in the
+    # same commit that stopped authoring them.
+    C = {cid: resolve_damage(dict(c, _id=cid)) for cid, c in C.items()}
+
     out = []
     for i, axis in ((0, "st"), (1, "aoe")):
         vals = [c["scores"]["III"][i] for c in C.values()
                 if c.get("scores", {}).get("III", [None])[i] is not None]
+        # A guard that can see nothing must say so rather than pass. Silence here reads exactly
+        # like a clean roster, which is the failure mode this whole function exists to end.
         if not vals:
+            out.append(f"{axis}: no chassis carries a rung on this axis — nothing was checked, "
+                       f"which is not the same as nothing being wrong")
             continue
         dist = collections.Counter(vals)
         n = len(vals)

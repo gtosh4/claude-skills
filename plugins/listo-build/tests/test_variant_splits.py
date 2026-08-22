@@ -71,5 +71,37 @@ class PrimaryClass(unittest.TestCase):
                          "cleric")
 
 
+class RosterAudit(unittest.TestCase):
+    """The guard reads DERIVED rungs, or it checks nothing and says nothing.
+
+    `audit_roster` was written against authored `st`/`aoe` ints and shipped in the same commit that
+    stopped authoring them. Reading `scores` raw sees `null` on every v7 chassis, so it skipped the
+    whole roster and reported clean — a silent pass that reads exactly like a sane roster.
+    """
+
+    def _body(self, st_raw, aoe_raw):
+        blk = {"actions": {"attacks": 6, "spells": 0, "filler": 2},
+               "st_raw": st_raw, "aoe_raw": aoe_raw,
+               "st_instances": 6, "aoe_instances": 4}
+        return {"split": "Cleric 20 (Life)",
+                "scores": {a: [None, None, 3, 2, 2, 1, 0, 3, None, 4] for a in ("I", "II", "III")},
+                "damage": {a: dict(blk) for a in ("I", "II", "III")}}
+
+    def test_a_derived_roster_is_actually_checked(self):
+        from scoring import audit_roster
+        # Every chassis identical, so the group-constant and saturation guards must both fire.
+        found = audit_roster({f"B{i}": self._body(70, 40) for i in range(6)})
+        self.assertTrue(found, "a roster of six identical bodies must not audit clean")
+        self.assertTrue(any("not entering the calculation" in f for f in found))
+
+    def test_an_axis_nothing_carries_is_reported_rather_than_skipped(self):
+        from scoring import audit_roster
+        c = self._body(70, 40)
+        del c["damage"]                      # no block and no authored rung: nothing to check
+        found = audit_roster({"B": c})
+        self.assertTrue(any("nothing was checked" in f for f in found),
+                        "silence must not read as a clean roster")
+
+
 if __name__ == "__main__":
     unittest.main()
