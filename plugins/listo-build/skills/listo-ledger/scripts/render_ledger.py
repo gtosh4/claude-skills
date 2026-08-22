@@ -13,7 +13,7 @@ See assets/ledger-schema.md.
 
 Strings pass through as HTML: inline <b>/<em>/<code> are fine.
 """
-import json, sys, os, re, itertools, collections
+import json, sys, os, re, itertools, collections, hashlib
 
 HERE   = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
@@ -259,22 +259,14 @@ def details(block, open_=False):
 
 
 # ── build ────────────────────────────────────────────────────────────────────
-def render(d):
-    C = d["chassis"]
-    for k, ch in C.items():
-        ch.setdefault("display", k)
-        validate_chassis(k, ch)
-    disp = lambda k: C[k]["display"]
+def select(d, field):
+    """Which pairings are on the frontier, and which chassis headlines an entry with whom.
 
-    if len(C) < 2:
-        sys.exit("need at least two chassis to form a pairing")
-
-    # Every unordered pair. The pair score is symmetric — combine() is add/comp/per, all
-    # order-independent — so (a, b) and (b, a) are one row, not two.
-    field = sorted((score(C, a, b) for a, b in itertools.combinations(C, 2)),
-                   key=lambda r: -r["score"])
-    by_pair = {(r["a"], r["b"]): r for r in field}
-
+    Extracted from `render` so that the same computation can be *reported* without rendering.
+    Entry prose is the expensive, model-authored layer of this format, and the only honest way to
+    know which of it needs rewriting is to ask the selection what changed — which means the
+    selection has to be readable on its own, and there must not be a second copy of it.
+    """
     # Selection: the Pareto frontier over the four blocks. Everything else stays in the field
     # table as the audit trail — it is dominated, not deleted.
     front_idx = set(frontier(field))
@@ -315,7 +307,29 @@ def render(d):
         ranked.append(ent)
 
     limit = d.get("entry_limit", len(ranked))
-    kept, cut = ranked[:limit], ranked[limit:]
+    return {"front": front, "front_pairs": front_pairs, "relevant": relevant,
+            "ranked": ranked, "kept": ranked[:limit], "cut": ranked[limit:], "cap": cap}
+
+
+def render(d):
+    C = d["chassis"]
+    for k, ch in C.items():
+        ch.setdefault("display", k)
+        validate_chassis(k, ch)
+    disp = lambda k: C[k]["display"]
+
+    if len(C) < 2:
+        sys.exit("need at least two chassis to form a pairing")
+
+    # Every unordered pair. The pair score is symmetric — combine() is add/comp/per, all
+    # order-independent — so (a, b) and (b, a) are one row, not two.
+    field = sorted((score(C, a, b) for a, b in itertools.combinations(C, 2)),
+                   key=lambda r: -r["score"])
+    by_pair = {(r["a"], r["b"]): r for r in field}
+
+    sel = select(d, field)
+    front, front_pairs, relevant = sel["front"], sel["front_pairs"], sel["relevant"]
+    kept, cut, cap = sel["kept"], sel["cut"], sel["cap"]
 
     prose = d.get("entries", {})
     missing = sorted({me for me, _, _ in kept if me not in prose})
@@ -515,16 +529,128 @@ def render(d):
 '''
 
 
+# The prose layer's own version. Bump it when the entry template changes shape in a way that
+# makes existing prose wrong — a new required paragraph, a renamed variation line. It is part of
+# every entry's `prose_deps`, so bumping it schedules a prose review rather than silently leaving
+# entries written against the old shape.
+PROSE_TEMPLATE = 1
+
+# What a pair-specific paragraph is actually about. Chassis prose — `note`, `strength`, `wants` —
+# is deliberately absent: it is authored by the scoring pass and rewriting an entry because a
+# roster note was reworded would be exactly the false alarm that teaches people to ignore the
+# report.
+PROSE_EVIDENCE = ("split", "reach", "concentration", "saves", "skills", "types",
+                  "scores", "redirect")
+
+
+def prose_deps(C, me, other, rec):
+    """A digest over everything that can make one entry's pair prose wrong.
+
+    Both bodies' evidence, the derived blocks, flags and holes the paragraph describes, and the
+    template version. Not the pairing's rank: a pairing that slipped from third to fourth is
+    still the same pairing, and its prose still says true things.
+    """
+    payload = {
+        "template": PROSE_TEMPLATE,
+        "bodies": {k: {f: C[k].get(f) for f in PROSE_EVIDENCE} for k in sorted((me, other))},
+        "blocks": rec["blocks"],
+        "acts": {a: rec["acts"][a]["blocks"] for a in sorted(rec["acts"])},
+        "holes": sorted(rec["holes"]),
+        "flags": sorted("/".join(f) for f in rec["flags"]),
+        "locked": rec["locked"], "same_class": rec["same_class"],
+        "types": sorted(rec["types"]),
+    }
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()[:12]
+
+
+def selection_report(d, previous=None):
+    """What the selection chose, and how it differs from the ledger the prose was written for.
+
+    Read-only. `render_ledger` already computes every one of these facts and already refuses to
+    print prose naming a partner that is no longer selected; this exposes the same computation so
+    a work plan can commission only the paragraphs that actually need writing.
+    """
+    C = d["chassis"]
+    for k, ch in C.items():
+        ch.setdefault("display", k)
+    field = sorted((score(C, a, b) for a, b in itertools.combinations(C, 2)),
+                   key=lambda r: -r["score"])
+    sel = select(d, field)
+    prose = d.get("entries", {})
+
+    prev_entries, prev_deps = {}, {}
+    if previous:
+        prev = selection_report(previous)
+        prev_entries = {e["headliner"]: e for e in prev["entries"]}
+        prev_deps = {e["headliner"]: e["prose_deps"] for e in prev["entries"]}
+
+    entries, changed, added = [], [], []
+    for rank, (me, other, rec) in enumerate(sel["kept"], 1):
+        deps = prose_deps(C, me, other, rec)
+        was = prev_entries.get(me)
+        if was is None:
+            status = "added" if previous else "unchanged"
+        elif was["partner"] != other:
+            status = "partner_changed"
+        elif prev_deps.get(me) != deps:
+            status = "evidence_moved"
+        elif was["rank"] != rank:
+            status = "rank_only"
+        else:
+            status = "unchanged"
+        entries.append({"headliner": me, "partner": other, "rank": rank,
+                        "score": rec["score"], "prose_deps": deps,
+                        "previous_partner": was["partner"] if was else None,
+                        "has_prose": me in prose, "status": status})
+        if status == "added":
+            added.append(me)
+        elif status in ("partner_changed", "evidence_moved"):
+            changed.append(me)
+
+    kept_names = {e["headliner"] for e in entries}
+    return {"entries": entries,
+            "added": added,
+            "removed": sorted(set(prev_entries) - kept_names),
+            "partner_changed": [e["headliner"] for e in entries
+                                if e["status"] == "partner_changed"],
+            "evidence_moved": [e["headliner"] for e in entries
+                               if e["status"] == "evidence_moved"],
+            "prose_missing": sorted(e["headliner"] for e in entries if not e["has_prose"]),
+            "cut": [me for me, _o, _r in sel["cut"]]}
+
+
 def main():
     args = [a for a in sys.argv[1:]]
-    out = None
-    if "-o" in args:
-        i = args.index("-o")
-        out = args[i + 1]
-        del args[i:i + 2]
+    out = sel_out = against = None
+    for flag in ("-o", "--selection", "--against"):
+        if flag in args:
+            i = args.index(flag)
+            value = args[i + 1]
+            del args[i:i + 2]
+            out, sel_out, against = ((value, sel_out, against) if flag == "-o" else
+                                     (out, value, against) if flag == "--selection" else
+                                     (out, sel_out, value))
     if len(args) != 1:
         sys.exit(__doc__)
-    doc = render(json.load(open(args[0])))
+    with open(args[0]) as fh:
+        ledger = json.load(fh)
+    if sel_out:
+        prev = None
+        if against:
+            with open(against) as fh:
+                prev = json.load(fh)
+        rep = selection_report(json.loads(json.dumps(ledger)), prev)
+        with open(sel_out, "w") as fh:
+            json.dump(rep, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
+        print(f"selection: {len(rep['entries'])} entries, {len(rep['added'])} added, "
+              f"{len(rep['partner_changed'])} with a new partner, "
+              f"{len(rep['evidence_moved'])} whose evidence moved, "
+              f"{len(rep['removed'])} removed", file=sys.stderr)
+        if not out:
+            return
+    doc = render(ledger)
     if out:
         open(out, "w").write(doc)
         print(f"wrote {out} ({len(doc)} bytes)", file=sys.stderr)

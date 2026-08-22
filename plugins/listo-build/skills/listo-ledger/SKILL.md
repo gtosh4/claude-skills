@@ -39,7 +39,7 @@ renders is indistinguishable from the current one.
 | `apply_falls.py` | repair | applies falling-series repairs and refuses to write unless the defect is gone |
 | `pb_sensitivity.py` | audit | measures how far the act III proficiency-bonus convention moves the ranking |
 | `rank_vec.py` | split search | the same pair score as `scoring.py`, restated over arrays for the sweep |
-| `render_ledger.py` | render | every derived number, the field table and the HTML |
+| `render_ledger.py` | render | every derived number, the field table, the HTML, and `--selection` |
 
 ### Tests
 
@@ -531,6 +531,35 @@ incomplete roster, resolves proposed ids centrally through `naming.py` while lea
 published ids alone, carries forward every field the scoring pass does not own — `skills` above
 all, which the evidence passes author — and emits a field-level change report. It writes a
 *candidate* beside the published ledger and never over it.
+
+### Commissioning entry prose from the selection, not wholesale
+
+Pair-specific entry prose is model-authored output, which is the expensive kind, and rewriting all
+of it because one chassis moved is the wasteful default. The renderer already knows exactly which
+entries changed, so ask it:
+
+```sh
+scripts/render_ledger.py candidate.json --selection selection.json --against assets/ledger-v6.json
+```
+
+Each entry carries a `prose_deps` digest over what its paragraph is actually *about* — both
+bodies' evidence, the derived blocks, flags and holes, and the prose template version. Chassis
+prose is deliberately excluded: rewording a roster note must not schedule a pairing paragraph.
+Rank is excluded too, since a pairing that slipped a place is the same pairing.
+
+| `status` | prose action |
+|---|---|
+| `unchanged` | retain |
+| `rank_only` | retain, unless the prose quotes a rank it does not derive |
+| `partner_changed` | rewrite the verdict, the cost and the variants |
+| `evidence_moved` | review, and say which component moved — do not discard sound prose automatically |
+| in `added` | author |
+| in `removed` | remove, or archive outside the live ledger |
+
+Chassis prose — `note`, `strength`, `wants` — stays part of full scoring and is not selection
+driven. Pairing names and every variation figure stay derived at render time; the renderer still
+hard-exits on prose that names a partner the selection did not choose, and on a selected entry
+with no prose at all.
 
 ## Verify before you score
 
