@@ -315,7 +315,7 @@ Two catalogues carry what the search needs, both authored by briefed agents like
 | `assets/dip-catalogue.json` | what each class sells, split into `as_first` and `as_dip`, with breakpoints | `catalogue-brief.md`, `build-brief.md` |
 
 ```sh
-scripts/enumerate_splits.py --limit 2 -o variants.json   # every expressible split, ranked
+scripts/enumerate_splits.py --limit 4 -o variants.json   # every expressible split, ranked
 scripts/crosscheck.py ledger.json                        # built bodies vs the base profiles
 ```
 
@@ -422,7 +422,7 @@ scripts/seed_index.py --assign 8              # only what is unseeded, drifted o
 scripts/seed_index.py --stamp                 # record src + brief hashes on every seed
 scripts/seed_index.py --check                 # seven buckets; blocks while any of the first four bite
 scripts/seed_index.py --promote               # the cut
-scripts/enumerate_splits.py --limit 2 -o variants.json   # search the split, don't inherit the guess
+scripts/enumerate_splits.py --limit 4 -o variants.json   # search the split, don't inherit the guess
 scripts/result_store.py manifest --run RUN --assignment score-001 --addresses @batch-1.txt
 # ... listo-score authors 5-10 chassis per turn, `result_store.py put` per chassis, and resumes ...
 scripts/merge_results.py --run RUN --into assets/ledger-v6.json -o candidate.json --report r.json

@@ -9,7 +9,7 @@ and ranked by pair value against the pool of everything enumerated.
 Composed vectors are FILTER-GRADE and are never published. They decide which splits are worth
 spending real scoring on; tier 2 re-derives every number from the rubric.
 
-    scripts/enumerate_splits.py --limit 2 -o variants.json
+    scripts/enumerate_splits.py --limit 4 -o variants.json
 """
 import json, os, sys, itertools, argparse, collections
 import numpy as np
@@ -376,7 +376,10 @@ def only_keys(arg):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--limit", type=int, default=2, help="variants kept per subclass")
+    # Four rather than two: `builds` allows up to three niches per subclass, so two candidates
+    # could not even fill it, and the second was often the first with a different dip level. The
+    # eps-domination guard in `pick` is what keeps the extra slots from going to the same shape.
+    ap.add_argument("--limit", type=int, default=4, help="variants kept per subclass")
     ap.add_argument("--only", metavar="KEY,KEY|@FILE",
                     help="subclass keys, for a smoke test. Several headings carry commas, so a "
                          "comma-joined list cannot address every key in the inventory; `@file`, "
