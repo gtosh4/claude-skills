@@ -163,6 +163,24 @@ Resilient (CON) instead.
 
 ---
 
+## Armour of Agathys — the second trigger
+
+**Snowlight's level-3 subclass spell, and it is not concentration**, so it runs alongside Friar's
+Bond. Upcast to a 4th-level slot it is 20 temporary HP and **20 Cold to every melee attacker that
+hits you** — and Cold is a Glaring Frost trigger.
+
+Stacked with Retribution, **one incoming hit becomes two damage instances, Radiant and Cold, so two
+Glaring Frost saves.** At Ranger 15 each of those also detonates Anthelion. One Action and one slot
+per fight roughly doubles the proc rate of the whole engine.
+
+It ends when the temporary HP is spent, which under Lone Wolf's halved damage is about two or three
+hits — so it is a per-fight opener, not a standing buff.
+
+`(unverified)` **Interaction with Friar's Bond.** Bond grants temp HP equal to your WIS modifier at
+the start of each turn and temp HP does not stack. Bond's 6 will not displace Agathys' 20, but once
+Agathys is worn below 6 the Bond tick may overwrite it and end the spell early. Test whether the
+Agathys reflect survives a Bond tick before relying on the uptime above.
+
 ## Concentration budget
 
 Friar's Bond holds the **only** concentration slot, permanently. That rules out Hunter's Mark,
@@ -172,7 +190,12 @@ the engine.
 Mitigation: shield + Guardian of Light (advantage) and, on Line B, CON proficiency at +11.
 
 Free control that costs no concentration: **Favored Foe** (bonus action, no slot), Glaring Frost,
-Anthelion, Snow Blindness.
+Anthelion, Snow Blindness, **Armour of Agathys**.
+
+**Resource budget per fight**, on the rubric's three-fights-per-long-rest arithmetic: ki **4, in
+full** (short-rest pool), levelled slots **4.7** of a 14-slot pool (Ranger 15 + Cleric 2 is caster
+level 9), Favored Foe **2** marks, Radiance of the Dawn **1** (short rest). The binding constraint
+is the 8-action / 8-bonus-action budget, not any of the pools.
 
 ---
 
@@ -206,12 +229,22 @@ feels thin on area damage — it costs Anthelion nothing, only delays it within 
 ## Scores
 
 Rubric: `skills/listo-build/references/axis-rubrics.md`. §1 and §2 computed against par
-(single-target 48 / 61 / 76, AoE 22 / 28 / 32); the rest act-relative.
+(single-target **60 / 87 / 123**, AoE **48 / 65 / 82**), both sides carrying the per-instance gear
+constant; the rest act-relative.
+
+> **These numbers are on the corrected rubric, and the ledger is not.** Three rules changed:
+> §2's par was re-based from one Fireball per fight to two (the old 22/28/32 let a full caster read
+> 4.6× par, pegging 130 of 298 chassis at rung 5), gear now enters as a constant per damage
+> instance on both sides of the ratio, the resource formula now fills unspent
+> action-slots with cantrips or attacks instead of scoring them at zero, and rule 3 was scoped to
+> build-time picks so a fungible resource counts as potential on every axis it could be spent on.
+> `ledger-v6.json` still holds values authored under the old rules, so **do not compare the table
+> below to ledger scores** until the roster is re-derived.
 
 | axis | I | II | III |
 |---|---|---|---|
-| Single-target | 2 | 2 | 2 |
-| AoE | 1 | 2 | **4** |
+| Single-target | 2 ? | 2 ? | **3** |
+| AoE | 1 | **2** | **4** |
 | Durability | 4 | 3 | 3 |
 | Actions | 3 | 3 | 3 |
 | Control (single) | 3 | 4 | 4 |
@@ -221,11 +254,39 @@ Rubric: `skills/listo-build/references/axis-rubrics.md`. §1 and §2 computed ag
 | Saves | **4** | **4** | **4** |
 | Endurance | 4 | **5** | **5** |
 
-*Single III:* 42 (4 × 1d8+WIS) + Favored Foe 4.5 + Flurry amortised 8 + Snowblind ticks ~7 +
-reflect on the boss ~12 ≈ 74 vs par 76 → 0.97 → rung 2.
+*Single III,* against the 8-action / 8-bonus-action budget, one Action reserved for Armour of
+Agathys: weapon 7 × 2 × 10.5 = 36.8 · bonus actions 14.6 (**ki is a short-rest pool, so the whole
+4 is available every fight** — 1 to Bond leaves 3 Flurries at 2×(1d6+DEX) = 13, and the three
+remaining bonus actions are free no-ki unarmed strikes at 6.5) · Favored Foe 4.5 · Snowblind ticks
+~7 · Retribution ~12 · Armour of Agathys ~10 on a melee boss — **≈ 85 raw across ~8 damage
+instances a round** (3.5 weapon attacks, 2.25 Flurry and free unarmed strikes, and roughly 2.5
+between Snowblind ticks, Retribution and Agathys). With the Act III gear constant, `85 + 8×8 = 149`
+**vs par 123 → 1.21 → rung 3**. Gear-free it read 1.12 and sat just under the 1.15 boundary; the
+body rolls damage twice as often as par does, and that is what carried it over.
 
 *AoE III:* reflect ~50 × 0.75 (Act II+ Radiant resistance) = 38, plus Snow Blindness at near-total
-blind uptime, 4 × 10.5 × 0.75 = 31 ≈ 69 vs par 32 → 2.1 → rung 4.
+blind uptime, 4 × 10.5 × 0.75 = 31, plus Word of Radiance on one Action, 4 targets × 4d6 × 0.71 for
+save-negates ≈ 40, plus Armour of Agathys ~9 (20 Cold per melee hit taken, 2–3 hits before the temp
+HP is spent, × 0.75). Total ≈ 118 raw across **~10 instances a round** — 5 reflect procs, 4 Snow
+Blindness targets, Word of Radiance's 4 targets amortized to 1, and Agathys — so `118 + 8×10 = 198`
+**vs par 82 → 2.41 → rung 4**. Word of Radiance is counted here *and*
+its Action is counted in §1, which the amended rule 3 permits: the choice of where to point that
+Action is tactical, not a build pick.
+
+*AoE I and II:* 20 raw in Act I over ~3 instances (reflect only, no resistance penalty yet) →
+`20 + 3×3 = 29` → 0.60 → rung 1; ~38 in Act II over ~7 (reflect 22 + Snow Blindness 16 across four
+targets) → `38 + 5×7 = 73` → 1.12 → **rung 2**. The Cleric dip lands at character 15–16, so Word of
+Radiance contributes to Act III only.
+
+> **Single-target I and II are marked `?` and still need deriving.** This sheet only ever recorded
+> the Act III routine, so there is no instance count to re-run for the other two acts — and a
+> many-instance body is exactly the shape the gear constant moves. Re-derive both before this sheet
+> is used against a re-scored ledger; do not carry the old 2s forward.
+
+**The re-based par reclassifies this chassis.** Under the old AoE par of 32 it read rung 4 and
+looked like an area-damage body. It is not: the blind engine's *damage* is modest and its value is
+Control-area, where it sits at rung 4 on its own merits. Read the 3 as "competent area damage
+attached to a control engine," not as a damage identity.
 
 Endurance is 5 because **the entire control engine costs nothing** — no slot, no ki, no action,
 no reaction. Saves is 4 on Line B only.
@@ -237,7 +298,8 @@ no reaction. Saves is 4 on Line B only.
 - **Single-target is flat 2 in every act.** This never threatens a boss on damage.
 - **Blind is a CON save.** Brutes and undead resist it, and a blinded caster still casts —
   Blindness in BG3 only imposes attack disadvantage and grants advantage against.
-- **AoE is thin until Cleric 2 lands**, and only peaks at Ranger 15.
+- **AoE is thin until Cleric 2 lands**, and only peaks at Ranger 15 — rungs 1 / 1 / 3, not the
+  4 the old par suggested.
 - **Retribution fires on `IsAttack() and IsHit()` only.** Enemy spells and save-based damage feed
   it nothing.
 - **The loop partly suppresses itself** — blinded enemies attack at disadvantage, so they hit you

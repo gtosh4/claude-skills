@@ -125,9 +125,14 @@ is the least-resisted type in the list, then Radiant in Act 2.
 
 `Wis 22 · Dex 20 · 7 feats`. Collapse to one stat only when one stat does both jobs.
 
-`meta` is display-only and the renderer neither reads nor checks it, so nothing here fails closed
-— which makes the convention load-bearing. It is the only place a reader can confirm the modifier
-behind a `st` rung, and a Monk record reading `Wis 22` alone reads as a +4 attack when the body
+**`meta` stopped being display-only.** `scoring.gear_key` reads its **first token** as the body's
+primary ability, and the contention factor in `scoring-model.md` §9 prices two bodies competing for
+one Amulet of Greater Health off it. `result_store.put` therefore rejects a `meta` whose first word
+is not one of `Str Dex Con Int Wis Cha` — a body it cannot read falls back to the coarser
+same-class proxy, silently.
+
+Beyond that first token it is still the only place a reader can confirm the modifier behind a `st`
+rung, and a Monk record reading `Wis 22` alone reads as a +4 attack when the body
 swings at +5 or +6. Monk, Paladin, Inquisitor, Mesmerist, Artificer (outside Battle Smith) and
 Paragon (outside Spellblade) all split the two stats; Way of the Astral Self, Battle Smith and
 Shillelagh are the cases that genuinely re-merge them.
@@ -366,7 +371,7 @@ that decides a fight comes off one, so the condition is nearly always met.
 | `spell-resistance` | Wizard Abjuration 14 — advantage on saves vs spells | self | blanket |
 | `magic-awareness` | Wildsurge — proficiency bonus to **both** bodies' saves vs spells | **pair** | blanket |
 | `rage-of-ginnungagap` | advantage on all saves vs spells while raging | self | blanket |
-| `dark-augmentation` | Blood Hunter 2 — +Int modifier to Str, Dex and Con saves | self | partial |
+| `dark-augmentation` | Blood Hunter **10** — +Int modifier to Str, Dex and Con saves | self | partial |
 | `towering-ego` | Mesmerist 2 — +Cha to Wis saves, +half Cha to Int saves | self | partial |
 | `frost-rune` | Rune Knight — +2 to Str and Con saves | self | partial |
 | `fanatical-focus` | Zealot — one reroll on a failed save per Rage | self | partial |
@@ -379,6 +384,8 @@ that decides a fight comes off one, so the condition is nearly always met.
 | `soul-of-artifice` | Artificer 20 — +1 to every save while holding an infused item | self | partial |
 | `danger-sense` | Barbarian 2 — advantage on Dexterity saves, unconditional | self | partial |
 | `bladesong` | Bladesinging 2 — +2/+3/+4 to Constitution saves | self | partial |
+| `spell-shield` | Cleric Inquisition, Channel Divinity 2 — advantage on saves vs spells while the temp HP holds | **pair** | partial |
+| `spell-breaker` | Cleric Arcana 6 — healing an ally grants them +slot level on saves vs spells | **pair** | partial |
 | `purity-judgment` | Inquisitor 1 — +half WIS to all saves against the Judged target | self | partial |
 | `saving-grace` | Tactics Inquisition — reaction, spends Shared Judgment to reroll an ally's save | **pair** | partial |
 | `vindicators-shield` | Tactics Inquisition 4th — +3 AC and all saves, transferable to the ally | self | partial |

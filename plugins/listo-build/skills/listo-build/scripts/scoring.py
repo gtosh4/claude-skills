@@ -364,6 +364,8 @@ BOOSTERS = {
     # lookalike id and reported all three subclasses as understated on saves instead. Every one
     # covers the whole save category and is gated on a resource or on the target being Judged,
     # which is the `partial` + ALL shape, not `blanket`.
+    "spell-shield":       {"scope": "pair", "partial": True, "abilities": ALL},   # Inquisition CD 2, advantage vs spells while the temp HP holds
+    "spell-breaker":      {"scope": "pair", "partial": True, "abilities": ALL},   # Arcana 6, +slot level to an ally's saves vs spells
     "purity-judgment":    {"scope": "self", "partial": True, "abilities": ALL},   # Judgment L1, +half WIS vs the Judged target
     "saving-grace":       {"scope": "pair", "partial": True, "abilities": ALL},   # Tactics, reaction, rerolls an ALLY's save
     "vindicators-shield": {"scope": "self", "partial": True, "abilities": ALL},   # Tactics 4th, +3 saves, transferable

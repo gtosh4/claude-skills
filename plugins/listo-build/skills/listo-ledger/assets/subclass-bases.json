@@ -1234,14 +1234,17 @@
     "wis",
     "cha"
    ],
-   "boosters": [],
+   "boosters": [
+    "spell-breaker"
+   ],
    "armour": "medium",
    "shield": true,
    "primary": "wis",
    "concentration": true,
    "why": "The only domain that gives a Cleric native Counterspell, which in a duo has no other holder and which Lone Wolf's spare reaction pays for. Arcane Abjuration banishes off a short-rest charge with no concentration, and that plus the base Hold Person line is what carries single-target control to 3. No armour or weapon grant at all, so the body is a plain caster on medium and a shield. Arcane Mastery is level 17.",
    "uncertain": [
-    "Arcane Abjuration's banish threshold keys off target level (CR 2 at Cleric 11, 3 at 14), so how many Act II enemies it actually reaches is unverified; single-target control would fall to 2 if the answer is few."
+    "Arcane Abjuration's banish threshold keys off target level (CR 2 at Cleric 11, 3 at 14), so how many Act II enemies it actually reaches is unverified; single-target control would fall to 2 if the answer is few.",
+    "`spell-breaker` registered after this pass ran; the rung judgements are untouched."
    ],
    "src": "ce6956972ea1",
    "base_deps": "318f7a0855f8"
@@ -1476,14 +1479,17 @@
     "wis",
     "cha"
    ],
-   "boosters": [],
+   "boosters": [
+    "spell-shield"
+   ],
    "armour": "heavy",
    "shield": true,
    "primary": "wis",
    "concentration": true,
    "why": "Heavy armour and martial weapons, and Listo's own changelog flags it as expected top-tier. Spell Shield is the standout: a bonus action giving a creature 1d10+level temp HP that carries spell-damage resistance and advantage on saves against spells while it holds - in a duo one charge covers half the team. Witch Hunter's Strike is Wisdom-modifier uses per long rest and does not stack with the Divine Strike interrupt, so the damage rider is smaller than it reads. Banishment, Silence and Dominate Person on the domain list carry single-target control to 3.",
    "uncertain": [
-    "Spell Shield is scored into rescue, not into this body's saves; whether self-targeting it should lift durability was left unscored to avoid double-counting."
+    "Spell Shield is scored into rescue, not into this body's saves; whether self-targeting it should lift durability was left unscored to avoid double-counting.",
+    "`spell-shield` registered after this pass ran; the rung judgements are untouched."
    ],
    "src": "36e7469e3376",
    "base_deps": "318f7a0855f8"
@@ -5457,6 +5463,12 @@
   },
   "inquisitor/Zeal Inquisition": {
    "unyielding-resolve": 3
+  },
+  "cleric/Inquisition": {
+   "spell-shield": 2
+  },
+  "cleric/Arcana": {
+   "spell-breaker": 6
   }
  }
 }

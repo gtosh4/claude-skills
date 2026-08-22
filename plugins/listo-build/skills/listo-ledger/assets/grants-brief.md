@@ -68,7 +68,7 @@ Return raw JSON, one object keyed exactly as your assignment lists the keys. No 
 | `spell-resistance` | Wizard Abjuration 14 — advantage vs spells | self |
 | `magic-awareness` | Wildsurge — proficiency bonus to both bodies' saves vs spells | pair |
 | `rage-of-ginnungagap` | advantage on all saves vs spells while raging | self |
-| `dark-augmentation` | Blood Hunter — +Int to Str, Dex and Con saves | self |
+| `dark-augmentation` | Blood Hunter **10** — +Int to Str, Dex and Con saves | self |
 | `towering-ego` | Mesmerist 2 — +Cha to Wis saves, +half Cha to Int | self |
 | `frost-rune` | Rune Knight — +2 to Str and Con saves | self |
 | `fanatical-focus` | Zealot — one reroll per Rage | self |
@@ -81,6 +81,8 @@ Return raw JSON, one object keyed exactly as your assignment lists the keys. No 
 | `soul-of-artifice` | Artificer 20 — +1 to every save | self |
 | `danger-sense` | Barbarian 2 — advantage on Dexterity saves | self |
 | `bladesong` | Bladesinging 2 — +2/3/4 to Constitution saves while singing | self |
+| `spell-shield` | Cleric Inquisition CD 2 — advantage on saves vs spells while the temp HP holds | pair |
+| `spell-breaker` | Cleric Arcana 6 — healing an ally grants +slot level on their saves vs spells | pair |
 | `purity-judgment` | Inquisitor 1 — Purity Judgment, +half WIS to all saves against the Judged target | self |
 | `saving-grace` | Tactics Inquisition — reaction, spend Shared Judgment to reroll an **ally's** failed save | pair |
 | `vindicators-shield` | Tactics Inquisition 4th — +3 AC and all saves, transferable to the ally | self |
