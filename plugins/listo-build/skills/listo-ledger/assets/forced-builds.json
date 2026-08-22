@@ -1,0 +1,16 @@
+{
+  "provenance": "Bodies that must appear in the roster whatever the split search ranks. Applied AFTER `enumerate_splits.py`, so the search never overwrites them. Each entry is keyed by build address — `<class>/<subclass heading>:<niche>` — and is merged into `chassis-seeds.json` as an ordinary build, then scored like any other. Forcing decides only the split; it does not exempt a body from scoring, crosscheck or the promotion bar.",
+  "why_this_file_exists": "The split search cannot express a three-class body whose dips both name a subclass. `dip_sets` offers only generic parts once a split has two dip classes, so `Ranger 15 / Fighter 2 / Barbarian 3` is reachable and `Ranger 15 / Monk 3 (Way of the Friar) / Cleric 2 (Light)` is not, even though both parts are catalogued. Lifting that restriction means enumerating the cross product of both dips' subclass lists, which is roughly a hundredfold on the affected cells. Forcing the handful of bodies that matter is cheaper than widening the search, and it keeps the search's output honest about what it actually explored.",
+  "builds": {
+    "ranger/Snowlight Conclave:reaction": {
+      "chassis": "Lectern",
+      "split": "Ranger 15 (Snowlight Conclave) / Monk 3 (Way of the Friar) / Cleric 2 (Light)",
+      "peak": 4,
+      "peak_axis": "ctrl_a",
+      "breadth": 6,
+      "why": "Friar's Retribution converts every incoming hit into Radiant, which Glaring Frost turns into a blind save and Anthelion spreads to the cluster.",
+      "source": "plugins/listo-build/lectern_v2.md",
+      "note": "Niched `reaction` rather than `lockdown` because the sweep's own Snowlight body, Whiteout, already holds lockdown with a Paladin smite dip, and the two are genuinely different bodies. The niche also reads true: the engine is `OnAttacked`, the Kin half is an interrupt spending Lone Wolf's second reaction, and the brief's own gloss on `reaction` is `needs a build shaped around being attacked`."
+    }
+  }
+}
