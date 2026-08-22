@@ -39,6 +39,7 @@ renders is indistinguishable from the current one.
 | `apply_falls.py` | repair | applies falling-series repairs and refuses to write unless the defect is gone |
 | `pb_sensitivity.py` | audit | measures how far the act III proficiency-bonus convention moves the ranking |
 | `rank_vec.py` | split search | the same pair score as `scoring.py`, restated over arrays for the sweep |
+| `work_plan.py` | plan | composes every stage's audit into one machine-readable work plan |
 | `render_ledger.py` | render | every derived number, the field table, the HTML, and `--selection` |
 
 ### Tests
@@ -411,6 +412,32 @@ re-sweep when you want one.
 `--stamp` fills hashes; it never overwrites a seed's judgement. It is deliberately a separate
 command from `--check`, so accepting drift is an act rather than a side effect: if a class file
 changed and you decide the seed still holds, you run `--stamp` and that decision is recorded.
+
+### The work plan is what makes an update incremental
+
+`--check --json` emits the same buckets `--check` prints, under the names the code already uses,
+with the exit status unchanged. `work_plan.py` composes that with the base-profile audit, the
+ledger's traceability audit and the selection diff into one plan:
+
+```sh
+scripts/work_plan.py --ledger candidate.json --against assets/ledger-v6.json -o plan.json
+```
+
+The plan names, separately: subclasses needing a new sweep judgement; base profiles needing
+regeneration; build addresses needing enumeration; build addresses needing scoring; chassis
+retained unchanged; chassis that cannot be traced to a source; chassis with no `address` to join
+on; and whether the prose layer needs rechecking. `renderer_only` is true when nothing
+model-authored is scheduled at all — which is the answer that stops a stylesheet edit turning into
+a rebuild.
+
+**Retained and unmapped are outputs, not footnotes.** Every published chassis lands in exactly one
+of retained / scheduled / untraceable / unmapped, and the four sum to the roster. An incremental
+plan that only ever names *work* reads as though the rest of the field were fine, and silently
+narrowing the published field is the one failure incremental execution can cause that a full
+rebuild cannot.
+
+`--all` on `--assign` remains the explicit full-rebuild override. It is not the normal path, and
+neither is re-running any expensive pass without consulting the plan first.
 
 ### Re-running it
 

@@ -165,6 +165,23 @@ reworded a title and would silently break every link anyone had saved.
 Headings are themselves the anchor rather than carrying a separate marker, so the link target is
 the thing being read. The `#` sigil appears on hover only.
 
+## A chassis carries the build address it was scored from
+
+```jsonc
+"Thunderhead": {"address": "cleric/Tempest:lockdown", "split": "Cleric 14 (Tempest) / …"}
+```
+
+`address` is `<class>/<subclass heading>:<niche>` — the seeds file's own key, and the join key
+every stage of the pipeline uses. It is written by `merge_results.py`, not authored by an agent,
+and it is what lets a re-score find the body it is re-scoring.
+
+Without it there is nothing to join on. A chassis id is *not* that key: ids are proposed by the
+scoring agent and resolved centrally by `naming.py`, so the published name is frequently not the
+one proposed. Measured against the v6 ledger, only 78 of 298 published ids match a seed's proposed
+`chassis`, and exactly one body matches by split. A merge that guessed the mapping would rename
+bodies silently and orphan every anchor pointing at them, so records with no `address` are
+reported as unmapped instead — `work_plan.py` names them.
+
 ## The field table shows tempo and rest per act
 
 Both halves of the score move between acts, so both are broken out. Rest was originally a single

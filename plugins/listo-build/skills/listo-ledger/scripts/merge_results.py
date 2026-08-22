@@ -33,6 +33,7 @@ ASSETS = os.path.join(os.path.dirname(HERE), "assets")
 # — `skills` above all — belongs to another pass and is carried forward untouched.
 OWNED = ("split", "reach", "concentration", "saves", "types", "scores",
          "note", "strength", "wants", "uncertain", "meta")
+# `address` is written by this merger rather than authored, and is not in OWNED for that reason.
 
 
 def assignments(run):
@@ -66,14 +67,25 @@ def collect(run, names=None):
     return docs, problems, wanted
 
 
-def existing_ids(seeds):
-    """`{address: published chassis id}` — the seeds file is what remembers which body is which.
+def existing_ids(seeds, chassis=None):
+    """`{address: published chassis id}`, best evidence first.
 
-    A ledger record carries no build address, so without this a re-score would look like a new
-    body and `naming.py` would hand it a fresh id, orphaning every anchor and pairing that named
-    the old one.
+    A published record's own `address` is authoritative, because it is written by this merger and
+    survives `naming.py` resolving a proposed name into a different one. The seeds file's
+    `chassis` field is only the *proposal* the sweep wrote down, so it is a fallback and a weak
+    one: measured against the v6 ledger, 78 of 298 published ids match a seed proposal and one
+    body matches by split. Anything the two cannot map is left unmapped rather than guessed —
+    handing a re-scored body a fresh id orphans every anchor and pairing that named the old one,
+    and a wrong guess does that silently.
     """
-    return {addr: b["chassis"] for addr, b in SI.builds(seeds).items() if b.get("chassis")}
+    out = {}
+    for cid, rec in (chassis or {}).items():
+        if rec.get("address"):
+            out[rec["address"]] = cid
+    for addr, b in SI.builds(seeds).items():
+        if addr not in out and b.get("chassis") and b["chassis"] in (chassis or {}):
+            out[addr] = b["chassis"]
+    return out
 
 
 def diff(old, new):
@@ -103,7 +115,7 @@ def merge(run, into=None, names=None, seeds_path=None, partial=False):
     ledger = copy.deepcopy(ledger)
     chassis = ledger.setdefault("chassis", {})
 
-    known = existing_ids(seeds)
+    known = existing_ids(seeds, chassis)
     fresh = [(a, docs[a]) for a in sorted(docs) if known.get(a) not in chassis]
     # Resolve every new body's name in one pass, against the ids already published, exactly as a
     # single scoring run would have. Bodies whose id is already in the ledger keep it.
@@ -124,6 +136,10 @@ def merge(run, into=None, names=None, seeds_path=None, partial=False):
         for f in OWNED:
             if f in rec:
                 new[f] = rec[f]
+        # The join key, written into the record itself. Without it the next merge has only the
+        # sweep's proposed name to go on, and a name that `naming.py` had to resolve away leaves
+        # the body looking new.
+        new["address"] = addr
         if "skills" not in new:
             report["evidence_gaps"].append(addr)
         changed = diff(old, new)

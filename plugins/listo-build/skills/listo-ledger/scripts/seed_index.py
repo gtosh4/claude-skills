@@ -154,10 +154,12 @@ def ranges(cls):
 REFS = os.path.join(os.path.dirname(os.path.dirname(HERE)), "listo-build", "references")
 DATA = os.path.dirname(CLASSES)
 
-# Two stages, two dependency sets. Seeding is a judgement about a subclass under the sweep
-# brief's rules; scoring is a judgement about a build under the rubric's rules. They go stale
-# independently — editing axis-rubrics.md must not force a re-sweep, and editing the brief must
-# not force a re-score. Add a file here when a new document starts governing one of them.
+# Three stages, three dependency sets. Seeding is a judgement about a subclass under the sweep
+# brief's rules; enumeration is a judgement about which split of it is worth scoring, under the
+# two catalogues; scoring is a judgement about the resulting body under the rubric's rules. They
+# go stale independently — editing axis-rubrics.md must not force a re-sweep, editing the brief
+# must not force a re-score, and editing a dip section must not force either. Add a file here
+# when a new document starts governing one of them.
 DEPS = {
     "base":  [os.path.join(ASSETS, "base-brief.md"),
               os.path.join(DATA, "listo-10.2-spells.md"),
@@ -601,6 +603,9 @@ def main():
     ap.add_argument("--enumerated", metavar="ADDR,ADDR|@FILE|all",
                     help="with --stamp: mark these build addresses as carrying the split the "
                          "search selected under the current catalogues. Same forms as --scored")
+    ap.add_argument("--json", action="store_true",
+                    help="with --check: emit the buckets as JSON on stdout instead of "
+                         "human diagnostics. Exit status is unchanged")
     ap.add_argument("--seeds", default=os.path.join(ASSETS, "chassis-seeds.json"))
     ap.add_argument("--bases", action="store_true",
                     help="operate on the tier-1 base profiles in assets/subclass-bases.json "
@@ -727,6 +732,23 @@ def main():
             return
 
         blocking = rep["unseeded"] + rep["stale"] + rep["drifted"] + rep["rules"]
+        if a.check and a.json:
+            # An orchestrator should not be parsing human diagnostics to find out what is stale.
+            # Same buckets, same names as the code has always used — renaming them to match a
+            # plan document would be churn — plus the inventory it all sorts against. The exit
+            # code stays exactly as it is below, so adding --json changes reporting and nothing
+            # about what blocks.
+            out = {"inventory": keys(inv),
+                   "verdicts": dict(collections.Counter(x["verdict"] for x in seeds.values()))}
+            out.update({b: rep[b] for b in ("unseeded", "stale", "drifted", "rules",
+                                            "unscored", "rescore",
+                                            "unenumerated", "reenumerate")})
+            json.dump(out, sys.stdout, indent=2, ensure_ascii=False)
+            sys.stdout.write("\n")
+            if blocking:
+                sys.exit(1)
+            return
+
         if a.check or blocking:
             for label, ks in (("unseeded", rep["unseeded"]),
                               ("stale (no such subclass)", rep["stale"]),

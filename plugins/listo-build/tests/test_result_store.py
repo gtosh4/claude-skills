@@ -134,9 +134,10 @@ class Merge(unittest.TestCase):
         self.seeds = SI.load(os.path.join(LEDGER, "assets", "chassis-seeds.json"))
 
     def _ledger(self):
-        """A two-chassis stand-in for the published ledger, carrying an evidence-pass field."""
-        ids = MR.existing_ids(self.seeds)
-        return {"chassis": {ids[A1]: {"split": S1, "note": "old", "skills":
+        """A stand-in for the published ledger: one body, carrying its address and an
+        evidence-pass field the scoring pass does not own."""
+        ids = {A1: "Reaper"}
+        return {"chassis": {ids[A1]: {"address": A1, "split": S1, "note": "old", "skills":
                                       {a: {"Perception": 5, "Investigation": 1, "Persuasion": 4}
                                        for a in RS.ACTS}}}}, ids
 
@@ -144,7 +145,6 @@ class Merge(unittest.TestCase):
         RS.put(self.run, "score-001", A1, record(S1))
         with self.assertRaises(RS.StoreError):
             MR.merge(self.run)
-        _ledger, _ids = self._ledger()
         report = MR.merge(self.run, partial=True)[1]
         self.assertEqual(report["missing"], [A2])
 
