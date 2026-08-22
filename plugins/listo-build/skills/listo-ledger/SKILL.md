@@ -333,6 +333,40 @@ level-1 class grants saves and good armour), **saturation** (Extra Attack and bo
 stack), and **stat conditionality**. It is tuned to *over-admit*, because a filter's only fatal
 error is dropping a real candidate. The scoring pass re-derives every number from the rubric.
 
+### How much the ranking actually separates — measured on the v7 run
+
+600 variants, 150 subclasses, `--limit 4`. Worth knowing before treating rank order as a decision:
+
+| | finding |
+|---|---|
+| four axes are pinned | `dur` is 5 on **512 of 600**, `end` on 456, `rsc` on 392, `ctrl_s` on 312 |
+| two axes are dead | `sav` is 1 on 511 — it is overwritten by `derive_saves`; `skl` is 1–2 on 468 |
+| what is left | `st`, `aoe`, `act` and `ctrl_a` carry essentially all the discrimination |
+| the primary collapses | 329 of 600 sit at 11 levels and 253 at 14 — 97% at one of two values |
+| the kept four are near-ties | median spread **0.95 points** on a scale running 69.0 to 82.5 |
+| against the sweep | **0 of 154** seed splits survived as a searched variant |
+
+So `--limit N` does not buy diversity by itself — past the first variant it buys near-duplicates,
+and `pick`'s eps-domination guard cannot cull them because the pinned axes never differ. **The
+ranking says which splits are worth considering; it does not say which are different bodies.**
+That judgement is a pass of its own, below.
+
+### Choosing among the variants is a judgement, not a sort
+
+The search hands back four splits per subclass and the seeds want at most three builds, one per
+niche. Assigning them by rank order looks mechanical and is not: with a 0.95-point spread the
+order is near-noise, and a `durability` niche would receive whichever body happened to rank first.
+
+So a `listo-variant` pass decides it, per subclass, from the sweep's build plus the four variants:
+which are genuinely different bodies, which niche each expresses, and which are the same body
+twice. It reads `sweep-brief.md` for the niche vocabulary and the seventeen `## Dip value`
+sections for what a dip buys — **not** the rubrics, because it authors no scores. **One build is
+the normal answer**; a forced second is worse than none.
+
+It is also where the search's monoculture gets broken. The v7 run reached for the same handful of
+dips across every class — a dip that is good everywhere is not thereby the right dip here, which
+is the same failure the brief records from v3's "12 of 16 Wizard bodies took Cleric 1".
+
 `crosscheck.py` is the fail-closed doctrine one level up. `scoring.py` raises on a value it does
 not *recognise* — an unknown booster id, an unknown reach. Nothing checked for one that was simply
 *omitted*: an effect that exists, has a registry id, is reachable at this body's level, and was
@@ -423,6 +457,8 @@ scripts/seed_index.py --stamp                 # record src + brief hashes on eve
 scripts/seed_index.py --check                 # seven buckets; blocks while any of the first four bite
 scripts/seed_index.py --promote               # the cut
 scripts/enumerate_splits.py --limit 4 -o variants.json   # search the split, don't inherit the guess
+# ... listo-variant picks which variants are different bodies and what niche each is ...
+# ... merge those builds back into chassis-seeds.json, then apply assets/forced-builds.json ...
 scripts/result_store.py manifest --run RUN --assignment score-001 --addresses @batch-1.txt
 # ... listo-score authors 5-10 chassis per turn, `result_store.py put` per chassis, and resumes ...
 scripts/merge_results.py --run RUN --into assets/ledger-v6.json -o candidate.json --report r.json
