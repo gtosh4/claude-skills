@@ -3799,14 +3799,13 @@
     },
     "warlock/1/The Psyker": {
       "deltas": {
-        "aoe": 1,
         "dur": -1
       },
       "requires": {
         "primary": "cha"
       },
       "conflicts": [],
-      "note": "Warp detonations are free AoE, but Perils of the Warp drains your own maximum HP with no mitigation until level 10 — the file says avoid it as a dip."
+      "note": "Avoid — and the reason is an asymmetry in which level each half keys off. Warp Breach's damage map carries a PreferredClassUUID, so at Warlock 1 the detonation stays 1d10 whatever the character level: about 2 x (5.5 + k) = 21 a round, 0.32x Act II AoE par, below rung 1. Perils of the Warp keys off CHARACTER level and is charged per beam, so a character-15 dip pays 1d10 per beam for a 1d10 explosion. Gellar's Field is Warlock 10 and out of a dip's reach. The aoe +1 the earlier pass credited is withdrawn on that arithmetic. (If the map turns out to key off character level instead, the dip is worth about 54 a round, roughly 0.8x AoE par, and aoe +1 should come back — this is the one thing to check before ruling the dip out for good.)"
     },
     "warlock/3": {
       "as_first": {

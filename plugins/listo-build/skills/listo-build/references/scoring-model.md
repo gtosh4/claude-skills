@@ -79,11 +79,18 @@ when *either* half runs dry, at Camp Cost 3.
 **Redirection is the exception, and only on Durability.** "No taunt" is what makes the minimum
 right, so an effect that *is* a taunt has to be priced against it. Warding Bond and the Peace
 domain's bonds let the tougher body take damage aimed at the softer one, which converts durability
-the minimum was discarding into floor the pair does not have. The carrier splits its surplus and
-keeps half, so the transfer scales with how much tougher it is and stops entirely once the two are
-level; the maximum never rises. Applied before the `min`, in the same slot pair-scope save boosters
-use. See `listo-ledger/assets/ledger-schema.md` for the ids and the rounding. Endurance takes no
-such exception — nothing lends a partner its long-rest resources.
+the minimum was discarding into floor the pair does not have. **The bonded body's rung doubles**,
+because half the damage aimed at it is what it actually receives, and the pair's floor is then the
+carrier's own rung or twice the partner's, whichever is lower — which is what makes a carrier's
+durability worth buying at all. Applied before the `min`, in the same slot pair-scope save boosters
+use. See `listo-ledger/assets/ledger-schema.md` for the ids. Endurance takes no such exception —
+nothing lends a partner its long-rest resources.
+
+This replaced a surplus-splitting rule — the carrier handed over `gap // 2` — which was right in
+shape and dead in practice: `dur` is compressed into rungs 2-4, so 90% of the pairings where a
+carrier was the tougher body had a gap of 0 or 1 and handed over nothing. Measured across the v6
+field it moved the floor in 210 of 44,253 pairings, 0.5%, and every Peace Cleric in the ledger was
+scored as though it had no bond at all.
 
 Control combines **complementary, not additive**, because the pair holds exactly two concentration
 slots. That bound is why control costing no concentration is worth a full rung more.
@@ -178,9 +185,13 @@ Checked per axis rather than assumed:
 - **Actions, Endurance, Skills** — not fight-type shaped.
 - **Durability** — *is* quietly fight-type shaped: Heavy Armour Master's flat −5 per hit is enormous
   against eight small attacks and nearly irrelevant against one 60-damage hit, while Lone Wolf's
-  halving is scale-invariant. **Handled in the rubric, not the schema** — rungs distinguish flat
-  from proportional mitigation. Splitting it starts the slide toward splitting everything, and
-  unlike control it is not a capability you choose between on a given turn.
+  halving is scale-invariant. **Handled in the rubric, not the schema**, and still is — but the
+  rubric now prices it rather than correcting for it. `axis-rubrics.md` §3 is an effective-HP ratio
+  computed against both a crowd hit and a boss hit and blended on this act's MIX weights, so the
+  mismatch is arithmetic and lands inside one rung. That replaced a hand-written rule ("flat-only
+  mitigation sits a rung below its raw numbers"), which was the correction a single ladder needed.
+  Splitting the axis would still start the slide toward splitting everything, and unlike control it
+  is not a capability you choose between on a given turn.
 
 ## 8. Weights
 
@@ -224,6 +235,42 @@ tempo's *defensive* value lives in the crowd term, not the boss term — a boss 
 40% or 60% off it — so if crowd clear deserves a premium, the act blend in §5 is the honest place
 for it, not the global split.
 
+### Contention: the pair pays for wanting the same gear
+
+Every axis is scored as though the body wore everything it wants. A duo has one of each item, so
+two bodies that want the same things do not both get them — and no axis can see that, because
+each body was scored alone.
+
+> **§1 and §2 are the partial exception, and the two do not overlap.** The damage axes price gear
+> as `k` per damage instance (`axis-rubrics.md`, "Gear is per instance") — how much a kit is worth
+> to *one* body, given how often it rolls damage. Contention is about whether the pair can field
+> two kits at once. One sizes the item, the other counts them. The score is multiplied by a factor keyed on two facts about each
+body, in descending order of how much they hurt:
+
+| both bodies share | factor | reaches |
+|---|---|---|
+| primary ability **and** gear class | **0.93** | 14% of pairings |
+| primary ability only | 0.96 | 7% |
+| gear class only | 0.98 | 44% |
+| neither | 1.00 | 35% |
+
+**Primary ability** is the pair fighting over one Amulet of Greater Health, one pair of gloves,
+one tome — it applies whatever else the two bodies do, which is why it is the larger rung.
+**Gear class** is weapon body versus caster body: two weapon bodies draw from one pool of blades
+and heavy armour, a weapon body and a caster body draw from disjoint ones. On its own it is weak —
+a Strength greatsword and a Dexterity bow barely meet — so it is the smallest rung, and it is
+there to say that a shared ability hurts *more* when both bodies also swing.
+
+The sizing is set against the field, not against intuition: **1.3 points of pair score span ranks
+1 to 25**, so 0.93 is about three rungs of the frontier, and it is the ceiling. Of the v6 ledger's
+top 25 pairings, four sit in the 0.93 bucket, all of them Charisma-caster doubles.
+
+Both facts are read off fields authored for other reasons — `meta`'s first token and whether
+`types` carries a physical type. A body missing either has **no key**, and a pairing where either
+body has no key falls back to the older proxy: **0.95 when the two splits share a class name**.
+That is the whole of what the split search sees, since `to_chassis` composes bodies with neither
+field.
+
 ## 10. Display collapses; source data does not
 
 Source keeps the full granularity. Presentation collapses it so a radar stays readable.
@@ -259,4 +306,4 @@ convexity of illithid returns in one body's power count, and the personal-kind c
 
 **Provisional** — reasoned but uncalibrated, and every one of them should be revisited against a
 re-authored roster: all four weights, the control and rescue coefficients, the tempo cap's
-functional form, and the 50/50 split.
+functional form, the 50/50 split, and the damage axes' per-instance gear constant `k`.

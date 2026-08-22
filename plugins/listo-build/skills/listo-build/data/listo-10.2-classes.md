@@ -166,7 +166,10 @@ docs site only covers `1.2.0.65` — so two versions of changes are undocumented
 
 Two carry real drawbacks worth reading before picking: **Path of the Revenant cannot be healed
 by any means while raging** (and the rage cannot be ended early), and **The Psyker drains max
-HP**. No Artificer content.
+HP per Eldritch Blast beam** — escalating within a fight — **and rolls on a random misfortune
+table that can silence it, blind it, spawn a hostile mephit, or hit your partner**. The Psyker
+buys real damage with it (roughly **+60% single-target**, at-will, no slot); read both halves in
+`data/classes/warlock.md` before ruling either way. No Artificer content.
 
 ---
 

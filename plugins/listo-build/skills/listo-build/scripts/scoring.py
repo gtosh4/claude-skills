@@ -11,6 +11,7 @@ low is indistinguishable from an honest one.
 """
 
 import collections
+import re
 
 
 class ScoringError(ValueError):
@@ -31,6 +32,8 @@ LABELS = ["Single-target", "AoE", "Durability", "Action economy",
 AXES = ["Single", "AoE", "Durab.", "Actions", "Ctrl-S", "Ctrl-A",
         "Rescue", "Skills", "Saves", "Endur."]
 SAV_IDX = KEYS.index("sav")
+ST_IDX = KEYS.index("st")
+AOE_IDX = KEYS.index("aoe")
 DUR_IDX = KEYS.index("dur")
 
 # `skl` and `sav` are both DERIVED, and for opposite reasons. Saves are personal: each body rolls
@@ -73,7 +76,18 @@ WEIGHTS = {"sav": 3.0, "skl": 2.5, "end": 2.0, "dur": 2.0, "rsc": 1.5}
 ACTION_BASELINE = 4.0
 ACTION_FLOOR = 0.75
 
-FLAG = 3.0      # an idle body, in a fight type worth >=40% of the act
+# An idle body, in a fight type worth >=40% of the act — measured on `utilisation`, not on a rung.
+#
+# This read 3.0, which is exactly what a body AT PAR on both damage axes delivers into a crowd
+# (`st` 2, `aoe` 2 -> 3.00) and more than it delivers into a boss (-> 2.50). Par is not idle, and
+# the consequence was that 99% of v6 pairings carried at least one flag and 41% carried all four:
+# a penalty every pairing pays is a level shift, not a discrimination, and it was charged a second
+# time against low-damage bodies whose zero is already inside the crowd sum.
+#
+# 1.25 is the boss delivery of a body at rung 1 on both axes — outrun in every act, but present.
+# That is the floor of NOT idle; below it is a body with no engine for this fight type at all,
+# which is the structural claim the penalty was written to make.
+FLAG = 1.25
 
 # Weaknesses used to be *reported* and never *priced*: `holes` and `flags` were collected into
 # the record, printed as chips, and left out of the score entirely. The page could say "idles in
@@ -88,6 +102,21 @@ FLAG = 3.0      # an idle body, in a fight type worth >=40% of the act
 # cover a gap. These price that remainder and nothing more.
 IDLE_BODY = 0.85    # per flagged body, on that fight type's term, in that act only
 HOLE = 0.95         # per holed axis, on the block that axis belongs to
+
+# What counts as a hole, as a fraction of that axis kind's own maximum.
+#
+# This read 0.40 and was saturated exactly as `FLAG` was. On an `add` axis 0.40 of 10 is a pair
+# summing to 4 — two bodies AT PAR — and on `per` it is a floor of 2, which is the commonest
+# durability floor in the field. Measured across v6: **100% of pairings held at least one hole and
+# the average pairing held 5.30 of 10 axes**, `skl` on every single pairing. A penalty everyone
+# pays is a level shift, and it was the only machinery in the model arguing for round pairs.
+#
+# 0.20 is derived rather than chosen: it is what **two rung-1 bodies** produce on every axis kind —
+# `add` 1+1 = 2/10, `per` min(1,1) = 1/5, `derived` 1/5, `comp` max(1,1)+0 = 1/7, which is under
+# 0.20 and holds at pair ≤ 1 as intended. A hole is therefore "the pair does no better here than
+# two bodies that are being outrun", which is the structural claim the penalty exists to make.
+# It drops the field to 1.08 holes per pairing-act, concentrated in `aoe` and `skl`.
+HOLE_AT = 0.20
 
 # ── gates: Skills is DERIVED, like Saves ─────────────────────────────────────
 # `Use Highest Modifier in dialogue` reads every party member's total for all eighteen skills and
@@ -250,9 +279,32 @@ TYPE_SPREAD = {1: 0.85, 2: 0.93}    # by size of the pair's combined type set; 3
 # down — the case `hi + lo//2` denies exists. Charged when the weaker body brings nothing.
 LONE_RESCUE = 0.85
 
-# Two bodies of the same class want the same unique items and the same ability spread. This is a
-# coarse proxy for contention the model cannot see properly; it is deliberately small.
+# ── gear contention ──────────────────────────────────────────────────────────
+# Every axis is scored as though the body wore everything it wants. In a duo there is one of each
+# item, so two bodies that want the same things do not both get them — a pair-level cost no axis
+# can see. What they compete over, worst first:
+#
+#   the primary ability   one Amulet of Greater Health, one pair of gloves, one ability tome. Two
+#                         bodies keyed on Charisma split that pool whatever else they do.
+#   the gear class        a weapon body and a caster body draw from disjoint pools; two weapon
+#                         bodies draw from the same one. Weak on its own — a Strength greatsword
+#                         and a Dexterity bow barely meet — which is why it is the smallest rung.
+#
+# Sized against the field it acts on, not against intuition: **1.3 points of pair score span ranks
+# 1 to 25** in the v6 ledger, so 0.93 is roughly three rungs of the frontier and nothing here may
+# be bigger. It reaches 14% of pairings at the full rate and 44% at the smallest.
+CONTEND = {(True, True):   0.93,    # same ability and same gear class — the whole overlap
+           (True, False):  0.96,    # same ability only — the ability items, not the weapons
+           (False, True):  0.98,    # same gear class only
+           (False, False): 1.00}
+
+# Superseded by CONTEND wherever both bodies declare the fields `gear_key` reads. They are ledger
+# fields; `enumerate_splits.to_chassis` emits neither, and on that path a shared class name is
+# still the only contention signal there is — so it stays, as the fallback and only as that.
 SAME_CLASS = 0.95
+
+# A body that routinely deals a physical type swings something; one that does not wears robes.
+WEAPON_TYPES = frozenset(("bludgeoning", "piercing", "slashing"))
 
 ABILITIES = ("str", "dex", "con", "int", "wis", "cha")
 KEY_SAVES = frozenset(("wis", "con", "dex"))
@@ -325,6 +377,25 @@ BOOSTERS = {
 # Two rungs of registry, because Peace does it strictly better than a spell slot does:
 #   1  the carrier takes the damage instead, at full   — Warding Bond and its copies
 #   2  ...with resistance, so the pair's total drops   — Expansive Bond
+#
+# `tier` is currently read only as "a bond is live": `redirect_pair` doubles the bonded body on
+# either rung. The difference between them is real and is a difference in what the CARRIER pays —
+# tier 1 relocates the damage at full, tier 2 lands it resisted — and `dur` is the floor, which is
+# the partner's number, so neither shows there. Pricing it would mean charging the tier-1 carrier
+# a rung. That is a separate decision from the doubling and is deliberately not taken here.
+# Halving the damage a body takes doubles its effective HP, and `axis-rubrics.md` §3 is now written
+# in effective HP, so the doubling is a lookup rather than arithmetic on the rung number. Each entry
+# is that rung's band midpoint, doubled, read back off the same band table:
+#
+#     rung   0     1     2     3     4     5
+#     mid    0.60  0.80  1.02  1.37  2.00  3.00
+#     x2     1.20  1.60  2.05  2.75  4.00  6.00   ->  3  4  4  5  5  5
+#
+# `dl * 2` on the rung number was the placeholder for this and is wrong at both ends: it read 0 for
+# an unarmoured body (doubling nothing is nothing, which is only true if the ladder is a ratio to
+# zero) and under-credited rung 1, where halving the damage taken is worth the most in proportion.
+DUR_DOUBLE = {0: 3, 1: 4, 2: 4, 3: 5, 4: 5, 5: 5}
+
 REDIRECT = {
     "warding-bond":    {"tier": 1},   # Five routes, all confirmed against the paks: Peace domain 3,
                                       # Battle Smith 5, Oath of the Moon 5, Favored Soul (Peace) at
@@ -543,20 +614,23 @@ def redirect_pair(ca, cb, act, da, db):
     """Durability after redirection, for one act. Applied before the Personal `min`.
 
     Only the *tougher* body's bond counts: the carrier is the one eating the damage, and a bond
-    running the other way lowers the floor it was supposed to raise. It splits the surplus — the
-    gap is what it has spare, and it keeps half — so the transfer scales with how much tougher the
-    carrier actually is. A rung-3 body compensates for half of what a rung-5 body does, and a body
-    whose partner is already as tough as it is transfers nothing, because there is no surplus to
-    move. The maximum never rises: this cannot manufacture durability, only relocate it.
+    running the other way lowers the floor it was supposed to raise.
+
+    **The bonded body's durability doubles**, because half the damage aimed at it is what it
+    actually receives. That is the effect stated in its own units rather than as a share of a gap.
+
+    It used to split the carrier's surplus — `gap // 2` at tier 1, rounded up at tier 2 — which
+    made the rule self-defeating on the field it had to run on. `dur` is compressed into rungs 2-4,
+    so 90% of the pairings where a carrier was the tougher body had a gap of 0 or 1 and tier 1
+    handed over `1 // 2` = nothing. Measured across v6: a bond moved the pair's floor in **210 of
+    44,253 pairings, 0.5%**. An effect that fires half a percent of the time is not priced, and
+    every Peace Cleric in the ledger was scored as though it had no bond at all.
     """
     hi, lo = (ca, cb) if da >= db else (cb, ca)
     dh, dl = max(da, db), min(da, db)
-    tier = _redirect_tier(hi, act)
-    if not tier or dh == dl:
+    if not _redirect_tier(hi, act):
         return da, db
-    gap = dh - dl
-    give = gap // 2 if tier == 1 else -(-gap // 2)   # tier 2 keeps the odd rung, not the partner
-    dl += give
+    dl = DUR_DOUBLE[dl]
     return (dh, dl) if da >= db else (dl, dh)
 
 
@@ -580,6 +654,39 @@ def _classes(split):
             out.add(m.group(1).strip())
     _CLASSES_CACHE[split] = out
     return out
+
+
+def gear_key(c):
+    """`(primary ability, is a weapon body)` — what this body competes for. `None` if unreadable.
+
+    Both halves are read off fields authored for other reasons; neither is a new field:
+
+      * **the primary ability** is `meta`'s first token. The schema requires `meta` to lead with
+        the attack stat, and all 298 v6 records do — but it is documented as display-only and
+        unchecked, so this reads it defensively and declines rather than guessing.
+      * **weapon or caster** is whether `types` carries a physical type. `types` is already
+        required for `type_spread`, and it reads the awkward case right: a `Fighter 1 (none) /
+        Cleric 14` dips for armour, deals nothing physical, and competes for no weapon.
+
+    Returning `None` for a body missing either field is what routes the split search back to
+    `SAME_CLASS`: `to_chassis` emits no `meta` and no `types`, so it never has a key.
+    """
+    meta = (c.get("meta") or "").split()
+    if not meta or meta[0].lower() not in ABILITIES or not c.get("types"):
+        return None
+    return meta[0].lower(), bool(WEAPON_TYPES.intersection(c["types"]))
+
+
+def contention(ca, cb, same_class):
+    """The pair's contention factor — CONTEND on the gear key, `SAME_CLASS` when there is none.
+
+    Falls back per PAIRING, not per body: a factor mixing one body's gear key with the other's
+    class name would be neither model, and the two are not on a common scale.
+    """
+    ka, kb = gear_key(ca), gear_key(cb)
+    if ka is None or kb is None:
+        return SAME_CLASS if same_class else 1.0
+    return CONTEND[(ka[0] == kb[0], ka[1] == kb[1])]
 
 
 def skills_pair(ca, cb, act):
@@ -615,16 +722,251 @@ def utilisation(sc, reach):
             aoe * FIGHT["aoe"][1] + FIGHT["st"][1] * st * rp]
 
 
-# Theoretical ceilings, used to put damage and control on a common 0..1 scale.
-_DMG_CROWD_MAX = 2 * (5 * FIGHT["aoe"][0] + FIGHT["st"][0] * 5)
-_DMG_BOSS_MAX = 2 * (5 * FIGHT["aoe"][1] + FIGHT["st"][1] * 5)
-_CTL_CROWD_MAX = KIND_MAX["comp"] * (FIGHT["ctrl_a"][0] + FIGHT["ctrl_s"][0])
-_CTL_BOSS_MAX = KIND_MAX["comp"] * (FIGHT["ctrl_a"][1] + FIGHT["ctrl_s"][1])
+# Ceilings, used to put damage and control on a common 0..1 scale. They are what the two terms
+# are DIVIDED BY, so a ceiling nobody can reach is a discount on that term and nothing else.
+#
+# These used to read rung 5 on every axis, and that quietly preferred control over damage for the
+# whole of v6. Control reaches its rung 5: `ctrl_s` and `ctrl_a` are judged against an act-relative
+# rubric, and the v6 field authors both at 5. The damage axes are not judged, they are ratios to a
+# par that outruns the roster (`axis-rubrics.md` §1 — "a frozen chassis reads 2 / 1 / 1 and that
+# decline is real information"), and across 298 published chassis and all three acts **nothing is
+# authored above `st` 4**. Measured against v6, the best pair the field could build filled 89% of
+# the crowd damage ceiling and 75% of the boss one, against 97% and 98% for control — so an
+# identical-quality control pair beat an identical-quality damage pair by ~23pp on the boss term
+# before a single coefficient was consulted.
+#
+# The fix is to divide by the best rung the ladder actually issues rather than by the top of the
+# scale. `st` is the only axis that moves. Exceeding a ceiling is legal and simply means a term
+# reads above 1.0 — a new record for the field, not an error, so nothing here validates against it.
+REACH_CEILING = {"st": 4, "aoe": 5, "ctrl": KIND_MAX["comp"]}
+_DMG_CROWD_MAX = 2 * (REACH_CEILING["aoe"] * FIGHT["aoe"][0]
+                      + FIGHT["st"][0] * REACH_CEILING["st"])
+_DMG_BOSS_MAX = 2 * (REACH_CEILING["aoe"] * FIGHT["aoe"][1]
+                     + FIGHT["st"][1] * REACH_CEILING["st"])
+_CTL_CROWD_MAX = REACH_CEILING["ctrl"] * (FIGHT["ctrl_a"][0] + FIGHT["ctrl_s"][0])
+_CTL_BOSS_MAX = REACH_CEILING["ctrl"] * (FIGHT["ctrl_a"][1] + FIGHT["ctrl_s"][1])
 
 
 def action_factor(act_pair):
     """Actions caps tempo rather than adding to it (scoring-model.md §6)."""
     return ACTION_FLOOR + (1.0 - ACTION_FLOOR) * min(1.0, act_pair / ACTION_BASELINE)
+
+
+
+# ── the damage axes are derived, not authored ────────────────────────────────
+# §1 and §2 were described as "computed, not judged" from v6 onward, but the rung was still the
+# only thing stored — so an authored 2 was unfalsifiable, and a par re-base stranded the whole
+# roster. Both axes now derive from a `damage` block exactly as `sav` derives from a `saves` block
+# and `skl` from skill modifiers, for the identical reason: a wrong number that is indistinguishable
+# from an honest one is the failure this model exists to refuse.
+#
+# Legacy ints are still accepted so an un-migrated roster keeps loading; they surface through
+# `legacy_damage_axes()` rather than passing silently.
+
+# GEAR IS PER DAMAGE INSTANCE, AND THAT IS THE WHOLE OF IT. Item damage riders in this install
+# attach to a single damage roll, not to a turn: 43 of the 55 item passives that carry a damage
+# bonus are gated on a weapon attack, 12 on a spell, and both sides land in the same band — a
+# weapon kit is worth about +8.5 a hit at Act III (+3 enchantment, Callous Glow +2, Infernal Metal
+# Gloves 1d6) and a caster kit about +8.0 (Markoheshkir's attuned element +ProficiencyBonus,
+# Callous Glow +2). The asymmetry the "no items" rule was hiding is therefore NOT rider size. It is
+# INSTANCE COUNT: four attacks take the rider four times, a Volley across three targets twice takes
+# it six, eight Eldritch Blast beams take it eight, and a Disintegrate takes it once.
+#
+# So one constant per act, added to every instance on both sides of the ratio, prices it. It
+# cancels wherever a chassis delivers like par — which is what makes it safe, the same argument
+# that lets `h` be a convention. Sized off the installed kit under the 5-attunement cap: Act I a +1
+# weapon and an Uncommon 1d4 rider, Act II +2 and a Rare 1d6, Act III +3 and two riders.
+#
+# Provisional, like every other coefficient here. The known residual is that a body whose riders
+# are element-locked collects less than k on a resisted encounter — Rule 4's 0.5 multiplier already
+# prices part of that, and double-counting it here would be worse than leaving it.
+GEAR = {"I": 3.0, "II": 5.0, "III": 8.0}
+
+# Par carries GEAR on its own instances, so these are not comparable to the v6 figures.
+#   st  — 4 attacks x (damage per hit + k), x the act's enemy HP relative to Act I's
+#         I 4x(12+3)=60 | II 4x(12+5)x1.2727=87 | III 4x(13+8)x1.4675=123
+#   aoe — 2 Fireball-equivalents per fight on 4 targets, save for half, over 4 rounds
+#         I 2x(28+3)x0.775x4/4=48 | II 2x(28+5)x0.775 x1.2727=65 | III 2x(28+8)x0.775 x1.4675=82
+PAR = {"st":  {"I": 60, "II": 87, "III": 123},
+       "aoe": {"I": 48, "II": 65, "III": 82}}
+
+# Upper bound of each rung, from axis-rubrics.md §1 and §2. Index i is the ceiling of rung i.
+LADDER = {"st":  (0.5, 0.8, 1.15, 1.5, 1.8),
+          "aoe": (0.35, 0.7, 1.3, 2.0, 3.0)}
+
+ACTION_BUDGET = 8      # 2 Actions x 4 rounds, Lone Wolf floor economy
+BONUS_BUDGET = 8       # 2 Bonus Actions x 4 rounds
+FIGHTS = 3             # hard fights per long-rest cycle
+ROUNDS = 4
+REFRESH = ("short", "long", "fight")
+
+
+def damage_rung(ratio, axis):
+    """Ratio to par -> 0-5 on that axis's ladder."""
+    for i, hi in enumerate(LADDER[axis]):
+        if ratio < hi:
+            return i
+    return 5
+
+
+def _pool_available(pool):
+    """Per-fight availability, from axis-rubrics.md's resource table."""
+    r = pool["refresh"]
+    if r == "short" or r == "fight":
+        return pool["size"]            # refilled twice a cycle: the full pool, every fight
+    return pool["size"] / FIGHTS       # long rest: pool / 3
+
+
+def derive_damage(block, act, cid="?"):
+    """Return (st_rung, aoe_rung, st, aoe) from an authored damage block.
+
+    `st` and `aoe` are the raws WITH the act's per-instance gear constant already added — the
+    numbers the rungs were actually taken against. Returning the authored raw alongside a rung
+    derived from a different figure is the two-sources-of-truth trap this block exists to close.
+
+    Validates the things the v6 round got wrong, and names each one.
+    """
+    where = f"{cid} {act} damage"
+    _require(isinstance(block, dict), f"{where}: must be an object")
+
+    acts = block.get("actions") or {}
+    attacks = acts.get("attacks", 0)          # action-slots spent attacking
+    spells = acts.get("spells", 0)            # action-slots spent casting a levelled spell
+    filler = acts.get("filler", 0)            # action-slots spent on a cantrip or at-will
+    # ACTIONS ARE CONSERVED. The v6 roster scored rounds at zero because nothing forced the
+    # budget to add up: a caster with 3.7 casts silently left 4.3 actions unscored.
+    total = attacks + spells + filler
+    _require(abs(total - ACTION_BUDGET) < 1e-6,
+             f"{where}: action-slots sum to {total:g}, not {ACTION_BUDGET}. Every slot is an "
+             f"attack, a levelled cast or at-will filler — a round is never scored at zero. "
+             f"Add the remainder to `filler`.")
+
+    bonus_used = sum(u.get("n", 0) for u in (block.get("bonus") or {}).get("used", []))
+    _require(bonus_used <= BONUS_BUDGET + 1e-6,
+             f"{where}: bonus actions used {bonus_used:g} exceeds the budget of {BONUS_BUDGET}")
+
+    # SHORT-REST POOLS ARE SPENT IN FULL. Ki, pact slots and Channel Divinity refill twice a
+    # cycle, so a fight gets the whole pool; anything less is a claim that needs a reason.
+    for pool in block.get("pools", []):
+        _require(pool.get("refresh") in REFRESH,
+                 f"{where}: pool {pool.get('name')!r} refresh must be one of {REFRESH}")
+        avail = _pool_available(pool)
+        spent = pool.get("spent", 0)
+        _require(spent <= avail + 1e-6,
+                 f"{where}: pool {pool['name']!r} spends {spent:g} of {avail:g} available")
+        if pool["refresh"] in ("short", "fight") and spent < avail - 1e-6:
+            _require(pool.get("underspend_reason"),
+                     f"{where}: pool {pool['name']!r} is a {pool['refresh']}-rest pool spending "
+                     f"{spent:g} of {avail:g}. The full pool is available every fight — if the "
+                     f"action budget binds first, say so in `underspend_reason`.")
+
+    # A LEVELLED-SLOT BODY MUST DECLARE ITS SPLIT. The silent "half to damage" default is how
+    # every v6 caster ended up priced off one named spell instead of its pool.
+    slots = block.get("slots")
+    if slots:
+        _require("to_damage" in slots,
+                 f"{where}: `slots` present without `to_damage`. State the fraction of the pool "
+                 f"this chassis spends on damage — the rest is its §5/§6/§7, and leaving it "
+                 f"implicit is what under-priced every caster in v6.")
+        _require(0.0 <= slots["to_damage"] <= 1.0, f"{where}: to_damage must be 0-1")
+
+    st = float(block.get("st_raw", 0.0))
+    aoe = float(block.get("aoe_raw", 0.0))
+    for axis, v in (("st", st), ("aoe", aoe)):
+        _require(v >= 0, f"{where}: {axis}_raw must be >= 0")
+
+    # INSTANCE COUNT IS WHAT GEAR PAYS ON, so it is stated, not inferred. It cannot be read off
+    # `actions` — a Volley spends one action-slot and delivers one instance per target, a
+    # Disintegrate spends one and delivers one — and inferring it from the raw would be exactly the
+    # unfalsifiable number the block exists to remove.
+    inst = {}
+    for axis, raw in (("st", st), ("aoe", aoe)):
+        key = f"{axis}_instances"
+        if raw == 0:
+            inst[axis] = float(block.get(key, 0.0))
+            continue
+        _require(key in block,
+                 f"{where}: {axis}_raw is {raw:g} but `{key}` is absent. State how many separate "
+                 f"damage rolls that is per round — item riders attach per instance, so four "
+                 f"attacks collect the gear constant four times and one big spell collects it "
+                 f"once. This is the count par is scaled against.")
+        n = float(block[key])
+        _require(n > 0, f"{where}: {key} must be > 0 when {axis}_raw is")
+        inst[axis] = n
+
+    # Both sides of the ratio carry GEAR, so a chassis that delivers like par is unmoved by it.
+    st += GEAR[act] * inst["st"]
+    aoe += GEAR[act] * inst["aoe"]
+
+    # POTENTIAL ON BOTH AXES (axis-rubrics.md "Four rules" #3, as amended). A fungible resource
+    # serves whichever axis the fight calls for; scoring it on one only charges the chassis for
+    # flexibility it has.
+    for r in block.get("riders", []):
+        one_sided = (r.get("st", 0) > 0) != (r.get("aoe", 0) > 0)
+        if one_sided:
+            _require(r.get("single_axis_reason"),
+                     f"{where}: rider {r.get('name')!r} feeds only one damage axis. If the "
+                     f"resource is fungible it counts as potential on both (rule 3); if it "
+                     f"genuinely is not, say why in `single_axis_reason`.")
+
+    return (damage_rung(st / PAR["st"][act], "st"),
+            damage_rung(aoe / PAR["aoe"][act], "aoe"), st, aoe)
+
+
+def legacy_damage_axes(C):
+    """Ids still carrying authored st/aoe ints rather than a `damage` block."""
+    return sorted(cid for cid, c in C.items()
+                  if any(c.get("scores", {}).get(a, [None])[0] is not None for a in ACTS))
+
+
+def audit_roster(C):
+    """Round-level guards. Returns a list of findings; empty means the roster is sane.
+
+    Two failures in v6 were invisible for a whole version and both are one pass over the roster:
+    AoE saturated (130 of 298 at rung 5 once par was corrected) and single-target had *no* chassis
+    at rung 5 across 298, so the top rung was decorative.
+    """
+    out = []
+    for i, axis in ((0, "st"), (1, "aoe")):
+        vals = [c["scores"]["III"][i] for c in C.values()
+                if c.get("scores", {}).get("III", [None])[i] is not None]
+        if not vals:
+            continue
+        dist = collections.Counter(vals)
+        n = len(vals)
+        for r in range(6):
+            if dist[r] == 0:
+                out.append(f"{axis}: rung {r} is empty across {n} chassis — the ladder does not "
+                           f"reach it, so par or the band is mis-set")
+            elif dist[r] / n > 0.25:
+                out.append(f"{axis}: rung {r} holds {dist[r]}/{n} ({dist[r]/n:.0%}) — saturated, "
+                           f"so the axis has stopped distinguishing chassis")
+    # A subclass that never enters the calculation shows up as a group constant.
+    by_class = {}
+    for cid, c in C.items():
+        cls = _primary_class(c.get("split", ""))
+        if cls:
+            by_class.setdefault(cls, []).append(c)
+    for cls, members in by_class.items():
+        if len(members) < 4:
+            continue
+        for i, axis in ((0, "st"), (1, "aoe")):
+            vals = {m["scores"]["III"][i] for m in members
+                    if m.get("scores", {}).get("III", [None])[i] is not None}
+            if len(vals) == 1:
+                out.append(f"{axis}: all {len(members)} {cls}-primary chassis score "
+                           f"{vals.pop()} — the subclass is not entering the calculation")
+    return out
+
+
+def _primary_class(split):
+    """The class holding the most levels in a split, or None."""
+    best = (0, None)
+    for m in re.finditer(r"([A-Za-z]+)\s+(\d+)", split or ""):
+        n = int(m.group(2))
+        if n > best[0]:
+            best = (n, m.group(1))
+    return best[1]
 
 
 # ── validation ───────────────────────────────────────────────────────────────
@@ -645,8 +987,26 @@ def validate_chassis(cid, c):
         _require(row[SAV_IDX] is None,
                  f"{cid} {act}: index {SAV_IDX} (saves) must be null — it is derived "
                  "from the `saves` block, never authored")
+        # §1 and §2 are derived from a `damage` block when one is present, and the authored ints
+        # must then be null so there is exactly one source of truth. Authored ints remain legal so
+        # an un-migrated roster still loads; `legacy_damage_axes()` names them.
+        dmg = (c.get("damage") or {}).get(act)
+        derived_dmg = row[ST_IDX] is None or row[AOE_IDX] is None
+        if derived_dmg or dmg is not None:
+            _require(dmg is not None,
+                     f"{cid} {act}: st/aoe are null but there is no `damage` block for this act. "
+                     f"The damage axes are derived from stated arithmetic — an absent block would "
+                     f"score 0 in silence, which is the failure the saves and skills blocks exist "
+                     f"to prevent.")
+            _require(row[ST_IDX] is None and row[AOE_IDX] is None,
+                     f"{cid} {act}: a `damage` block is present, so indices {ST_IDX} (st) and "
+                     f"{AOE_IDX} (aoe) must both be null — deriving one and authoring the other "
+                     f"gives two sources of truth that can disagree.")
+            derive_damage(dmg, act, cid)
         for i, v in enumerate(row):
             if i == SAV_IDX:
+                continue
+            if i in (ST_IDX, AOE_IDX) and v is None:
                 continue
             _require(isinstance(v, int) and 0 <= v <= 5,
                      f"{cid} {act}: {KEYS[i]} is {v!r}, expected an integer 0-5")
@@ -732,6 +1092,20 @@ def score(C, a, b):
     return score_bodies(dict(C[a], _id=a), dict(C[b], _id=b))
 
 
+def resolve_damage(c):
+    """Fill derived st/aoe into a chassis's `scores` rows. Idempotent; returns the chassis."""
+    dmg = c.get("damage")
+    if not dmg:
+        return c
+    rows = {a: list(r) for a, r in c["scores"].items()}
+    for act in ACTS:
+        if act in dmg:
+            st, aoe, _, _ = derive_damage(dmg[act], act, c.get("_id", "?"))
+            rows[act][ST_IDX], rows[act][AOE_IDX] = st, aoe
+    c["scores"] = rows
+    return c
+
+
 def score_bodies(ca, cb):
     """Pair score from two body dicts.
 
@@ -741,6 +1115,7 @@ def score_bodies(ca, cb):
     _require(ca["reach"] in REACH, f"{ca['_id']}: unknown reach {ca['reach']!r}")
     _require(cb["reach"] in REACH, f"{cb['_id']}: unknown reach {cb['reach']!r}")
 
+    ca, cb = resolve_damage(ca), resolve_damage(cb)
     ca, cb = lead_order(ca, cb)
     a, b = ca["_id"], cb["_id"]
     ra, rb = ca["reach"], cb["reach"]
@@ -816,7 +1191,7 @@ def score_bodies(ca, cb):
         # act, to the block that axis belongs to, so a pair holed in Act I but not Act III pays
         # for Act I only. Applied to the blocks as well as to the score, because the frontier
         # selects on the blocks and the two must not disagree about how good a pairing is.
-        act_holes = {k for k in KEYS if norm(k, pair[k]) <= 0.40}
+        act_holes = {k for k in KEYS if norm(k, pair[k]) <= HOLE_AT}
         hole_f = {grp: HOLE ** len(act_holes & set(axes))
                   for grp, axes in (("tempo", set(TEMPO) | {"act"}),
                                     ("resilience", set(RESILIENCE)),
@@ -863,7 +1238,7 @@ def score_bodies(ca, cb):
     rec["nontempo"] = nontempo_total / len(ACTS)
     rec["blocks"] = {b: sum(rec["acts"][a]["blocks"][b] for a in ACTS) / len(ACTS)
                      for b in BLOCKS}
-    contention = SAME_CLASS if same_class else 1.0
-    rec["score"] = round((50 * rec["tempo"] + 50 * rec["nontempo"]) * contention, 1)
+    rec["contention"] = contention(ca, cb, same_class)
+    rec["score"] = round((50 * rec["tempo"] + 50 * rec["nontempo"]) * rec["contention"], 1)
     rec["holes"] = sorted(rec["holes"], key=KEYS.index)
     return rec

@@ -253,28 +253,130 @@ Six are available. Four vanilla, two modded.
 - **File pulled:** `Otherworldly Archetypes 21822 1.2.0.67 2026-06-17T17-15Z PYJWETtYB.zip`
 - **Added:** v9.0.3, changelog item 118 — *"ADDED (for testing) Otherworldly Archetypes."*
   **The "for testing" wording is the author's; treat this patron as less settled than the rest.**
-- **Mechanics** (from the author's own reference site, `prizzels.github.io/DTO/`):
-  - **Level 1 — Warp Wielder** (passive toggle): Eldritch Blast damage applies **Warp** for 2
-    turns. Further blasts or detonations reduce the remaining duration by 1.
-  - **Warp (status):** when it ends it **detonates for 1d10 Force in a 3 m radius**, +1d10 at
-    **levels 5, 11 and 17**.
-  - **Level 1 — Perils of the Warp** (passive): each Warped blast or detonation **reduces your
-    maximum hit points by 1d4 per turn of remaining duration** (1d6/1d8/1d10 at 5/11/17), and
-    exposes you to random consequences at the start of each turn.
+- **Mechanics** — read out of the pak itself (`DaelensTestament_c714f127…`: `Passive.txt`,
+  `Status_BOOST.txt`, `Spell_Projectile.txt`, `Spell_Shout.txt`, `Levelmaps/LevelMapValues.lsx`,
+  `RandomCasts/Outcomes.lsx`), **not** from the author's reference site. Where the two disagree
+  the pak wins, and it disagrees on both dice ladders.
+  - **Level 1 — Warp Wielder** (passive toggle, default on): on Eldritch Blast **damage**,
+    applies **Warp** to that target for 2 turns, or extends an existing Warp by 1 turn. Gated on
+    `IsCantrip()` **and one of exactly three spell ids** — `Projectile_EldritchBlast`,
+    `Projectile_EldritchBlast_Force_Spell`, `Projectile_EldritchBlast_Hexblade_Spell`. Any other
+    Eldritch Blast Overhaul flavour (Fire, Cold, Necrotic, Radiant, …) **does not trigger it**.
+  - **Warp (status):** when it ends — expiry *or* the target's death — it runs
+    `CreateExplosion(Projectile_WarpBreach)`: 3 m radius, Force, **no attack roll and no save**,
+    and it excludes self and allies, so the detonation itself never friendly-fires. Damage is a
+    flat level map: **1d10 → 2d10 at 5 → 3d10 at 10 → 4d10 at 15 → 5d10 at 20** `(the map
+    carries a PreferredClassUUID, so read those as Warlock levels rather than character levels —
+    unverified in game)`. Each detonation also shortens Warp on anything else it hits, chaining
+    the next one early.
+  - **Agonizing Blast does not apply to the detonation, and neither do Mizora's riders.** This
+    was the open question and the pak closes it: vanilla `AgonizingBlast` is gated on
+    `SpellId('Projectile_EldritchBlast')`, and Mizora's `IsEldritchBlastAlike()`
+    (`17046`, `Scripts/thoth/helpers/Warlock.khn`) enumerates ~35 spell ids without
+    `Projectile_WarpBreach` among them. The detonation adds **no ability modifier at all** — the
+    `+CharismaModifier` visible in the Warp tooltip lives in `DescriptionParams`; the functor is
+    `DealDamage(LevelMapValue(WarpBreach),Force,Magical)`.
+  - **What the detonation is actually worth — this is the upside, and it is large.** Warp Wielder
+    both *applies* Warp and *shortens* it: the first beam applies it for 2 turns, and every beam
+    after that on the same target subtracts 1. **Three beams on one target therefore run the clock
+    to zero inside the same Action, so a focused Eldritch Blast ends in a detonation** — at
+    character 10+ that is one detonation per Action, two per round on Lone Wolf's floor economy.
+    Worked at character 15 / Warlock 15, single-target, `k = 5` per instance and Agonizing Blast
+    on the beams:
+    - beams: 6 × (1d8 4.5 + Cha 5 + k 5) = **87**, which is exactly Act II single-target par;
+    - detonations: 2 × (4d10 22 + k 5) = **+54**, no attack roll and no save, on top;
+    - total **141 = 1.62× par**, against 1.00× for the same body without the patron.
+
+    So the patron is worth **roughly +60% single-target damage at no action cost**, and the same
+    beams spread over a crowd put a 3 m explosion on each of them. Two riders make it better than
+    the raw number: a detonation **shortens Warp on everything else in its radius**, so packed
+    crowds chain, and killing a Warped target detonates it as well
+    (`IF(RemoveCause(StatusRemoveCause.Death))`).
+    `(The load-bearing assumption is that a duration driven to 0 expires and detonates in-turn
+    rather than at the start of the next. If it does not, it is one detonation per round instead
+    of two — 114 = 1.31× par — which is the difference between a rung 3 and a rung 4. Worth one
+    look at a combat log.)`
+  - **Level 1 — Perils of the Warp** (passive) — the cost, and it is charged **per beam, not per
+    cast**. Every Eldritch Blast beam that deals damage, and every Warp detonation, applies
+    `PERILSOFWARP` to **you** for 1 turn. The status is `Additive`, so duration accumulates, and
+    it carries `MultiplyEffectsByDuration` on `IncreaseMaxHP(-LevelMapValue(Perils))`:
+    **maximum hit points lost = the die × the remaining duration.**
+    - Die by **character** level: **1d4** (1–4), **1d6** (5–8), **1d8** (9–12), **1d10**
+      (13–16), **1d12** (17–20). The site's "1d6/1d8/1d10 at 5/11/17" is wrong on both the
+      steps and the breakpoints.
+    - **The cost is charged on exactly the resource the upside is bought with.** Every beam that
+      brings a detonation closer also stacks a turn of drain, and the detonation stacks another.
+      The full-output round above — 6 beams plus 2 detonations — is **8 applications a round**
+      against a tick-down of 1, so the stack climbs no matter how the fight goes. At character
+      15 (1d10, avg 5.5): duration 8 after round 1 (**−44 max HP**), 15 after round 2 (**−82**),
+      22 after round 3 (**−121**). Act II par pool is 115.
+      `(Unverified in game, and the arithmetic is its own warning: taken literally a
+      character-15 Psyker's maximum hit points reach zero during round 2, which would make the
+      patron unplayable rather than merely costly. Either MultiplyEffectsByDuration does not
+      compound the way the stat block reads, or IncreaseMaxHP is floored somewhere. One combat
+      log settles it, and it decides whether Durability here is a 1 or a 0.)`
+    - Trading output down to one Action of blasting halves the drain and halves the detonations
+      with it. There is no setting where the damage is bought without the bleed.
+    - It clears only on **combat end**, Gellar's Field, or Soul Rupture. Nothing else in the
+      subclass reduces it.
+  - **Perils' random consequences** — `TickFunctors "TriggerRandomCast(13,0,PerilsOfWarp)"`
+    fires at the **start of each of your turns** while Perils is up. The first argument is a
+    1-in-N chance, so **≈1 in 13 per turn** `(inferred: vanilla Wild Magic uses 20 for the base
+    surge, 11 under Tides of Chaos, 1 for guaranteed)`. The table below is
+    `RandomCasts/Outcomes.lsx`, weighted by how many times each entry is listed.
+
+    | Outcome | Weight | Effect |
+    |---|---|---|
+    | Burning | 5 | `D6Cantrip + ProficiencyBonus` Fire to every character within 3 m, then **Burning 3 turns on you** |
+    | Repulsor | 2 | 6 m, Strength save vs your DC. On a fail, pushed 3 m and `D8Cantrip + ProficiencyBonus` Psychic; on a save, still pushed. **Excludes only you — your partner is a target,** with fall damage |
+    | Darkness | 2 | `CreateSurface(4,2,DarknessCloud)` centred on you — blocks your own line of sight to blast through |
+    | Silence | 2 | `SILENCED` for 1 turn on everything within 3 m, **including you**: no Eldritch Blast that turn |
+    | Mephit | 2 | Spawns a **hostile** mephit (a bigger one above character level 3) — a third body on the enemy side |
+    | Blur | 1 | `BLUR` 3 turns on everything within 3 m. The only outcome in the level-1 table that helps |
+
+    Later levels add to the same table rather than replacing it: **Fear** (5, weight 3,
+    `FRIGHTENED` 1 turn), **Slow** (7, weight 2), **Gellar's Field free** (10, 15 and 19, weight
+    1 each), a **Cambion** (10), **Chaos Rift** (14, weight 2), **Word of Pain** (15), an
+    antimagic shout (17), and **Psychic Scream** (19: 12 m, Intelligence save, 10d6 Psychic and
+    `STUNNED`, half on a save). `Shout_Cambion`, `Perils_WordOfPain` and `Shout_ATT_AsmoAntimagic`
+    are **not in this pak** — they come from elsewhere in the load order or fail silently.
+    `(unverified)`
+    - **Read: the table is a liability until 14 and an asset after.** At level 1–13, 13 of the
+      14 base entries are neutral-to-hostile, two of them target your partner, and two of them
+      cost the Psyker its own turn. From 14 the level-gated entries are strong enough to pay for
+      the rest.
   - **Level 1** also grants **Eldritch Blast** as an additional spell known.
-  - **Level 6 — Soul Rupture:** a killing blast reduces Perils duration by 2.
-  - **Level 10 — Gellar's Field:** bonus action, **once per short rest** — negates Perils and
-    blocks its return for 2 turns; Psychic resistance and advantage on mental saves while up.
-    Free if it triggers in response to Perils.
-  - **Level 14 — Chaos Rift:** action, 5th-level, 18 m range, 6 m radius — Warps all foes and
-    can inflict Burning, Banished, Paralyzed, Frozen, Force Vulnerability, Confusion, Phantasmal
-    Killer, Knockback, Frighten.
-- **Duo relevance:** **avoid as a dip.** The max-HP drain is self-inflicted and scales with
-  character level, the mitigation is a level 10 feature, and in a two-person party there is no
-  third body to cover a caster who is bleeding max HP. As a main class it is an AoE blaster, but
-  it trades exactly the resource a duo cannot spare.
-- **Interaction not verified:** whether Warp detonations count as "Eldritch Blast" for
-  Agonizing Blast or for Mizora's `IsEldritchBlastAlike()` rider system. `(unverified)`
+  - **Level 6 — Soul Rupture:** `OncePerTurn`, on a killing blow against an enemy — reduces
+    Perils duration by 2. Against the escalating stack above this is a partial brake, not a fix.
+  - **Level 10 — Gellar's Field:** bonus action, **once per short rest** —
+    `RemoveStatus(PERILSOFWARP)` plus 2 turns of `StatusImmunity(PERILSOFWARP)`, Psychic
+    resistance and advantage on Int/Wis/Cha saves. From level 10 it is also in the Perils table
+    itself, so it can fire free.
+  - **Level 14 — Chaos Rift:** action, 5th-level, 18 m range, 6 m radius — applies `MAELSTROM`
+    to all foes, then rolls a d20 per rider: Burning (DC 10), Banished / Paralyzed / Phantasmal
+    Killer / Force Vulnerability (15), Frozen / Confusion / Frighten / 3 m pull (17), 5d10 Force
+    (20).
+- **Duo relevance:** **a real damage upgrade with a real bill — cost both halves, not one.**
+
+  On the credit side, roughly **+60% single-target damage for no action, no slot and no
+  concentration**, in Force, which almost nothing resists; the same beams put a 3 m explosion on
+  every target they touch, so it is a single-target *and* an area engine off one at-will
+  resource; and it needs no gear to work, which the rest of the Warlock's damage does.
+
+  On the debit side, three charges:
+  1. **Max HP**, per beam and escalating within a fight, on the resource a duo cannot spare —
+     mitigation is a level 10 feature on a short-rest clock. It is levied on the same beams that
+     buy the damage, so a Psyker cannot dial the cost down without dialling the engine down.
+  2. **Friendly fire.** Repulsor and Silence do not exclude your partner, and in a two-body
+     party the partner is 50% of the roster. Silence lands on the Psyker as well. (The
+     detonation itself excludes allies — this is the random table, not Warp.)
+  3. **The detonation is unbuffable.** No Agonizing Blast, no Mizora rider, no ability modifier.
+     It is flat dice, so it does not grow with the build the way the beams do — big now, and a
+     shrinking share of the total as gear and Charisma scale.
+
+  **Avoid as a dip** for a separate reason: see `## Dip value`, Warlock 1 — the detonation map is
+  Warlock-level-keyed while the drain is character-level-keyed, so a dip buys the smallest
+  explosion in the game at the full price.
 
 ---
 

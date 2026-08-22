@@ -26,10 +26,11 @@ stays, this stays, and two things keep them from drifting apart. Neither is opti
     place once — see `_nsum`.
 
 Three branches of `score_bodies` are dead on this path and are asserted rather than implemented:
-`to_chassis` emits no `types` (so `type_spread` is 1.0) and no `redirect` (so `redirect_pair` is
-the identity), and `lead_order` only decides which body is presented first — the score is
-symmetric, and only the score is read here. `_rung` reads only the probabilities, never the `sure`
-flags, so those are not carried either.
+`to_chassis` emits no `types` (so `type_spread` is 1.0, and `gear_key` is `None`, which pins
+`contention` to its `SAME_CLASS` fallback) and no `redirect` (so `redirect_pair` is the identity),
+and `lead_order` only decides which body is presented first — the score is symmetric, and only the
+score is read here. `_rung` reads only the probabilities, never the `sure` flags, so those are not
+carried either.
 """
 import collections
 import numpy as np
@@ -90,7 +91,10 @@ def build(bodies):
 
     for bi, c in enumerate(bodies):
         _require(c["reach"] in S.REACH, f"{c['_id']}: unknown reach {c['reach']!r}")
-        _require(not c.get("types"), f"{c['_id']}: `types` is set; this path assumes none")
+        # `types` absent is load-bearing twice over: it fixes `type_spread` at 1.0 AND denies
+        # `gear_key`, which is what leaves `contention` on the `SAME_CLASS` branch restated below.
+        _require(S.gear_key(c) is None and not c.get("types"),
+                 f"{c['_id']}: `types` is set; this path assumes none")
         _require(not c.get("redirect"), f"{c['_id']}: `redirect` is set; this path assumes none")
         rc[bi], rp[bi] = S.REACH[c["reach"]]
         locked[bi] = c["reach"] in ("static", "mobile")
@@ -255,7 +259,7 @@ def score_block(F, ci, pi):
         for i, v in ((I_ST, p_st), (I_AOE, p_aoe), (I_DUR, p_dur), (I_ACT, p_act),
                      (I_CS, p_cs), (I_CA, p_ca), (I_RSC, p_rsc), (I_SKL, p_skl),
                      (I_SAV, p_sav), (I_END, p_end)):
-            h[i] = v / DIV[i] <= 0.40
+            h[i] = v / DIV[i] <= S.HOLE_AT
         n_tempo = sum(h[i].astype(np.int32) for i in (I_ST, I_AOE, I_CS, I_CA, I_ACT))
         tempo = tempo * S.HOLE ** n_tempo
         adj_dur = np.where(h[I_DUR], adj_dur * S.HOLE, adj_dur)
@@ -271,6 +275,7 @@ def score_block(F, ci, pi):
         non_t = nontempo if non_t is None else non_t + nontempo
 
     n = len(S.ACTS)
+    # `contention`'s fallback branch, which `build` asserts is the only one reachable here.
     same = (F.cls[ci][:, None] & F.cls[pi][None, :]) != 0
     sc = (50 * (tempo_t / n) + 50 * (non_t / n)) * np.where(same, S.SAME_CLASS, 1.0)
     return np.round(sc, 1)

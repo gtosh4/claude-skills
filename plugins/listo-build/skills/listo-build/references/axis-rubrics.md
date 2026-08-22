@@ -76,16 +76,12 @@ act band — character 8 / 15 / 20:
 - **Summons decay slowest of all.** Allies scale +34% HP and **+1 AC static plus +1 per 4 levels**,
   so a summon set holds its rung where a flat-statted feature loses one.
 
-> **⚠ Correction — save-DC control does *not* decay, and the old note saying it did was a
-> misreading.** `Spell save DC: bosses +1 per 7 levels` is the DC of spells **the enemy casts**;
-> it is their offence and belongs on §9 Saves. What resists *our* control is the enemy's saving
-> throw, which rises only through `Ability points +1 per 6` and the flat `+1 per 20` on save rolls
-> — roughly **+2 to +3** across the whole run, against **+4** on our own DC (proficiency +3, primary
-> stat +1). A pure save-DC controller therefore **holds its rung**, and may gain slightly.
->
-> Rungs 4–5 on both control axes still sit above rung 2, but on the **concentration** argument
-> alone — a duo holds exactly two slots — which is derived and sufficient. Do not restore the
-> decay justification.
+> **Save-DC control does not decay.** `Spell save DC: bosses +1 per 7 levels` is the DC of spells
+> **the enemy casts** — their offence, and §9's business. What resists *our* control is the enemy's
+> saving throw, which rises only through `Ability points +1 per 6` and the flat `+1 per 20` on save
+> rolls: **+2 to +3** across the run against **+4** on our own DC (proficiency +3, primary stat +1).
+> A pure save-DC controller **holds its rung**. Rungs 4–5 on the control axes sit above rung 2 on
+> the **concentration** argument alone — a duo holds exactly two slots — which is sufficient.
 
 | band | characters | feats | full-caster tier | what newly lands |
 |---|---|---|---|---|
@@ -127,12 +123,11 @@ to *two* abilities with save proficiency in both, **from level 1**. Score what t
 
 ## The two damage axes are computed, not judged
 
-§1 and §2 are **ratios to a fixed reference body**, not configuration checklists. The old ladders
-counted components — multiattack, rider, bonus-action strike — as if each were worth the same. They
-are not: Improved Extra Attack adds about half a body's damage, Hex adds under a tenth of it by
-Act III, and the old rungs scored both as one step. Worse, a level-gated rider (Monk's Martial Arts
-die at 1/5/11/17, Rogue's Sneak Attack die every two levels) is invisible to a checklist, so a
-split that stops one level short of a breakpoint paid no price.
+§1 and §2 are **ratios to a fixed reference body**, not configuration checklists. Components are
+not interchangeable steps: Improved Extra Attack adds about half a body's damage, Hex under a tenth
+of it by Act III. And a **level-gated rider** — Monk's Martial Arts die at 1/5/11/17, Rogue's Sneak
+Attack die every two levels — is invisible to a checklist, so a split stopping one level short of a
+breakpoint must pay for it. A ratio prices both.
 
 ### Constants
 
@@ -143,6 +138,32 @@ split that stops one level short of a breakpoint paid no price.
 | save-fail chance `s` | **0.55** | act-invariant — our DC rises +4 across the run against +2 to +3 on enemy saves |
 | save-for-half multiplier | `s + (1−s)/2` = **0.775** | |
 | AoE targets | **4** | act-invariant. `scoring-model.md` §5's crowd/boss coefficients already carry fight shape; scaling target count here as well would double-count it. |
+| gear constant `k`, per damage instance | **+3 / +5 / +8** | what the act's kit adds to **one damage roll**, under the 5-attunement cap. Like `h`, a convention that cancels between chassis and par wherever both deliver the same way. See "Gear is per instance" below. |
+
+### Gear is per instance, and that is the whole of the correction
+
+Item damage riders in this install attach to a **single damage roll**, never to a turn. Across the
+base game and every mod pak, **43 of the 55 item passives carrying a damage bonus are gated on a
+weapon attack and 12 on a spell** — but the two sides land in the same band. An Act III weapon kit
+is worth about **+8.5 a hit** (+3 enchantment, Callous Glow +2, Infernal Metal Gloves 1d6); an Act
+III caster kit about **+8.0 an instance** (Markoheshkir's attuned element `DamageBonus(ProficiencyBonus)`,
+Callous Glow +2).
+
+So rider *size* is not the asymmetry. **Instance count is.** Four attacks collect the rider four
+times; a Volley across four targets collects it four; eight Eldritch Blast beams collect it eight;
+a Disintegrate collects it once. Score gear-free and that vanishes — and it does not cancel, because
+§1's par is a weapon body while §2's par is a Fireball: weapon-delivered **area** damage comes out
+about a quarter light and one-big-spell bodies about a third heavy.
+
+`k` is therefore added to **every damage instance, on both sides of the ratio** — the chassis's and
+par's alike. A body that delivers like par is unmoved by it. Sizing is the installed kit under the
+5-attunement cap: Act I a +1 weapon and an Uncommon 1d4 rider, Act II +2 and a Rare 1d6, Act III +3
+and two riders.
+
+> **Two things this deliberately does not do.** It does not restore items to the chassis — rule 1
+> stands, and no named item is ever a chassis property. And it does not vary `k` by damage type: a
+> body whose riders are element-locked collects less than `k` on a resisted encounter, but rule 4's
+> 0.5 multiplier already prices that, and charging it twice would be worse than the residual.
 
 ### Par
 
@@ -154,12 +175,17 @@ What changes is the enemy.
 |---|---|---|---|
 | attacks per round (Lone Wolf ×2 Actions) | 4 | 4 | 4 |
 | attack stat / damage per hit | 20 / 12 | 20 / 12 | 22 / 13 |
+| gear constant `k`, per instance | +3 | +5 | +8 |
 | enemy HP multiplier | ×1.54 | ×1.96 | ×2.26 |
-| **par — single-target** | **48** | **61** | **76** |
-| **par — AoE** | **22** | **28** | **32** |
+| **par — single-target** | **60** | **87** | **123** |
+| **par — AoE** | **48** | **65** | **82** |
 
-Single-target par is `attacks × damage per hit`, multiplied by that act's enemy HP relative to
-Act I's.
+Single-target par is `attacks × (damage per hit + k)`, multiplied by that act's enemy HP relative to
+Act I's — `4 × (13+8) × 1.4675 = 123` at Act III.
+
+> **Not the v6 figures** (48/61/76 and 43/55/64) — par carries `k` on its own four instances, so
+> the whole scale moved. A chassis scored against the old par is not comparable to one scored
+> against this one. Re-derive rather than mix.
 
 > **The row is the ATTACK stat, which for a third of the roster is not the chassis's primary.**
 > A Monk's Wisdom drives AC, the Ki Save DC and its Way's scaling while **Dexterity** rolls the
@@ -170,8 +196,16 @@ Act I's.
 > 1, and a body that puts its 22 on the attack stat is at par on the modifier and ahead on the
 > attack count. The exceptions run the other way and are worth knowing: **Way of the Astral Self**
 > and **Battle Smith** put attack *and* damage on the caster stat, and **Shillelagh** does it for
-> a Druid's club or quarterstaff. AoE par is one **Fireball** (8d6) per fight on four targets, save for half, spread over
-the fight — `28 × 0.775 × 4 ÷ 4 = 22` — scaled the same way.
+> a Druid's club or quarterstaff. AoE par is **two Fireball-equivalents** (8d6) per fight on four targets, save for half, spread
+over the fight — `2 × (28+k) × 0.775 × 4 ÷ 4 = 48` at Act I — scaled the same way. Each target is
+its own instance, so par collects `k` four times a cast and twice a round.
+
+> **Why two per fight, and not one, and not one per round.** Par is set where the ladder *resolves
+> the population*. At one Fireball per fight a full caster deploying the damage half of its pool
+> reads **4.6× par** and the field pegs at rung 5; at one per *round* — the superficially symmetric
+> choice, since §1 par is a full routine every round — the highest-output body in the game reaches
+> only **rung 3** and the top two rungs go unreachable. Two per fight is what the half-pool affords
+> in Act I, and the only band that spans 0–5 across the archetype set below.
 
 Damage is carried **raw**, before `h`. Multiply by `h` only where a chassis resolves differently
 from par: a save-based single-target effect takes `0.775/0.65`, an attack-roll AoE takes
@@ -183,14 +217,23 @@ from par: a save-based single-target effect takes `0.775/0.65`, an attack-roll A
 
 ### Four rules
 
-1. **No items.** Mundane weapons, no attunement, no Legendary. A rented capability is not a chassis
-   property — the same objection that removed the Mirror of Loss from §8.
+1. **No named items.** Mundane weapons, no attunement, no Legendary. A rented capability is not a
+   chassis property — the same objection that removed the Mirror of Loss from §8. **What the act's
+   kit is worth enters as `k`, not as an item**: a flat constant per damage instance, applied to
+   par as well, carrying no item's name and conferring no item's rider, cantrip or proficiency.
+   Never score a specific item here; state the instance count and let `k` do the rest.
 2. **Lone Wolf floor economy only** — 2 Actions and 2 Bonus Actions. **Exclude Action Surge,
    summons and extra bodies.** Those are §4, and `scoring-model.md` §6 applies Actions as a *cap* on
    deployable tempo; counting them here as well scores them twice.
-3. **One configuration.** Score the build as actually played, never the union of its options.
-   Mutually exclusive picks — which Friar Blessing, Kensei versus unarmed, the single concentration
-   slot — must be chosen before scoring and named in the chassis note.
+3. **One configuration — at build time.** Score the build as actually played, never the union of
+   its options. Mutually exclusive picks — which Friar Blessing, Kensei versus unarmed, the single
+   concentration slot — must be chosen before scoring and named in the chassis note.
+   **This governs build-time picks only.** A per-round tactical choice is not a configuration: a
+   fungible resource counts as **potential on every axis it could be spent on**, because
+   `scoring-model.md` §5's crowd/boss coefficients already decide which capability is actually
+   spent. Eight Eldritch Blast beams score on both §1 and §2 — focused on one target for §1, split
+   across four for §2 — and so does a levelled slot that could be Disintegrate or Fireball. Scoring
+   such a resource on one axis only charges the chassis for flexibility it in fact has.
 4. **Resistance is a multiplier, not a cap.** Absolute Wrath is on. A body locked to one commonly
    resisted damage type multiplies by **0.5** on the share of encounters that resist it — assume
    **half** from Act II — unless it carries a resistance strip, Elemental Adept, or a second damage
@@ -212,9 +255,28 @@ What one fight has to spend:
 | once per battle (Cleansing Wave) | per fight | the full allowance |
 
 ```
-spend per fight  = min(available per fight, what four rounds of actions can consume)
-damage per round = at-will damage + (spend per fight × damage per unit) / 4
+action budget    = 2 Actions × 4 rounds = 8 action-slots   (Lone Wolf floor economy)
+spend per fight  = min(available per fight, action budget)
+filler           = action budget − spend per fight
+damage per round = (spend × damage per unit + filler × at-will damage per action) / 4
+instances/round  = separate damage rolls per round, amortized the same way
+scored damage    = damage per round + k × instances/round
 ```
+
+**Count instances the way the game rolls them, and amortize them exactly as the damage was.** One
+attack is one instance; a Flurry strike is one; each *target* of an area spell is one, so a Fireball
+is four; each Eldritch Blast beam is one, so a character-20 Warlock spending both Actions is eight;
+a single-target spell of any tier is one. A rider that adds to an existing roll — Hex, Sneak Attack,
+Crimson Rite, Divine Smite — is **not** a new instance. A once-per-fight cast spread over four rounds
+contributes its instances at the same quarter weight its damage does: one Fireball a fight is
+`4 targets ÷ 4 rounds = 1` instance per round. Where a feature *replaces* the Action's attacks —
+Breath of the Dragon — count the instances net, as the damage is counted net.
+
+**No round is scored at zero.** An action-slot with no levelled resource behind it is a cantrip or
+a weapon attack, and it counts. **Never add at-will damage as a flat term on top of the spell
+total** — a caster cannot cast Fireball and Fire Bolt with the same Action; the filler term above
+is what prices it. This is what makes a full caster's single-target reachable at all: at Act III
+its 3.7 levelled casts leave **4.3 cantrip actions**, about a third of its single-target output.
 
 **The action cap usually binds before the pool does.** A Monk 12 holds 12 ki, but two Flurries a
 round across four rounds consumes 8 — the constraint is bonus actions, not ki. A full caster holds
@@ -224,11 +286,11 @@ Where a strong *configuration* still scores a rung lower is the other direction,
 binds first: **a Monk 5 has 5 ki against the 8 that double Flurry wants**, so it delivers about
 six attacks a round, not eight.
 
-> **Do not key the fight count to the body's own §10 rung.** An earlier draft did, and it inverts:
-> two chassis holding the same twenty slots would amortize differently because one of them has
-> out-of-combat healing, and the *worse*-supplied body would book the larger per-fight burst.
-> Endurance asks whether the pool covers the run. §1 and §2 ask what the pool yields per round. Same
-> pool, two different questions, one shared constant — and no circular reference between the axes.
+> **Do not key the fight count to the body's own §10 rung.** It inverts: two chassis holding the
+> same twenty slots would amortize differently because one has out-of-combat healing, and the
+> *worse*-supplied body would book the larger per-fight burst. Endurance asks whether the pool
+> covers the run; §1 and §2 ask what it yields per round. Same pool, two questions, one shared
+> constant.
 
 **One pool, one axis.** A slot spent on Fireball is not available for Hold Monster or Death Ward.
 Rule 3 applies: name the split in the chassis note. Absent a note the default is **half the levelled
@@ -249,41 +311,51 @@ Damage into one priority target per round, with both Lone Wolf Actions spent on 
 | **1** | 0.5 – 0.8 | being outrun |
 | **2** | 0.8 – 1.15 | par |
 | **3** | 1.15 – 1.5 | ahead |
-| **4** | 1.5 – 2.0 | a damage chassis |
-| **5** | ≥ 2.0 | the act's ceiling |
+| **4** | 1.5 – 1.8 | a damage chassis |
+| **5** | ≥ 1.8 | the act's ceiling |
 
-Worked anchors, raw damage per round over par:
+Worked anchors — instances per round, then damage **with `k` already added** over par:
 
-| configuration | I (par 48) | II (par 61) | III (par 76) |
-|---|---|---|---|
-| Extra Attack, no rider | 48 → 1.00 → **2** | 48 → 0.79 → **1** | 52 → 0.68 → **1** |
-| Extra Attack + flat 1d6 rider (Hex, Crimson Rite) | 62 → 1.29 → **3** | 62 → 1.02 → **2** | 66 → 0.87 → **2** |
-| Improved Extra Attack (Fighter 11), no rider | — | 72 → 1.18 → **3** | 78 → 1.03 → **2** |
-| Sneak Attack ×2 (turn + one reaction) + 4 attacks | 59 → 1.23 → **3** | 80 → 1.31 → **3** | 112 → 1.47 → **3** |
-| Monk: Extra Attack + double Flurry, Martial Arts die | 45 → 0.94 → **2** | 76 → 1.25 → **3** | 84 → 1.11 → **2** |
-| Improved Extra Attack + scaling rider + 2 bonus strikes | — | 124 → 2.03 → **5** | 132 → 1.74 → **4** |
+| configuration | inst | I (par 60) | II (par 87) | III (par 123) |
+|---|---|---|---|---|
+| Extra Attack, no rider | 4 | 60 → 1.00 → **2** | 68 → 0.78 → **1** | 84 → 0.68 → **1** |
+| Extra Attack + flat 1d6 rider (Hex, Crimson Rite) | 4 | 74 → 1.23 → **3** | 82 → 0.94 → **2** | 98 → 0.80 → **1** |
+| Improved Extra Attack (Fighter 11), no rider | 6 | — | 102 → 1.17 → **3** | 126 → 1.02 → **2** |
+| Sneak Attack ×2 (turn + one reaction) + 4 attacks | 5 | 74 → 1.23 → **3** | 105 → 1.21 → **3** | 152 → 1.24 → **3** |
+| Monk: Extra Attack + double Flurry, Martial Arts die | 8 | 69 → 1.15 → **3** | 116 → 1.33 → **3** | 148 → 1.20 → **3** |
+| Improved Extra Attack + scaling rider + 2 bonus strikes | 8 | — | 164 → 1.89 → **5** | 196 → 1.59 → **4** |
+
+> **The Monk row is what `k` is for.** Eight instances a round collect the constant eight times
+> against par's four, so a configuration that reads 2 / 3 / 2 gear-free reads **3 / 3 / 3**. Pricing
+> bonus-action strikes as though nothing hangs off them invents an Act III slide that is not there.
 
 > **Improved Extra Attack almost exactly cancels the run's HP inflation.** +50% attacks against
 > +47% enemy HP from Act I to Act III. Fighter 11's signature feature buys *pace*, not advantage —
 > which is why a bare Fighter 11 reads 2, not 5. It still outscores an equivalent two-attack body
 > in every act, which is the ordering that matters.
 
-> **A flat rider decays and the arithmetic shows it** — 1d6 on four attacks is 1.29× par in Act I
-> and 0.87× in Act III with nothing having changed. Do not also apply a hand-written decay rule;
+> **A flat rider decays and the arithmetic shows it** — 1d6 on four attacks is 1.23× par in Act I
+> and 0.80× in Act III with nothing having changed. Do not also apply a hand-written decay rule;
 > that would charge for it twice. Riders that scale with level or dice count (Sneak Attack,
-> Improved Divine Smite) hold their ratio.
+> Improved Divine Smite) hold their ratio. `k` does not rescue a flat rider: it lands on the same
+> four instances par has, so it cancels and the decay stands.
 
 > **Cantrips scale on character level, not class level.** Eldritch Blast is **1d8 per beam here,
 > not 1d10** (v10.0 nerf), with beams at **character** 5/10/17 and a fourth from `Expansion`;
 > Booming Blade and Green-Flame Blade likewise (`data/listo-10.2-spells.md:142`). **A two-level
 > Warlock dip on a character-20 body fires four full beams** — 4 × (1d8 + Cha) × 2 Actions ≈ 60
-> raw, or 0.79× par, from two levels. Magic Initiate buys a martial a character-level-scaling melee
-> rider for one feat. Configuration ladders could not see any of this; ratios must.
+> raw from two levels, and **eight instances**, so `k` takes it to 124, or **1.01× par**. Magic
+> Initiate buys a martial a character-level-scaling melee rider for one feat. Configuration ladders
+> could not see any of this; ratios must.
+>
+> **A beam is an instance** — 0.79× par gear-free against 1.01× with `k`. Eight small rolls collect
+> a per-roll rider twice as often as par's four, the same arithmetic that lifts the Monk row and, on
+> §2, every weapon-delivered area engine. `k` is not pro-martial; it is pro-*many-instances*.
 
 ## 2. AoE
 
 Damage delivered to a group per round, and how often it is available. Same unit as §1, against a
-par of one Fireball per fight on four targets.
+par of two Fireball-equivalents per fight on four targets.
 
 `ratio = damage per round across all targets ÷ AoE par`
 
@@ -299,27 +371,37 @@ once-per-fight burst by far more than any single-target engine outruns another.
 | **4** | 2.0 – 3.0 |
 | **5** | ≥ 3.0 |
 
-Worked anchors:
+Worked anchors — instances per round, then damage **with `k` already added** over par:
 
-| configuration | I (par 22) | II (par 28) | III (par 32) |
-|---|---|---|---|
-| an incidental cleave or two-target cantrip | 8 → 0.36 → **1** | 8 → 0.29 → **0** | 9 → 0.28 → **0** |
-| one Fireball (8d6) per fight | 22 → 1.00 → **2** | 22 → 0.79 → **2** | 22 → 0.69 → **1** |
-| one Cone of Cold (8d8) per fight | — | 28 → 1.00 → **2** | 28 → 0.88 → **2** |
-| one Chain Lightning (10d8) per fight | — | — | 35 → 1.09 → **2** |
-| Spirit Guardians, at-will while concentration holds | — | 42 → 1.50 → **3** | 42 → 1.31 → **3** |
-| Volley / Whirlwind (Ranger 11), ×2 Actions | — | 49 → 1.75 → **3** | 55 → 1.72 → **3** |
-| Breath of the Dragon (Monk 3), ×2, net of the replaced attack | 41 → 1.86 → **3** | — | — |
-| Consuming Fervor: maximised Fireball ×2 per short rest | 74 → 3.4 → **5** | 74 → 2.6 → **4** | 74 → 2.3 → **4** |
-| Eldritch Cone (Warlock 9), at-will, ×2 Actions | — | 102 → 3.6 → **5** | 102 → 3.2 → **5** |
+| configuration | inst | I (par 48) | II (par 65) | III (par 82) |
+|---|---|---|---|---|
+| an incidental cleave or two-target cantrip | 2 | 14 → 0.29 → **0** | 18 → 0.28 → **0** | 25 → 0.30 → **0** |
+| one Fireball (8d6) per fight | 1 | 25 → 0.52 → **1** | 27 → 0.42 → **1** | 30 → 0.37 → **1** |
+| one Cone of Cold (8d8) per fight | 1 | — | 33 → 0.51 → **1** | 36 → 0.44 → **1** |
+| one Chain Lightning (10d8) per fight | 1 | — | — | 43 → 0.52 → **1** |
+| Spirit Guardians, at-will while concentration holds | 4 | — | 62 → 0.95 → **2** | 74 → 0.90 → **2** |
+| Volley / Whirlwind (Ranger 11), ×2 Actions | 4 | — | 69 → 1.06 → **2** | 87 → 1.06 → **2** |
+| Breath of the Dragon (Monk 3), ×2, net of the replaced attack | 4 | 53 → 1.10 → **2** | — | — |
+| Consuming Fervor: maximised Fireball ×2 per short rest | 2 | 80 → 1.67 → **3** | 84 → 1.29 → **2** | 90 → 1.10 → **2** |
+| Eldritch Cone (Warlock 9), at-will, ×2 Actions | 8 | — | 142 → 2.18 → **4** | 166 → 2.02 → **4** |
+| **damage half of a full caster's pool + cantrip filler** | 4/5/6 | 76 → 1.58 → **3** | 130 → 2.00 → **4** | 194 → 2.37 → **4** |
+| **whole pool committed to area, no control or rescue** | 5/7/8 | 98 → 2.04 → **4** | 178 → 2.74 → **4** | 269 → 3.28 → **5** |
 
-> **The old note that Eldritch Cone "drops a rung in Act III" was wrong, and the arithmetic is why.**
-> `Zone_EldritchCone` reads `LevelMapValue(EldritchZoneDamage)` — 1d10 at 1–4, 2d10 at 5–9, **3d10
-> from 10, where it ends** — and its `SpellSuccess` never checks `AgonizingBlast`, so the effect is
-> frozen at 16.5 average from character 10. It **does** decay: 3.6× par to 3.2×. It does not decay
-> across a band, because at-will four-target save-for-half damage twice a round is the strongest
-> area engine in the list and a 14% slide does not touch that. Record the decay; do not invent a
-> rung drop.
+> **Instance density is what this axis rewards.** Par is a Fireball — four instances a cast, two
+> casts a fight, so **two instances a round**, the lowest density of any engine on the table.
+> Everything delivering more often gains against it (Volley 1.06, Spirit Guardians 0.90 in Act III);
+> everything delivering in one lump barely moves.
+
+> **Score a caster at its pool, not at one named spell.** A full caster is a rung-4 area body on
+> the damage half of its slots alone and a rung-5 one if it spends everything — which is the trade
+> rule 3 makes explicit, because those slots were also its §5, §6 and §7.
+
+> **Eldritch Cone does not drop a rung in Act III.** `Zone_EldritchCone` reads
+> `LevelMapValue(EldritchZoneDamage)` — 1d10 at 1–4, 2d10 at 5–9, **3d10 from 10, where it ends** —
+> and its `SpellSuccess` never checks `AgonizingBlast`, so it is frozen at 16.5 average from
+> character 10. It decays 2.18× par to 2.02×: **record the decay, do not invent a rung drop.**
+> At-will four-target save-for-half damage twice a round is the strongest **slot-free** area engine
+> in the list. A caster committing real slots outscores it, but pays out of §5, §6 and §7.
 
 > **Repeatability outranks per-cast size, and the amortization is where it shows.** A 9th-tier
 > burst spread over four rounds is a fifth of its headline number. This is the same principle the
@@ -331,53 +413,104 @@ Worked anchors:
 ## 3. Durability
 
 How hard this body is to remove by damage. Lone Wolf's halved damage is the floor for everyone in
-every act, so it earns no rung.
+every act, so it cancels and earns no rung.
 
-Rank by **mitigation actually applied**, not by armour category — a robe with the right spells
-outperforms unoptimised medium armour.
+**This axis is computed, not judged** — it joins §1 and §2, and for the same reason. Counting
+mitigation *layers* makes every layer one step and cannot say what a layer is worth against the act
+it faces; flat reduction is worth several times more against a crowd than against a boss. A ratio
+prices both directly, so no hand-written flat-mitigation correction is needed on top.
 
-**Self-healing is Durability, not Rescue.** Effective HP however it is bought: AC, hit dice,
+`ratio = this body's effective HP ÷ par effective HP`
+
+**Self-healing is Durability, not Rescue.** Effective HP however it is bought: AC, hit points,
 resistances, damage reduction, *and* recovery aimed at yourself — Second Wind, Lay on Hands spent
 on yourself, temp HP on yourself, Lycan Regeneration (11: 1 + Con each turn below half), Durable's
-full-HP short rests. A body that keeps itself up is durable; only what it can aim at its partner
+full-HP short rests. A body that keeps itself up is durable; only what it can aim at your partner
 is Rescue. Never score the same feature in both.
 
-| | |
-|---|---|
-| **0** | No armour proficiency, no AC spell, no defensive feat. |
-| **1** | Light armour, no shield; or a robe with **Mage Armour** alone (13 + Dex). |
-| **2** | Medium armour and a shield; or a robe with Mage Armour **plus Shield** cast most rounds. |
-| **3** | Heavy armour and a shield. |
-| **4** | Rung 3 plus one flat-reduction or damage-halving source. |
-| **5** | Rung 3 plus everything the act's feat budget can stack on top. |
+### Constants
 
-| rung | I (2 feats) | II (5–6 feats) | III (7–8 feats, 5 attuned) |
+| | value | note |
+|---|---|---|
+| hard fight | **4 rounds** | as §1 |
+| enemy hit chance against **par AC** | **0.65** | a **convention, not a measurement**, and the mirror of §1's `h`. Enemy attack bonus is no more recoverable from the manifest than enemy AC was. It is safe for the same reason `h` is: only the *difference* between this body's AC and par's is ever read, so the convention cancels. |
+| one point of AC | **5%** hit chance | clamp `p_hit` to `[0.05, 0.95]` |
+| par is dropped in | **4 rounds** | the anchor that turns a hit count into a hit size — par takes its whole pool over the fight |
+| attacks taken per round | **3** crowd, **1** boss | provisional. This is what splits flat from proportional mitigation, and it is the one input a pak sweep could later replace. |
+
+### Par
+
+Par is the act's **reference body**: medium armour and a shield, no magic AC, no defensive feat,
+no resistance, no self-healing. Its configuration never improves. What changes is the enemy.
+
+| | I (char 8) | II (char 15) | III (char 20) |
 |---|---|---|---|
-| **2 =** | Medium armour + shield (AC 17–18), or a robe with Mage Armour **plus** Shield cast most rounds — only if the slot budget supports it | The same, but enemy AC/attack scaling has begun; par now includes **one magic AC source** on top | Medium + shield with no magic AC and no attunement falls to **1**; par is medium/heavy + shield + an attuned defensive item |
-| **3 =** | Heavy armour + shield (AC 19–20) — reachable only if the level-1 class grants heavy armour proficiency | Heavy + shield **plus** a magic AC source or a resistance | Heavy + shield + attuned defensive gear, or rung 4's mitigation without the armour |
-| **4 =** | Rung 3 + **Heavy Armour Master** — one feat, which is half the Act I budget. Class equivalents: Lycan Resilient Hide, Uncanny Dodge, Evasion | Rung 3 + **Shield Master**'s passive Block, or Evasion, or Eldritch Ward at IMR 2+ (flat `IMR` off AoE, ranged and spells) | Rung 3 + two mitigation layers, at least one **proportional** — flat-only mitigation sits a rung below its raw numbers by Act III |
-| **5 =** | Heavy armour + shield + **Heavy Armour Master** (all damage −PB, cap 5) — one feat, and only if the level-1 class grants heavy armour. Brutish Durability (Fighter 7) also lands here | + **Shield Master** (Block is a **passive** here: halves damage on a failed Dex save, plus flat −1) and **Tough** → flat −6 after Lone Wolf's halving, plus Evasion-grade AoE mitigation | + Legendary attunement defensive gear (5 attuned, 3 Legendary) |
+| par pool (HP) | **65** | **115** | **160** |
+| par AC | **17** | **17** | **17** |
+| typical hit — crowd | 65/4/3 = **5.4** | **9.6** | **13.3** |
+| typical hit — boss | 65/4/1 = **16.3** | **28.8** | **40.0** |
 
-> **Shield lasts until the start of your next turn**, so it is a once-per-round +5 and **Lone Wolf's
-> second reaction buys no extra uptime** — the second cast would overwrite an active buff. It also
-> costs a slot every round it is used, so a robe caster is paying for Durability out of **Endurance**.
-> Score rung 2 only if the slot budget actually supports casting it most rounds.
+    eHP ratio  =  pool ratio  ×  0.65 / p_hit  ×  1 / mitigation
+
+    pool ratio  =  (max HP + temp HP + self-healing spendable in the fight) ÷ par pool
+    p_hit       =  clamp(0.65 − (AC − 17)/20, 0.05, 0.95)
+    mitigation  =  the product of what actually lands on a typical hit
+                   proportional  — resistance ×0.5, Block ×0.5
+                   flat          — (hit − reduction) ÷ hit, per that act and fight type
+
+Compute the ratio **twice**, once on the crowd hit and once on the boss hit, and blend them with
+that act's MIX weights (70/30, 60/40, 50/50). The blend is why no hand-written "flat-only sits a
+rung below" rule is needed: Heavy Armour Master's −5 is ×1.61 against an Act III crowd hit and
+×1.14 against a boss one, and the arithmetic says so. Durability stays **one** axis —
+`scoring-model.md` §7 declines to split it.
+
+| rung | ratio | reads as |
+|---|---|---|
+| **0** | < 0.7 | a robe with nothing on it |
+| **1** | 0.7 – 0.9 | light armour, or being outrun by the act |
+| **2** | 0.9 – 1.15 | par |
+| **3** | 1.15 – 1.6 | ahead |
+| **4** | 1.6 – 2.4 | a durable chassis |
+| **5** | ≥ 2.4 | the act's ceiling |
+
+Worked anchors, Act III (par pool 160, AC 17, crowd hit 13.3, boss hit 40):
+
+| configuration | AC | mitigation | ratio | rung |
+|---|---|---|---|---|
+| robe, no Mage Armour | 12 | — | 0.68 | **0** |
+| light armour, no shield | 14 | — | 0.81 | **1** |
+| medium armour + shield | 17 | — | 1.00 | **2** |
+| robe + Mage Armour + Shield most rounds | 18 | — | 1.08 | **2** |
+| heavy armour + shield | 19 | — | 1.18 | **3** |
+| heavy + shield + attuned defensive gear | 20 | — | 1.30 | **3** |
+| the same + **Heavy Armour Master** (flat −5) | 20 | crowd ×1.61 / boss ×1.14 | 1.79 | **4** |
+| the same + a resistance or Shield Master Block | 20 | ×2 proportional | 2.60 | **5** |
+| heavy + shield + Block + Tough (pool ×1.15) | 20 | ×2, flat −1 | 3.05 | **5** |
+
+> **Rung 5 must be buildable in every act.** `norm` divides by 5 regardless, so a top rung nothing
+> reaches is a flat 20% discount on the axis. The bands above are set so the ceiling is a
+> configuration somebody can actually field.
+
+> **The AC term is where most of the spread is, and it saturates.** Each point is 5% of a 65%
+> baseline, so the first few points are worth ~8% eHP each and the twelfth is worth far more —
+> `p_hit` clamps at 0.05, which is the natural-20 floor. Do not extrapolate past AC 28.
+
+> **Shield lasts until the start of your next turn**, so it is a once-per-round +5 and **Lone
+> Wolf's second reaction buys no extra uptime** — the second cast would overwrite an active buff.
+> It also costs a slot every round it is used, so a robe caster is paying for Durability out of
+> **Endurance**. Score it into AC only if the slot budget actually supports casting it most rounds.
 >
 > Heavy Armour Master needs heavy armour proficiency first — free from a Fighter/Paladin/heavy
 > domain at level 1, otherwise **three feats** (Lightly → Moderately → Heavily Armoured), which no
 > Act I budget can afford.
 >
-> Shield Master's Block **does not stack with Rogue Evasion**. A body with both scores 4, not 5.
+> Shield Master's Block **does not stack with Rogue Evasion** — one ×0.5, not two.
 >
-> Class equivalents for rung 4: Lycan Resilient Hide, Uncanny Dodge, Evasion.
->
-> **Flat reduction is crowd-facing; proportional is fight-shape neutral.** Heavy Armour Master's
-> flat −5 *per hit* is enormous against eight small attacks and nearly irrelevant against one
-> 60-damage hit, while Lone Wolf's halving is scale-invariant. Durability is not split into crowd
-> and boss axes the way Control is — it is not a capability you choose between on a given turn — so
-> **price the mismatch here instead**: a body whose mitigation is purely flat, facing an act whose
-> encounters are boss-weighted, sits a rung below where its raw numbers suggest. `scoring-model.md`
-> §7 records why this is handled in the rubric rather than the schema.
+> Class equivalents for a proportional layer: Lycan Resilient Hide, Uncanny Dodge, Evasion.
+
+> **Self-healing enters the pool, not the mitigation.** Lay on Hands spent on yourself is HP you
+> get to spend twice; count what the body can actually deliver inside four rounds, net of the
+> actions it costs. A pool that needs eight rounds to matter did not matter.
 
 ## 4. Actions
 
@@ -425,10 +558,8 @@ control that does.
 > holds two slots between them, so control that spends none is strictly additional where control
 > that spends one is substitutional.
 >
-> An earlier version of this note also claimed save-DC control decays across the run. **It does
-> not** — see the correction under "What actually drifts". Enemy saving throws rise ~+2 to +3 while
-> our DC rises +4. Disadvantage-on-saves is still better than a DC, but because it stacks with the
-> DC rather than because the DC rots.
+> Save-DC control does **not** decay — see "What actually drifts". Disadvantage-on-saves still beats
+> a bare DC, because it stacks with the DC, not because the DC rots.
 >
 > **The pool a caster picks from, by act** (`data/listo-10.2-spells.md`): Wizard 176 / 242 / 260,
 > Sorcerer 138 / 182 / 192, Bard 85 / 105 / 122 — plus Magical Secrets at 280 (Bard 10), 376 (14)
@@ -488,8 +619,7 @@ punish you for lacking.
 
 **Keeping the *other* body functional, or getting it back.** Outward-facing only — recovery aimed
 at yourself is **Durability**, and scoring it in both inflates the polygon and breaks the pairing
-read. Renamed from "Rescue", which was too close to Endurance and implied healing when the top of
-the axis is not healing at all.
+read. The top of this axis is not healing at all.
 
 Four things count, and they are not equal in a duo:
 
@@ -537,22 +667,16 @@ Four things count, and they are not equal in a duo:
 check, per act — and `scoring.py` owns the arithmetic. There is no 0–5 judgement to make here.
 Record the modifiers; the rung falls out.
 
-### What it measures, and why it changed
+### What it measures
 
-It used to score the run's **named gates**: Hag's Hair, the Araj pickpocket, the Mirror of Loss.
-That was the wrong target, for two independent reasons.
+**Not the run's named gates.** They are *buyable* — Withers charges 100 gold from Act I, and
+respeccing into Rogue 11 / Knowledge Cleric 1 for Religion Expertise passes the Mirror at DC 25,
+after which respeccing back *"retains the Mirror of Loss stat enhancement"*. They are also
+*bypassable* — Ethel's deal yields the hair for Mayrina, Araj can be killed and looted; passing
+buys the secondary prize, not the +1 or +2. A check a chassis can rent its way past is not a
+chassis property, so **the Mirror is not scored at all**.
 
-**The named gates are buyable.** Withers charges 100 gold and sits in the Dank Crypt from Act I.
-bg3.wiki documents respeccing into Rogue 11 / Knowledge Cleric 1 for Religion Expertise, passing
-the Mirror at DC 25, then respeccing back *"retaining the Mirror of Loss stat enhancement"*. A
-check any chassis can rent its way past is not a chassis property, so **the Mirror is no longer
-scored at all**.
-
-**The named gates are also bypassable.** Each has a no-check route to the same ability point —
-taking Ethel's deal yields the hair and costs only Mayrina, and Araj can simply be killed and
-looted. Passing buys the *secondary* prize, not the +1 or +2.
-
-What survives both objections is the untelegraphed half of the run, scored every act:
+What is scored is the untelegraphed half of the run, every act:
 
 | check | skill | DC |
 |---|---|---|
@@ -602,10 +726,8 @@ acts against 5.70 for pairs sharing a class.
 > and Barbarians get an easier **Intimidation DC 15 with advantage** instead. **Stern Gaze**
 > (Inquisitor) lets Intimidation use **Wisdom instead of Charisma**, the only non-Charisma route
 > in the list. Vengeance's **Monster Tactician** grants Expertise in an Intelligence skill *and*
-> double Wisdom modifier on it — put it on **Investigation** and it is the strongest answer in the
-> roster to secret doors and switches. It used to be described here as the clean answer to the
-> Mirror of Loss; the Mirror is no longer scored, and the feature only ever reached that DC on a
-> body with the Intelligence to back it.
+> double Wisdom modifier on it — put it on **Investigation**, the strongest answer in the roster to
+> secret doors and switches.
 
 > **Dialogue checks assume the host makes the roll.** `Use Highest Modifier in dialogue` and
 > `Use Best Sleight of Hand` hand the party-best total to `GetHostCharacter()` only, so a gate
@@ -654,11 +776,10 @@ How many hard fights the body's resource budget covers per long-rest cycle. **Tw
 long rest**, so a short-rest pool is spent **three times** per cycle — the initial fill plus two
 refreshes, not indefinitely.
 
-This axis drifts least — a clock is a clock at every level — but it does **not** hold still, and the
-previous version of this ladder named class levels as rungs (Warlock 11, Paladin 17, Monk 14),
-which put every rung above 1 out of reach in Act I and left the axis unable to discriminate there
-at all. The ladder below is stated in **shapes**; the class levels moved into the act table where
-they belong.
+This axis drifts least — a clock is a clock at every level — but it does **not** hold still. The
+ladder is stated in **shapes**, never as class levels: naming Warlock 11 or Monk 14 as a rung puts
+every rung above 1 out of reach in Act I and the axis stops discriminating there. Class levels
+belong in the act table, as thresholds.
 
 | | |
 |---|---|
@@ -671,11 +792,22 @@ they belong.
 
 | rung | I (char 3–8) | II (9–15) | III (16–20) |
 |---|---|---|---|
-| **2 =** | Warlock 3–5 (2 pact × 3 = **6 units**), Battle Master's 4 dice × 3 = **12**, or Second Wind + Action Surge | Warlock 11 (3 pact × 3 = **9**); a full caster's ≈14–16 slots is now only rung 1–2 | Paladin 17 ≈ **15 slots**; a full caster's long-rest table alone no longer clears rung 2 |
+| **2 =** | A small pool that funds the body's **own damage** — not a rider pool sitting on top of at-will attacks. Second Wind + Action Surge on a body with no other clock | A full caster's ≈14–16 slots is now only rung 1–2 | Paladin 17 ≈ **15 slots**; a full caster's long-rest table alone no longer clears rung 2 |
 | **3 =** | Monk 5–8 (6–9 ki × 3 = **18–27**), or slots **plus** Song of Rest (Bard 2) | Bard 15 ≈ **18 slots**, or a short-rest pool plus out-of-combat healing | Cleric 18 ≈ **21 slots** — four to five fights |
 | **4 =** | A short-rest pool large enough that one fight does not empty it — Monk 8's ki, Ki-fuelled healing between fights | **Monk 14**: 14 ki × 3 = **42** at 8–10 per hard fight, plus ki healing | **Monk 20**: 21 ki × 3 = **63**; or a short-rest engine plus Illithid charges *not* leaned on |
 | **5 =** | At-will damage with no clock — **act-invariant, and that is the point**: it is why martials own this axis in every act | The same | The same |
 
+> **Score the clock on the capability the body leans on, not on its largest visible pool.** Where a
+> pool buys **riders** rather than **output**, the output's clock sets the rung. A Warlock's damage
+> is Eldritch Blast — at-will, and **≈1.00× §1 par on its own at Act II** (6 beams × (1d8 + Cha +
+> `k`) = 87 against par 87) — so its rung is the at-will one and its pact slots are the §5/§6/§7
+> budget. A Battle Master reads the same way: at-will attacks, superiority dice as the rider pool.
+> **Warlock default 4**, 5 only where at-will output is the whole kit with no pool worth naming,
+> and a drop from 4 for a body that pays hit points to run that output (The Psyker).
+>
+> **The "6 units / 9 units" figures are a slot budget, not an Endurance rung** — they are what the
+> Paladin-dip comparison below is built on.
+>
 > **Illithid charges cut against this axis.** `2.5 + 0.5 × powers` per long rest, only half back on
 > a short rest — a chassis that funds its tempo from charges is buying Act III damage with Act III
 > rests. Score the drop.
@@ -751,8 +883,7 @@ Astral Stillness discounting every cast by 1, it becomes a genuine repeatable en
    - **flat-only mitigation** in a boss-weighted act.
 
    And what does **not**: Advantage/Disadvantage, proportional mitigation, summons (allies scale
-   too) — and **save-DC control**, which the old version of this list wrongly included. See the
-   correction under "What actually drifts".
+   too), and **save-DC control** — see "What actually drifts".
 
    **Do not apply any of this to §1 or §2.** Flat-magnitude decay, Eldritch Cone's frozen scaling
    and Absolute Wrath's resistances are all priced inside the ratio already; applying a rule of

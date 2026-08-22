@@ -19,7 +19,7 @@ values. Every string is emitted as HTML, so inline `<b>`, `<em>` and
 | Pair radar value per axis | from `profile.scores`, by axis kind, at view time in the page's JS |
 | Whole delivered-damage table | from `profile.scores` (ST, AoE) + `damage.reach` |
 | Saves (index 8) | derived from `profile.saves` — authored as `null` |
-| Idle-body flags (`u-idle`) | character under 3.0 in a fight type worth ≥40% of that act |
+| Idle-body flags (`u-idle`) | character under 1.25 in a fight type worth ≥40% of that act |
 | Melee lock | applied, and its callout emitted, when neither reach is `ranged`/`hybrid` |
 | Axis names, kinds, order, act bands | fixed; override with `profile.axes` / `.kinds` / `.labels` / `.bands` only if a sheet genuinely differs |
 | Gate grade | `bad` when `owner` is `none`, else `ok` — set `grade` (`ok`\|`mid`\|`bad`) to override |

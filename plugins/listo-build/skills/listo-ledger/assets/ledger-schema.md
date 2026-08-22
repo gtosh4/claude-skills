@@ -20,7 +20,7 @@ Every string is emitted as HTML, so inline `<b>`, `<em>` and `<code>` work.
 | Melee lock | a further ×0.9 on crowd when neither reach is `ranged`/`hybrid` |
 | Tempo cap | `min(capability breadth, action points)` — Actions bounds tempo rather than adding to it |
 | Score | the four blocks of `scoring-model.md` §9 |
-| Idle-body flags, holes, chips | flag under 3.0 in a fight type worth ≥40% of the act; hole is any pair axis ≤2 |
+| Idle-body flags, holes, chips | flag under 1.25 in a fight type worth ≥40% of the act; hole is any pair axis at or below what two rung-1 bodies produce (`HOLE_AT`, 0.20 of the kind's max) |
 | The whole field table | **every chassis with every other**, ranked — `C(n,2)` unordered pairs |
 | Which pairings become entries | each chassis's **best** partner, ranked, capped at `entry_limit`; a pairing that two chassis both name is kept once |
 | Which pairings the field table lists | the **whole frontier**, always, then the highest-scoring dominated pairings up to `field_limit`; the number omitted is stated |
@@ -62,10 +62,23 @@ because they do not exist until render time.
         "II":  {"prof": ["int","wis","dex","con"], "boosters": []},
         "III": {"prof": ["int","wis","dex","con"], "boosters": []}
       },
-      "scores": {                           // 10 per act, in AXIS ORDER; index 8 is null
-        "I":   [3,2,3,2,2,1,0,3,null,4],
-        "II":  [4,4,3,3,4,2,0,3,null,4],
-        "III": [4,4,3,3,4,2,0,3,null,4]
+      "scores": {              // 10 per act, in AXIS ORDER; 0, 1 and 8 are null when derived
+        "I":   [null,null,3,2,2,1,0,3,null,4],
+        "II":  [null,null,3,3,4,2,0,3,null,4],
+        "III": [null,null,3,3,4,2,0,3,null,4]
+      },
+      "damage": {                           // one block per act; see "The damage axes"
+        "III": {
+          "actions": {"attacks": 7, "spells": 1, "filler": 0},
+          "bonus":   {"used": [{"src":"flurry","n":3},{"src":"unarmed","n":3}]},
+          "pools":   [{"name":"ki","refresh":"short","size":4,"spent":4}],
+          "slots":   {"caster_level":9,"pool":14,"to_damage":0.35},
+          "riders":  [{"name":"Retribution","st":12,"aoe":38}],
+          "st_raw":  85,
+          "aoe_raw": 118,
+          "st_instances":  8,     // separate damage rolls per round — what the gear constant pays on
+          "aoe_instances": 6
+        }
       }
     }
   },
@@ -254,6 +267,61 @@ passing buys the secondary prize rather than the +1 or +2. **Religion is no long
 Rerolls are credited on the named gates only. Traps roll automatically with no prompt, so there is
 nothing to spend Inspiration on, and four charges do not stretch across a run of town dialogue.
 
+## The damage axes are derived from stated arithmetic
+
+Indices **0 (`st`) and 1 (`aoe`) are derived** and authored as `null`, from a `damage` block per
+act. The rung is `raw ÷ par` on that axis's ladder, with par and the bands owned by
+`listo-build/references/axis-rubrics.md` §1 and §2.
+
+This is the same argument that makes saves derived, applied to the two axes the whole tempo block
+rests on. v6 described §1 and §2 as "computed, not judged" but stored only the rung, so an authored
+`2` could not be re-checked from outside — and when the AoE par was re-based the entire roster was
+stranded, because nothing recorded the arithmetic it had been scored against.
+
+| field | what it holds |
+|---|---|
+| `actions` | `attacks` + `spells` + `filler` **must sum to 8** — 2 Actions × 4 rounds |
+| `bonus.used` | list of `{src, n}`; total may not exceed 8 |
+| `pools` | `{name, refresh: short\|long\|fight, size, spent}` — short/fight pools are available **in full every fight**; spending less requires `underspend_reason` |
+| `slots` | levelled slots. `to_damage` is **required** — the fraction of the pool this chassis spends on damage rather than §5/§6/§7 |
+| `riders` | `{name, st, aoe}`. A rider feeding only one axis requires `single_axis_reason` |
+| `st_raw`, `aoe_raw` | damage per round, raw, before par |
+| `st_instances`, `aoe_instances` | **separate damage rolls per round**, amortized exactly as the damage was. Required whenever the matching `_raw` is non-zero. Item riders attach per instance, so this is what the act's gear constant `k` is multiplied by — on par as well as on the chassis. One attack, one Flurry strike, one Eldritch Blast beam, or one *target* of an area spell is one instance; Hex, Sneak Attack and Divine Smite add to an existing roll and are none |
+
+**Four things this makes impossible, each of which happened in v6:**
+
+- **A round scored at zero.** Actions must conserve, so a caster with 3.7 levelled casts has to
+  state what the other 4.3 action-slots did. Every v6 caster left them blank.
+- **A short-rest pool priced as if it were long-rest.** Ki, pact slots and Channel Divinity refill
+  twice a cycle, so a fight gets the whole pool.
+- **A silent slot split.** The rubric's "half to damage" default is now an explicit `to_damage`,
+  because leaving it implicit is how every v6 caster was priced off one named spell instead of a
+  pool.
+- **A fungible resource scored on one axis only.** Rule 3 as amended makes a resource *potential*
+  on every axis it could serve; claiming otherwise needs a stated reason.
+- **A body priced as though gear were worth the same to everyone.** Item riders attach per damage
+  roll, so eight Eldritch Blast beams collect one eight times and a Disintegrate once. The instance
+  counts make that visible; without them the gear-free scale under-priced every many-roll engine
+  and over-priced every one-lump spell.
+
+Authored ints are still accepted so an un-migrated roster keeps loading, but they are not silent:
+`scoring.legacy_damage_axes(C)` names every chassis still carrying them. A `damage` block and an
+authored int for the same act is **fatal** — two sources of truth that can disagree.
+
+### Round-level guards
+
+`scoring.audit_roster(C)` is a single pass to be run after any scoring round. It reports:
+
+- **a rung no chassis reaches** — the ladder does not span, so par or the band is mis-set. v6 had
+  *no* chassis at single-target rung 5 across 298.
+- **a rung holding more than 25% of the roster** — the axis has stopped distinguishing. v6 had 55%
+  of chassis at single-target rung 2.
+- **a group constant** — every chassis sharing a primary class carrying one value on an axis, which
+  means the subclass never entered the calculation. v6 had all 12 Warlock-primary chassis at AoE 5
+  and all 8 Artificer-primary at single-target 2.
+
+None of these were visible for a whole version, and each is one pass over the roster.
+
 ## The saves axis is authored as a set, not a number
 
 Index 8 is **derived** and must be authored as `null`. Every other axis is a judgement against
@@ -430,18 +498,35 @@ the pak applies a status to an ally. The Eyebiter Mirror boon is real but is **s
 authored `dur` rung, not here. A body cannot share a floor it only has itself.
 
 Only the **tougher** body's bond counts. The carrier is the one eating the damage, and a bond
-running the other way lowers the floor it was meant to raise. It splits the surplus — the gap is
-what it has spare and it keeps half, rounding down at tier 1 and up at tier 2:
+running the other way lowers the floor it was meant to raise. **The bonded body's rung doubles**,
+capped at 5, because half the damage aimed at it is what it actually receives:
+
+Doubling happens in **effective HP**, not on the rung number — `axis-rubrics.md` §3 is a ratio
+now, so the step is a lookup off its own band table (`DUR_DOUBLE`):
 
 ```
-tank 5 + partner 2   ->  3   (tier 1)      4  (tier 2)
-tank 3 + partner 2   ->  2                 3
-tank 5 + partner 5   ->  5                 5      nothing spare to move
+partner rung   0  1  2  3  4  5
+bonded         3  4  4  5  5  5
+
+tank 4 + partner 2   ->  floor 4      partner reads 4; the carrier is now the binding rung
+tank 3 + partner 2   ->  floor 3
+tank 5 + partner 1   ->  floor 4      halving matters MOST to the body with least armour
+tank 4 + partner 4   ->  floor 4      already level; nothing to gain
 ```
 
-So the transfer scales with how much tougher the carrier actually is: a rung-3 body compensates for
-half of what a rung-5 body does, and a body whose partner is already its equal transfers nothing.
-**The maximum never rises.** This relocates durability; it cannot manufacture it.
+The pair's floor becomes `min(carrier, double(partner))`, which is what makes the **carrier's own**
+durability worth buying: above the minimum it used to be discarded outright.
+
+This replaced a surplus-splitting rule — `gap // 2` at tier 1, rounded up at tier 2 — that was
+right in shape and dead on the field it ran on. `dur` is compressed into rungs 2-4, so 90% of the
+pairings where a carrier was the tougher body had a gap of 0 or 1 and tier 1 handed over `1 // 2`
+= nothing. It moved the floor in **210 of 44,253 pairings, 0.5%**, and every Peace Cleric in v6
+was scored as though it carried no bond.
+
+`tier` is now read only as "a bond is live". The two rungs differ in what the **carrier** pays —
+tier 1 takes the redirected damage at full, tier 2 takes it resisted — and `dur` is the floor,
+which is the partner's number, so neither shows there. Pricing that would mean charging a tier-1
+carrier a rung, and that is a separate decision from the doubling.
 
 This does **not** touch `rsc`. `axis-rubrics.md` caps redirection at rung 1 there and is right to —
 a bond does not pick up a body that already went down. That cap prices it as *rescue*; this prices
@@ -455,6 +540,14 @@ cannot score something correctly must not produce a number for it.
 - a chassis with an unknown `reach`
 - a `scores` array that is not **ten** long
 - a `scores` array whose index 8 is not `null` — saves is derived, never authored
+- a `damage` block present for an act whose index 0 or 1 is not `null`, or null damage axes with no
+  `damage` block for that act
+- a `damage` block whose action-slots do not sum to 8, or whose bonus actions exceed 8
+- a short- or per-fight pool spending less than its size with no `underspend_reason`
+- a `slots` object with no `to_damage`
+- a non-zero `st_raw` or `aoe_raw` with no matching `st_instances` / `aoe_instances`, or an
+  instance count of zero against a non-zero raw
+- a rider feeding one damage axis with no `single_axis_reason`
 - a chassis with no `saves` block, or one missing an act
 - a `prof` entry outside `str dex con int wis cha`, or a duplicate within one act
 - an unknown `boosters` id

@@ -97,7 +97,8 @@ REST_HELP = ("Rest — everything that is not tempo, as a weighted percentage: r
 TEMPO_HELP = ("Tempo — damage and control actually delivered, capped by action economy and "
               "discounted for reach, idle bodies and holes.")
 SCORE_HELP = ("Score — 50 x tempo + 50 x rest, averaged across the three acts, then multiplied "
-              "by a contention factor when both bodies share a class.")
+              "by a contention factor when the two bodies compete for the same gear: up to -7% "
+              "when they share a primary ability and both swing, or both cast.")
 
 
 # ── fragments ────────────────────────────────────────────────────────────────

@@ -4340,7 +4340,7 @@
       "why": "Fey Presence is area charm-or-fear off a short-rest charge with no concentration — the rung-4 clause — and Dominate Person at patron 9 lands on a short-rest pact slot rather than a long-rest one, so the control clock is the best in the patron set; nothing here is aimed at the partner and light armour with no shield is the floor.",
       "uncertain": [
         "Archfey gets no 14th-level feature from Expansion and the class file records it as unverified whether another mod fills the gap; nothing was scored for it.",
-        "end 4 rather than the rubric's explicit 'Warlock 11 = 9 units' rung-2 anchor: Eldritch Blast is at-will with no clock, which is the rung-5 definition, and the 9 units fund everything else. The tension is real and applies to all five non-Psyker patrons here."
+        "end 4 rather than the rubric's old 'Warlock 11 = 9 units' rung-2 anchor: Eldritch Blast is at-will with no clock, which is the rung-5 definition, and the 9 units fund everything else. RESOLVED — axis-rubrics.md §10 now carries this correction: the pact-slot figures are a slot budget, not an Endurance rung, and 4 is the stated Warlock default. This is no longer an override of the rubric."
       ],
       "boosters": [],
       "src": "b918d76ab07e",
@@ -4372,7 +4372,7 @@
       "uncertain": [
         "The burst half of aoe 4 is all Fire, a commonly resisted type; Eldritch Cone's Force is the unresisted half and it stops scaling at character 10, so this row is at its peak exactly at the judging point.",
         "Hurl Through Hell is a 14 feature and is not counted.",
-        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note; Eldritch Blast's at-will clock is what carries it."
+        "end 4 is now the rubric's own Warlock default — axis-rubrics.md §10 was corrected to price at-will Eldritch Blast rather than the pact-slot count. No longer an override; see the Archfey note."
       ],
       "boosters": [],
       "src": "177b11ada830",
@@ -4404,7 +4404,7 @@
       "uncertain": [
         "ctrl_a 4 not 5 because Evard's still spends the one concentration slot; Mortal Reminder is the free layer under it but is crit-gated.",
         "Create Thrall is a 14 feature and is not counted.",
-        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note."
+        "end 4 is now the rubric's own Warlock default — axis-rubrics.md §10 was corrected to price at-will Eldritch Blast rather than the pact-slot count. No longer an override; see the Archfey note."
       ],
       "boosters": [],
       "src": "ea5dee09ae76",
@@ -4437,7 +4437,7 @@
         "concentration false because Curse plus smites needs none, which is unusual for a caster and is the patron's quiet advantage in a pair holding only two slots.",
         "Warlock grants no shield proficiency, so dur 2 rests on the Shield spell and Blur against a three-slot budget the rubric warns will not support casting Shield most rounds; 1 is defensible.",
         "Master of Hexes is a 14 feature and is not counted. Mizora's Rewards modifies Hexblade's Pact alongside Pact of the Blade; the interaction was not in the read set.",
-        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note."
+        "end 4 is now the rubric's own Warlock default — axis-rubrics.md §10 was corrected to price at-will Eldritch Blast rather than the pact-slot count. No longer an override; see the Archfey note."
       ],
       "boosters": [],
       "src": "3b4fe2c740c6",
@@ -4470,7 +4470,7 @@
         "rsc 4 rather than 3 rests on the clock rather than the ladder's literal rung-4 clause: there is no Death Ward or Sanctuary here, so no true prevention, but restoration on a short-rest clock plus bonus-action outward healing is what rung 4 exists to reward.",
         "Healing Light's own pool is long-rest, so it is a per-day budget, not a per-fight one.",
         "Searing Vengeance is a 14 feature and is not counted.",
-        "end 4 versus the rubric's Warlock-11 rung-2 anchor — see the Archfey note."
+        "end 4 is now the rubric's own Warlock default — axis-rubrics.md §10 was corrected to price at-will Eldritch Blast rather than the pact-slot count. No longer an override; see the Archfey note."
       ],
       "boosters": [],
       "src": "54ffcdb60aa7",
@@ -4488,7 +4488,7 @@
         0,
         1,
         null,
-        2
+        3
       ],
       "prof": [
         "cha",
@@ -4498,10 +4498,15 @@
       "shield": false,
       "primary": "cha",
       "concentration": false,
-      "why": "Warp turns every Eldritch Blast beam into a 3d10 Force detonation in a 3m radius, which is a genuinely repeatable at-will area engine in the least-resisted damage type — and Perils of the Warp pays for it in max hit points every turn, which is the one resource a duo cannot spare and the reason Endurance is the lowest in this whole assignment.",
+      "why": "Warp Wielder both applies Warp and shortens it, so three focused Eldritch Blast beams run the clock to zero inside one Action: a detonation per Action, two per round on Lone Wolf's floor. At character 15 that is 6 x (1d8 + Cha + k) = 87, exactly single-target par, plus 2 x (4d10 + k) = 54 with no attack roll and no save — 1.62x par, about +60% damage for no action, no slot and no concentration, in the least-resisted type, and the same beams put a 3 m explosion on every target they touch. Against that: Perils of the Warp is levied on the same beams, per beam and per detonation, so the drain scales with the engine and cannot be dialled down separately, and the detonation itself takes no ability modifier and no Agonizing Blast, so it is flat dice that stop growing while the beams keep scaling. It is the only patron whose at-will damage is paid for in hit points, which is what separates its Durability and Endurance from its five siblings'.",
       "uncertain": [
-        "end 2, not 4, is the load-bearing judgement here: the damage is at-will but the engine drains max HP (1d8 per turn of remaining duration at level 11+), and the rubric says hit points force more long rests than slots do. Gellar's Field is once per short rest and only blocks Perils for 2 turns.",
-        "It is explicitly unverified whether Warp detonations count as Eldritch Blast for Agonizing Blast or Mizora's IsEldritchBlastAlike rider system. If they do not, aoe 4 holds but st 3 and ctrl_s 3 are both a rung high.",
+        "st 3 not 4, and the whole question is one timing detail: whether a Warp duration driven to 0 by the third beam expires in-turn or at the start of the next. In-turn gives two detonations a round (141 = 1.62x par, a rung 4); otherwise one (114 = 1.31x par, a rung 3). Scored at the cautious reading. One combat log settles it and it is the single highest-value check on this patron.",
+        "aoe 4 is the conservative count: 6 beams spread over 4 targets at the attack-roll correction (73) plus about 3 detonations a round at 27 each (81) = 154 = 2.37x par. It reaches rung 5 as soon as a detonation is credited with more than one target, which a 3 m radius on a packed crowd usually is, and detonations shorten Warp on everything else in radius, so crowds chain.",
+        "Resolved from the pak: Warp detonations are not Eldritch Blast for Agonizing Blast or for Mizora's IsEldritchBlastAlike, and take no ability modifier at all — the +CharismaModifier in the Warp tooltip is DescriptionParams, the functor is DealDamage(LevelMapValue(WarpBreach),Force,Magical). The previous pass's conditional said this would cost st and ctrl_s a rung each. It does not: the detonation is a separate flat 4d10 that fires whether or not Agonizing Blast reaches it, and the arithmetic above is what actually prices it. Both rungs are held at 3.",
+        "The Perils dice ladder the previous pass scored against was wrong. From the pak: 1d4/1d6/1d8/1d10/1d12 at character 5/9/13/17, not 1d6/1d8/1d10 at 5/11/17 — applied per damaging beam AND per detonation, Additive, with MultiplyEffectsByDuration, so loss = die x remaining duration. A full-output round is 8 applications against a tick-down of 1: duration 8 after round 1 (-44 max HP at character 15), 15 after round 2 (-82), against an Act II par pool of 115. Taken literally the Psyker dies to its own passive in round 2, which cannot be the played behaviour, so either the multiplier does not compound as written or IncreaseMaxHP is floored. dur is held at 1 pending that check; it is a 0 if the arithmetic is literal.",
+        "end 3, up from 2, and the 2 was an artefact of the rubric rather than a judgement about this patron. The old §10 act table anchored Warlock at rung 2 on 2-3 pact slots x 3, which prices the clocked half of the class and ignores that its damage is at-will Eldritch Blast at about 1.00x §1 par. Every other patron's sweep had already overridden that anchor to 4; only this entry followed it. §10 now carries the correction. The Psyker starts from the same 4 as its siblings and drops one for paying maximum hit points to run its at-will damage, which is exactly what the axis's 'hit points force more long rests than slots do' note is for.",
+        "Perils' random-cast table (TriggerRandomCast(13,0,PerilsOfWarp), about 1 in 13 per turn) is a liability below character 14 and is priced into no axis. Of the six base outcomes, two target your partner (Repulsor's 6 m push plus fall damage, Silence's 3 m radius), one silences or blinds the Psyker itself, one spawns a hostile mephit, and only Blur helps. There is no rung for a chance of handing the enemy a third body in a two-body party. Note this is the random table only — the Warp detonation itself excludes self and allies.",
+        "Warp Wielder is gated on three Eldritch Blast spell ids (base, Force, Hexblade). A build that picks any other Eldritch Blast Overhaul flavour loses the entire subclass engine.",
         "Chaos Rift is a 14 feature and is not counted.",
         "Listo added the DTO pack 'for testing'; the class file says to treat this patron as less settled than the rest."
       ],

@@ -358,8 +358,13 @@ changes at natural breakpoints rather than paying the fiddle cost every level.
   > | Monk 14 | 14 ki × 3 = **42**, at 8–10 per hard fight |
   > | Cleric 18 / Bard 15 | ≈**21** / ≈**18** slots, 4–5 per hard fight |
   > | **Paladin 17** | ≈**15** slots `(slot counts are not stated in the data files)` |
-  > | Warlock 3 / 5 / 7 | 2 pact slots × 3 = **6** |
-  > | Warlock 11+ | 3 pact slots × 3 = **9** |
+  > | Warlock 3 / 5 / 7 | 2 pact slots × 3 = **6** `(slots only — see below)` |
+  > | Warlock 11+ | 3 pact slots × 3 = **9** `(slots only — see below)` |
+  >
+  > **The Warlock rows are a slot budget, not an Endurance rung.** Its damage is Eldritch Blast:
+  > at-will, no clock, and roughly par single-target on its own. The pact slots fund control,
+  > rescue and utility. Scoring a Warlock's Endurance off these numbers reads the wrong half of
+  > the class — see `axis-rubrics.md` §10.
   >
   > **A Paladin 17's own table is more than twice a Warlock 7 dip.** Trading Paladin levels for
   > pact slots to "get onto the short-rest clock" *loses* budget — `Paladin 17 / Warlock 3` holds
