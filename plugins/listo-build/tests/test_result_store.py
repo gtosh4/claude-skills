@@ -90,6 +90,29 @@ class Store(unittest.TestCase):
                          "the readable half is expected to be lossy — that is why the digest exists")
         self.assertNotEqual(RS.filename(a), RS.filename(b))
 
+    def test_replace_overwrites_a_valid_result(self):
+        """The author's own correction, when the fix moves no dependency.
+
+        A scoring agent attached a booster to a body that could not reach it. Nothing recorded
+        that as a dependency, so `put` kept returning the wrong record and the number would have
+        reached the ledger. `--replace` skips the skip, never the validation.
+        """
+        path = RS.put(self.run, "score-001", A1, record(S1, note="first"))
+        RS.put(self.run, "score-001", A1, record(S1, note="second"))
+        with open(path) as fh:
+            self.assertEqual(json.load(fh)["record"]["note"], "first",
+                             "a valid result is left alone by default")
+        RS.put(self.run, "score-001", A1, record(S1, note="second"), replace=True)
+        with open(path) as fh:
+            self.assertEqual(json.load(fh)["record"]["note"], "second")
+
+    def test_replace_still_validates(self):
+        RS.put(self.run, "score-001", A1, record(S1))
+        bad = record(S1)
+        bad["scores"]["II"] = [None, None, 3, 2, 2, 1, 0, 3, 4, 4]
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, bad, replace=True)
+
     def test_a_valid_result_is_not_rewritten(self):
         path = RS.put(self.run, "score-001", A1, record(S1, note="first"))
         RS.put(self.run, "score-001", A1, record(S1, note="second"))

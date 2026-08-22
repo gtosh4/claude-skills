@@ -214,12 +214,20 @@ def validate_record(address, rec, unified=False):
         validate_skills(address, rec["skills"])
 
 
-def put(run, assignment, address, rec, man=None):
+def put(run, assignment, address, rec, man=None, replace=False):
     """Validate one candidate record and promote it atomically. Returns its path.
 
     An existing *valid* result is left alone — re-authoring one that nothing invalidated would
     discard a judgement for no reason. A stale one is replaced only once the new candidate has
     passed every check, so a failed re-score cannot destroy the result it was meant to improve.
+
+    `replace` overrides the skip, for the one case it does not cover: the author finds its own
+    promoted record wrong for a reason no dependency records. A scoring agent hit exactly that —
+    it had attached a booster to a body that could not reach it, and the correction moved no
+    dependency, so `put` kept returning the wrong record. Leaving it unfixable would have meant
+    a known-bad number reaching the ledger, which is the failure this whole format is built
+    against. The candidate is still fully validated first; `replace` skips the *skip*, not the
+    checks.
     """
     man = man or read_manifest(run, assignment)
     entry = next((b for b in man["builds"] if b["address"] == address), None)
@@ -229,7 +237,7 @@ def put(run, assignment, address, rec, man=None):
     validate_record(address, rec, man.get("unified", False))
     _, res_dir = _paths(run, assignment)
     path = os.path.join(res_dir, entry["file"])
-    if os.path.exists(path):
+    if os.path.exists(path) and not replace:
         with open(path) as fh:
             old = json.load(fh)
         if not SD.stale(old.get("deps", {}), entry["deps"]):
@@ -319,6 +327,10 @@ def main():
     p.add_argument("--assignment", required=True)
     p.add_argument("--address", required=True)
     p.add_argument("--record", required=True, help="path to the candidate JSON, or `-` for stdin")
+    p.add_argument("--replace", action="store_true",
+                   help="overwrite an existing VALID result. For correcting your own record "
+                        "when the fix moves no dependency — a booster attached to a body that "
+                        "cannot reach it, say. The candidate is validated either way.")
 
     s = sub.add_parser("status", help="what is done, what is stale, what is left")
     s.add_argument("--run", required=True)
@@ -339,7 +351,7 @@ def main():
             json.dump(man, sys.stdout, indent=2, ensure_ascii=False)
         elif a.cmd == "put":
             rec = json.load(sys.stdin if a.record == "-" else open(a.record))
-            print(put(a.run, a.assignment, a.address, rec))
+            print(put(a.run, a.assignment, a.address, rec, replace=a.replace))
         else:
             json.dump(status(a.run, a.assignment), sys.stdout, indent=2, ensure_ascii=False)
         sys.stdout.write("\n")

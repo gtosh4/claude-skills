@@ -105,7 +105,7 @@ damage from all sources, and a second Action / Bonus Action / Reaction.
 | Bond concentration | CON proficient, CON 20 → **+11, with advantage** | no CON prof; shield advantage only |
 | AC (Unarmoured + shield) | 21 | 23 |
 | Initiative | +3 | +5 |
-| Weapon | Shillelagh trident (WIS) | rapier (DEX) |
+| Weapon | Shillelagh morningstar (WIS) | rapier (DEX) |
 | Fighting style | **Druidic Warrior** | **Duelling** |
 | Extra feats needed | none | War Caster *or* Resilient (CON) |
 
@@ -115,8 +115,10 @@ the ASI feat plus a half-feat). **Lone Wolf already halves all incoming damage, 
 wants attacks to land** — AC is the cheapest thing here to give up. Fix the initiative gap with
 `Alert`, not with DEX.
 
-Per-hit damage is a wash either way: Shillelagh trident is 1d8 + 6 at +12; rapier + Duelling is
-1d8 + 5 + 2 at +11. Hit-weighted, 45.2 vs 46.0 a round.
+Per-hit damage is a wash either way: Shillelagh morningstar is 1d8 + 6 at +12; rapier + Duelling
+is 1d8 + 5 + 2 at +11. Hit-weighted, 45.2 vs 46.0 a round. Both weapons qualify as monk weapons
+because Ranger supplies proficiency and neither has the Heavy nor Two-Handed property, so both
+preserve Martial Arts' bonus-action unarmed strike.
 
 ---
 
@@ -130,14 +132,32 @@ UA_FightingStyle_DruidicWarrior
   Boosts "UnlockSpell(Shout_Shillelagh,,,,Wisdom);UnlockSpell(Target_Guidance,,,,Charisma)"
 ```
 Shillelagh **hard-locked to Wisdom**, no feat, no Druid dip. In Listo it is a **level 1 spell**,
-not a cantrip: costs a slot and a prepared slot, lasts **until Long Rest**.
+not a cantrip: costs a slot and a prepared slot, lasts **until Long Rest**. **[pak + in-game]**
 
-**Use a trident.** Listo's Shillelagh list is Club / Quarterstaff / Mace / Morningstar / Sickle /
-Spear / Trident. Trident and Morningstar are **martial**, so they are not monk weapons, so Monk's
-Martial Arts *Dextrous Attacks* cannot contest the ability override. The five simple weapons on
-that list all can — and the data files disagree about whether it wins (`druid.md:68` says Dextrous
-Attacks overrides Shillelagh outright; `monk.md:435` calls it `(unverified)`). Dodge the question
-rather than test it. Trident is versatile, so one-handed alongside the shield.
+Unlike vanilla BG3, Listo's player version does **not** set the weapon die to 1d8.
+**[pak + in-game]** Its
+replacement `SHILLELAGH` status explicitly supplies only:
+```
+WeaponProperty(Magical);WeaponAttackRollAbilityOverride(SpellCastingAbility);Attribute(InventoryBound)
+```
+There is no `WeaponDamageDieOverride`. The same file's Dryad status explicitly adds
+`WeaponDamageDieOverride(2d8)`, confirming that damage-die overrides are written separately when
+intended. `using "SHILLELAGH"` inherits fields that the patch does not redefine, but the locally
+defined `Boosts` field replaces that whole inherited field; omitted boost tokens do not fall back.
+The inherited description parameter may still make the localized `[1]` display vanilla's 1d8,
+so trust the functional status rather than that tooltip. Confirmed in game: an active Shillelagh
+torch remained **1d4 + 5** on its weapon card while the spell tooltip incorrectly advertised
+**6–13** (1d8 + 5). A scan of every installed pak found no later player `SHILLELAGH` definition.
+
+**Use a morningstar.** BG3 defines a monk weapon as any weapon with which the Monk is proficient,
+from any source, provided it has neither the Heavy nor Two-Handed property. Ranger supplies martial
+weapon proficiency, so every one-handed weapon on Listo's Shillelagh list qualifies — including
+Morningstar and Trident. The morningstar is the cleanest shield choice because its one-handed die
+is **1d8**; a trident beside a shield uses only **1d6** because it cannot use its versatile die.
+Either preserves Martial Arts' bonus-action unarmed strike after the Attack action. The data files
+still disagree about whether Dextrous Attacks overrides Shillelagh's Wisdom ability
+(`druid.md:68` says it does; `monk.md:435` calls the interaction `(unverified)`), so verify that
+the morningstar actually uses WIS in game.
 
 **A shield is mandatory** — Guardian of Light keeps Unarmoured Defence working with one equipped
 and grants **advantage on Concentration checks**, the second half of protecting Bond.
@@ -261,7 +281,7 @@ remaining bonus actions are free no-ki unarmed strikes at 6.5) · Favored Foe 4.
 ~7 · Retribution ~12 · Armour of Agathys ~10 on a melee boss — **≈ 85 raw across ~8 damage
 instances a round** (3.5 weapon attacks, 2.25 Flurry and free unarmed strikes, and roughly 2.5
 between Snowblind ticks, Retribution and Agathys). With the Act III gear constant, `85 + 8×8 = 149`
-**vs par 123 → 1.21 → rung 3**. Gear-free it read 1.12 and sat just under the 1.15 boundary; the
+**vs par 123 → 1.21 → rung 3**. Gear-free it reads 1.12 and sits just under the 1.15 boundary; the
 body rolls damage twice as often as par does, and that is what carried it over.
 
 *AoE III:* reflect ~50 × 0.75 (Act II+ Radiant resistance) = 38, plus Snow Blindness at near-total
@@ -315,10 +335,11 @@ no reaction. Saves is 4 on Line B only.
   concentration, 5th-level slot) plus 5th-level slots. Every other trigger in this build is
   melee-range, Word of Radiance included, so Cone of Cold covers the one gap the Cleric dip does
   not. It is close. This document takes the Cleric.
-- **Shillelagh's damage die in Listo** is `(unverified)`; the changelog's Dryad comparison implies
-  1d8 + WIS.
+- **Shillelagh does not replace the player weapon's damage die in Listo. [pak + in-game]** The morningstar
+  is therefore materially better than a shield-used trident here: native 1d8 rather than 1d6.
 - **Whether Dextrous Attacks overrides Shillelagh** is `(unverified)` and the data files
-  contradict each other. The trident sidesteps it.
+  contradict each other. Morningstar and trident are nevertheless monk weapons here: Ranger's
+  martial proficiency qualifies them under BG3's broader monk-weapon rule.
 - **Whether Word of Radiance is save-negates or save-for-half** in Listo's implementation is
   `(unverified)` — its stats entry was not locatable in the installed paks. 5e default is
   save-negates, meaning a successful CON save yields no damage and therefore no proc.
