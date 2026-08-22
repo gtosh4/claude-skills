@@ -240,7 +240,15 @@ def enumerate_for(key, base, cat, pbc, cls_of, sbc=None):
                 skills = CO.compose_skills(cat, budgets, base.get("primary"),
                                            {primary.title()} | {c.title() for c, *_ in dips},
                                            expertise)
-                bits = [f"{primary.title()} {p}"] + [
+                # The primary carries its own subclass parenthetical even though the variant is
+                # filed under that subclass. A chosen split is written straight into a seed, and
+                # `score_deps.body_sources` resolves the dependency set FROM THE SPLIT — so a
+                # split that names only `Cleric 14` gives the chassis a dependency set with no
+                # entry for the subclass being scored, and a Listo update rewriting that subclass
+                # would never mark it stale. A "/" cannot appear inside the parenthetical, since
+                # `parse_split` splits parts on it.
+                sub_disp = sub if "/" not in sub else sub.split(" — ")[0].strip()
+                bits = [f"{primary.title()} {p} ({sub_disp})"] + [
                     f"{c.title()} {lv}" + (f" ({s[0]})" if s else "") for c, lv, _g, s in dips]
                 # The split string stays parseable by `seed_index.check_split`, because a chosen
                 # variant's split is written straight into a seed. Which class is taken at level 1

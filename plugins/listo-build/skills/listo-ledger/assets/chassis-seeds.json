@@ -28,7 +28,7 @@
    "builds": {
     "skills": {
      "chassis": "Archive",
-     "split": "Cleric 14 / Fighter 1 / Bard 5",
+     "split": "Cleric 14 (Knowledge) / Fighter 1 / Bard 5",
      "why": "Domain double proficiency, Bard 5's two Expertise picks and Jack of All Trades between them clear every gate in the campaign.",
      "peak": 4,
      "peak_axis": "skl",
@@ -46,7 +46,7 @@
    "builds": {
     "durability": {
      "chassis": "Vigil",
-     "split": "Cleric 14 / Bard 5 / Barbarian 1",
+     "split": "Cleric 14 (Life) / Bard 5 / Barbarian 1",
      "why": "Barbarian 1 first buys Strength and Constitution saves on a d12 body; Disciple of Life lifts every heal from any source.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -63,7 +63,7 @@
    "builds": {
     "reaction": {
      "chassis": "Flare",
-     "split": "Cleric 14 / Bard 6 (College of Lore)",
+     "split": "Cleric 14 (Light) / Bard 6 (College of Lore)",
      "why": "Improved Warding Flare and Lore's Cutting Words each spend one of Lone Wolf's two reactions to make an attacker miss.",
      "peak": 3,
      "peak_axis": "rsc",
@@ -108,7 +108,7 @@
     },
     "reaction": {
      "chassis": "Squall",
-     "split": "Cleric 14 / Bard 6 (College of Stormcalling)",
+     "split": "Cleric 14 (Tempest) / Bard 6 (College of Stormcalling)",
      "why": "Wrath of the Storm punishes two attackers a round on Lone Wolf's doubled reaction, and Stormcalling shares the lightning.",
      "peak": 4,
      "peak_axis": "dur",
@@ -160,7 +160,7 @@
    "builds": {
     "reaction": {
      "chassis": "Nullify",
-     "split": "Cleric 14 / Fighter 1 / Bard 5",
+     "split": "Cleric 14 (Arcana) / Fighter 1 / Bard 5",
      "why": "Domain Counterspell spent off Lone Wolf's second reaction; Fighter 1 first buys heavy armour and the Constitution save that holds concentration.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -177,7 +177,7 @@
    "builds": {
     "durability": {
      "chassis": "Anvil",
-     "split": "Cleric 14 / Fighter 1 / Bard 5",
+     "split": "Cleric 14 (Forge) / Fighter 1 / Bard 5",
      "why": "Heavy armour plus Soul of the Forge's AC and fire resistance; Fighter 1 adds a Defence style and short-rest Second Wind.",
      "peak": 4,
      "peak_axis": "dur",
@@ -194,7 +194,7 @@
    "builds": {
     "reaction": {
      "chassis": "Epitaph",
-     "split": "Cleric 14 / Fighter 1 / Bard 5",
+     "split": "Cleric 14 (Grave) / Fighter 1 / Bard 5",
      "why": "Sentinel at Death's Door turns crits on either body into normal hits, twice a round on Lone Wolf's doubled reaction.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -211,7 +211,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Decree",
-     "split": "Cleric 14 / Bard 6 (College of Stormcalling)",
+     "split": "Cleric 14 (Order) / Bard 6 (College of Stormcalling)",
      "why": "Voice of Authority hands the partner a free weapon attack on every buff or heal, which is an Action the duo did not have.",
      "peak": 4,
      "peak_axis": "act",
@@ -228,7 +228,7 @@
    "builds": {
     "durability": {
      "chassis": "Concord",
-     "split": "Cleric 14 / Fighter 1 / Bard 5",
+     "split": "Cleric 14 (Peace) / Fighter 1 / Bard 5",
      "why": "Fighter 1 first buys the heavy armour Peace does not grant, and Emboldening Bond is a permanent d4 on both bodies' rolls.",
      "peak": 4,
      "peak_axis": "sav",
@@ -245,7 +245,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Gloaming",
-     "split": "Cleric 14 / Fighter 1 / Warlock 5",
+     "split": "Cleric 14 (Twilight) / Fighter 1 / Warlock 5",
      "why": "Twilight Sanctuary, two Warlock pact slots and Second Wind all refill on the short rest; the whole body runs off the cheap clock.",
      "peak": 5,
      "peak_axis": "rsc",
@@ -278,7 +278,7 @@
    "builds": {
     "front-line": {
      "chassis": "Ember",
-     "split": "Cleric 14 / Bard 6 (College of Swords)",
+     "split": "Cleric 14 (Zeal (Hazoret)) / Bard 6 (College of Swords)",
      "why": "College of Swords buys the Extra Attack Zeal lacks, stacking with the domain's level-1 bonus-action attack and Divine Strike.",
      "peak": 3,
      "peak_axis": "st",
@@ -304,7 +304,7 @@
    "builds": {
     "front-line": {
      "chassis": "Purge",
-     "split": "Cleric 14 / Bard 6 (College of Swords)",
+     "split": "Cleric 14 (Inquisition) / Bard 6 (College of Swords)",
      "why": "College of Swords buys the Extra Attack the domain lacks, so Witch Hunter's Strike lands twice on a concentrating caster.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -321,7 +321,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Doom",
-     "split": "Cleric 14 / Bard 6 (College of Stormcalling)",
+     "split": "Cleric 14 (Eldritch) / Bard 6 (College of Stormcalling)",
      "why": "Prophecy of Doom is the widest control here off one short-rest charge, and Stormcalling supplies the area damage it sets up.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -338,7 +338,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Eclipse",
-     "split": "Cleric 14 / Bard 6 (College of Stormcalling)",
+     "split": "Cleric 14 (Night) / Bard 6 (College of Stormcalling)",
      "why": "Invocation of Night blinds everything failing a Constitution save for Cleric-level rounds; Stormcalling drops area damage into the blinded crowd.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -355,7 +355,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Torpor",
-     "split": "Cleric 14 / Fighter 1 / Bard 5",
+     "split": "Cleric 14 (Dream) / Fighter 1 / Bard 5",
      "why": "Inception's disadvantage on the first save does not decay as enemy saves climb; Fighter 1 first buys armour and Constitution saves.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -373,7 +373,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Draconic",
-     "split": "Sorcerer 11 / Bard 6 / Warlock 3",
+     "split": "Sorcerer 11 (Draconic Bloodline (vanilla) + Draconic Bloodline Expanded) / Bard 6 / Warlock 3",
      "why": "Warlock's short-rest slots convert into sorcery points, so Quickened casts twice a turn without waiting on a 120-supply long rest.",
      "peak": 4,
      "peak_axis": "st",
@@ -390,7 +390,7 @@
    "builds": {
     "reaction": {
      "chassis": "Tides",
-     "split": "Sorcerer 11 / Bard 6 / Warlock 3",
+     "split": "Sorcerer 11 (Wild Magic (vanilla) + Wild Magic Subclass - Additional Spells) / Bard 6 / Warlock 3",
      "why": "Bend Luck swings any roll off the spare reaction, and Warlock's short-rest slots refill the sorcery points it burns.",
      "peak": 3,
      "peak_axis": "rsc",
@@ -407,7 +407,7 @@
    "builds": {
     "reaction": {
      "chassis": "Storm",
-     "split": "Sorcerer 14 / Bard 6 (College of Valour)",
+     "split": "Sorcerer 14 (Storm Sorcery (vanilla)) / Bard 6 (College of Valour)",
      "why": "Storm's Fury at Sorcerer 11 answers each attacker on Lone Wolf's doubled reaction, and Valour's martial training keeps the body in range.",
      "peak": 3,
      "peak_axis": "aoe",
@@ -443,7 +443,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Psion",
-     "split": "Sorcerer 14 / Bard 6 (College of Valour)",
+     "split": "Sorcerer 14 (Aberrant Mind) / Bard 6 (College of Valour)",
      "why": "Psionic Sorcery casts the control list off sorcery points with no components, and points equal Sorcerer level, so fourteen of them matter.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -460,7 +460,7 @@
    "builds": {
     "durability": {
      "chassis": "Chosen",
-     "split": "Sorcerer 14 / Bard 6 (College of Stormcalling)",
+     "split": "Sorcerer 14 (Favored Soul) / Bard 6 (College of Stormcalling)",
      "why": "Cleric healing cast on Charisma, Twinned Death Ward across both bodies, and Countercharm at Bard 6; no second stat anywhere.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -492,7 +492,7 @@
    "builds": {
     "skills": {
      "chassis": "Peerless",
-     "split": "Bard 14 / Fighter 1 / Cleric 5",
+     "split": "Bard 14 (College of Lore (vanilla)) / Fighter 1 / Cleric 5",
      "why": "Lore's three proficiencies, Expertise four times and Jack of All Trades saturate skills; Fighter first covers the armour and saves a skill-monkey lacks.",
      "peak": 5,
      "peak_axis": "skl",
@@ -512,7 +512,7 @@
    "builds": {
     "front-line": {
      "chassis": "Flourish",
-     "split": "Bard 11 / Cleric 6 / Barbarian 3",
+     "split": "Bard 11 (College of Swords (vanilla)) / Cleric 6 / Barbarian 3",
      "why": "Barbarian first buys Str/Con saves and Reckless Attack advantage on every Flourish; Cleric six adds heavy armour and short-rest Channel Divinity.",
      "peak": 4,
      "peak_axis": "st",
@@ -532,7 +532,7 @@
    "builds": {
     "front-line": {
      "chassis": "Fanfare",
-     "split": "Bard 11 / Sorcerer 6 / Paladin 3",
+     "split": "Bard 11 (College of Valour (vanilla)) / Sorcerer 6 / Paladin 3",
      "why": "Font of Magic converts Bard slots into sorcery points and back, feeding Paladin smites; Sorcerer first covers Constitution and Charisma saves.",
      "peak": 3,
      "peak_axis": "st",
@@ -549,7 +549,7 @@
    "builds": {
     "durability": {
      "chassis": "Mantle",
-     "split": "Bard 14 / Cleric 6 (War)",
+     "split": "Bard 14 (College of Glamour (vanilla)) / Cleric 6 (War)",
      "why": "Unbreakable Majesty arrives at 14 so the split must reach it; Cleric first adds heavy armour and the Wis/Cha saves Mantle cannot buy.",
      "peak": 3,
      "peak_axis": "rsc",
@@ -566,7 +566,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Verse",
-     "split": "Bard 14 / Cleric 6 (Zeal)",
+     "split": "Bard 14 (College of Eloquence) / Cleric 6 (Zeal)",
      "why": "Cleric first buys Wis/Cha saves and heavy armour; Bard 14 lands two rounds of Magical Secrets, which is where the control spells come from.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -586,7 +586,7 @@
    "builds": {
     "front-line": {
      "chassis": "Pirouette",
-     "split": "Bard 11 / Barbarian 3 / Monk 6",
+     "split": "Bard 11 (College of Dance) / Barbarian 3 / Monk 6",
      "why": "Monk five supplies the Extra Attack the College lacks; Barbarian first adds Str/Con saves, Reckless Attack advantage and Rage damage on unarmed strikes.",
      "peak": 3,
      "peak_axis": "st",
@@ -604,7 +604,7 @@
    "builds": {
     "reaction": {
      "chassis": "Dirge",
-     "split": "Bard 14 / Sorcerer 6 (Favored Soul)",
+     "split": "Bard 14 (College of Tragedy) / Sorcerer 6 (Favored Soul)",
      "why": "Sorrowful Fate is a Charisma save with no concentration; Metamagic and Favored Soul's armour make a Charisma-SAD body whose own features fill both reactions.",
      "peak": 3,
      "peak_axis": "ctrl_s",
@@ -685,7 +685,7 @@
     },
     "skills": {
      "chassis": "Reagent",
-     "split": "Bloodhunter 14 / Bard 6 (College of Lore)",
+     "split": "Bloodhunter 14 (Order of the Mutant) / Bard 6 (College of Lore)",
      "why": "Potency and Cunning mutagens raise ability scores, so they raise every check; Lore adds three proficiencies and Expertise twice on top.",
      "peak": 5,
      "peak_axis": "end",
@@ -705,7 +705,7 @@
    "builds": {
     "front-line": {
      "chassis": "Anathema",
-     "split": "Bloodhunter 11 / Barbarian 3 / Paladin 6",
+     "split": "Bloodhunter 11 (Order of the Profane Soul) / Barbarian 3 / Paladin 6",
      "why": "Barbarian first buys Strength and Constitution saves and Rage; Paladin six adds Aura of Protection and smites onto the same Sapping Scar.",
      "peak": 5,
      "peak_axis": "ctrl_s",
@@ -715,7 +715,7 @@
     },
     "lockdown": {
      "chassis": "Scar",
-     "split": "Bloodhunter 11 / Barbarian 3 / Wizard 6",
+     "split": "Bloodhunter 11 (Order of the Profane Soul) / Barbarian 3 / Wizard 6",
      "why": "Blood Hunter 11 is exactly Brand of the Sapping Scar; Wizard six supplies the area control that slot-free blanket save-disadvantage makes land.",
      "peak": 5,
      "peak_axis": "ctrl_s",
@@ -741,7 +741,7 @@
     },
     "front-line": {
      "chassis": "Gambit",
-     "split": "Fighter 11 / Paladin 3 / Wizard 6",
+     "split": "Fighter 11 (Battle Master) / Paladin 3 / Wizard 6",
      "why": "Three attacks at Fighter 11 with d10 superiority dice, Divine Smite fuelled by six Wizard levels of slots, and Haste.",
      "peak": 4,
      "peak_axis": "st",
@@ -815,7 +815,7 @@
     },
     "skills": {
      "chassis": "Envoy",
-     "split": "Fighter 11 / Bard 6 / Paladin 3",
+     "split": "Fighter 11 (Banneret (Purple Dragon Knight, 2014)) / Bard 6 / Paladin 3",
      "why": "Royal Envoy's Expertise plus Bard 6's two Expertises and Jack of All Trades makes the armoured half the gate-clearer.",
      "peak": 4,
      "peak_axis": "act",
@@ -835,7 +835,7 @@
    "builds": {
     "durability": {
      "chassis": "Brute",
-     "split": "Fighter 11 / Cleric 6 / Bloodhunter 3",
+     "split": "Fighter 11 (Brute (UA)) / Cleric 6 / Bloodhunter 3",
      "why": "Opened Cleric, Brutish Durability's d6 rides Wisdom and Charisma save proficiencies; Bloodhunter's rite keeps the damage at-will.",
      "peak": 5,
      "peak_axis": "sav",
@@ -868,7 +868,7 @@
    "builds": {
     "reaction": {
      "chassis": "Kinetic",
-     "split": "Fighter 11 / Paladin 3 / Wizard 6",
+     "split": "Fighter 11 (Psi Warrior) / Paladin 3 / Wizard 6",
      "why": "Protective Field reduces damage on the partner from range twice a round; Wizard 6 shares Intelligence and pays for smites.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -901,7 +901,7 @@
    "builds": {
     "front-line": {
      "chassis": "Resolve",
-     "split": "Fighter 11 / Cleric 6 / Bloodhunter 3",
+     "split": "Fighter 11 (Samurai) / Cleric 6 / Bloodhunter 3",
      "why": "Fighting Spirit's advantage feeds three attacks at 11, Crimson Rite rides every one, and the domain buys a bonus-action swing.",
      "peak": 4,
      "peak_axis": "sav",
@@ -934,7 +934,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Mirror",
-     "split": "Fighter 11 / Paladin 3 / Wizard 6",
+     "split": "Fighter 11 (Echo Knight) / Paladin 3 / Wizard 6",
      "why": "Unleash Incarnation adds a melee attack per Action taken; Wizard 6's Haste and three attacks stack Actions onto Actions.",
      "peak": 4,
      "peak_axis": "act",
@@ -989,7 +989,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Thorn",
-     "split": "Warlock 14 / Bard 6 (College of Stormcalling)",
+     "split": "Warlock 14 (The Archfey) / Bard 6 (College of Stormcalling)",
      "why": "Fey Presence is slot-free area charm-or-fear every short rest, and Stormcalling's area damage lands on whatever the charm leaves standing.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -1053,7 +1053,7 @@
     },
     "short-rest": {
      "chassis": "Curse",
-     "split": "Warlock 14 / Sorcerer 6 (Favored Soul)",
+     "split": "Warlock 14 (The Hexblade) / Sorcerer 6 (Favored Soul)",
      "why": "Same stat, different clock: Favored Soul's armour with Quickened and Twinned spending short-rest pact slots twice a turn.",
      "peak": 4,
      "peak_axis": "st",
@@ -1070,7 +1070,7 @@
    "builds": {
     "front-line": {
      "chassis": "Aureole",
-     "split": "Warlock 14 / Bloodhunter 1 / Paladin 5",
+     "split": "Warlock 14 (The Celestial) / Bloodhunter 1 / Paladin 5",
      "why": "Radiant Soul adds Charisma to radiant damage, so Paladin 5's Extra Attack and smites, opened in heavy armour, scale off one stat.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -1097,7 +1097,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Warp",
-     "split": "Warlock 14 / Bard 6 (College of Swords)",
+     "split": "Warlock 14 (The Psyker) / Bard 6 (College of Swords)",
      "why": "Focused Eldritch Blast detonates Warp inside one Action for slotless Force damage; Swords adds armour, Expertise and short-rest inspiration.",
      "peak": 4,
      "peak_axis": "st",
@@ -1124,7 +1124,7 @@
     },
     "lockdown": {
      "chassis": "Palm",
-     "split": "Monk 11 / Cleric 6 / Artificer 3",
+     "split": "Monk 11 (Way of the Open Hand (vanilla)) / Cleric 6 / Artificer 3",
      "why": "Every Flurry strike carries free Topple and Push at no resource cost; Cleric six shares Wisdom and adds short-rest Channel Divinity.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1141,7 +1141,7 @@
    "builds": {
     "front-line": {
      "chassis": "Umbra",
-     "split": "Monk 11 / Bard 6 / Warlock 3",
+     "split": "Monk 11 (Way of Shadow (vanilla)) / Bard 6 / Warlock 3",
      "why": "Devil's Sight sees through the Darkness Shadow Arts casts off ki, making every Flurry strike advantaged without spending concentration.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1168,7 +1168,7 @@
    "builds": {
     "front-line": {
      "chassis": "Wyrm",
-     "split": "Monk 11 / Bard 6 / Barbarian 3",
+     "split": "Monk 11 (Way of the Ascendant Dragon) / Bard 6 / Barbarian 3",
      "why": "Barbarian three adds Rage's physical resistance and +2 on unarmed strikes behind the only Way that hands the partner a resistance aura.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1178,7 +1178,7 @@
     },
     "short-rest": {
      "chassis": "Ascendant",
-     "split": "Monk 14 / Bard 6 (College of Stormcalling)",
+     "split": "Monk 14 (Way of the Ascendant Dragon) / Bard 6 (College of Stormcalling)",
      "why": "Breath Weapon replaces an attack for real area damage off ki, and Stormcalling stacks thunder and lightning on the same short clock.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1196,7 +1196,7 @@
    "builds": {
     "reaction": {
      "chassis": "Effigy",
-     "split": "Monk 11 / Bard 6 / Warlock 3",
+     "split": "Monk 11 (Way of the Astral Self) / Bard 6 / Warlock 3",
      "why": "Wisdom alone drives attack, damage, AC and DC, and Deflect Energy spends both Lone Wolf reactions every round.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1206,7 +1206,7 @@
     },
     "skills": {
      "chassis": "Augur",
-     "split": "Monk 11 / Rogue 3 / Bard 6",
+     "split": "Monk 11 (Way of the Astral Self) / Rogue 3 / Bard 6",
      "why": "Rogue first gives four skills and two Expertise, Bard six two more; a Wisdom-SAD monk can afford both dips without spending a feat.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1223,7 +1223,7 @@
    "builds": {
     "front-line": {
      "chassis": "Edge",
-     "split": "Monk 11 / Bloodhunter 3 / Bard 6",
+     "split": "Monk 11 (Way of the Kensei) / Bloodhunter 3 / Bard 6",
      "why": "Crimson Rite puts a permanent elemental die on the Kensei weapon and Blood Hunter adds a fighting style; Agile Parry holds the AC.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1243,7 +1243,7 @@
    "builds": {
     "durability": {
      "chassis": "Cerement",
-     "split": "Monk 11 / Cleric 6 / Paladin 3",
+     "split": "Monk 11 (Way of the Long Death) / Cleric 6 / Paladin 3",
      "why": "Mastery of Death at 11 buys off dying for one ki, and Cleric six is Wisdom-SAD with Channel Divinity on the short clock.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1260,7 +1260,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Balm",
-     "split": "Monk 11 / Bard 6 / Warlock 3",
+     "split": "Monk 11 (Way of Mercy) / Bard 6 / Warlock 3",
      "why": "Mercy's free Flurry healing lands at 11 and pact slots refuel alongside ki, so the entire body runs on the short clock.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1277,7 +1277,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Corona",
-     "split": "Monk 14 / Bard 6 (College of Stormcalling)",
+     "split": "Monk 14 (Way of the Sun Soul) / Bard 6 (College of Stormcalling)",
      "why": "The one ranged Monk: ki funds Searing Sunburst and Stormcalling adds a second ranged blast line on the same clock.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1295,7 +1295,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Cyclone",
-     "split": "Monk 14 / Bard 6 (College of Stormcalling)",
+     "split": "Monk 14 (Warrior of the Elements (PHB2024 rework of Four Elements)) / Bard 6 (College of Stormcalling)",
      "why": "Elemental Strikes push and pull without concentration; Bard first buys three skills because Diamond Soul at 14 makes the level-one save pair redundant.",
      "peak": 5,
      "peak_axis": "sav",
@@ -1322,7 +1322,7 @@
    "builds": {
     "durability": {
      "chassis": "Kin",
-     "split": "Monk 14 / Bard 6 (College of Stormcalling)",
+     "split": "Monk 14 (Way of the Friar) / Bard 6 (College of Stormcalling)",
      "why": "Friar's Bond temp-HPs the partner every round with no action, and Diamond Soul at 14 closes the save holes that end a duo.",
      "peak": 5,
      "peak_axis": "rsc",
@@ -1342,7 +1342,7 @@
    "builds": {
     "durability": {
      "chassis": "Philtre",
-     "split": "Artificer 11 / Bard 6 / Paladin 3",
+     "split": "Artificer 11 (Alchemist) / Bard 6 / Paladin 3",
      "why": "Artificer first buys Int and Con saves; Flash of Genius at seven adds Intelligence to the partner's saves twice per round.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -1362,7 +1362,7 @@
    "builds": {
     "front-line": {
      "chassis": "Carapace",
-     "split": "Artificer 11 / Bloodhunter 2 / Paladin 7",
+     "split": "Artificer 11 (Armorer) / Bloodhunter 2 / Paladin 7",
      "why": "Paladin first buys heavy armour and Wis/Cha saves; Aura of Protection at six, smites and Crimson Rite ride the Guardian model.",
      "peak": 4,
      "peak_axis": "dur",
@@ -1372,7 +1372,7 @@
     },
     "skills": {
      "chassis": "Ratchet",
-     "split": "Artificer 11 / Rogue 3 / Bard 6",
+     "split": "Artificer 11 (Armorer) / Rogue 3 / Bard 6",
      "why": "Rogue first is four skills and two Expertise; Bard six adds two more plus Jack of All Trades, and neither costs a feat.",
      "peak": 4,
      "peak_axis": "dur",
@@ -1408,7 +1408,7 @@
    "builds": {
     "front-line": {
      "chassis": "Warforge",
-     "split": "Artificer 11 / Paladin 3 / Wizard 6",
+     "split": "Artificer 11 (Battle Smith) / Paladin 3 / Wizard 6",
      "why": "Intelligence drives weapon attacks, spells and DC across both casters; Paladin first buys heavy armour and smites off the half-caster slots.",
      "peak": 4,
      "peak_axis": "act",
@@ -1428,7 +1428,7 @@
    "builds": {
     "durability": {
      "chassis": "Aegis",
-     "split": "Wizard 14 / Bard 5 / Barbarian 1",
+     "split": "Wizard 14 (Abjuration) / Bard 5 / Barbarian 1",
      "why": "Barbarian first adds Constitution saves, a d12 hit die and Constitution to AC unarmoured, under an Arcane Ward that resets every short rest.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -1438,7 +1438,7 @@
     },
     "reaction": {
      "chassis": "Interpose",
-     "split": "Wizard 14 / Bard 6 (College of Lore)",
+     "split": "Wizard 14 (Abjuration) / Bard 6 (College of Lore)",
      "why": "Projected Ward spends both Lone Wolf reactions absorbing damage aimed at the partner; Lore's Magical Secrets add the outward rescue Wizard lacks.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -1487,7 +1487,7 @@
    "builds": {
     "reaction": {
      "chassis": "Divination",
-     "split": "Wizard 14 / Bard 6 (College of Stormcalling)",
+     "split": "Wizard 14 (Divination) / Bard 6 (College of Stormcalling)",
      "why": "Portent dice are reaction-spent automatic failures refunded on short rests, and Lone Wolf's second reaction spends two of them a round.",
      "peak": 4,
      "peak_axis": "ctrl_s",
@@ -1521,7 +1521,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Cinder",
-     "split": "Wizard 14 / Fighter 1 / Bard 5",
+     "split": "Wizard 14 (Evocation) / Fighter 1 / Bard 5",
      "why": "Sculpt Spells keeps the partner out of your own fireball; Fighter first buys heavy armour, Constitution saves and Second Wind for standing that close.",
      "peak": 4,
      "peak_axis": "aoe",
@@ -1538,7 +1538,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Illusion",
-     "split": "Wizard 14 / Bard 6 (College of Swords)",
+     "split": "Wizard 14 (Illusion) / Bard 6 (College of Swords)",
      "why": "The thinnest school leans on Greater Invisibility and Phantasmal Force; Swords buys medium armour and a fighting style the school cannot supply.",
      "peak": 3,
      "peak_axis": "act",
@@ -1574,7 +1574,7 @@
    "builds": {
     "durability": {
      "chassis": "Crucible",
-     "split": "Wizard 14 / Bard 6 (College of Lore)",
+     "split": "Wizard 14 (Transmutation) / Bard 6 (College of Lore)",
      "why": "Transmuter's Stone hands the partner permanent Constitution save proficiency, and Lore's Magical Secrets at 6 add the outward healing Wizard cannot reach.",
      "peak": 3,
      "peak_axis": "sav",
@@ -1592,7 +1592,7 @@
    "builds": {
     "reaction": {
      "chassis": "Fulcrum",
-     "split": "Wizard 14 / Bard 6 (College of Stormcalling)",
+     "split": "Wizard 14 (War Magic) / Bard 6 (College of Stormcalling)",
      "why": "Arcane Deflection spikes AC or a save on the spare Lone Wolf reaction, and Tactical Wit adds Intelligence to initiative.",
      "peak": 3,
      "peak_axis": "dur",
@@ -1629,7 +1629,7 @@
    "builds": {
     "durability": {
      "chassis": "Grimoire",
-     "split": "Wizard 14 / Bard 5 / Barbarian 1",
+     "split": "Wizard 14 (Hexcraft) / Bard 5 / Barbarian 1",
      "why": "Ritual temp HP on every cast plus Barbarian's Constitution-to-AC and Constitution saves; charm and fear immunity lands at 10.",
      "peak": 4,
      "peak_axis": "dur",
@@ -1646,7 +1646,7 @@
    "builds": {
     "durability": {
      "chassis": "Reliquary",
-     "split": "Wizard 14 / Bard 5 / Barbarian 1",
+     "split": "Wizard 14 (Hierophant) / Bard 5 / Barbarian 1",
      "why": "Erudite Remedy heals and grants resistance as a bonus action; Bard 5 moves Inspiration to the short clock, and Magical Inspiration feeds healing.",
      "peak": 5,
      "peak_axis": "rsc",
@@ -1666,7 +1666,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Charnel",
-     "split": "Wizard 14 / Bard 5 / Artificer 1",
+     "split": "Wizard 14 (School of Death) / Bard 5 / Artificer 1",
      "why": "Artificer first is Int and Con saves plus medium armour and shields; Inescapable Destruction at 6 answers the necrotic resistance Absolute Wrath spreads.",
      "peak": 4,
      "peak_axis": "st",
@@ -1684,7 +1684,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Mortar",
-     "split": "Wizard 14 / Bard 5 / Barbarian 1",
+     "split": "Wizard 14 (School of Bombardment) / Bard 5 / Barbarian 1",
      "why": "A slot-free bomb every turn lays its own surface and rides a levelled spell from 14; Barbarian first protects the concentration underneath.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -1711,7 +1711,7 @@
     },
     "short-rest": {
      "chassis": "Devotion",
-     "split": "Paladin 15 / Warlock 5 (The Archfey)",
+     "split": "Paladin 15 (Oath of Devotion) / Warlock 5 (The Archfey)",
      "why": "Two third-level pact slots returning on every short rest are smite fuel a half-caster cannot otherwise refill mid-day.",
      "peak": 4,
      "peak_axis": "st",
@@ -1728,7 +1728,7 @@
    "builds": {
     "durability": {
      "chassis": "Verdant",
-     "split": "Paladin 14 / Bard 6 (College of Swords)",
+     "split": "Paladin 14 (Oath of the Ancients) / Bard 6 (College of Swords)",
      "why": "Aura of Warding at seven halves spell damage for both characters; Swords adds a fighting style and full-caster slots without leaving heavy armour.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -1780,7 +1780,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Blight",
-     "split": "Paladin 14 / Bard 6 (College of Stormcalling)",
+     "split": "Paladin 14 (Oathbreaker) / Bard 6 (College of Stormcalling)",
      "why": "Smite is necrotic here and caps under layered resistance, so the oath's honest half is Dreadful Aspect's fear and Control Undead.",
      "peak": 4,
      "peak_axis": "st",
@@ -1809,7 +1809,7 @@
     },
     "lockdown": {
      "chassis": "Dread",
-     "split": "Paladin 14 / Bard 6 (College of Stormcalling)",
+     "split": "Paladin 14 (Oath of Conquest) / Bard 6 (College of Stormcalling)",
      "why": "Aura of Conquest paralyses the frightened without concentration; Paladin first keeps heavy armour and both saves, Bard six adds area control.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -1852,7 +1852,7 @@
     },
     "short-rest": {
      "chassis": "Waning",
-     "split": "Paladin 14 / Fighter 1 / Warlock 5",
+     "split": "Paladin 14 (Oath of the Moon (Selûne-inspired)) / Fighter 1 / Warlock 5",
      "why": "Fighter first preserves heavy armour and Second Wind; Warlock five refuels smites with third-level pact slots twice per long rest.",
      "peak": 5,
      "peak_axis": "rsc",
@@ -1870,7 +1870,7 @@
    "builds": {
     "front-line": {
      "chassis": "Dawnray",
-     "split": "Paladin 14 / Bard 6 (College of Stormcalling)",
+     "split": "Paladin 14 (Oath of Illumination) / Bard 6 (College of Stormcalling)",
      "why": "Paladin first keeps heavy armour and both saves; Bard six restores full-caster slot progression, which is this radiant body's smite fuel.",
      "peak": 3,
      "peak_axis": "st",
@@ -1896,7 +1896,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Wellspring",
-     "split": "Druid 17 / Barbarian 1 / Paladin 2",
+     "split": "Druid 17 (Circle of the Land) / Barbarian 1 / Paladin 2",
      "why": "Natural Recovery refunds most at Druid 17; Barbarian first buys Constitution saves and a d12, and Paladin two spends the refund as smites.",
      "peak": 3,
      "peak_axis": "end",
@@ -1947,7 +1947,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Omen",
-     "split": "Druid 14 / Bard 5 / Barbarian 1",
+     "split": "Druid 14 (Circle of the Stars) / Bard 5 / Barbarian 1",
      "why": "Bard five is exactly Font of Inspiration, putting a second partner-facing die on the same short-rest clock as Cosmic Omens.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -1964,7 +1964,7 @@
    "builds": {
     "front-line": {
      "chassis": "Brine",
-     "split": "Druid 14 / Barbarian 1 / Monk 5",
+     "split": "Druid 14 (Circle of the Sea) / Barbarian 1 / Monk 5",
      "why": "Monk five is Extra Attack and Stunning Strike on the same Wisdom that drives the circle; Barbarian one buys Constitution saves and a d12.",
      "peak": 3,
      "peak_axis": "ctrl_a",
@@ -1974,7 +1974,7 @@
     },
     "lockdown": {
      "chassis": "Undertow",
-     "split": "Druid 14 / Sorcerer 6 (Favored Soul)",
+     "split": "Druid 14 (Circle of the Sea) / Sorcerer 6 (Favored Soul)",
      "why": "Quickened lets the bonus-action Wrath of the Sea coexist with a levelled spell, which Listo's bonus-action rule otherwise forbids.",
      "peak": 3,
      "peak_axis": "ctrl_a",
@@ -1991,7 +1991,7 @@
    "builds": {
     "durability": {
      "chassis": "Stormchasers",
-     "split": "Druid 14 / Bard 6 (College of Stormcalling)",
+     "split": "Druid 14 (Circle of Stormchasers) / Bard 6 (College of Stormcalling)",
      "why": "Storm Shift is triple Druid level in temp HP; Bard six keeps full-caster slots and Countercharm while doubling down on the storm type.",
      "peak": 4,
      "peak_axis": "dur",
@@ -2011,7 +2011,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Rime",
-     "split": "Druid 11 / Bard 6 / Warlock 3",
+     "split": "Druid 11 (Circle of Winter) / Bard 6 / Warlock 3",
      "why": "Cold spells knock failures prone from Druid 10 with no concentration, and short-rest pact slots repeat it while Bard six adds area control.",
      "peak": 4,
      "peak_axis": "dur",
@@ -2021,7 +2021,7 @@
     },
     "skills": {
      "chassis": "Cairn",
-     "split": "Druid 11 / Rogue 3 / Bard 6",
+     "split": "Druid 11 (Circle of Winter) / Rogue 3 / Bard 6",
      "why": "Rogue first is four skills and Expertise twice, Bard six adds Expertise twice more plus Jack of All Trades — every gate cleared.",
      "peak": 4,
      "peak_axis": "dur",
@@ -2071,7 +2071,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Emberkin",
-     "split": "Druid 14 / Fighter 1 / Warlock 5",
+     "split": "Druid 14 (Circle of Wildfire) / Fighter 1 / Warlock 5",
      "why": "Fighter first buys heavy armour and Constitution saves for a summoner; Warlock five adds short-rest third-level slots to cast beside the spirit.",
      "peak": 4,
      "peak_axis": "act",
@@ -2089,7 +2089,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Gale",
-     "split": "Druid 14 / Bard 6 (College of Lore)",
+     "split": "Druid 14 (Circle of Wrath) / Bard 6 (College of Lore)",
      "why": "Druid first keeps Intelligence and Wisdom saves; Lore's proficiencies and Cutting Words back a control body whose own elemental numbers stay small.",
      "peak": 3,
      "peak_axis": "aoe",
@@ -2107,7 +2107,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Whisper",
-     "split": "Mesmerist 12 / Paladin 3 / Warlock 5",
+     "split": "Mesmerist 12 (Aspect of the Trickster) / Paladin 3 / Warlock 5",
      "why": "Hypnotic Bonds, pact slots and Channel Oath all return on the short rest, and Paladin first buys heavy armour and Wisdom saves.",
      "peak": 5,
      "peak_axis": "rsc",
@@ -2125,7 +2125,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Gaze",
-     "split": "Mesmerist 14 / Sorcerer 6 (Favored Soul)",
+     "split": "Mesmerist 14 (Aspect of the Eyebiter) / Sorcerer 6 (Favored Soul)",
      "why": "Hypnotic Stare is an at-will, concentration-free save penalty; Heightened Spell stacks disadvantage on top so the DC never decays.",
      "peak": 5,
      "peak_axis": "ctrl_s",
@@ -2171,7 +2171,7 @@
     },
     "skills": {
      "chassis": "Skald",
-     "split": "Barbarian 11 / Bloodhunter 3 / Bard 6",
+     "split": "Barbarian 11 (Base game (Patch 8) — Berserker) / Bloodhunter 3 / Bard 6",
      "why": "Barbarian first keeps Strength and Constitution saves; Crimson Rite is at-will non-spell damage and Bard six buys Expertise twice plus Jack of All Trades.",
      "peak": 4,
      "peak_axis": "st",
@@ -2239,7 +2239,7 @@
    "builds": {
     "reaction": {
      "chassis": "Ancestor",
-     "split": "Barbarian 14 / Bard 6 (College of Stormcalling)",
+     "split": "Barbarian 14 (Path of the Ancestral Guardian) / Bard 6 (College of Stormcalling)",
      "why": "Reaches Vengeful Ancestors at 14 with Barbarian first for Strength and Constitution saves; Spirit Shield spends the spare reaction on the partner's damage.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -2307,7 +2307,7 @@
    "builds": {
     "durability": {
      "chassis": "Tundra",
-     "split": "Barbarian 14 / Bard 6 (College of Stormcalling)",
+     "split": "Barbarian 14 (Path of the Storm Herald) / Bard 6 (College of Stormcalling)",
      "why": "Barbarian first keeps the saves and the aura reaches its 14 upgrade; Tundra feeds the partner temp HP each turn off no rest resource.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -2340,7 +2340,7 @@
    "builds": {
     "reaction": {
      "chassis": "Null",
-     "split": "Barbarian 11 / Bard 6 / Warlock 3",
+     "split": "Barbarian 11 (Path of Ginnungagap) / Bard 6 / Warlock 3",
      "why": "Warlock first adds Wisdom and Charisma saves to the subclass's advantage on spell saves; the Constitution counterspell and crit downgrade fill both reactions.",
      "peak": 4,
      "peak_axis": "sav",
@@ -2377,7 +2377,7 @@
    "builds": {
     "durability": {
      "chassis": "Wraith",
-     "split": "Barbarian 11 / Bard 6 / Warlock 3",
+     "split": "Barbarian 11 (Path of the Revenant) / Bard 6 / Warlock 3",
      "why": "The subclass grants its own heavy armour and flat reduction at three, so level one is free for Warlock's Wisdom and Charisma saves.",
      "peak": 5,
      "peak_axis": "dur",
@@ -2397,7 +2397,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Quickhand",
-     "split": "Rogue 11 / Ranger 3 / Bard 6",
+     "split": "Rogue 11 (Thief) / Ranger 3 / Bard 6",
      "why": "Fast Hands plus Lone Wolf is a third bonus action, and Beast Master's companion at Ranger 3 adds a whole third body.",
      "peak": 5,
      "peak_axis": "end",
@@ -2433,7 +2433,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Tempo",
-     "split": "Rogue 11 / Sorcerer 6 / Warlock 3",
+     "split": "Rogue 11 (Arcane Trickster) / Sorcerer 6 / Warlock 3",
      "why": "Quickened and Twinned Haste hand an Action to both bodies, and Cunning Action still leaves a bonus action spare.",
      "peak": 5,
      "peak_axis": "end",
@@ -2443,7 +2443,7 @@
     },
     "skills": {
      "chassis": "Legerdemain",
-     "split": "Rogue 11 / Bard 6 / Warlock 3",
+     "split": "Rogue 11 (Arcane Trickster) / Bard 6 / Warlock 3",
      "why": "Reliable Talent at Rogue 11 under four Expertise picks, plus Bard 6's pair and Jack of All Trades, clears every gate.",
      "peak": 5,
      "peak_axis": "end",
@@ -2460,7 +2460,7 @@
    "builds": {
     "front-line": {
      "chassis": "Swashbuckler",
-     "split": "Rogue 11 / Cleric 6 / Paladin 3",
+     "split": "Rogue 11 (Swashbuckler) / Cleric 6 / Paladin 3",
      "why": "Rakish Audacity needs no second melee body, and Paladin 3 turns Cleric 6's slots into Divine Smite on the Sneak Attack.",
      "peak": 5,
      "peak_axis": "end",
@@ -2477,7 +2477,7 @@
    "builds": {
     "front-line": {
      "chassis": "Insight",
-     "split": "Rogue 11 / Bloodhunter 3 / Bard 6",
+     "split": "Rogue 11 (Inquisitive) / Bloodhunter 3 / Bard 6",
      "why": "Insightful Fighting enables Sneak Attack with no ally in reach, and Crimson Rite rides every hit on no clock at all.",
      "peak": 5,
      "peak_axis": "end",
@@ -2494,7 +2494,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Tactician",
-     "split": "Rogue 14 / Bard 6 (College of Stormcalling)",
+     "split": "Rogue 14 (Mastermind) / Bard 6 (College of Stormcalling)",
      "why": "Bonus-action Help hands the partner advantage every round without spending an Action, and Rogue 14 keeps the subclass's own tier-three feature.",
      "peak": 5,
      "peak_axis": "end",
@@ -2511,7 +2511,7 @@
    "builds": {
     "front-line": {
      "chassis": "Requiem",
-     "split": "Rogue 11 / Bard 6 / Barbarian 3",
+     "split": "Rogue 11 (Phantom) / Bard 6 / Barbarian 3",
      "why": "Rage's physical resistance lets a Phantom stand in melee, where Wails from the Grave splits each Sneak Attack onto a second target.",
      "peak": 5,
      "peak_axis": "end",
@@ -2550,7 +2550,7 @@
    "builds": {
     "short-rest": {
      "chassis": "Cipher",
-     "split": "Rogue 11 / Bard 6 / Warlock 3",
+     "split": "Rogue 11 (Soulknife) / Bard 6 / Warlock 3",
      "why": "Psionic dice, Warlock pact slots and Font of Inspiration are three pools that all refill on the short rest.",
      "peak": 5,
      "peak_axis": "end",
@@ -2567,7 +2567,7 @@
    "builds": {
     "reaction": {
      "chassis": "Siphon",
-     "split": "Rogue 11 / Warlock 3 / Wizard 6",
+     "split": "Rogue 11 (Seeker) / Warlock 3 / Wizard 6",
      "why": "Auspicious Parry and Spell Siphon spend the reactions Lone Wolf doubled, and Wizard 6 adds Shield and Counterspell on the same Intelligence.",
      "peak": 5,
      "peak_axis": "end",
@@ -2632,7 +2632,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Moths",
-     "split": "Ranger 11 / Barbarian 3 / Wizard 6",
+     "split": "Ranger 11 (Swarmkeeper (base game, Patch 8 + `Expansion`)) / Barbarian 3 / Wizard 6",
      "why": "Moths blind once per round off your own attack at no concentration cost; Reckless Attack and Haste buy more attacks to blind from.",
      "peak": 4,
      "peak_axis": "ctrl_s",
@@ -2713,7 +2713,7 @@
    "builds": {
     "durability": {
      "chassis": "Grove",
-     "split": "Ranger 11 / Cleric 6 / Barbarian 3",
+     "split": "Ranger 11 (Primeval Guardian (UA)) / Cleric 6 / Barbarian 3",
      "why": "Guardian Aura heals a hurt partner every turn for no action; Cleric 6 keeps everything on Wisdom and adds short-rest Channel Divinity.",
      "peak": 4,
      "peak_axis": "rsc",
@@ -2730,7 +2730,7 @@
    "builds": {
     "lockdown": {
      "chassis": "Whiteout",
-     "split": "Ranger 11 / Cleric 6 / Paladin 3",
+     "split": "Ranger 11 (Snowlight Conclave) / Cleric 6 / Paladin 3",
      "why": "Divine Smite is Radiant, so every smite trips Glaring Frost's blind; a radiant domain doubles the sources on a short-rest clock.",
      "peak": 4,
      "peak_axis": "ctrl_a",
@@ -2756,7 +2756,7 @@
    "builds": {
     "front-line": {
      "chassis": "Valkyrie",
-     "split": "Ranger 11 / Barbarian 3 / Wizard 6",
+     "split": "Ranger 11 (Conclave of the Dawnstriders) / Barbarian 3 / Wizard 6",
      "why": "Divine Flurry's extra attacks at 11 all fire with Reckless Attack's advantage into a reduced crit threshold; Haste adds an Action.",
      "peak": 5,
      "peak_axis": "st",
@@ -2776,7 +2776,7 @@
    "builds": {
     "action-economy": {
      "chassis": "Banner",
-     "split": "Paragon 11 / Paladin 3 / Wizard 6",
+     "split": "Paragon 11 (Lionheart) / Paladin 3 / Wizard 6",
      "why": "Red Banner hands the partner a reaction attack on the short-rest clock from Paragon 6; Wizard 6 adds Haste and smite fuel.",
      "peak": 5,
      "peak_axis": "act",
@@ -2847,7 +2847,7 @@
    "builds": {
     "front-line": {
      "chassis": "Armament",
-     "split": "Paragon 12 / Paladin 3 / Warlock 5",
+     "split": "Paragon 12 (Spellblade — the exception the skill suspected, but not a caster) / Paladin 3 / Warlock 5",
      "why": "Same Charisma attack stat, different clock: short-rest pact slots and Divine Smite turn every hit into burst the capstone body cannot match.",
      "peak": 4,
      "peak_axis": "st",
