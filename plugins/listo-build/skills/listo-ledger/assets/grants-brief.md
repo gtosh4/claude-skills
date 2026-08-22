@@ -81,6 +81,12 @@ Return raw JSON, one object keyed exactly as your assignment lists the keys. No 
 | `soul-of-artifice` | Artificer 20 — +1 to every save | self |
 | `danger-sense` | Barbarian 2 — advantage on Dexterity saves | self |
 | `bladesong` | Bladesinging 2 — +2/3/4 to Constitution saves while singing | self |
+| `purity-judgment` | Inquisitor 1 — Purity Judgment, +half WIS to all saves against the Judged target | self |
+| `saving-grace` | Tactics Inquisition — reaction, spend Shared Judgment to reroll an **ally's** failed save | pair |
+| `vindicators-shield` | Tactics Inquisition 4th — +3 AC and all saves, transferable to the ally | self |
+| `battle-acumen` | Tactics Inquisition 7 — +1 to saves per Judged ally within 9m, shareable for a charge | pair |
+| `inquisitors-edge` | Vengeance Inquisition 15 — reaction to reroll a failed save against a Judged enemy | self |
+| `unyielding-resolve` | Zeal Inquisition 3 — +1 to saves per 5 points held in the delayed damage pool | self |
 | `war-caster` | advantage on concentration saves only | self |
 
 ## Read set

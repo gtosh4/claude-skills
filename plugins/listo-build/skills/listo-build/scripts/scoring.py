@@ -360,6 +360,16 @@ BOOSTERS = {
     "soul-of-artifice":   {"scope": "self", "partial": True, "abilities": ALL},   # Artificer 20, +1 all saves
     "danger-sense":       {"scope": "self", "partial": True, "abilities": ("dex",)},  # Barbarian 2
     "bladesong":          {"scope": "self", "partial": True, "abilities": ("con",)},  # Bladesinging 2, +2/3/4
+    # Inquisitor, found by the v7 tier-1 pass, which correctly mapped none of them to a
+    # lookalike id and reported all three subclasses as understated on saves instead. Every one
+    # covers the whole save category and is gated on a resource or on the target being Judged,
+    # which is the `partial` + ALL shape, not `blanket`.
+    "purity-judgment":    {"scope": "self", "partial": True, "abilities": ALL},   # Judgment L1, +half WIS vs the Judged target
+    "saving-grace":       {"scope": "pair", "partial": True, "abilities": ALL},   # Tactics, reaction, rerolls an ALLY's save
+    "vindicators-shield": {"scope": "self", "partial": True, "abilities": ALL},   # Tactics 4th, +3 saves, transferable
+    "battle-acumen":      {"scope": "pair", "partial": True, "abilities": ALL},   # Tactics 7, +1 per Judged ally, shareable
+    "inquisitors-edge":   {"scope": "self", "partial": True, "abilities": ALL},   # Vengeance 15, reaction reroll vs a Judged enemy
+    "unyielding-resolve": {"scope": "self", "partial": True, "abilities": ALL},   # Zeal 3, +1 per 5 points in the delayed pool
     # real, but priced elsewhere
     "war-caster":         {"scope": "self", "blanket": False},  # concentration saves only
 }

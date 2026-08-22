@@ -379,6 +379,12 @@ that decides a fight comes off one, so the condition is nearly always met.
 | `soul-of-artifice` | Artificer 20 — +1 to every save while holding an infused item | self | partial |
 | `danger-sense` | Barbarian 2 — advantage on Dexterity saves, unconditional | self | partial |
 | `bladesong` | Bladesinging 2 — +2/+3/+4 to Constitution saves | self | partial |
+| `purity-judgment` | Inquisitor 1 — +half WIS to all saves against the Judged target | self | partial |
+| `saving-grace` | Tactics Inquisition — reaction, spends Shared Judgment to reroll an ally's save | **pair** | partial |
+| `vindicators-shield` | Tactics Inquisition 4th — +3 AC and all saves, transferable to the ally | self | partial |
+| `battle-acumen` | Tactics Inquisition 7 — +1 per Judged ally within 9m; **+1 in a duo**, +2 at 20 | **pair** | partial |
+| `inquisitors-edge` | Vengeance Inquisition 15 — reaction to reroll a failed save vs a Judged enemy | self | partial |
+| `unyielding-resolve` | Zeal Inquisition 3 — +1 per 5 points held in the delayed damage pool | self | partial |
 | `war-caster` | advantage on concentration saves only | self | no rung |
 
 `war-caster` stays a legal id because it is worth recording; its value is already priced by
