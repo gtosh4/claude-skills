@@ -972,12 +972,26 @@ def audit_roster(C):
 
 
 def _primary_class(split):
-    """The class holding the most levels in a split, or None."""
+    """The class holding the most levels in a split, normalised, or None.
+
+    Matching a single word before the number truncated every multi-word class name to its last
+    word, so `Blood Hunter 17` grouped as "Hunter" while `Bloodhunter 14` grouped as
+    "Bloodhunter" — the same class in two groups, which is exactly what the group-constant guard
+    cannot survive. A scoring agent caught it: its own sweep reported four constants for a group
+    of three chassis because the other three had sorted elsewhere.
+
+    Normalised the way `score_deps.split_parts` does it, so the audit groups by the same key the
+    dependency set resolves by. Parts are separated by `/` and the subclass parenthetical trails
+    the level, so each segment is read up to its number.
+    """
     best = (0, None)
-    for m in re.finditer(r"([A-Za-z]+)\s+(\d+)", split or ""):
+    for seg in (split or "").split("/"):
+        m = re.match(r"\s*([A-Za-z][A-Za-z ]*?)\s+(\d{1,2})\b", seg)
+        if not m:
+            continue
         n = int(m.group(2))
         if n > best[0]:
-            best = (n, m.group(1))
+            best = (n, re.sub(r"[^a-z]", "", m.group(1).lower()))
     return best[1]
 
 

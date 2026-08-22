@@ -42,5 +42,34 @@ class Labels(unittest.TestCase):
             self.assertIn('"first": first or primary', fh.read())
 
 
+class PrimaryClass(unittest.TestCase):
+    """`audit_roster` groups by primary class, so the key has to survive how a split spells it.
+
+    Matching one word before the number truncated every multi-word class name to its last word:
+    `Blood Hunter 17` grouped as "Hunter" and `Bloodhunter 14` as "Bloodhunter", splitting one
+    class across two groups. The group-constant guard cannot survive that — a scoring agent saw
+    four constants reported for a group of three chassis.
+    """
+
+    def test_both_spellings_of_a_two_word_class_agree(self):
+        from scoring import _primary_class
+        self.assertEqual(_primary_class("Blood Hunter 17 (Order of the Lycan) / Bard 3"),
+                         _primary_class("Bloodhunter 14 (Order of the Mutant) / Bard 6"))
+
+    def test_the_primary_is_the_class_with_the_most_levels(self):
+        from scoring import _primary_class
+        self.assertEqual(_primary_class("Fighter 11 (Echo Knight) / Paladin 3 / Wizard 6"),
+                         "fighter")
+        self.assertEqual(
+            _primary_class("Ranger 15 (Snowlight Conclave) / Monk 3 (Way of the Friar) "
+                           "/ Cleric 2 (Light)"), "ranger")
+
+    def test_a_subclass_parenthetical_is_not_read_as_a_class(self):
+        """`(Order of the Lycan)` contains no number, but `Cleric 2 (Light)` must not lose to it."""
+        from scoring import _primary_class
+        self.assertEqual(_primary_class("Cleric 14 (Tempest) / Bard 6 (College of Stormcalling)"),
+                         "cleric")
+
+
 if __name__ == "__main__":
     unittest.main()
