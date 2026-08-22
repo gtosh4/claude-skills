@@ -74,6 +74,13 @@ Return raw JSON, one object keyed exactly as your assignment lists the keys. No 
 | `fanatical-focus` | Zealot — one reroll per Rage | self |
 | `gift-of-will` | Trickster — +Cha and half level to the partner's Wis saves | pair |
 | `flash-of-genius` | Artificer 7 — +Int to an ally's save, costs a reaction | pair |
+| `indomitable` | Fighter 9 — reroll a failed save, 1–3 per long rest | self |
+| `supernatural-defense` | Monster Slayer 7 — +1d6 on saves against your prey | self |
+| `cosmic-omen` | Circle of the Stars 6 — ±1d6 on a save, short rest | self |
+| `legendary-resistance` | Paragon 15 — auto-succeed a failed save | self |
+| `soul-of-artifice` | Artificer 20 — +1 to every save | self |
+| `danger-sense` | Barbarian 2 — advantage on Dexterity saves | self |
+| `bladesong` | Bladesinging 2 — +2/3/4 to Constitution saves while singing | self |
 | `war-caster` | advantage on concentration saves only | self |
 
 ## Read set
