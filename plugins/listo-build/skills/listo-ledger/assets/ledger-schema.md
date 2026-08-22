@@ -195,11 +195,16 @@ mistakes are now hard errors rather than confusing output:
 
 A free-form alternative uses `{"text": "<b>Heading</b>: …"}` instead and is rendered verbatim.
 
-## The skills axis is authored as modifiers, not a number
+## The skills axis carries modifiers as well as a number
 
-Index 7 is **derived** too, from `skills` — a modifier map per act. Same reason as saves: the
+`skills` is a modifier map per act, and it is what the **pair** score reads: `skills_pair`
+recomputes `skl` from the two bodies' maps and discards both rungs. Same reason as saves — the
 rubric is written in terms of which checks a pair can actually clear, and a bare 0–5 cannot be
 re-checked from outside.
+
+Unlike saves, index 7 is still **authored**: it must be an integer 0–5, a `null` there is rejected,
+and the value reaches the solo radar and the presentation-order tiebreak. Author both, and let them
+agree.
 
 ```jsonc
 "skills": {

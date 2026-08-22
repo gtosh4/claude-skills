@@ -75,6 +75,31 @@ it, and those are the two questions the roster card exists to answer.
 authoring a number there is a hard error. See `ledger-schema.md`, "The saves axis is authored as
 a set, not a number", for `prof`, `boosters` and which features grant what.
 
+**Index 7 (`skl`) is different from index 8, and the difference catches people out.** You *do*
+author it, as an ordinary integer 0–5 against the `skl` rung — a null there is a hard error, the
+opposite of `sav`. But it is not the number the pair score uses. Every chassis also carries a
+`skills` block, a per-act map of the finished modifier the body rolls on each recorded check:
+
+```json
+"skills": {
+  "I":   {"Perception": 5, "Investigation": 1, "Persuasion": 7},
+  "II":  {"Perception": 7, "Investigation": 2, "Persuasion": 9, "Deception": 9},
+  "III": {"Perception": 8, "Investigation": 3, "Persuasion": 11, "Deception": 11}
+}
+```
+
+Perception, Investigation and Persuasion are mandatory in all three acts even when the answer is
+untrained; the named gates are optional, because there absence *is* the answer. Proficiency bonus
+is pinned at **+3 / +4 / +5 by act**, never derived from character level. `ledger-schema.md`,
+"the `skills` block", is the authority.
+
+**You do not author that map** — the evidence and routine-skills passes do, against
+`evidence-brief.md` and `routine-skills-brief.md`. It is described here because `skills_pair`
+recomputes the pair's `skl` from the map and ignores your rung. Your integer reaches the solo
+radar on the roster card and the presentation-order tiebreak; the map reaches every pair score.
+Score index 7 the way the rubric says and let the two agree — if your read of the body's checks
+contradicts what a `skills` map would have to say, that belongs in `uncertain`.
+
 Acts: **I** = characters 3–8, **II** = 9–15, **III** = 16–20.
 
 ### Act-relative means the ladder re-baselines, and this is where the last run went wrong

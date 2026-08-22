@@ -35,7 +35,20 @@ renders is indistinguishable from the current one.
 | `merge_prose.py` | prose | merges rewritten entry prose and roster notes, enforcing labels and self-containment |
 | `apply_falls.py` | repair | applies falling-series repairs and refuses to write unless the defect is gone |
 | `pb_sensitivity.py` | audit | measures how far the act III proficiency-bonus convention moves the ranking |
+| `rank_vec.py` | split search | the same pair score as `scoring.py`, restated over arrays for the sweep |
 | `render_ledger.py` | render | every derived number, the field table and the HTML |
+
+### Tests
+
+Stdlib `unittest`, no third-party runner. From the repository root:
+
+```sh
+python -m unittest discover -s plugins/listo-build/tests
+```
+
+Fixtures are copies written into a `tempfile` directory. No test writes a published asset — the
+ledger, the seeds, the base profiles and the dip catalogue are all cache keys, and a test that
+mutates one can invalidate a scoring run. See `plugins/listo-build/tests/README.md`.
 
 ## Discovering the roster
 

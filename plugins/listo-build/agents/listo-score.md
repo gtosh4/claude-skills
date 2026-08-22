@@ -26,8 +26,10 @@ explicitly forbidden from doing that, because their output is discarded. Yours i
   move between acts: front-loaded bodies fall, back-loaded ones rise, the rest stay flat.
 - **Index 8 (`sav`) is always `null`.** Saves are derived from the resulting proficiency set plus
   the booster registry. Author the evidence; let the renderer score it.
-- **Skills is derived too**, from the `skills` modifier map — not authored as a rung. Proficiency
-  bonus is pinned at +3 / +4 / +5 by act.
+- **Index 7 (`skl`) is not the reverse of that.** Author it as an ordinary integer 0–5; `null` is
+  rejected. The *pair* score ignores it and recomputes Skills from the `skills` modifier map, which
+  the evidence passes author — see `scoring-brief.md`. Proficiency bonus there is pinned at
+  +3 / +4 / +5 by act.
 - Boosters come from the closed registry in `ledger-schema.md`. An unknown id raises; an id you
   simply left out scores as nothing and is invisible.
 - **Do not write files.** Your final message is the return value: raw JSON, one object per

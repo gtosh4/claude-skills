@@ -359,10 +359,28 @@ def rank_all(tasks, pool_ch, verify):
     return results
 
 
+def only_keys(arg):
+    """`--only` as a set of subclass keys, or `None` for "every key".
+
+    Three subclass headings carry commas — `fighter/Banneret (Purple Dragon Knight, 2014)` among
+    them — so a comma-joined list cannot address them and silently splits them into two keys that
+    match nothing. `@file`, one key per line, can. Same convention as `seed_index.py --scored`.
+    """
+    if not arg:
+        return None
+    if arg.startswith("@"):
+        with open(arg[1:]) as fh:
+            return {l.strip() for l in fh if l.strip()}
+    return set(arg.split(","))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--limit", type=int, default=2, help="variants kept per subclass")
-    ap.add_argument("--only", help="comma-separated subclass keys, for a smoke test")
+    ap.add_argument("--only", metavar="KEY,KEY|@FILE",
+                    help="subclass keys, for a smoke test. Several headings carry commas, so a "
+                         "comma-joined list cannot address every key in the inventory; `@file`, "
+                         "one key per line, can")
     ap.add_argument("--pool-cap", type=int, default=5000,
                     help="bodies in the partner pool, drawn evenly from every subclass's "
                          "frontier; 0 = all, which is quadratic and takes hours")
@@ -383,7 +401,8 @@ def main():
     bases = bases_for_compose(doc)
     inv = SI.inventory()
     cls_of = {f"{c}/{s}": c for c, subs in inv.items() for s in subs}
-    keys = [k for k in bases if not a.only or k in a.only.split(",")]
+    only = only_keys(a.only)
+    keys = [k for k in bases if only is None or k in only]
 
     # The base profiles are keyed by subclass and know nothing about verdicts, so enumerating
     # straight off them resurrects every subclass the sweep already rejected — a `none` whose
@@ -417,7 +436,7 @@ def main():
                     print(f"      unverified: {sd['uncertain']}", file=sys.stderr)
         # A base profile with no seed at all is a real gap, not a rejection: `--check` never saw
         # it, so nobody decided anything about it. Fail rather than silently narrowing the roster.
-        missing = [k for k in cand if k not in bases and (not a.only or k in a.only.split(","))]
+        missing = [k for k in cand if k not in bases and (only is None or k in only)]
         if missing:
             sys.exit(f"{len(missing)} promoted subclass(es) have no base profile: "
                      + ", ".join(sorted(missing)[:5]))
