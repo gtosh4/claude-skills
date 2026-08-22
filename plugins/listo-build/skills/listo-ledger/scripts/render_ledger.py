@@ -150,6 +150,39 @@ def dmg_table(rec, disp):
             '<tbody>' + "".join(rows) + '</tbody></table></div>')
 
 
+_SEG = re.compile(r"^(?P<head>.+?\s+(?P<lv>\d+))(?P<tail>\s*\(.*\))?$")
+
+
+def split_html(raw):
+    """Render a split biggest class first, with the level-1 class marked.
+
+    Two facts are in one string and they want opposite orders. The *size* of each class is what
+    a reader scans for — a `Cleric 14 / Monk 5 / Barbarian 1` is a Cleric — so the classes are
+    sorted by level descending. But the class listed **first** in the authored split is the one
+    taken at character level 1, and that is load-bearing: only the level-1 class grants saving
+    throw proficiencies and its full armour (`ledger-schema.md`, "Grants are the level-1 class").
+    Sorting alone would silently destroy it, so it is preserved as a marker instead of a position.
+
+    Sorting is stable, so classes on the same level keep the order they were authored in.
+    """
+    segs = [p.strip() for p in raw.split(" / ") if p.strip()]
+    parsed = []
+    for i, seg in enumerate(segs):
+        m = _SEG.match(seg)
+        # An unparseable segment is kept verbatim and sorted last rather than dropped — the
+        # split is the one field a reader needs to rebuild the body.
+        parsed.append((int(m.group("lv")) if m else -1, seg, i == 0))
+    parsed.sort(key=lambda t: -t[0])
+
+    out = []
+    for _lv, seg, is_first in parsed:
+        seg = re.sub(r"\(([^)]*)\)", r'<span class="sub">\1</span>', seg)
+        if is_first:
+            seg += ' <sup class="lv1" title="taken at character level 1">L1</sup>'
+        out.append(seg)
+    return " / ".join(out)
+
+
 def roster_block(key, ch, disp):
     head = "".join(axis_th(a) for a in AXES)
     rows = []
@@ -165,14 +198,14 @@ def roster_block(key, ch, disp):
     # A split carries its subclasses as parentheticals — `Warlock 17 (The Hexblade)`. They are the
     # part a reader actually needs to rebuild the body, so they are kept, just set back from the
     # class and level that carry the arithmetic.
-    split = re.sub(r"\(([^)]*)\)", r'<span class="sub">\1</span>', ch.get("split", ""))
+    split = split_html(ch.get("split", ""))
     return f'''<article class="rost" id="r-{key.lower()}">
 <header><h3><a class="anchor" href="#r-{key.lower()}">{disp(key)}</a></h3>
 <p class="chassis">{split}{meta}</p>
 <p class="chassis reachline">reach: <b>{REACH_LABEL[ch["reach"]]}</b></p></header>
 {f'<p class="note">{ch["note"]}</p>' if ch.get("note") else ""}
 {f'<p class="note lede-strength"><b>Strong because</b> {ch["strength"]}</p>' if ch.get("strength") else ""}
-{f'<p class="note lede-wants"><b>Wants a partner who</b> {ch["wants"]}</p>' if ch.get("wants") else ""}
+{f'<p class="note lede-wants"><b>Wants</b> {ch["wants"]}</p>' if ch.get("wants") else ""}
 <div class="scroll"><table class="matrix"><thead><tr><th>Act</th>{head}
 <th class="tot"><span>Sum</span></th></tr></thead><tbody>{rows}</tbody></table></div></article>'''
 
@@ -464,7 +497,9 @@ def render(d):
 <section>
   {h2("roster", "The roster")}
   <p class="sublede">Every chassis, the {len(relevant)} that reach the frontier first, then those
-  whose every pairing is dominated. Each ranked by the best score it reaches anywhere in the field. Act bands: {" &middot; ".join(f"{a} {b}" for a, b in zip(ACTS, BANDS))}.</p>
+  whose every pairing is dominated. Each ranked by the best score it reaches anywhere in the field. Act bands: {" &middot; ".join(f"{a} {b}" for a, b in zip(ACTS, BANDS))}.
+  Splits read biggest class first; <sup class="lv1">L1</sup> marks the class taken at character
+  level 1, which is the only one that grants saving throws and its full armour.</p>
   {roster}
 </section>
 

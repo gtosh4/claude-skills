@@ -40,9 +40,12 @@ asterisk** — `Fighter 1* / Wizard 19 (Evocation)` — because only the level-1
 throws and, for several classes, the good armour. If you do not mark one, the majority class is
 assumed to be first.
 
-**Dipping is close to free here.** Feats key off *character* level (3/6/9/12/13/15/18), so a
-three-level dip costs no feats. Lone Wolf already grants two save proficiencies, so the classic
-Fighter 1 for Constitution buys nothing. A dip costs only what the top of the abandoned class
+**Dipping is usually free, but check the arithmetic.** Feats key off **class** level
+(3/6/9/12/13/15/18), not character level, so the budget is `floor(A/3) + floor(B/3) + ...`, **+1 per
+class that reaches 13**, +1 for Fighter/Rogue at 11. `20`, `17/3` and `14/3/3` all pay **7** — that
+is why a three-level dip is normally free. But a split where **no class reaches 13** loses a feat
+outright: `11/6/3` and `12/8` pay **6**. Lone Wolf already grants two save proficiencies, so the
+classic Fighter 1 for Constitution buys nothing. A dip costs only what the top of the abandoned class
 table would have given — and outside a few real capstones, that is very little. **A mono-20 split
 needs a specific reason**: name the late feature that beats the best three levels available
 elsewhere.

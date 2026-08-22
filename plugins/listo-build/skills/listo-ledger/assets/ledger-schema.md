@@ -56,6 +56,7 @@ because they do not exist until render time.
       "strength": "Why it is worth playing *in this run* — two bodies, Lone Wolf, Listo's inflated encounters.",
       "wants":    "What it needs from the other half of the duo, stated as a capability, not a class.",
       "concentration": false,               // does this body's plan ride a concentration spell?
+      "types":   ["slashing", "radiant"],   // damage types this body actually deals — REQUIRED
       "saves": {                            // source of truth for the saves axis — see below
         "I":   {"prof": ["int","wis","dex","con"], "boosters": []},
         "II":  {"prof": ["int","wis","dex","con"], "boosters": []},
@@ -90,6 +91,33 @@ because they do not exist until render time.
   }
 }
 ```
+
+### `types` is required, and the renderer raises without it
+
+The damage types this body actually deals, from the closed set:
+
+    acid bludgeoning cold fire force lightning necrotic
+    piercing poison psychic radiant slashing thunder
+
+**Absolute Wrath is on**, so ordinary enemies carry layered resistances, not just bosses. Two
+bodies sharing one damage type have no answer when it is resisted — which is a *pair* property the
+renderer computes, and it can only compute it if both bodies declare what they deal. An absent
+`types` is therefore a hard error, not a default.
+
+List what the body deals **routinely**, not everything it could ever roll: the weapon's own type,
+a rider's type, the damage of the spells it actually casts. One to three entries is normal. Force
+is the least-resisted type in the list, then Radiant in Act 2.
+
+### `meta` names the attack stat whenever it is not the primary
+
+`Wis 22 · Dex 20 · 7 feats`. Collapse to one stat only when one stat does both jobs.
+
+`meta` is display-only and the renderer neither reads nor checks it, so nothing here fails closed
+— which makes the convention load-bearing. It is the only place a reader can confirm the modifier
+behind a `st` rung, and a Monk record reading `Wis 22` alone reads as a +4 attack when the body
+swings at +5 or +6. Monk, Paladin, Inquisitor, Mesmerist, Artificer (outside Battle Smith) and
+Paragon (outside Spellblade) all split the two stats; Way of the Astral Self, Battle Smith and
+Shillelagh are the cases that genuinely re-merge them.
 
 ### `note`, `strength` and `wants` do different jobs — write all three
 

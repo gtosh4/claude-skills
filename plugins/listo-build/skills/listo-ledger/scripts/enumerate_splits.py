@@ -12,7 +12,7 @@ spending real scoring on; tier 2 re-derives every number from the rubric.
     scripts/enumerate_splits.py --limit 2 -o variants.json
 """
 import json, os, sys, itertools, argparse, collections
-import concurrent.futures as cf
+import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
@@ -21,11 +21,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "listo-b
 import compose as CO                                              # noqa: E402
 import seed_index as SI                                           # noqa: E402
 from scoring import (KEYS, SAV_IDX, KEY_SAVES, derive_saves,       # noqa: E402
-                     derive_skills, score_bodies, _gate_odds_cached)
+                     derive_skills, _gate_odds_cached)
+import rank_vec as RV                                             # noqa: E402
 
 MIN_PRIMARY = 11          # a majority of twenty; below this the subclass is not the subject
 MAX_CLASSES = 3
 ACTS = ("I", "II", "III")
+TOP = 10                  # partners averaged into a candidate's value
 
 # `to_chassis` overwrites both of these before anything is scored — Saves from the proficiency set,
 # Skills from the modifier map — so the rungs `compose` produced for them are dead weight in a
@@ -252,7 +254,7 @@ def enumerate_for(key, base, cat, pbc, cls_of, sbc=None):
 
 
 def to_chassis(vec, prof, boosters, concentration, reach="hybrid", skills=None, split="",
-               classes=()):
+               classes=(), vid="v"):
     """A composed variant in the shape `score_bodies` wants.
 
     `skills` is not optional in practice: `skills_pair` scores off modifiers, so a body handed
@@ -267,31 +269,11 @@ def to_chassis(vec, prof, boosters, concentration, reach="hybrid", skills=None, 
         row = list(sc)
         row[KEYS.index("skl")] = derive_skills(skills.get(a, {}), a, cls)
         per_act[a] = row
-    return {"_id": "v", "reach": reach, "concentration": concentration, "split": split,
+    return {"_id": vid, "reach": reach, "concentration": concentration, "split": split,
             "skills": skills,
             "scores": per_act,
             "saves": {a: {"prof": list(prof), "boosters": list(boosters)}
                       for a in ("I", "II", "III")}}
-
-
-def pair_value(a, b):
-    try:
-        return score_bodies(dict(a, _id="a"), dict(b, _id="b"))["score"]
-    except Exception:
-        return 0.0
-
-
-# Ranking is `candidates x pool` pair scores and dwarfs everything else: enumerating and deduping
-# four subclasses takes 22s, ranking them against an uncapped pool took 33 minutes. The pool is
-# identical for every subclass and the subclasses do not see each other, so the loop is
-# embarrassingly parallel — the pool is handed to each worker once by the initialiser rather than
-# pickled per task, which at a thousand bodies is the difference that matters.
-_POOL = None
-
-
-def _init_worker(pool_ch):
-    global _POOL
-    _POOL = pool_ch
 
 
 def stratify(per, cap):
@@ -334,14 +316,47 @@ def stratify(per, cap):
     return out
 
 
-def _rank_one(task):
-    key, cand = task
-    ranked = []
-    for vid, ch in cand:
-        s = sorted((pair_value(ch, pc) for pid, pc in _POOL if pid != vid), reverse=True)
-        ranked.append((vid, sum(s[:10]) / max(1, len(s[:10]))))
-    ranked.sort(key=lambda t: -t[1])
-    return key, ranked
+def rank_all(tasks, pool_ch, verify):
+    """`{key: [(vid, value)]}` — every candidate scored against the pool, in `rank_vec` blocks.
+
+    The pool is drawn from the frontier, so its bodies are also candidates. They are appended to
+    the feature table a second time rather than being cross-referenced: 5,000 duplicate rows
+    against 89,000, and `rank` excludes a candidate from its own pool by id either way.
+    """
+    cand = [(k, vid, ch) for k, c in tasks for vid, ch in c]
+    bodies = [ch for _k, _vid, ch in cand] + [ch for _vid, ch in pool_ch]
+    print(f"building features for {len(bodies)} bodies", file=sys.stderr)
+    F = RV.build(bodies)
+
+    if verify:
+        bad = RV.verify(F, bodies, verify)
+        if bad:
+            for i, j, got, want in bad[:5]:
+                print(f"  {F.ids[i]} x {F.ids[j]}: vectorised {got}, score_bodies {want}",
+                      file=sys.stderr)
+            sys.exit(f"--verify: {len(bad)}/{verify} sampled pairs disagree with score_bodies. "
+                     "The vectorised path has drifted from the model — do not trust this run.")
+        print(f"verified {verify} sampled pairs against score_bodies", file=sys.stderr)
+
+    ci = np.arange(len(cand))
+    pi = np.arange(len(cand), len(bodies))
+
+    step = RV.CHUNK * 20
+
+    def tick(done, total):
+        if done % step == 0 or done == total:
+            print(f"  ranked {done}/{total}", file=sys.stderr)
+
+    ranked = RV.rank(F, ci, pi, top=TOP, progress=tick)
+    # Seeded from `tasks`, not from what ranked: a subclass whose frontier is empty still has to
+    # appear, because the caller indexes `results[k]` for every key in `per`.
+    results = {k: [] for k, _c in tasks}
+    for i, val in ranked:
+        k, vid, _ch = cand[i]
+        results[k].append((vid, val))
+    for k in results:
+        results[k].sort(key=lambda t: -t[1])
+    return results
 
 
 def main():
@@ -351,8 +366,12 @@ def main():
     ap.add_argument("--pool-cap", type=int, default=5000,
                     help="bodies in the partner pool, drawn evenly from every subclass's "
                          "frontier; 0 = all, which is quadratic and takes hours")
-    ap.add_argument("--jobs", type=int, default=0,
-                    help="ranking workers; 0 = one per CPU, 1 = in-process")
+    ap.add_argument("--verify", type=int, default=1000, metavar="N",
+                    help="cross-check N random pairs against `score_bodies` before ranking and "
+                         "abort on any disagreement; 0 disables. `rank_vec` restates the model "
+                         "that `scoring.py` implements for the renderers, and nothing else in the "
+                         "tree scores anything, so this is the only check that the two still "
+                         "agree — do not run a roster at 0. A thousand pairs costs about a second")
     ap.add_argument("--ignore-verdicts", action="store_true",
                     help="enumerate every subclass with a base profile, including ones the sweep "
                          "rejected; for smoke tests only, never for a roster")
@@ -381,10 +400,21 @@ def main():
         if dropped:
             print(f"skipping {len(dropped)} subclass(es) the sweep did not promote:",
                   file=sys.stderr)
+            # The verdict word alone ("none", "dupe") says a decision happened but not what it was,
+            # which is exactly as useless as no message: a reader still has to open the seed file to
+            # learn whether the subclass is mechanically dead, unreadable in this pack, or merely a
+            # reflavour of another seed's body. The seed already carries that sentence — print it.
             for k in sorted(dropped):
                 sd = seeds.get(k)
-                why = f"{sd['verdict']}" if sd else "no seed"
-                print(f"  {k} — {why}", file=sys.stderr)
+                if not sd:
+                    print(f"  {k} — no seed", file=sys.stderr)
+                    continue
+                tag = sd["verdict"]
+                if sd.get("dupe_of"):
+                    tag += f" of {sd['dupe_of']}"
+                print(f"  {k} — {tag}: {sd.get('why', '(no reason recorded)')}", file=sys.stderr)
+                if sd.get("uncertain"):
+                    print(f"      unverified: {sd['uncertain']}", file=sys.stderr)
         # A base profile with no seed at all is a real gap, not a rejection: `--check` never saw
         # it, so nobody decided anything about it. Fail rather than silently narrowing the roster.
         missing = [k for k in cand if k not in bases and (not a.only or k in a.only.split(","))]
@@ -428,7 +458,7 @@ def main():
                                 bases[vid.split("::")[0]]["concentration"],
                                 skills=per[vid.split("::")[0]][1][vid]["skills"],
                                 split=vid.split("::", 1)[1],
-                                classes=per[vid.split("::")[0]][1][vid]["classes"]))
+                                classes=per[vid.split("::")[0]][1][vid]["classes"], vid=vid))
                for vid, v, _m in pool]
     slots = collections.Counter(vid.split("::")[0] for vid, _c in pool_ch)
     print(f"pool: {len(pool_ch)} bodies from {len(slots)}/{len(per)} subclasses, "
@@ -437,26 +467,13 @@ def main():
     tasks = [(k, [(vid, to_chassis(v, meta[vid]["prof"], bases[k]["boosters"],
                                    bases[k]["concentration"], skills=meta[vid]["skills"],
                                    split=vid.split("::", 1)[1],
-                                   classes=meta[vid]["classes"])) for vid, v, _m in d])
+                                   classes=meta[vid]["classes"], vid=vid))
+                  for vid, v, _m in d])
              for k, (d, meta) in sorted(per.items())]
 
-    jobs = a.jobs if a.jobs > 0 else (os.cpu_count() or 1)
-    print(f"ranking {sum(len(c) for _k, c in tasks)} candidates against {len(pool_ch)} bodies "
-          f"on {jobs} worker(s)", file=sys.stderr)
-    results = {}
-    if jobs == 1:
-        _init_worker(pool_ch)
-        done = (_rank_one(t) for t in tasks)
-    else:
-        ex = cf.ProcessPoolExecutor(max_workers=jobs, initializer=_init_worker,
-                                    initargs=(pool_ch,))
-        done = (f.result() for f in cf.as_completed([ex.submit(_rank_one, t) for t in tasks]))
-    for i, (k, ranked) in enumerate(done, 1):
-        results[k] = ranked
-        if i % 20 == 0 or i == len(tasks):
-            print(f"  ranked {i}/{len(tasks)}", file=sys.stderr)
-    if jobs != 1:
-        ex.shutdown()
+    n_cand = sum(len(c) for _k, c in tasks)
+    results = rank_all(tasks, pool_ch, a.verify)
+    print(f"ranked {n_cand} candidates against {len(pool_ch)} bodies", file=sys.stderr)
 
     out = {}
     for k, (d, meta) in sorted(per.items()):

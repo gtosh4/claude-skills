@@ -321,16 +321,25 @@ Eleven circles: four vanilla (Land, Moon, Spores, Stars), seven modded.
 - **Mod:** `Book of Druids - 5e Druid Subclasses (Nexus-Exclusive Version)` (`17722`).
 - **File pulled:** `Book of Druids - Nexus Version-17722-1-0-0-9.zip`; the installed pak is
   **`BookOfDruids_NexusVersion 1.0.0.6c.pak`**. Requires Compatibility Framework (present).
-- **Mechanics:** the Xanathar's Circle of Dreams. Confirmed from the mod page: a **level 14 "Walker in
-  Dreams"** that is "completely different from the source material, due to significant limitations on
-  the spells available," and requires a level 20 mod (present); v1.0.0.9 fixed its spell save DC.
-  **The levels 2/6/10 features are (unverified) in this pack** — the same author's separate Circle of
-  Dreams implementations use Balm of the Summer Court (2, bonus-action ranged heal + temp HP),
-  Hearth of Moonlight and Shadow (6, Stealth/Perception aura + always-prepared Invisibility) and
-  Hidden Paths (10, bonus-action teleport of self or ally + brief Invisibility), but that text comes
-  from a *different* standalone mod (`1844`) and must not be assumed to match this pack.
-- **Duo relevance:** if the standard progression holds, ally-targeted bonus-action healing and an
-  ally teleport are both two-player-shaped tools; **verify in game before committing**.
+- **Mechanics — READ OUT OF THE INSTALLED PAK, 21 Aug 2026.** All four features confirmed from
+  `Progressions.lsx` (`CircleOfTheDreams`), `Passive.txt`, `Spell_Target.txt`,
+  `ActionResourceDefinitions.lsx` and the pack's own `english.xml`. Nothing below is inferred from
+  mod `1844`.
+
+  | Lvl | Feature | What the pak says |
+  |---|---|---|
+  | 2 | **Balm of the Summer Court** | A pool of `SummerCourtDie` **equal to your Druid level** (2 at level 2, +1 every level after). **Bonus action, 18 m**: spend up to **half the pool at once** to heal an ally `Nd6 + spellcasting modifier` and give matching temporary hit points. Ten graded variants exist, `Target_Summer_Court_1` through `_10`, each costing that many dice. |
+  | 6 | **Hearth of Moonlight and Shadow** | **Once per short rest**, create an obscured zone in which **all healing received is the maximum possible roll**. You must stay inside for it to persist. |
+  | 10 | **Hidden Paths** | **Bonus action**: teleport **yourself 18 m** or **an ally 9 m**. Uses = **your Wisdom modifier** (`HiddenPathResourceAdd` grants 1 per point from +2 up). |
+  | 14 | **Walker in Dreams** | **Once per long rest**, grant the party **all the effects of a short rest, plus every 1st- and 2nd-level spell slot back**. Alternatively dream-walk unseen; appearing to an enemy can incapacitate it (`NIGHTMARE_SLEEP`, 3 turns) and ends the walk. |
+
+  **All three resources replenish on a long rest only** (`ReplenishType` = `Rest` for
+  `SummerCourtDie`, `HiddenPath` and `DreamsWalkerPoint`), though a Greater Restoration potion
+  refills all three (`DreamsPointsRecovery`).
+- **Duo relevance:** confirmed two-player-shaped. At Druid 17 the Balm pool is 17d6 and you may
+  spend 8 of them in **one bonus action** on the other player, with the Hearth turning every one of
+  those dice into a 6. Hidden Paths is a bonus-action extraction for the partner. Walker in Dreams
+  is a **free short rest once per long rest**, which is worth real supplies at 120 per camp.
 
 ### Circle of the Shepherd
 - **Mod:** `Book of Druids` (`17722`) — same pack and pak as above.

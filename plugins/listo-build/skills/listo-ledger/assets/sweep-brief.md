@@ -112,7 +112,7 @@ one class for all twenty levels. **That was wrong, and the numbers say so** — 
 quarter beat the mono three-quarters by +0.8 on Actions, the axis that caps Tempo, and took a
 third more than its share of the frontier.
 
-The reason is arithmetic. **Feats key off character level (3/6/9/12/13/15/18), not class level, so
+The reason is arithmetic. **Feats key off class level (3/6/9/12/13/15/18), and a dip is usually free, so
 a dip costs no feats at all.** Nor does it cost save proficiencies: Lone Wolf already grants two
 of its own, so the classic Fighter 1 or Sorcerer 1 for Constitution buys nothing here. A dip in
 this list costs only what the top of the abandoned class table would have given — and outside a
@@ -137,7 +137,9 @@ Read the `## Dip value` sections as a menu you are expected to buy from, not as 
 - **It must sum to 20.** A split that does not has shipped here before, and `--check` refuses it
   rather than letting it through.
 - The **level-1 class** owns saving throws and armour; it is a real choice, not a formality.
-- Feats land at character **3/6/9/12/13/15/18**, plus **11 for Fighter and Rogue only**. Every
+- Feats land at **class** level **3/6/9/12/13/15/18**, plus **11 for Fighter and Rogue only**;
+  budget is `floor(A/3) + floor(B/3) + ...` **+1 per class reaching 13**, so a split with no class at
+  13+ (`11/6/3`, `12/8`) pays 6 rather than 7. Every
   mod page's own feat table is wrong for this list.
 - The primary stat must reach **20 by character 6 and 22 by 18**. One stat, in practice.
 - **The subclass you were assigned must take more levels than any other class in the split** — it

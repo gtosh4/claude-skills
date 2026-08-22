@@ -1,0 +1,37 @@
+{
+ "version": "v6",
+ "built": "2026-08-21",
+ "supersedes": "v5 (2026-08-19/20), deleted — a stale ledger that still renders is indistinguishable from the current one",
+ "headline_change": "§1 single-target and §2 AoE were rewritten from configuration checklists into ratios against a per-act par carrying the run's enemy-HP inflation, with every resource amortised over three hard fights of four rounds and no items counted. Every other axis is unchanged in method.",
+ "pipeline": {
+  "sweep": "157 subclasses, 4 agents, against listo-build/data/classes/*.md under sweep-brief.md",
+  "verdicts": {
+   "candidate": 149,
+   "none": 4,
+   "dupe": 2,
+   "not-a-subclass": 2
+  },
+  "split_search": "1,073,626 raw splits enumerated, 612,834 distinct after dedupe, 88,987 on the frontier (85% culled), ranked against a 5,000-body pool stratified 33-34 per subclass across all 149",
+  "scoring": "298 chassis by 11 agents; 4,320+ authored values",
+  "naming": "29 colliding ids across 10 files resolved by naming.py; 40 renames",
+  "types_backfill": "3 agents; the field is validator-required but was undocumented in both scoring-brief.md and ledger-schema.md until this run",
+  "crosscheck": "0 omitted boosters, 0 concentration judgements"
+ },
+ "defects_found_and_fixed": [
+  "chassis-seeds.json predated the `breadth` requirement — all 150 builds rejected by load(), forcing a full re-sweep",
+  "cleric/Trickery claimed breadth 3 with peak 2 — impossible, corrected to 0",
+  "enumerate_splits.py ignored seed verdicts and resurrected 10 rejected subclasses; now reads them and names what it drops, with --ignore-verdicts for smoke tests",
+  "four briefs stated feats key off character level; they key off class level, so a split with no class reaching 13 pays 6 feats not 7",
+  "`types` was validator-required and documented nowhere; now in both scoring-brief.md and ledger-schema.md",
+  "six druid records scored Call Lightning at 2 targets against the rubric's fixed 4; re-banded for comparability, radius gap recorded as a v7 change"
+ ],
+ "known_gaps": [
+  "the split search ranks variants on the finished 20-level body with no penalty for arriving late, so the roster leans back-loaded and Act I scores across it are thin",
+  "AoE assumes a fixed four-target catch regardless of spell radius",
+  "Iron Mind (Gloom Stalker 7) has no representable saves-registry grant",
+  "enemy AC is unrecoverable from the manifest; the 0.65 hit rate is a stated convention"
+ ],
+ "uncertainty_lines": 614,
+ "chassis_count": 298,
+ "pairings": 44253
+}

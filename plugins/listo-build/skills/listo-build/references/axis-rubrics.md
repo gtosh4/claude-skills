@@ -110,7 +110,10 @@ act band — character 8 / 15 / 20:
 
 **The axes are not independent — they are funded from one budget.** Feats
 (`floor(A/3) + floor(B/3)`, +1 per class reaching 13, +1 for Fighter/Rogue at 11), twenty class
-levels, and one primary stat that must hit **20 by character 6 and 22 by 18**. A 5 on any axis
+levels, and one primary stat that must hit **20 by character 6 and 22 by 18**. (`Feats Overhaul`
+removes the 20 cap on every feat-granted increase except the plain ASI, so 22 is reached by
+stacking half-feats — `Enweaved` is merely the only **+2** one, and it offers WIS, CHA or INT
+alone.) A 5 on any axis
 is priced in that act's budget, and in Act I two 5s essentially cannot coexist — there are two
 feats. When a body scores 5, check what it gave up; if nothing, the score is wrong.
 
@@ -150,13 +153,24 @@ What changes is the enemy.
 | | I (char 8) | II (char 15) | III (char 20) |
 |---|---|---|---|
 | attacks per round (Lone Wolf ×2 Actions) | 4 | 4 | 4 |
-| primary / damage per hit | 20 / 12 | 20 / 12 | 22 / 13 |
+| attack stat / damage per hit | 20 / 12 | 20 / 12 | 22 / 13 |
 | enemy HP multiplier | ×1.54 | ×1.96 | ×2.26 |
 | **par — single-target** | **48** | **61** | **76** |
 | **par — AoE** | **22** | **28** | **32** |
 
 Single-target par is `attacks × damage per hit`, multiplied by that act's enemy HP relative to
-Act I's. AoE par is one **Fireball** (8d6) per fight on four targets, save for half, spread over
+Act I's.
+
+> **The row is the ATTACK stat, which for a third of the roster is not the chassis's primary.**
+> A Monk's Wisdom drives AC, the Ki Save DC and its Way's scaling while **Dexterity** rolls the
+> attack; the same split runs through Paladin (Cha/Str), Inquisitor (Wis/Str), Mesmerist (Cha/Dex),
+> Artificer outside Battle Smith (Int/Dex) and Paragon outside Spellblade (Cha/Str). Score the
+> damage off the stat that rolls it. Reading the primary here charges a body a modifier it does
+> not actually lose — Lone Wolf's +4 lands on **two** abilities, so both stats reach 20 at level
+> 1, and a body that puts its 22 on the attack stat is at par on the modifier and ahead on the
+> attack count. The exceptions run the other way and are worth knowing: **Way of the Astral Self**
+> and **Battle Smith** put attack *and* damage on the caster stat, and **Shillelagh** does it for
+> a Druid's club or quarterstaff. AoE par is one **Fireball** (8d6) per fight on four targets, save for half, spread over
 the fight — `28 × 0.775 × 4 ÷ 4 = 22` — scaled the same way.
 
 Damage is carried **raw**, before `h`. Multiply by `h` only where a chassis resolves differently

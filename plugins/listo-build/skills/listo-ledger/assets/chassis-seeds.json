@@ -1187,22 +1187,52 @@
       "seed_deps": "3f76b2d551bc"
     },
     "inquisitor/Tactics Inquisition": {
-      "verdict": "none",
-      "why": "Subclasses are chosen at 3 and the shipped install has a dangling subclass GUID there, so no 20-level split reaches it; needs updating to 2.2.1.",
+      "verdict": "candidate",
       "src": "714f71fcac56",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "3f76b2d551bc",
+      "uncertain": "Listo 10.2 ships Inquisitor 2.2.0, whose level-3 progression references a subclass GUID that resolves to nothing, so the class is unusable past level 2 on the shipped install. Scored here on the standing decision that 2.2.1's pak is dropped in over it if an Inquisitor chassis is actually picked. See data/classes/inquisitor.md.",
+      "builds": {
+        "front-line": {
+          "chassis": "Lockstep",
+          "split": "Inquisitor 20 (Tactics Inquisition)",
+          "peak": 5,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Shared Judgment copies every active Judgment onto the one partner you have, and the shared Resiliency upgrade is temp HP equal to your Inquisitor level every turn plus physical resistance from 11 — no action, outward, every round. Saving Grace rerolls the partner's failed save on a reaction and Vindicator's Shield hands over +3 AC and saves. Extra Attack at 5 and Hallowed Blade at 6 keep the body swinging; 15 drops Shared Judgment to once per combat and 20 doubles Battle Acumen, so this wants the full twenty."
+        }
+      }
     },
     "inquisitor/Vengeance Inquisition": {
-      "verdict": "none",
-      "why": "Unreachable on the shipped install - the level-3 subclass GUID dangles, and every split that stops at 2 loses the subclass entirely. Needs 2.2.1.",
+      "verdict": "candidate",
       "src": "e607e5a523ac",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "3f76b2d551bc",
+      "uncertain": "Listo 10.2 ships Inquisitor 2.2.0, whose level-3 progression references a subclass GUID that resolves to nothing, so the class is unusable past level 2 on the shipped install. Scored here on the standing decision that 2.2.1's pak is dropped in over it if an Inquisitor chassis is actually picked. See data/classes/inquisitor.md.",
+      "builds": {
+        "front-line": {
+          "chassis": "Scourge",
+          "split": "Inquisitor 20 (Vengeance Inquisition)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 6,
+          "why": "Divine Scourge recasts Monster Lore with no check and refunds the bonus action, so the Quarry stays marked; Studied Combat then gives the first attack each round advantage and rolls all damage against that creature with advantage. Monster Tactician stacks Expertise on an Intelligence skill with a doubled Wisdom modifier, and Inquisitor's Edge at 15 is two reactions' worth of defence — which Lone Wolf's second reaction actually pays for. Third Judgment at 20."
+        }
+      }
     },
     "inquisitor/Zeal Inquisition": {
-      "verdict": "none",
-      "why": "Same level-3 dangling GUID: Crusader's Conviction and Unyielding Resolve are all level 3, so nothing survives a stop at 2. Needs 2.2.1.",
+      "verdict": "candidate",
       "src": "a06d16f30378",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "3f76b2d551bc",
+      "uncertain": "Listo 10.2 ships Inquisitor 2.2.0, whose level-3 progression references a subclass GUID that resolves to nothing, so the class is unusable past level 2 on the shipped install. Scored here on the standing decision that 2.2.1's pak is dropped in over it if an Inquisitor chassis is actually picked. See data/classes/inquisitor.md.",
+      "builds": {
+        "durability": {
+          "chassis": "Vigil",
+          "split": "Inquisitor 20 (Zeal Inquisition)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 4,
+          "why": "Crusader's Conviction is fast healing for your full Inquisitor level at the end of every turn from 9, unblockable by anti-healing, and Unyielding Resolve holds up to 25% of max HP as a delayed pool that excess healing can erase before it lands, plus +1 to saves per 5 points held. Long-rest-free sustain against a 120-supply camp cost. Ardent Protector is damage redirection and is priced as such, not as rescue."
+        }
+      }
     },
     "barbarian/Base game (Patch 8) — Berserker": {
       "verdict": "candidate",
@@ -1646,10 +1676,19 @@
       "seed_deps": "3f76b2d551bc"
     },
     "druid/Circle of Dreams": {
-      "verdict": "none",
-      "uncertain": "Only the level 14 Walker in Dreams is confirmed for this pack; levels 2, 6 and 10 are explicitly unverified and must not be assumed from mod 1844.",
-      "why": "Three of its four features are unreadable in this pack, so nothing here can be ranked without in-game verification.",
-      "src": "0b00931c5dce",
+      "verdict": "candidate",
+      "uncertain": "Nothing material. All four features were read out of BookOfDruids_NexusVersion 1.0.0.6c.pak on 21 Aug 2026 — Progressions.lsx, Passive.txt, Spell_Target.txt, ActionResourceDefinitions.lsx and the pack's own english.xml — so the earlier 'three of its four features are unreadable' verdict no longer holds. Open only: whether the Hearth's maximised healing applies to the Balm dice cast from outside the zone.",
+      "builds": {
+        "short-rest": {
+          "chassis": "Reverie",
+          "split": "Druid 17 (Circle of Dreams) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Balm of the Summer Court is a long-rest pool of d6 equal to Druid level — 17 at this split — of which half may be spent in ONE bonus action, healing the partner 8d6 plus Wisdom and handing over the same in temporary hit points, at 18m. Hearth of Moonlight and Shadow makes every one of those dice roll maximum, once per short rest. Hidden Paths is a bonus-action 9m extraction for the partner, Wisdom-modifier times per long rest. Walker in Dreams at 14 grants the party a free short rest plus every 1st and 2nd level slot, once per long rest, which is what makes this the short-rest chassis rather than a healer: it buys back the clock the whole duo runs on, at 120 supplies a camp."
+        }
+      },
+      "src": "55ff56133cd1",
       "seed_deps": "3f76b2d551bc"
     },
     "druid/Circle of the Shepherd": {
@@ -2014,10 +2053,19 @@
       "seed_deps": "3f76b2d551bc"
     },
     "wizard/School of Bombardment": {
-      "verdict": "none",
-      "why": "Every mechanic is unverified - the feature table is images-only and the mod.io mirror is script-gated, so no rung here would be honest.",
-      "uncertain": "The whole subclass. Read it in the level-up screen before promoting it; it may well be a candidate.",
-      "src": "5a748420eeaf",
+      "verdict": "candidate",
+      "uncertain": "MATERIAL: Salvo (6) and Barrage (10) look unreachable — they require 2 and 3 Bombs and the only grant in the pak is ActionResource(Bombs,1,0), with the tooltip saying you may hold one at a time. Scored on the three features that do work. Also open: whether a bomb counts as a spell for Arcane Ordnance's own refill, which is the difference between one bomb per spell cast and one every turn; ctrl_a would go to 5 if it is.",
+      "builds": {
+        "lockdown": {
+          "chassis": "Ordnance",
+          "split": "Wizard 17 (School of Bombardment) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
+          "peak_axis": "ctrl_a",
+          "breadth": 4,
+          "why": "Arcane Ordnance is a slot-free 3m area attack that lays its own surface every time it lands — fire, ice, acid or electrified ground — refilled by casting any spell, so the terrain keeps accumulating at no spell-slot cost while the wizard's real control list does its own work. Saturating Fire at 14 moves the bomb onto the bonus action after any levelled spell, so the Action never has to choose. The Big One is once per long rest but pays for itself: Devastating is 5d8+Int three times over in a 6m radius plus Strength-save Prone, and Reckoning breaks concentration outright."
+        }
+      },
+      "src": "2c6c4dd7246a",
       "seed_deps": "3f76b2d551bc"
     },
     "rogue/Thief": {

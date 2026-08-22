@@ -14,6 +14,15 @@ around this class. **This class has no D&D or BG3 baseline**: it is a homebrew a
 the Pathfinder 1e Inquisitor, so nothing here is inferred from 5e. Anything the mod page does
 not state is marked `(unverified)`.
 
+> **STANDING DECISION — treat this class as working.** The shipped 2.2.0 pak cannot level past 2
+> (dangling level-3 subclass GUID; see *Known issues*). That is an **install** problem, not a
+> mechanics problem, and the fix is a one-file pak swap the player has already agreed to make:
+> **if an Inquisitor chassis is picked, the run updates the mod to 2.2.1 before it starts.** So the
+> sweep, the base pass, the ledger and every scoring pass rank all three Inquisitions as ordinary
+> candidates on the mechanics documented below. Do not re-reject them for reachability. The only
+> thing the bug still costs is that nothing here has been seen in a level-up screen past 2, so the
+> `(unverified)` marks stand on their own merits.
+
 A grim divine **half-caster martial** — the mod pitches it as "Paladin-shaped, but for hunting
 a specific target." Its niche is single-target focus: **Judgment**, a stance-like buff aimed at
 one enemy that you can rewrite mid-fight as a bonus action, and **Monster Lore**, a skill check
@@ -336,7 +345,9 @@ over CHA builds generally.
   and 28 May + 72 days = 8 Aug. **2.2.0 is also absent from the mod's "old files" list**, which is
   what an author does with a version they consider broken. No Inquisitor patch exists anywhere in
   the 10.2 manifest.
-  **Treat the installed Inquisitor as unusable past level 2 until proven otherwise.** The cheap
+  **Treat the installed Inquisitor as unusable past level 2 until proven otherwise — but see the
+  standing decision at the top of this file: the ledger scores the class anyway, because the run
+  updates to 2.2.1 if an Inquisitor is actually picked.** The cheap
   test is to create an Inquisitor and try to take level 3. If it fails, the fix is to manually
   drop 2.2.1's pak in over the installed one — a single-pak mod with no Listo patch, so the
   swap is low-risk `(the exact scope of the bug — Inquisitors only, or any character in the

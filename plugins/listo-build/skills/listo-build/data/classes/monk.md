@@ -32,7 +32,7 @@ baselines come from bg3.wiki. Anything not read directly is marked `(unverified)
 
 | | |
 |---|---|
-| **Primary ability** | **Wisdom** first in Listo, then DEX (or STR). WIS drives Unarmoured Defence AC *and* the Ki Save DC that Stunning Strike / Open Hand Technique now use. |
+| **Primary ability** | **Wisdom** first in Listo, then DEX (or STR). WIS drives Unarmoured Defence AC *and* the Ki Save DC that Stunning Strike / Open Hand Technique now use. **DEX still rolls attack and damage** — "primary" here means DCs and scaling, not the attack stat, and the 22 belongs on DEX (see [Stats](#building-a-monk-in-listo)). Way of the Astral Self is the exception. |
 | **Saving throws at level 1** | **Strength + Dexterity** — only granted if Monk is your **level 1** class. |
 | **Proficiencies** | Simple weapons, Shortswords. No armour, no shields (exception: **Way of the Friar** grants shield proficiency and lets you keep Unarmoured Defence with one equipped). Skills: choose 2 of History, Insight, Religion, Acrobatics, Stealth, Athletics. |
 | **Resource** | **Ki Points**, **recharged on a short rest**. BG3 grants Ki = monk level + 1 (2 at L1 → 13 at L12; L13–20 values `(unverified)`). |
@@ -390,9 +390,29 @@ scaling on Astral Self, Friar, Long Death, Mercy and Warrior of the Elements. Th
 your ability scores and gives a flat **(PB − 1)**, and Elixirs of Giant's Strength only *add* to
 whatever STR you already have.
 
+**The 22 goes on DEX, not WIS.** Lone Wolf's +4 puts both at 20 at level 1 and `Feats Overhaul`
+removes the cap above it, so the question is only which one gets the next point. Unarmoured
+Defence is `10 + DEX + WIS`, so **AC is identical either way** — 22/20 and 20/22 both give AC 21,
+and AC does not decide this. What is left is one point of Ki Save DC against **+1 attack and +1
+damage on every one of the eight strikes** a double-Flurry Monk throws with two Actions. That is
+roughly +8 raw damage a round, enough to move a rung. The Ki DC side is weaker than it looks:
+eight attacks a round already land *a* Stunning Strike at near-certainty, so the marginal DC
+mostly buys a second stunned target, and ki caps the attempts anyway.
+
+The price is that **there is no +2 DEX half-feat** — `Enweaved` offers WIS, CHA or INT only — so
+DEX 22 costs **two** +1 half-feats where WIS 22 costs one. Take **Dungeon Delver** (+1 DEX or WIS,
+plus expertise in Sleight of Hand and Perception) and **Performer** (+1 DEX or CHA, plus expertise
+in Performance and Acrobatics): both carry a real skills payload, which a two-person party needs.
+**Duellist** and **Bow Expert** also grant +1 DEX and both misfit — Duellist wants an empty
+off-hand, which fights Way of the Friar's shield, and Bow Expert's payload is inert on a Monk.
+
+**The exception is Way of the Astral Self**, where the arms use WIS for attack *and* damage. There
+DEX 22 buys one point of AC and nothing else, and the 22 belongs on WIS.
+
 Two workable spreads:
-- **WIS/DEX** — the default. DEX for attack rolls and the second half of Unarmoured Defence.
-  Works with every Way.
+- **WIS/DEX** — the default, with the 22 on DEX. DEX rolls attack and damage and is the second
+  half of Unarmoured Defence; WIS sets the Ki Save DC and the Way's own scaling. Works with every
+  Way.
 - **WIS-only** — **Way of the Astral Self** from level 3 puts attack, damage, AC and save DC all
   on WIS. DEX and STR can be left low and the points banked in CON, which matters more here
   because Lone Wolf multiplies max HP.

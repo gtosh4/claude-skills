@@ -422,13 +422,31 @@ at level 2 (halved scroll-copy cost for that school) in addition to what is list
   (current 1.2.0.67) → `DaelensTestament_c714f127-6475-4e82-1816-3922fc220bee.pak`. The pack's
   twelve subclasses cover every class and are **fully featured to level 20**; the Wizard entry
   is School of Bombardment. `5e Spells` (present) is recommended by the author.
-- **Mechanics:** *"Rather than be limited by incantations, you discover a method to transform
-  your magic energy into ordnance and lay siege to your foes from afar."* **The per-level
-  feature list is published only as images on the mod page and the mod.io mirror is
-  JavaScript-gated — every mechanic is `(unverified)`.** Read it in the level-up screen before
-  committing.
-- **Duo relevance:** unknown until verified. Flagged here so the skill knows a **twelfth
-  Wizard-usable school exists** rather than silently omitting it.
+- **Mechanics — READ OUT OF THE INSTALLED PAK, 21 Aug 2026.** The mod page's images are no
+  longer the only source: everything below comes from `Progressions.lsx` (`BombardSchool`),
+  `Passive.txt`, `Spell_Projectile.txt`, `SpellLists.lsx`, `LevelMapValues.lsx` and the pack's
+  own `english.xml`.
+
+  | Lvl | Feature | What the pak says |
+  |---|---|---|
+  | 2 | **Arcane Ordnance** | You hold **one** `Bombs` charge. Casting any spell while empty refills it, and it refills again when combat ends. A bomb costs **Action + 1 charge**, throws **18 m + Intelligence**, explodes in a **3 m radius**, rolls a ranged spell attack, and deals **cantrip-scaling damage + your Intelligence modifier** — 1/2/3/4 dice at character levels 1/5/10/17. Two bombs chosen at 2 from Fire (d8, d12 vs Burning), Frost (d6), Acid, Poison, Lightning, Thunder. **Every bomb also lays its own surface** (Fire, ice, acid, electrified). |
+  | 6 | **Salvo** | Toggle: next bomb fires **two** projectiles at +50 % radius for a Bonus Action. Two more bomb types unlock, from a list adding Force, Necrotic, Psychic and Radiant. |
+  | 10 | **Barrage** *(`Salvo2`)* | Toggle: **three** projectiles at +50 % radius for Bonus Action **and** 9 m of movement. |
+  | 10 | **The Big One** | One of three, **once per long rest**, **Action only — no charge**, **6 m radius**, scaling `TheBigOne`: 2d8 at 10, 3d8 at 13, 4d8 at 16, **5d8 at 19**. *Devastating* deals that **three times over** (Fire + Force + Necrotic) plus Strength save or **Prone** and a necrotic-fire surface; *Reckoning* is the same three-way in Radiant + Lightning + Thunder on an attack roll and **breaks concentration**; *Oblivion* is Cold + Psychic on a Wisdom save and leaves **−2 AC and disadvantage on attacks and all ability checks for 3 turns**. |
+  | 14 | **Saturating Fire** | Once per turn, casting a **levelled** spell lets you fire a bomb as a **Bonus Action** instead of an Action. |
+
+- **DEFECT — Salvo and Barrage look unreachable on the installed pak.** Their `EnabledConditions`
+  require **2** and **3** `Bombs` respectively, but the only grant anywhere in the pak is
+  `ActionResource(Bombs,1,0)` on `ArcaneOrdnance`, and the tooltip says outright *"You can only
+  hold a single Arcane Ordnance at a time."* No other file in the pak raises the ceiling.
+  `(unverified: whether some other mod in the list grants Bombs, and whether BG3 evaluates the
+  condition against the maximum rather than the current value — but nothing in 10.2 patches this
+  mod.)` Judge the subclass on the three features that do work.
+- **Duo relevance:** a slot-free area attack every turn that leaves a surface behind, and from 14
+  it rides along with a levelled spell on the bonus action — so the wizard's Action stays free for
+  control while the bombs handle chip damage and terrain. **`(unverified)` whether a bomb itself
+  counts as a spell for the refill**, which is the difference between one bomb per spell cast and
+  one every single turn.
 
 ---
 
@@ -500,7 +518,9 @@ at level 1 is what buys the Int/Wis pair.
 - ~~Listo's Expansion MCM profile.~~ **Resolved** — read out of the install and recorded in
   `data/listo-10.2-mcm.md`. Cantrip Formulas off, both Bladesinger swaps off, Song of Victory at
   14, Epic Boons off, Expansion feats `"None"`.
-- **School of Bombardment's entire feature set** (see above).
+- ~~School of Bombardment's entire feature set.~~ **Resolved** — read out of the installed pak,
+  21 Aug 2026 (see above). What remains open is the Salvo/Barrage charge ceiling and whether a
+  bomb counts as a spell for its own refill.
 - **Book of Wizards' per-level tables** for War Magic and Order of Scribes (images only).
 - **Whether scroll transcription cost is modified** by any Listo patch — the 50 gp/level
   (25 gp/level with the matching Savant) figures are vanilla; the **4× merchant markup on

@@ -5,7 +5,7 @@ multiclassing**, scored coarsely on the ten axes in **Act II**.
 
 **A base profile is not a recommendation.** Almost none of these bodies should actually be played
 mono-class — dips are close to free in this list, because feats key off *character* level
-(3/6/9/12/13/15/18), so a three-level dip costs nothing. The mono-20 profile is the **zero-dip
+(3/6/9/12/13/15/18) — see below. The mono-20 profile is the **zero-dip
 reference point**: the thing every split of this subclass is measured against. Score it as what
 the subclass does on its own, not as what you would build.
 

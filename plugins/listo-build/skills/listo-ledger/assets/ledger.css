@@ -263,3 +263,11 @@ a.ent:hover, a.ent:focus-visible { background: var(--ok); color: var(--bg); }
 .lede-strength, .lede-wants { margin:0 0 8px; }
 .lede-strength b, .lede-wants b { color:var(--ink-1); font-weight:600; }
 .lede-wants { margin-bottom:14px; }
+
+/* The level-1 class marker. Superscript "L1" rather than a bare digit, because every segment of
+   a split already ends in a number and a second one would read as part of the level. */
+.chassis .lv1 {
+  font-family:"IBM Plex Mono", monospace; font-size:9px; font-weight:600;
+  letter-spacing:.04em; color:var(--muted); vertical-align:super; line-height:0;
+}
+.sublede .lv1 { font-family:"IBM Plex Mono", monospace; font-size:9px; font-weight:600; }

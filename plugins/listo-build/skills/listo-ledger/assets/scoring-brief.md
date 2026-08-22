@@ -29,6 +29,7 @@ For each chassis in your assignment, one object keyed by its `chassis` id:
   "strength": "One or two sentences: why it is strong FOR THIS RUN — two bodies, Lone Wolf, Listo's encounters.",
   "wants":    "One sentence: what it needs from the other half of the duo, as a capability not a class.",
   "concentration": false,
+  "types": ["slashing","radiant"],
   "saves": {
     "I":   {"prof": ["int","dex"], "boosters": []},
     "II":  {"prof": ["int","dex","con","wis"], "boosters": []},
@@ -109,13 +110,32 @@ Before you write a chassis's three acts, ask: *is this body better than its cont
 III than it was in Act I?* If the honest answer is "no, it just has bigger numbers, like everyone
 else", write the same value three times.
 
+### `types` — required, and easy to forget
+
+The damage types this body routinely deals, from the closed set: `acid bludgeoning cold fire force
+lightning necrotic piercing poison psychic radiant slashing thunder`. One to three entries is
+normal. **The renderer raises if it is missing** — Absolute Wrath means two bodies sharing a single
+damage type have no answer when it is resisted, and that is a pair property the renderer can only
+compute if both bodies declare what they deal.
+
 ### `reach`
 
 One of `ranged` `hybrid` `mobile` `static`. Closed enum; an unknown value is a hard render error.
 
 ### `meta`
 
-The primary stat at its Act III value and the feat count. `Int 22 · 7 feats`.
+The primary stat at its Act III value, **the attack stat too whenever it differs**, and the feat
+count. `Wis 22 · Dex 20 · 7 feats`. One stat is right only when one stat does both jobs —
+`Int 22 · 7 feats` for a Wizard, or for a Battle Smith, where Intelligence rolls the attack.
+
+A third of the last roster named a caster stat and nothing else on a body that swings a weapon:
+Monk (Wis primary, **Dex** attacks), Paladin (Cha/Str), Inquisitor (Wis/Str), Mesmerist (Cha/Dex),
+Artificer outside Battle Smith (Int/Dex), Paragon outside Spellblade (Cha/Str), and War, Tempest
+or Swords bodies under a Cleric or Bard. `meta` is display-only and changes no score, which is
+exactly the problem — it is the line a reader checks the damage arithmetic against, and a record
+reading `Wis 22` alone gets read as a +4 attack modifier when the body has +5 or +6. That misread
+is worth a full rung on `st`. Lone Wolf's +4 lands on **two** abilities, so both stats are at 20
+from level 1; say which one carries the 22.
 
 ## Lone Wolf is the floor, not a bonus
 
@@ -142,7 +162,9 @@ is two entries, not four.
   control loses a rung by Act III. Disadvantage-on-saves does not.
 - **Eldritch Blast is 1d8 per beam here**, not 1d10.
 - **`StackId` is a cap.** A summon or brand carrying one *replaces* rather than accumulates.
-- Feats land at character **3/6/9/12/13/15/18**, plus **11 for Fighter and Rogue only**.
+- Feats land at **class** level **3/6/9/12/13/15/18**, plus **11 for Fighter and Rogue only** — so the
+  budget is `floor(A/3) + floor(B/3) + ...`, **+1 per class reaching 13**. `20`, `17/3` and `14/3/3`
+  all pay 7; a split where **no class reaches 13** pays 6 (`11/6/3`, `12/8`). Count it, do not assume 7.
 - The primary stat reaches **20 by character 6, 22 by 18**.
 
 ## Calibration — use the whole ladder
