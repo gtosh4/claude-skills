@@ -502,7 +502,14 @@ def main():
                    "meta": {kk: vv for kk, vv in meta[vid].items() if kk != "prof"}}
                   for vid, val in kept]
     if a.out:
-        json.dump(out, open(a.out, "w"), indent=2, ensure_ascii=False)
+        # The variants file is a disposable artefact, but which catalogue state produced it is
+        # not: the same command run either side of a `## Dip value` edit yields two files that
+        # look alike and mean different things. Stamp it with the `split` cache key, so a build
+        # promoted off this file can be marked `--stamp --enumerated` against the same hash.
+        doc = {"format": 1, "split_deps": SI.deps_hash("split"), "variants": out}
+        with open(a.out, "w") as fh:
+            json.dump(doc, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
     print(f"kept {sum(len(v) for v in out.values())} variants across {len(out)} subclasses",
           file=sys.stderr)
     return out

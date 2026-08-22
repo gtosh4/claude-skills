@@ -310,7 +310,8 @@ scripts/crosscheck.py ledger.json                        # built bodies vs the b
 `enumerate_splits.py` walks the primary class from 11 to 20 levels, spends the remainder on
 catalogued dip breakpoints, marks one class level-1, composes a vector from parts via `compose.py`
 and ranks by pair value against the pool of everything enumerated. `--limit N` keeps the best N
-variants per subclass; `--only` takes comma-separated subclass keys for a smoke test. Enumeration
+variants per subclass; `--only` takes subclass keys for a smoke test, comma-joined or `@file`
+for the headings that carry commas. Enumeration
 is wide — one subclass can express thousands of raw variants, most of which collapse to the same
 composed vector — so ranking, not enumeration, is what makes the output usable.
 
@@ -342,24 +343,38 @@ Then score the promoted seeds normally. The seed's `peak` and `breadth` have no 
 A seed is an expensive judgement that stays valid until something it was derived from changes. So
 every seed records what it was derived *from*, and `--check` reports what that invalidates.
 
-**Two stages, two keys, and they go stale independently** — that separation is the point. Editing
-`axis-rubrics.md` must not force a 157-subclass re-sweep, and editing the sweep brief must not
-force a re-score of every chassis.
+**Three stages, three keys, and they go stale independently** — that separation is the point.
+Editing `axis-rubrics.md` must not force a 157-subclass re-sweep, editing the sweep brief must not
+force a re-score of every chassis, and editing a `## Dip value` section must not force either.
 
 | stamp | where | covers | invalidated by |
 |---|---|---|---|
 | `src` | seed | that subclass's `###` block **plus** its class's at-a-glance section | a Listo update that rewrites the subclass, or the class's headline facts |
 | `seed_deps` | seed | `assets/sweep-brief.md` | changing the rules the sweep judged under |
-| `score_deps` | **build** | `axis-rubrics.md`, `scoring-model.md`, `gates.md` | changing the rules the *scores* were authored under |
+| `split_deps` | **build** | `dip-catalogue.json`, `subclass-bases.json` | changing what the search may buy, or what a subclass brings on its own |
+| `score_deps` | **build** | `scoring-brief.md`, `axis-rubrics.md`, `scoring-model.md`, `gates.md` | changing the rules the *scores* were authored under |
 
 `DEPS` in `seed_index.py` is that registry — add a file to it when a new document starts governing
-one of the two stages, exactly as you would add a booster to the renderer's.
+one of the three stages, exactly as you would add a booster to the renderer's.
 
-`--check` sorts the whole file into five buckets: **unseeded**, **stale** (heading gone),
+**The split stage answers a different question from the score stage, which is why it is separate.**
+A catalogue edit means the search would now choose from a different space; it says nothing about
+whether the body already published was scored correctly. So it schedules a re-enumeration, and
+only a split that actually *changes* schedules scoring work. Folding the catalogues into
+`score_deps` would rescore 149 builds over a typo in one dip section.
+
+`--check` sorts the whole file into seven buckets: **unseeded**, **stale** (heading gone),
 **drifted** (`src` moved), **rules changed** (`seed_deps` moved) — those four block — plus
-**re-score** and **never scored**, which are reported but do not, since a stale score is a
-ledger-authoring job rather than a sweep one. A seed that must be re-swept is not also reported as
-needing a re-score; the seed comes first.
+**re-score**, **never scored**, **re-enumerate** and **never enumerated**, which are reported but
+do not, since those are ledger-authoring jobs rather than sweep ones. A seed that must be re-swept
+is not also reported as needing a re-score or a re-enumeration; the seed comes first.
+
+`enumerate_splits.py` stamps its own output with the same `split` hash, so a variants file taken
+off disk can be told apart from one produced under different catalogues:
+
+```jsonc
+{"format": 1, "split_deps": "18e2668bb7c9", "variants": {"...": []}}
+```
 
 The workflow after a sweep, and after any later edit:
 
@@ -367,13 +382,14 @@ The workflow after a sweep, and after any later edit:
 scripts/seed_index.py --assign 8              # only what is unseeded, drifted or under old rules
 # ... merge the agents' JSON into chassis-seeds.json ...
 scripts/seed_index.py --stamp                 # record src + brief hashes on every seed
-scripts/seed_index.py --check                 # five buckets; blocks while any of the first four bite
+scripts/seed_index.py --check                 # seven buckets; blocks while any of the first four bite
 scripts/seed_index.py --promote               # the cut
 scripts/enumerate_splits.py --limit 2 -o variants.json   # search the split, don't inherit the guess
 # ... author ten-axis scores for the promoted builds into ledger.json ...
 scripts/crosscheck.py ledger.json             # nothing reachable was left unrecorded
 # ... naming.py resolves proposed ids; merge_routine.py / merge_prose.py land agent passes ...
 scripts/render_ledger.py ledger.json -o ledger.html
+scripts/seed_index.py --stamp --enumerated all   # these splits came from the current catalogues
 scripts/seed_index.py --stamp --scored "warlock/The Hexblade:front-line,cleric/Life:durability"
 ```
 

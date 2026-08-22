@@ -165,6 +165,13 @@ DEPS = {
               os.path.join(REFS, "scoring-model.md"),
               os.path.join(REFS, "gates.md")],
     "seed":  [os.path.join(ASSETS, "sweep-brief.md")],
+    # The split search reads two authored catalogues and nothing else that moves. It is its own
+    # stage because its output is its own kind of answer: editing a `## Dip value` section can
+    # select a *different body* for a build without saying anything about whether the score of the
+    # body already published is still true. Folding these into `score` would rescore the roster
+    # for a catalogue typo; folding them into `seed` would re-sweep it. Neither is the work.
+    "split": [os.path.join(ASSETS, "dip-catalogue.json"),
+              os.path.join(ASSETS, "subclass-bases.json")],
     "score": [os.path.join(ASSETS, "scoring-brief.md"),
               os.path.join(REFS, "axis-rubrics.md"),
               os.path.join(REFS, "scoring-model.md"),
@@ -203,7 +210,8 @@ def deps_hash(stage):
     for path in DEPS[stage]:
         _require(os.path.exists(path),
                  f"missing {os.path.relpath(path)} — it is part of the {stage} cache key")
-        h.update(open(path, "rb").read())
+        with open(path, "rb") as fh:
+            h.update(fh.read())
     return h.hexdigest()[:12]
 
 
@@ -216,18 +224,23 @@ def audit(inv, seeds):
     derived from the rubric and the scoring model (`score_deps`), and they go stale on their own
     schedule — which is the point of keeping the two keys apart.
 
-    Returns the five buckets and the fresh `src` map.
+    Enumeration is a *third* cached judgement over the same build — which split of this subclass
+    is worth scoring — keyed on the two catalogues the search reads (`split_deps`). It moves on
+    its own schedule too, and deliberately does not drag the score with it: a catalogue edit can
+    select a new body, but it says nothing about whether the old body's published score was right.
+
+    Returns the buckets and the fresh `src` map.
     """
     src = {cls: digests(cls) for cls in inv}
     want = {f"{cls}/{sub}": src[cls].get(sub) for cls, subs in inv.items() for sub in subs}
-    seed_h, score_h = deps_hash("seed"), deps_hash("score")
+    seed_h, score_h, split_h = deps_hash("seed"), deps_hash("score"), deps_hash("split")
 
     unseeded = sorted(k for k in want if k not in seeds)
     stale    = sorted(k for k in seeds if k not in want)
     drifted  = sorted(k for k, h in want.items()
                       if k in seeds and seeds[k].get("src") != h)
     rules    = sorted(k for k in seeds if k in want and seeds[k].get("seed_deps") != seed_h)
-    unscored, rescore = [], []
+    unscored, rescore, unenumerated, reenumerate = [], [], [], []
     for addr, b in builds(seeds).items():
         if b["key"] in drifted or b["key"] in rules:
             continue                       # the seed itself must be redone first
@@ -235,8 +248,13 @@ def audit(inv, seeds):
             unscored.append(addr)
         elif b["score_deps"] != score_h:
             rescore.append(addr)
+        if not b.get("split_deps"):
+            unenumerated.append(addr)
+        elif b["split_deps"] != split_h:
+            reenumerate.append(addr)
     return dict(unseeded=unseeded, stale=stale, drifted=drifted, rules=rules,
-                unscored=sorted(unscored), rescore=sorted(rescore), want=want)
+                unscored=sorted(unscored), rescore=sorted(rescore),
+                unenumerated=sorted(unenumerated), reenumerate=sorted(reenumerate), want=want)
 
 
 def dip_ranges():
@@ -407,6 +425,23 @@ def load(path):
     return seeds
 
 
+def addr_list(arg, seeds):
+    """A build-address work-list for `--scored` / `--enumerated`.
+
+    A build address ends in `:<niche>` but *starts* with a subclass heading, and several of those
+    carry commas. So a comma-joined list cannot address every build in the inventory; `@file`, one
+    address per line, and `all` can. The comma form stays because most addresses have no comma in
+    them and it is the convenient way to name two or three; one that does simply fails the
+    caller's address check, which is the fail-closed answer and names the flag.
+    """
+    if arg == "all":
+        return sorted(promote(seeds)[1])
+    if arg.startswith("@"):
+        with open(arg[1:]) as fh:
+            return [l.strip() for l in fh if l.strip()]
+    return arg.split(",")
+
+
 def builds(seeds):
     """Every candidate build, addressed `<class>/<subclass>:<niche>`.
 
@@ -551,6 +586,9 @@ def main():
                     help="with --stamp: mark these build addresses scored under the current rubric. "
                          "Subclass headings contain commas, so pass `@path` to read one address per "
                          "line, or `all` for the whole promoted roster")
+    ap.add_argument("--enumerated", metavar="ADDR,ADDR|@FILE|all",
+                    help="with --stamp: mark these build addresses as carrying the split the "
+                         "search selected under the current catalogues. Same forms as --scored")
     ap.add_argument("--seeds", default=os.path.join(ASSETS, "chassis-seeds.json"))
     ap.add_argument("--bases", action="store_true",
                     help="operate on the tier-1 base profiles in assets/subclass-bases.json "
@@ -655,26 +693,24 @@ def main():
             for k, sd in seeds.items():
                 if k in rep["want"]:
                     sd["src"], sd["seed_deps"] = rep["want"][k], now
-            if a.scored:
-                score_h, cand = deps_hash("score"), builds(seeds)
-                # A build address ends in `:<niche>` but *starts* with a subclass heading, and
-                # several of those carry commas. So a comma-joined list cannot address every
-                # build in the inventory; `@file` and `all` can.
-                if a.scored == "all":
-                    addrs = sorted(promote(seeds)[1])
-                elif a.scored.startswith("@"):
-                    addrs = [l.strip() for l in open(a.scored[1:]) if l.strip()]
-                else:
-                    addrs = a.scored.split(",")
+            marked = {}
+            for flag, arg, field in (("--scored", a.scored, "score_deps"),
+                                     ("--enumerated", a.enumerated, "split_deps")):
+                if not arg:
+                    continue
+                stage = "score" if field == "score_deps" else "split"
+                h, cand = deps_hash(stage), builds(seeds)
+                addrs = addr_list(arg, seeds)
                 for addr in addrs:
-                    _require(addr in cand, f"--scored: {addr!r} is not a build address")
+                    _require(addr in cand, f"{flag}: {addr!r} is not a build address")
                     k, niche = addr.rsplit(":", 1)
-                    seeds[k]["builds"][niche]["score_deps"] = score_h
+                    seeds[k]["builds"][niche][field] = h
+                marked[flag] = len(addrs)
             with open(a.seeds, "w") as fh:
                 json.dump(doc, fh, indent=2, ensure_ascii=False)
                 fh.write("\n")
             print(f"stamped {len(seeds)} seeds"
-                  + (f", {len(addrs)} builds scored" if a.scored else ""),
+                  + "".join(f", {n} builds {f[2:]}" for f, n in marked.items()),
                   file=sys.stderr)
             return
 
@@ -695,6 +731,16 @@ def main():
             if rep["unscored"]:
                 print(f"never scored ({len(rep['unscored'])}): "
                       + ", ".join(rep["unscored"]), file=sys.stderr)
+            # Enumeration staleness is reported beside the scoring buckets and blocks neither.
+            # A moved catalogue means the search would now pick from a different space; whether
+            # that changes *this* build's split is what re-running the search answers, and only
+            # a changed split is scoring work.
+            if rep["reenumerate"]:
+                print(f"re-enumerate ({len(rep['reenumerate'])}, a split catalogue moved): "
+                      + ", ".join(rep["reenumerate"]), file=sys.stderr)
+            if rep["unenumerated"]:
+                print(f"never enumerated ({len(rep['unenumerated'])}): "
+                      + ", ".join(rep["unenumerated"]), file=sys.stderr)
             if blocking:
                 sys.exit(f"{len(rep['unseeded'])} unseeded, {len(rep['stale'])} stale, "
                          f"{len(rep['drifted'])} drifted, {len(rep['rules'])} under old rules "
