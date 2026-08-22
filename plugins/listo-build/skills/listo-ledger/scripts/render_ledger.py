@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
 from scoring import (BLOCKS,                                       # noqa: E402
     KEYS, LABELS, AXES, KINDS, KINDNAME, KIND_MAX, ACTS, BANDS, MIX, FLAG,
     REACH, REACH_LABEL, SAV_IDX, WEIGHTS, TEMPO, RESILIENCE,
-    ScoringError, score, norm, derive_saves, validate_chassis)
+    ScoringError, score, norm, derive_saves, resolve_damage, validate_chassis)
 
 
 # ── column help ──────────────────────────────────────────────────────────────
@@ -187,6 +187,9 @@ def split_html(raw):
 def roster_block(key, ch, disp):
     head = "".join(axis_th(a) for a in AXES)
     rows = []
+    # The pair scores resolve their own damage inside `score_bodies`; the roster radar reads the
+    # rows directly, so it has to do the same or it renders — and sums — the nulls.
+    ch = resolve_damage(dict(ch, _id=key))
     for act in ACTS:
         vals = list(ch["scores"][act])
         blk = ch["saves"][act]

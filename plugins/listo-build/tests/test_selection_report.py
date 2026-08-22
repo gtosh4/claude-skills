@@ -82,6 +82,22 @@ class Report(unittest.TestCase):
         self.assertEqual(first, again)
         self.assertNotIn("rank", json.dumps(sel["kept"][0][2].get("blocks", {})))
 
+    def test_the_roster_radar_resolves_its_own_damage(self):
+        """The pair scores resolve inside `score_bodies`; the roster radar reads the rows raw.
+
+        A v7 chassis carries `null` at indices 0 and 1, so a roster block that does not derive
+        them renders empty damage cells and crashes summing the row — which is how this was found.
+        """
+        d = ledger()
+        key, ch = next(iter(d["chassis"].items()))
+        ch["scores"] = {a: [None, None] + list(r[2:]) for a, r in ch["scores"].items()}
+        ch["damage"] = {a: {"actions": {"attacks": 6, "spells": 0, "filler": 2},
+                            "st_raw": 70, "aoe_raw": 40,
+                            "st_instances": 6, "aoe_instances": 4} for a in RL.ACTS}
+        html = RL.roster_block(key, ch, lambda k: k)
+        self.assertNotIn("None", html)
+        self.assertIsNone(ch["scores"]["II"][0], "the caller's chassis must not be mutated")
+
     def test_the_template_version_schedules_a_review(self):
         before = RL.selection_report(ledger())
         RL.PROSE_TEMPLATE += 1
