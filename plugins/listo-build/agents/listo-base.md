@@ -31,6 +31,14 @@ the one place in the pipeline where being conservative is the failure rather tha
   this profile plus the dip catalogue. Do not speculate about it.
 - Score against the **act table row** for the act, not the ladder headline.
 - Index 8 (`sav`) is always `null` — saves are derived from the proficiency set, not authored.
+- **Return both maps in one response.** `bases`, keyed by subclass, and `arrives`, keyed by the
+  same subclass and then by grant. You are already reading everything needed for both; a second
+  pass over the same briefs and the same class sections to supply the arrival levels is the read
+  this contract exists to stop paying twice.
+- **`arrives` is required for every subclass you score, and `{}` is a real answer.** Write it when
+  the subclass adds nothing after level 1. An *omitted* map is an evidence gap: nothing downstream
+  can tell "adds nothing later" from "was not looked at", and a dip judged not to reach a grant it
+  does reach understates the heaviest-weighted axis in the model.
 - **Do not write files.** Your final message is the return value: raw JSON. No prose, no fences.
 
 Everything you could not establish from the sources goes in `uncertain`, named specifically. A

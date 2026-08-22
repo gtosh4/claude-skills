@@ -124,3 +124,44 @@ all sources, +4 to two abilities with save proficiency in both.** Score what the
 If you cannot justify a value from the rubric and the class text, pick the one you can defend and
 list the doubt in an `uncertain` array on that subclass. A feature that scores as nothing is
 indistinguishable from an honest low score; the `uncertain` list is what makes that visible.
+
+
+## The response shape — two maps, one response
+
+You return one object with exactly two top-level keys:
+
+```jsonc
+{
+  "bases": {
+    "ranger/Gloom Stalker": {
+      "verdict": "candidate",
+      "scores": [2, 3, 2, 3, 2, 1, 2, 4, null, 3],
+      "prof": ["str", "dex", "wis", "int"],
+      "boosters": [],
+      "armour": "medium",
+      "shield": true,
+      "primary": "dex",
+      "concentration": false,
+      "why": "…",
+      "uncertain": []
+    }
+  },
+  "arrives": {
+    "ranger/Gloom Stalker": {"wis": 7, "int": 7}
+  }
+}
+```
+
+`bases` is this brief's contract. `arrives` is `grants-brief.md`'s, and it is returned here rather
+than by a second pass because you have already read everything it needs: the grant fields say
+**what the body holds at level 20**, and `arrives` says **which of those turn up after level 1**.
+Use the ability name for a save, `armour` / `shield` for those, and the booster id for a booster.
+
+Three rules the merger enforces, all for the same reason — a grant nothing applies is an
+understated save score, and an understated score reads exactly like an honest one:
+
+- **Every subclass in `bases` needs an entry in `arrives`.** Write `{}` when the subclass adds
+  nothing after level 1. Omission is an evidence gap, not a "no".
+- **Nothing arrives at level 1.** That is what the base profile's own grant fields already record.
+- **`arrives` cannot name a grant the profile does not hold.** It annotates the profile; if a save
+  turns up at 7 it is also in `prof`.

@@ -375,7 +375,43 @@ def load_bases(path):
             _require(f not in b,
                      f"{k}: `{f}` is not a tier-1 field. Splits, names and niches are decided "
                      "after enumeration, not here")
+    validate_arrives(bases, d.get("arrives", {}))
     return bases
+
+
+# `arrives` says at which level a grant the body holds at 20 actually turns up. Its vocabulary is
+# closed for the same reason every other registry here is: a key nothing recognises is a grant
+# nothing applies, and a dip that "does not reach" a grant it does reach is an understated save
+# score on the heaviest-weighted axis in the model.
+ARRIVES_KEYS = set(ABILITIES) | {"armour", "shield"} | set(BOOSTERS)
+
+
+def validate_arrives(bases, arrives):
+    """Check the `{subclass: {grant: level}}` map. Raises; returns nothing."""
+    _require(isinstance(arrives, dict), "`arrives` must be an object keyed by subclass")
+    for k, m in arrives.items():
+        _require(k in bases, f"arrives: {k!r} is not a base-profile key")
+        _require(isinstance(m, dict), f"arrives[{k}]: must be a `{{grant: level}}` object")
+        for grant, level in m.items():
+            _require(grant in ARRIVES_KEYS,
+                     f"arrives[{k}]: unknown grant {grant!r} — expected an ability, `armour`, "
+                     f"`shield`, or a booster id from the registry")
+            _require(isinstance(level, int) and not isinstance(level, bool) and 1 <= level <= 20,
+                     f"arrives[{k}][{grant}]: level {level!r} must be an integer 1-20")
+            _require(level > 1,
+                     f"arrives[{k}][{grant}]: level 1 grants are what a base profile already "
+                     f"records — `arrives` is for what turns up later")
+            b = bases[k]
+            if grant in ABILITIES:
+                _require(grant in (b.get("prof") or []),
+                         f"arrives[{k}]: {grant!r} arrives at {level} but is not in `prof`")
+            elif grant in BOOSTERS:
+                _require(grant in (b.get("boosters") or []),
+                         f"arrives[{k}]: {grant!r} arrives at {level} but is not in `boosters`")
+            elif grant == "shield":
+                _require(b.get("shield"), f"arrives[{k}]: shield arrives but `shield` is false")
+            elif grant == "armour":
+                _require(b.get("armour"), f"arrives[{k}]: armour arrives but `armour` is null")
 
 
 def audit_bases(inv, bases):

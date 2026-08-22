@@ -39,6 +39,7 @@ renders is indistinguishable from the current one.
 | `apply_falls.py` | repair | applies falling-series repairs and refuses to write unless the defect is gone |
 | `pb_sensitivity.py` | audit | measures how far the act III proficiency-bonus convention moves the ranking |
 | `rank_vec.py` | split search | the same pair score as `scoring.py`, restated over arrays for the sweep |
+| `merge_bases.py` | tier 1 | merges a fused base/grants pass into `subclass-bases.json`, validating both maps |
 | `work_plan.py` | plan | composes every stage's audit into one machine-readable work plan |
 | `render_ledger.py` | render | every derived number, the field table, the HTML, and `--selection` |
 
@@ -347,6 +348,32 @@ this is a subset test and never an equality test.
 considered and dropped, so the roster's bias is on the page rather than in your head.
 
 Then score the promoted seeds normally. The seed's `peak` and `breadth` have no standing from that point on.
+
+### Base profiles and grant arrivals come back from one pass
+
+`listo-base` reads `base-brief.md`, `grants-brief.md`, the axis rubrics and its assigned class
+sections. The grants correction pass then read the same four things again, to fix one field group.
+The reconstruction is the expensive part, and it was paid for twice.
+
+The fused pass returns two explicit top-level maps in one response — `bases`, keyed by subclass,
+and `arrives`, keyed by the same subclass and then by grant — and `merge_bases.py` validates both
+before either enters split composition:
+
+```sh
+scripts/merge_bases.py out-*.json --into assets/subclass-bases.json --expect @batch.txt -o cand.json
+```
+
+**`arrives` is required per subclass and `{}` is a real answer.** Absence cannot be distinguished
+from "adds nothing after level 1", and a dip judged not to reach a grant it does reach understates
+the heaviest-weighted axis in the model. Nothing may arrive at level 1 — the profile's own grant
+fields record that — and `arrives` may not name a grant the profile does not hold, since it
+annotates the profile rather than extending it. `load_bases` now checks all of that, so the rule
+applies to the published file too and not only to new passes.
+
+`crosscheck.py` stays an independent subset check: it tests built bodies against the profiles, and
+a merger that also decided whether a profile were right would be marking its own homework. The
+standalone grants extraction stays until a side-by-side run on a checked sample, then the full
+inventory, resolves every difference. **That trial needs live runs and has not been done.**
 
 ### The seeds file is a cache, and it knows when it is stale
 
