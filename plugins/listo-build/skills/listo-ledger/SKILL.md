@@ -29,6 +29,7 @@ renders is indistinguishable from the current one.
 | `seed_index.py` | seed | derives the subclass inventory, diffs the seeds, applies the promotion bar |
 | `enumerate_splits.py` | split search | enumerates every split a subclass can express and ranks them |
 | `compose.py` | split search | composes a filter-grade vector from catalogued parts — never publishes a number |
+| `score_deps.py` | score | the complete dependency set behind one chassis's score, and what has moved since |
 | `crosscheck.py` | score | checks built bodies against the tier-1 base profiles for omitted effects |
 | `naming.py` | score | resolves chassis ids centrally, after scoring, so parallel agents cannot collide |
 | `merge_routine.py` | evidence | merges a routine-skills evidence pass, with coverage and calibration checks |

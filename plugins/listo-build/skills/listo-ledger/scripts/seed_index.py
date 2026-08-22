@@ -179,15 +179,15 @@ DEPS = {
 }
 
 
-def digests(cls):
-    """`{subclass: hash}` over exactly the text a sweep agent was shown for it.
+def sections(cls):
+    """`(at-a-glance text, {subclass heading: its `###` block})` for one class file.
 
-    The seed is a cached judgement, and this is its cache key: the subclass's own `###` block
-    plus that class's at-a-glance section, which carries the class-level facts every split in
-    the file depends on. Editing one subclass therefore invalidates one seed, and editing
-    at-a-glance invalidates that class's seeds — nothing wider.
+    The two readable parts of a class file, split once. `digests` keys a seed on them, and the
+    scoring dependency record keys a multiclass body on them class by class; both must see the
+    same text or the two caches disagree about what changed.
     """
-    lines = open(os.path.join(CLASSES, cls + ".md")).read().split("\n")
+    with open(os.path.join(CLASSES, cls + ".md")) as fh:
+        lines = fh.read().split("\n")
     spans, _ = ranges(cls)
     glance = "\n".join(lines[spans["glance"][0] - 1:spans["glance"][1]]) if "glance" in spans else ""
     lo, hi = spans["subs"]
@@ -201,6 +201,18 @@ def digests(cls):
             body.append(line)
     if head:
         out[head] = "\n".join(body)
+    return glance, out
+
+
+def digests(cls):
+    """`{subclass: hash}` over exactly the text a sweep agent was shown for it.
+
+    The seed is a cached judgement, and this is its cache key: the subclass's own `###` block
+    plus that class's at-a-glance section, which carries the class-level facts every split in
+    the file depends on. Editing one subclass therefore invalidates one seed, and editing
+    at-a-glance invalidates that class's seeds — nothing wider.
+    """
+    glance, out = sections(cls)
     return {k: hashlib.sha256((glance + "\0" + v).encode()).hexdigest()[:12]
             for k, v in out.items()}
 
