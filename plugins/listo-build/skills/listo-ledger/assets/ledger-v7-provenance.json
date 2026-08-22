@@ -1,0 +1,35 @@
+{
+ "version": 7,
+ "supersedes": 6,
+ "built": "2026-08-22",
+ "commit": "cf9d940",
+ "roster": {
+  "chassis": 174,
+  "subclasses_swept": 157,
+  "candidates": 150,
+  "excluded": 7,
+  "pairings": 15051
+ },
+ "what_changed_from_v6": [
+  "The two damage axes are derived from per-act stated arithmetic instead of authored as rungs. Every chassis carries an action budget that must sum to eight, pools with their refresh clock, an explicit levelled-slot split, riders, raws and instance counts. Par re-based: single-target 48/61/76 -> 60/87/123, area 22/28/32 -> 48/65/82.",
+  "Gear enters as a constant per damage instance on both sides of the ratio, so a many-roll engine is no longer priced as though gear were worth the same to it as to one big spell.",
+  "Warding Bond doubles the bonded body's rung instead of splitting the carrier's surplus. The old rule moved the floor in 210 of 44,253 pairings and every Peace Cleric was scored as carrying no bond.",
+  "The pair score pays a contention factor for two bodies wanting the same primary ability and gear class.",
+  "Durability is an effective-HP ratio blended on the act's crowd and boss hits, not a ladder with a hand-written correction for flat mitigation.",
+  "Everything was rebuilt from scratch: the sweep, the tier-1 base profiles, the split search and every score. No v6 value was carried forward."
+ ],
+ "known_issues": [
+  "Area rung 5 is unreachable — 3.0x par is one to two four-target Fireballs per round. No chassis reaches it in any act.",
+  "Single-target rung 2 holds 51% of the field at Act III.",
+  "Both are band problems rather than score problems, and re-basing either ladder re-derives the roster without re-scoring, because the arithmetic is stored."
+ ],
+ "audit": {
+  "crosscheck": "0 omitted boosters, 0 concentration judgements",
+  "legacy_damage_axes": [],
+  "audit_roster": [
+   "st: rung 2 holds 88/174 (51%) — saturated, so the axis has stopped distinguishing chassis",
+   "aoe: rung 0 holds 44/174 (25%) — saturated, so the axis has stopped distinguishing chassis",
+   "aoe: rung 5 is empty across 174 chassis — the ladder does not reach it, so par or the band is mis-set"
+  ]
+ }
+}

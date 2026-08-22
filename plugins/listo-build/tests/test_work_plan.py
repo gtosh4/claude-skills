@@ -5,7 +5,7 @@ merely expensive, while a narrow plan that misses a dependency publishes a stale
 exactly like a fresh one. So every test here checks both halves — what got scheduled, and what
 correctly did not.
 """
-import json, os, shutil, sys, tempfile, unittest
+import glob, json, os, shutil, sys, tempfile, unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEDGER = os.path.join(ROOT, "skills", "listo-ledger")
@@ -125,7 +125,11 @@ class Accounting(unittest.TestCase):
     """Every published chassis lands in exactly one bucket, and the buckets sum to the roster."""
 
     def test_the_live_ledger_is_fully_accounted_for(self):
-        led = os.path.join(LEDGER, "assets", "ledger-v6.json")
+        # Derived, not named. The published ledger is `ledger-vN.json` and the superseded one is
+        # deleted rather than kept, so a hardcoded version breaks on every publish — this test
+        # failed the moment v6 was removed.
+        found = sorted(glob.glob(os.path.join(LEDGER, "assets", "ledger-v*.json")))
+        led = next(p for p in found if not p.endswith("-provenance.json"))
         p = WP.plan(ledger=led)
         with open(led) as fh:
             total = len(json.load(fh)["chassis"])
