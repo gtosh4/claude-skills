@@ -15,6 +15,7 @@ import result_store as RS  # noqa: E402
 import merge_results as MR  # noqa: E402
 import score_deps as SD  # noqa: E402
 import seed_index as SI  # noqa: E402
+from scoring import ScoringError  # noqa: E402
 
 A1 = "cleric/Death:action-economy"
 S1 = "Cleric 17 (Death) / Fighter 3 (Battle Master)"
@@ -22,11 +23,21 @@ A2 = "cleric/Life:durability"
 S2 = "Cleric 14 (Life) / Paladin 6 (Oath of Devotion)"
 
 
+def damage(**over):
+    """The smallest block that validates: eight action-slots spent, both raws instanced."""
+    blk = {"actions": {"attacks": 6, "spells": 0, "filler": 2},
+           "st_raw": 70, "aoe_raw": 40, "st_instances": 6, "aoe_instances": 4}
+    blk.update(over)
+    return blk
+
+
 def record(split, note="A body.", **over):
     rec = {"proposed_id": "Testbody", "split": split, "reach": "hybrid",
-           "concentration": True, "types": ["necrotic"],
+           "concentration": True, "types": ["necrotic"], "meta": "Wis 22 · 7 feats",
            "saves": {a: {"prof": ["wis", "cha"], "boosters": []} for a in RS.ACTS},
-           "scores": {a: [3, 2, 3, 2, 2, 1, 0, 3, None, 4] for a in RS.ACTS},
+           # Indices 0 and 1 are derived from `damage`, exactly as index 8 is from `saves`.
+           "scores": {a: [None, None, 3, 2, 2, 1, 0, 3, None, 4] for a in RS.ACTS},
+           "damage": {a: damage() for a in RS.ACTS},
            "note": note, "strength": "Two actions.", "wants": "Concentration.",
            "uncertain": []}
     rec.update(over)
@@ -114,15 +125,90 @@ class Store(unittest.TestCase):
 
     def test_validation_rejects_an_authored_saves_rung(self):
         rec = record(S1)
-        rec["scores"]["II"] = [3, 2, 3, 2, 2, 1, 0, 3, 4, 4]
+        rec["scores"]["II"] = [None, None, 3, 2, 2, 1, 0, 3, 4, 4]
         with self.assertRaises(RS.StoreError):
             RS.put(self.run, "score-001", A1, rec)
 
     def test_validation_rejects_a_null_skills_rung(self):
         rec = record(S1)
-        rec["scores"]["II"] = [3, 2, 3, 2, 2, 1, 0, None, None, 4]
+        rec["scores"]["II"] = [None, None, 3, 2, 2, 1, 0, None, None, 4]
         with self.assertRaises(RS.StoreError):
             RS.put(self.run, "score-001", A1, rec)
+
+
+class DerivedDamage(unittest.TestCase):
+    """The damage axes are arithmetic, and the store is where the agent can still fix it.
+
+    v6 stored a rung and nothing else, so an authored `2` could not be re-checked from outside and
+    the whole roster was stranded when the AoE par was re-based. The block records what the rung was
+    taken against. Every check below is a defect that shipped in v6.
+    """
+
+    def setUp(self):
+        self.run = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.run)
+        RS.write_manifest(self.run, "score-001", [(A1, S1), (A2, S2)])
+
+    def test_an_authored_damage_rung_is_refused(self):
+        """The v6 shape must not slip through: it is the thing this version exists to replace."""
+        rec = record(S1)
+        rec["scores"]["II"] = [3, 2, 3, 2, 2, 1, 0, 3, None, 4]
+        with self.assertRaises(RS.StoreError) as e:
+            RS.put(self.run, "score-001", A1, rec)
+        self.assertIn("null", str(e.exception))
+
+    def test_a_missing_act_block_is_refused(self):
+        rec = record(S1)
+        del rec["damage"]["II"]
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, rec)
+
+    def test_a_record_with_no_damage_at_all_is_refused(self):
+        rec = record(S1)
+        del rec["damage"]
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, rec)
+
+    def test_unconserved_actions_are_caught_where_they_were_written(self):
+        """A caster with 3.7 casts left 4.3 slots unscored in v6, and nothing noticed."""
+        rec = record(S1, damage={a: damage(actions={"attacks": 0, "spells": 3.7, "filler": 0})
+                                 for a in RS.ACTS})
+        with self.assertRaises(ScoringError):
+            RS.put(self.run, "score-001", A1, rec)
+
+    def test_a_raw_with_no_instance_count_is_refused(self):
+        """Gear attaches per damage roll, so the count is stated rather than inferred."""
+        blk = damage()
+        del blk["st_instances"]
+        rec = record(S1, damage={a: blk for a in RS.ACTS})
+        with self.assertRaises(ScoringError):
+            RS.put(self.run, "score-001", A1, rec)
+
+    def test_a_short_rest_pool_underspent_without_a_reason_is_refused(self):
+        rec = record(S1, damage={a: damage(pools=[{"name": "ki", "refresh": "short",
+                                                   "size": 4, "spent": 1}]) for a in RS.ACTS})
+        with self.assertRaises(ScoringError):
+            RS.put(self.run, "score-001", A1, rec)
+        rec = record(S1, damage={a: damage(pools=[{"name": "ki", "refresh": "short", "size": 4,
+                                                   "spent": 1, "underspend_reason": "actions bind"}])
+                                 for a in RS.ACTS})
+        RS.put(self.run, "score-001", A1, rec)
+
+    def test_the_block_survives_the_merge(self):
+        """`merge_results` carries `damage`, or the merged ledger cannot re-derive its own rungs."""
+        for addr, split in ((A1, S1), (A2, S2)):
+            RS.put(self.run, "score-001", addr, record(split, skills=SKILLS))
+        merged, _report = MR.merge(self.run)
+        cid = next(k for k, v in merged["chassis"].items() if v["address"] == A1)
+        self.assertEqual(merged["chassis"][cid]["damage"]["II"]["st_instances"], 6)
+        self.assertIsNone(merged["chassis"][cid]["scores"]["II"][RS.ST_IDX])
+
+    def test_a_meta_that_names_no_ability_is_refused(self):
+        """`gear_key` declines rather than guessing, so the contention factor goes silently coarse."""
+        rec = record(S1, meta="7 feats")
+        with self.assertRaises(RS.StoreError) as e:
+            RS.put(self.run, "score-001", A1, rec)
+        self.assertIn("meta", str(e.exception))
 
 
 SKILLS = {"I": {"Perception": 5, "Investigation": 1, "Persuasion": 4},

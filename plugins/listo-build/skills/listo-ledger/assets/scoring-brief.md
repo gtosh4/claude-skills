@@ -46,18 +46,27 @@ each other's picks and a collision used to silently overwrite a body.
     "III": {"prof": ["int","dex","con","wis"], "boosters": []}
   },
   "scores": {
-    "I":   [3,2,3,2,2,1,0,3,null,4],
-    "II":  [4,4,3,3,4,2,0,3,null,4],
-    "III": [4,4,3,3,4,2,0,3,null,4]
+    "I":   [null,null,3,2,2,1,0,3,null,4],
+    "II":  [null,null,3,3,4,2,0,3,null,4],
+    "III": [null,null,3,3,4,2,0,3,null,4]
+  },
+  "damage": {
+    "I":   {"actions": {"attacks": 6, "spells": 2, "filler": 0},
+            "bonus": {"used": [{"src": "Crimson Rite", "n": 1}]},
+            "slots": {"caster_level": 3, "pool": 6, "to_damage": 0.5},
+            "st_raw": 71, "aoe_raw": 30, "st_instances": 7, "aoe_instances": 3},
+    "II":  {"...": "one block per act"},
+    "III": {"...": "one block per act"}
   },
   "uncertain": ["anything you had to guess, one line each — omit if empty"]
 }
 ```
 
 `put` validates the record before it lands: the split against your assignment, the score rows
-against their length and sentinels, the damage types and reach against the closed registries. A
-rejection names the field. Fix it and put again — a rejected record is never written, so nothing
-half-formed reaches the merge.
+against their length and sentinels, the damage arithmetic against the budgets, `meta` against the
+ability names, the damage types and reach against the closed registries. A rejection names the
+field. Fix it and put again — a rejected record is never written, so nothing half-formed reaches
+the merge.
 
 Keep the `split` **exactly** as your assignment gives it, parenthesised subclasses and all, unless
 the class text proves it wrong; if you change it, say so in `uncertain`. Splits are 1–3 distinct
@@ -86,9 +95,10 @@ it, and those are the two questions the roster card exists to answer.
 
     st, aoe, dur, act, ctrl_s, ctrl_a, rsc, skl, sav, end
 
-**Index 8 (`sav`) is always `null`.** It is derived from the `saves` block by the renderer;
-authoring a number there is a hard error. See `ledger-schema.md`, "The saves axis is authored as
-a set, not a number", for `prof`, `boosters` and which features grant what.
+**Indices 0 (`st`), 1 (`aoe`) and 8 (`sav`) are always `null`.** All three are derived, and
+authoring a number in any of them is a hard error. `sav` comes from the `saves` block — see
+`ledger-schema.md`, "The saves axis is authored as a set, not a number", for `prof`, `boosters`
+and which features grant what. `st` and `aoe` come from the `damage` block, below.
 
 **Index 7 (`skl`) is different from index 8, and the difference catches people out.** You *do*
 author it, as an ordinary integer 0–5 against the `skl` rung — a null there is a hard error, the
@@ -116,6 +126,44 @@ and ignores your rung: your integer reaches the solo radar on the roster card an
 presentation-order tiebreak; the map reaches every pair score. Score index 7 the way the rubric
 says and let the two agree — if your read of the body's checks contradicts what a `skills` map
 would have to say, that belongs in `uncertain`.
+
+### `damage` — the arithmetic indices 0 and 1 are derived from
+
+One block per act. You state what the body actually does across a fight; the rung is
+`(raw + gear) ÷ par` off the ladder, and neither par nor the ladder is yours to touch.
+`ledger-schema.md`, "The damage axes are derived from stated arithmetic", is the authority on the
+shape. What matters while you write it:
+
+| field | what it holds |
+|---|---|
+| `actions` | `attacks` + `spells` + `filler`, **summing to exactly 8** — 2 Actions × 4 rounds |
+| `bonus.used` | `{src, n}` per source; the total may not exceed 8 |
+| `pools` | `{name, refresh, size, spent}`; `refresh` is `short`, `long` or `fight` |
+| `slots` | levelled slots, with `to_damage` — the fraction of the pool spent on damage |
+| `riders` | `{name, st, aoe}` per rider |
+| `st_raw`, `aoe_raw` | damage per round, raw, before par |
+| `st_instances`, `aoe_instances` | **separate damage rolls per round** |
+
+**A fight is four rounds and a round is never scored at zero.** Actions are conserved, which is the
+point of the sum: a caster with 3.7 levelled casts has 4.3 action-slots left and has to say what
+they did. Put them in `filler` — a cantrip, an at-will, a second weapon attack. Every caster in the
+last roster left them blank and was scored as though it stood still.
+
+**Short-rest and per-fight pools are spent in full.** Ki, pact slots and Channel Divinity refill
+twice a cycle, so a fight gets the whole pool. Spending less is a claim about the action budget
+binding first, and it needs `underspend_reason`.
+
+**A fungible resource is potential on every axis it could serve.** A rider feeding only `st` or
+only `aoe` needs `single_axis_reason`; otherwise fill both, because that is what the body can
+choose to do.
+
+**Instances are what gear pays on, so state them rather than letting them be inferred.** An item
+rider attaches per damage roll, so eight Eldritch Blast beams collect the act's gear constant eight
+times and one Disintegrate collects it once. One attack, one Flurry strike, one beam, or one
+*target* of an area spell is one instance. Hex, Sneak Attack and Divine Smite ride an existing roll
+and are **none**. The count cannot be read off `actions` — a Volley and a Disintegrate each spend
+one action-slot and deliver very different numbers of rolls — and inferring it from the raw would
+recreate exactly the unfalsifiable number this block exists to remove.
 
 ### Unified assignments
 
@@ -155,11 +203,12 @@ axis table's headline.
 save set or rescue kit does not improve holds its rung; it has not got worse, the world moved with
 it. Only a body whose *standing relative to its peers* changes should move.
 
-**`st` and `aoe` are the exception and are meant to move.** Both are now computed as a ratio to a
-fixed par that carries the act's enemy-HP multiplier (`axis-rubrics.md`, "The two damage axes are
-computed, not judged"). Extra Attack plus a flat 1d6 rider is 1.29× par in Act I and 0.87× in
-Act III — **3 / 2 / 2** — because a flat rider genuinely is being outrun. Do not flatten those
-rows to match the other eight.
+**`st` and `aoe` are the exception and are meant to move**, and you no longer decide by how much.
+Both are a ratio to a fixed par that carries the act's enemy-HP multiplier, computed from the
+`damage` block you author (`axis-rubrics.md`, "The two damage axes are computed, not judged").
+Extra Attack plus a flat 1d6 rider is 1.23× par in Act I and 0.80× in Act III — **3 / 2 / 1** —
+because a flat rider genuinely is being outrun. Write three honest blocks and let the fall happen;
+do not reach for a number and then work backwards to arithmetic that produces it.
 
 The last scoring run produced **883 rises and 34 falls** across 150 chassis. That is not what the
 run looks like; it is what an absolute ladder looks like. Movement is meant to be roughly
@@ -197,11 +246,16 @@ count. `Wis 22 · Dex 20 · 7 feats`. One stat is right only when one stat does 
 A third of the last roster named a caster stat and nothing else on a body that swings a weapon:
 Monk (Wis primary, **Dex** attacks), Paladin (Cha/Str), Inquisitor (Wis/Str), Mesmerist (Cha/Dex),
 Artificer outside Battle Smith (Int/Dex), Paragon outside Spellblade (Cha/Str), and War, Tempest
-or Swords bodies under a Cleric or Bard. `meta` is display-only and changes no score, which is
-exactly the problem — it is the line a reader checks the damage arithmetic against, and a record
-reading `Wis 22` alone gets read as a +4 attack modifier when the body has +5 or +6. That misread
-is worth a full rung on `st`. Lone Wolf's +4 lands on **two** abilities, so both stats are at 20
-from level 1; say which one carries the 22.
+or Swords bodies under a Cleric or Bard. It is the line a reader checks the damage arithmetic
+against, and a record reading `Wis 22` alone gets read as a +4 attack modifier when the body has
++5 or +6. That misread is worth a full rung on `st`. Lone Wolf's +4 lands on **two** abilities, so
+both stats are at 20 from level 1; say which one carries the 22.
+
+**It must lead with the primary ability, because the pair score reads that first token.** Two
+bodies wanting the same ability are two bodies fighting over one Amulet of Greater Health and one
+pair of gloves, and the contention factor in `scoring-model.md` §9 prices that. The field is no
+longer display-only, and `put` rejects a `meta` whose first word is not one of `Str Dex Con Int
+Wis Cha`.
 
 ## Lone Wolf is the floor, not a bonus
 

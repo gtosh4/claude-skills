@@ -24,8 +24,13 @@ explicitly forbidden from doing that, because their output is discarded. Yours i
 
 - **Score against the act table row for the act, not the ladder headline.** Most axes should not
   move between acts: front-loaded bodies fall, back-loaded ones rise, the rest stay flat.
-- **Index 8 (`sav`) is always `null`.** Saves are derived from the resulting proficiency set plus
-  the booster registry. Author the evidence; let the renderer score it.
+- **Indices 0 (`st`), 1 (`aoe`) and 8 (`sav`) are always `null`.** All three are derived from
+  evidence you author instead: `sav` from the proficiency set plus the booster registry, `st` and
+  `aoe` from a per-act `damage` block. A fight is four rounds with two Actions each, the eight
+  action-slots must add up, and short-rest pools are spent in full. See the brief's `damage`
+  section — `put` checks the arithmetic while you can still fix it.
+- **`meta` leads with the primary ability.** The pair score reads that token to price gear
+  contention; it stopped being display-only.
 - **Index 7 (`skl`) is not the reverse of that.** Author it as an ordinary integer 0–5; `null` is
   rejected. The *pair* score ignores it and recomputes Skills from the `skills` modifier map, which
   the evidence passes author — see `scoring-brief.md`. Proficiency bonus there is pinned at

@@ -32,15 +32,23 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
                                 "listo-build", "scripts"))
 import score_deps as SD                                        # noqa: E402
 import seed_index as SI                                        # noqa: E402
-from scoring import (KEYS, SAV_IDX, REACH, DAMAGE_TYPES,        # noqa: E402
-                     RECORDED_SKILLS, REQUIRED_SKILLS)
+from scoring import (KEYS, SAV_IDX, ST_IDX, AOE_IDX, REACH,     # noqa: E402
+                     DAMAGE_TYPES, RECORDED_SKILLS, REQUIRED_SKILLS,
+                     ABILITIES, ScoringError, derive_damage)
 
 FORMAT = 1
 ACTS = ("I", "II", "III")
 
 # The fields every scoring result carries.
-REQUIRED = ("split", "reach", "concentration", "saves", "types", "scores",
-            "note", "strength", "wants")
+#
+# `damage` and `meta` are here because both became load-bearing when the damage axes stopped being
+# judged. `damage` carries the arithmetic indices 0 and 1 are derived from, so an absent block is
+# not a score-of-zero but a chassis with no damage axes at all. `meta` was display-only until the
+# pair score started reading its first token for the contention factor — a body whose `meta` is
+# unreadable silently falls back to the coarser same-class proxy, which is the invisible kind of
+# wrong this format refuses everywhere else.
+REQUIRED = ("split", "reach", "concentration", "saves", "types", "scores", "damage",
+            "meta", "note", "strength", "wants")
 
 # A *unified* assignment additionally carries the evidence the separate `listo-evidence` and
 # `listo-routine-skills` passes used to revisit each chassis for. All three passes reconstruct the
@@ -170,6 +178,13 @@ def validate_record(address, rec, unified=False):
     _require(isinstance(rec["types"], list) and rec["types"], f"{address}: `types` is empty")
     for t in rec["types"]:
         _require(t in DAMAGE_TYPES, f"{address}: unknown damage type {t!r}")
+    # `scoring.gear_key` reads `meta`'s first token as the primary ability and declines rather than
+    # guessing, so an unreadable one costs the pairing its contention factor without saying so.
+    # Checked here because the fallback is silent everywhere downstream.
+    head = rec["meta"].split() if isinstance(rec["meta"], str) else []
+    _require(head and head[0].lower() in ABILITIES,
+             f"{address}: `meta` must lead with the primary ability — {rec['meta']!r} does not. "
+             f"The pair score reads that token to decide what the two bodies compete for.")
     SI.check_split(rec["split"], address)
     for act in ACTS:
         _require(act in rec["scores"], f"{address}: `scores` missing act {act}")
@@ -179,8 +194,17 @@ def validate_record(address, rec, unified=False):
                  f"{address} {act}: scores has {len(row)} entries, expected {len(KEYS)}")
         _require(row[SAV_IDX] is None,
                  f"{address} {act}: index {SAV_IDX} (saves) must be null — it is derived")
+        # Indices 0 and 1 are derived from the act's `damage` block, exactly as index 8 is derived
+        # from `saves`. Checked here rather than only at merge time because the arithmetic is the
+        # agent's own: a block whose action-slots do not sum to 8 is fixable by the pass that wrote
+        # it and archaeology for anybody else.
+        _require(row[ST_IDX] is None and row[AOE_IDX] is None,
+                 f"{address} {act}: indices {ST_IDX} (st) and {AOE_IDX} (aoe) must both be null — "
+                 f"they are derived from this act's `damage` block, never authored")
+        _require(act in rec["damage"], f"{address}: `damage` missing act {act}")
+        derive_damage(rec["damage"][act], act, address)
         for i, v in enumerate(row):
-            if i == SAV_IDX:
+            if i in (SAV_IDX, ST_IDX, AOE_IDX):
                 continue
             _require(isinstance(v, int) and 0 <= v <= 5,
                      f"{address} {act}: {KEYS[i]} is {v!r}, expected an integer 0-5")
@@ -319,7 +343,7 @@ def main():
         else:
             json.dump(status(a.run, a.assignment), sys.stdout, indent=2, ensure_ascii=False)
         sys.stdout.write("\n")
-    except (StoreError, SD.DepsError, SI.SeedError) as e:
+    except (StoreError, ScoringError, SD.DepsError, SI.SeedError) as e:
         sys.exit(str(e))
 
 

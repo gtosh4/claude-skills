@@ -33,7 +33,7 @@ ASSETS = os.path.join(os.path.dirname(HERE), "assets")
 # never carries them, so the `if f in rec` guard below is what keeps the evidence passes'
 # authorship intact: a unified result overwrites the map it authored, a score-only result leaves
 # the published one exactly where it was.
-OWNED = ("split", "reach", "concentration", "saves", "types", "scores",
+OWNED = ("split", "reach", "concentration", "saves", "types", "scores", "damage",
          "note", "strength", "wants", "uncertain", "meta", "skills", "redirect")
 # `address` is written by this merger rather than authored, and is not in OWNED for that reason.
 

@@ -509,8 +509,9 @@ and lowers the other — and that is `listo-build` §5a's business, not the ledg
 
 Then the renderer does the rest. Your job is three things and nothing else:
 
-1. **The chassis scores** — ten ints per act, honestly, with the low ones low.
-   Index 8 (saves) is `null`: author the `saves` set instead and let the renderer derive it.
+1. **The chassis scores** — ten values per act, honestly, with the low ones low. Three of them are
+   `null` because they are derived from evidence you author instead: index 8 (saves) from the
+   `saves` set, and indices 0 and 1 (`st`, `aoe`) from a per-act `damage` block.
 2. **`reach`** — `ranged`, `hybrid` (melee with a real ranged option), `mobile`
    (melee with repeatable mobility), `static` (melee, none).
 3. **The prose** — what each chassis is, and why each entry reads the way it does.
