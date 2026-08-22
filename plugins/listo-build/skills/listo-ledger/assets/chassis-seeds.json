@@ -1,11 +1,11 @@
 {
-  "provenance": "Swept 2026-08-21 by four agents against listo-build/data/classes/*.md under assets/sweep-brief.md, for ledger v6 — the first sweep under the computed §1/§2 damage axes. Stamps written by seed_index.py --stamp.",
+  "provenance": "Ledger v7 sweep — 157 subclasses, four agents, fresh against the re-based damage par. Chassis ids resolved by naming.py.",
   "seeds": {
     "cleric/Heavy armour / martial weapon table (the dip-planning summary)": {
       "verdict": "not-a-subclass",
-      "why": "A dip-planning table sitting inside the Domains section, so it parses as a subclass heading. Not a domain.",
+      "why": "The heading is the domain-by-domain proficiency table used for dip planning, not a playable domain.",
       "src": "b9a44bfbdd2b",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Death": {
       "verdict": "candidate",
@@ -15,140 +15,133 @@
           "split": "Cleric 17 (Death) / Fighter 3 (Battle Master)",
           "peak": 3,
           "peak_axis": "act",
-          "why": "Control Undead turns an enemy into a third body on a short-rest charge; necrotic Divine Strike caps against Absolute Wrath's layered resistances.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Control Undead turns an enemy into the duo's missing third body; Action Surge adds a turn, but necrotic is widely resisted here."
         }
       },
       "src": "c48faa0089aa",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Knowledge": {
       "verdict": "candidate",
       "builds": {
         "skills": {
-          "chassis": "Archive",
-          "split": "Cleric 14 (Knowledge) / Bard 6 (College of Lore)",
+          "chassis": "Lorekeep",
+          "split": "Cleric 17 (Knowledge) / Bard 3 (College of Lore)",
           "peak": 4,
           "peak_axis": "skl",
-          "why": "Magical Secrets at 6 and 10 plus double proficiency; Lore's Expertise and three skills close every gate, but the damage never arrives.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Magical Secrets at 6 buys Counterspell or Haste off-list; Lore's three proficiencies plus Expertise cover the campaign's gates."
         }
       },
+      "uncertain": "CCC's Magical Secrets pick count and source lists at Knowledge 6 and 10 are not stated on the mod page.",
       "src": "92ccdbf1357b",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Life": {
       "verdict": "candidate",
       "builds": {
         "durability": {
-          "chassis": "Mercy",
-          "split": "Cleric 14 (Life) / Paladin 6 (Oath of Devotion)",
-          "peak": 5,
+          "chassis": "Vigil",
+          "split": "Cleric 17 (Life) / Sorcerer 3 (Shadow Magic)",
+          "peak": 4,
           "peak_axis": "rsc",
-          "why": "The rescue ceiling in the list; Paladin 6 adds a pair-wide aura, which is why the split runs that deep.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Disciple of Life boosts every heal from any source, and Twinned Metamagic puts Death Ward or Greater Restoration on both bodies."
         }
       },
       "src": "262546e84a42",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Light": {
       "verdict": "candidate",
       "builds": {
         "reaction": {
           "chassis": "Flare",
-          "split": "Cleric 17 (Light) / Sorcerer 3 (Draconic Bloodline)",
+          "split": "Cleric 17 (Light) / Fighter 3 (Battle Master)",
           "peak": 3,
           "peak_axis": "rsc",
-          "why": "Two reactions mean Warding Flare fires twice a round and protects the partner from 6; Potent Spellcasting and Corona arrive late.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Improved Warding Flare imposes disadvantage on attacks against the partner, and Lone Wolf's spare reaction still pays for Riposte."
         }
       },
       "src": "d8b23daece5b",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Nature": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
           "chassis": "Bramble",
-          "split": "Cleric 14 (Nature) / Fighter 6 (Battle Master)",
+          "split": "Cleric 17 (Nature) / Ranger 3 (Beast Master)",
           "peak": 3,
-          "peak_axis": "st",
-          "why": "The only domain with built-in Shillelagh, so Wisdom swings a quarterstaff with no feat tax; Fighter 6 buys Extra Attack and Action Surge.",
-          "breadth": 4
+          "peak_axis": "dur",
+          "breadth": 4,
+          "why": "Domain Shillelagh makes a Wisdom melee body in heavy armour with no feat tax; Beast Master's companion is a cheap third body."
         }
       },
       "src": "ec44c3030ab3",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Tempest": {
       "verdict": "candidate",
       "builds": {
-        "lockdown": {
-          "chassis": "Thunderhead",
-          "split": "Cleric 14 (Tempest) / Sorcerer 6 (Storm)",
-          "peak": 4,
-          "peak_axis": "aoe",
-          "why": "Maximised thunder and lightning on a short-rest Channel Divinity, Twinned and Quickened off Sorcerer 6; Absolute Wrath's resistances are the ceiling.",
-          "breadth": 5
-        },
         "front-line": {
-          "chassis": "Galebrand",
-          "split": "Cleric 14 (Tempest) / Fighter 6 (Battle Master)",
-          "peak": 3,
-          "peak_axis": "st",
-          "why": "Same domain, weapon turns instead: heavy armour, martial weapons and Extra Attack from Fighter, with Wrath of the Storm punishing melee.",
-          "breadth": 4
+          "chassis": "Thunderhead",
+          "split": "Cleric 17 (Tempest) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Heavy armour, martial weapons and Wrath of the Storm, with Destructive Wrath maximising thunder; Action Surge buys the swing Cleric lacks."
         }
       },
       "src": "c1d093d4ad89",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Trickery": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Mirage",
+          "chassis": "Duplicity",
           "split": "Cleric 17 (Trickery) / Rogue 3 (Thief)",
-          "peak": 2,
+          "peak": 3,
           "peak_axis": "act",
-          "why": "Weakest vanilla domain and the recommended buff mod is absent; four duplicates at 17 is real but arrives past the act that matters.",
-          "breadth": 0
+          "breadth": 3,
+          "why": "Invoke Duplicity's decoy and Thief's second bonus action; the four-duplicate upgrade lands at 17, and the domain offers a duo little before then."
         }
       },
       "src": "e166db2688e7",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/War": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Vanguard",
+          "chassis": "Warpriest",
           "split": "Cleric 17 (War) / Fighter 3 (Battle Master)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "The only domain with true Extra Attack, and War Priest stacks on top; Fighter 3 adds Action Surge and superiority dice.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Extra Attack at 6 plus War Priest's bonus-action swing and Action Surge; Strength primary, so the domain's save DCs stay secondary."
         }
       },
       "src": "7a9d93f9abe6",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Arcana": {
       "verdict": "candidate",
       "builds": {
         "reaction": {
           "chassis": "Nullify",
-          "split": "Cleric 17 (Arcana) / Sorcerer 3 (Draconic Bloodline)",
-          "peak": 3,
+          "split": "Cleric 17 (Arcana) / Sorcerer 3 (Shadow Magic)",
+          "peak": 4,
           "peak_axis": "rsc",
-          "why": "The only Cleric with native Counterspell, which Lone Wolf's spare reaction pays for; Spell Breaker hands the partner a save bonus.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "The only Cleric with native Counterspell, and Lone Wolf's spare reaction pays for it; Spell Breaker buffs the partner's spell saves."
         }
       },
       "src": "ce6956972ea1",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Forge": {
       "verdict": "candidate",
@@ -156,14 +149,14 @@
         "durability": {
           "chassis": "Anvil",
           "split": "Cleric 17 (Forge) / Fighter 3 (Battle Master)",
-          "peak": 5,
+          "peak": 4,
           "peak_axis": "dur",
-          "why": "Heavy armour plus a domain +1 AC, then non-magical physical resistance; the act's feats stack Heavy Armour Master and Tough on top.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Heavy armour plus Soul of the Forge's +1 AC and fire resistance; the Channel Divinity reaction bypasses physical resistance for either body."
         }
       },
       "src": "b33df1d45201",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Grave": {
       "verdict": "candidate",
@@ -173,35 +166,27 @@
           "split": "Cleric 17 (Grave) / Fighter 3 (Battle Master)",
           "peak": 4,
           "peak_axis": "rsc",
-          "why": "Sentinel at Death's Door turns crits on your partner into normal hits several times a rest, and Path to the Grave enables their burst.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Sentinel at Death's Door turns crits on either body into normal hits, and Path to the Grave doubles the partner's biggest swing."
         }
       },
       "src": "b0fcfeb259c7",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Order": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Decree",
-          "split": "Cleric 17 (Order) / Sorcerer 3 (Draconic Bloodline)",
-          "peak": 5,
+          "chassis": "Authority",
+          "split": "Cleric 17 (Order) / Sorcerer 3 (Shadow Magic)",
+          "peak": 4,
           "peak_axis": "act",
-          "why": "Every buff or heal on the partner buys them a free weapon attack; Sorcerer 3 adds Twinned Haste on top.",
-          "breadth": 5
-        },
-        "lockdown": {
-          "chassis": "Writ",
-          "split": "Cleric 14 (Order) / Bard 6 (College of Eloquence)",
-          "peak": 3,
-          "peak_axis": "ctrl_a",
-          "why": "Same domain as a controller: Embodiment of the Law casts enchantments as a bonus action, and Unsettling Words drags the save down.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Every buff or heal on the partner buys them a free weapon attack, and Quickened fires that trigger from a bonus action."
         }
       },
       "src": "deff890b267b",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Peace": {
       "verdict": "candidate",
@@ -211,1685 +196,1000 @@
           "split": "Cleric 17 (Peace) / Fighter 3 (Battle Master)",
           "peak": 4,
           "peak_axis": "sav",
-          "why": "Emboldening Bond is a permanent d4 on both characters' attacks, checks and saves; the redirect features score nothing in a duo.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Emboldening Bond is a permanent d4 on both characters' attacks, checks and saves; light and medium armour only, so durability lags."
         }
       },
       "src": "8bc10baa17b6",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Twilight": {
       "verdict": "candidate",
       "builds": {
         "short-rest": {
-          "chassis": "Sanctuary",
+          "chassis": "Gloaming",
           "split": "Cleric 17 (Twilight) / Fighter 3 (Battle Master)",
           "peak": 5,
           "peak_axis": "rsc",
-          "why": "Sanctuary taps temp HP into both bodies every round for one short-rest charge, and the Cleric list supplies Revivify and Death Ward.",
-          "breadth": 5
+          "breadth": 6,
+          "why": "Twilight Sanctuary temp-HPs both bodies every round and cleanses charm and fright, for one Channel Divinity charge a short rest refunds."
         }
       },
       "src": "0f82f408ebf5",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Strength (Rhonas)": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Titan",
-          "split": "Cleric 17 (Strength (Rhonas)) / Sorcerer 3 (Draconic Bloodline)",
-          "peak": 4,
+          "chassis": "Strength",
+          "split": "Cleric 17 (Strength) / Sorcerer 3 (Storm Sorcery)",
+          "peak": 5,
           "peak_axis": "act",
-          "why": "The only Cleric domain with Haste on its own list; Sorcerer 3 Twins it across both characters, and Avatar of Battle adds resistance.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "The only Cleric domain with Haste on its own list, and Sorcerer 3's Twinned Spell puts it on both bodies."
         }
       },
       "src": "8dcf9b8a7071",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Zeal (Hazoret)": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Zeal",
-          "split": "Cleric 12 (Zeal (Hazoret)) / Fighter 8 (Battle Master)",
-          "peak": 4,
+          "chassis": "Ember",
+          "split": "Cleric 17 (Zeal) / Fighter 3 (Battle Master)",
+          "peak": 3,
           "peak_axis": "st",
-          "why": "Weapon domain that keeps full casting; Fighter 8 buys Extra Attack, Action Surge and superiority dice behind the level-1 bonus-action attack.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Heavy armour, martial weapons and a bonus-action attack from level 1 with Action Surge; no Extra Attack outside War caps the ceiling."
         },
-        "lockdown": {
+        "short-rest": {
           "chassis": "Fervor",
-          "split": "Cleric 17 (Zeal (Hazoret)) / Sorcerer 3 (Draconic Bloodline)",
-          "peak": 4,
+          "split": "Cleric 17 (Zeal) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 3,
           "peak_axis": "aoe",
-          "why": "Same domain on a spell clock: Haste and Fireball sit on the domain list and Consuming Fervor maximises them once per short rest.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Consuming Fervor maximises the domain's Fireball on a short-rest Channel Divinity, and Quickened lets the second Action carry another spell."
         }
       },
       "src": "8b2123ef5ba4",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Inquisition": {
       "verdict": "candidate",
       "builds": {
-        "front-line": {
+        "durability": {
           "chassis": "Witchhunter",
-          "split": "Cleric 14 (Inquisition) / Fighter 6 (Battle Master)",
+          "split": "Cleric 17 (Inquisition) / Fighter 3 (Battle Master)",
           "peak": 4,
-          "peak_axis": "st",
-          "why": "Force damage sidesteps Absolute Wrath's layered resistances, and Spell Shield covers half the party with one short-rest charge.",
-          "breadth": 5
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Spell Shield hands the partner temp HP with spell resistance and advantage on spell saves; Witch Hunter's Strike punishes concentrating casters."
         }
       },
       "src": "36e7469e3376",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Eldritch": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Prophecy",
-          "split": "Cleric 17 (Eldritch) / Sorcerer 3 (Draconic Bloodline)",
+          "chassis": "Doom",
+          "split": "Cleric 17 (Eldritch) / Sorcerer 3 (Aberrant Mind)",
           "peak": 4,
           "peak_axis": "ctrl_a",
-          "why": "Prophecy of Doom is slot-free area control on the short-rest Channel Divinity clock; the random effect table makes it unreliable for a plan.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Prophecy of Doom is the widest control here off one short-rest charge, and Heightened Spell keeps its Wisdom save from decaying."
         }
       },
       "src": "fa1402fdd3fb",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Night": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Umbra",
-          "split": "Cleric 17 (Night) / Sorcerer 3 (Draconic Bloodline)",
+          "chassis": "Nightfall",
+          "split": "Cleric 17 (Night) / Sorcerer 3 (Shadow Magic)",
           "peak": 4,
           "peak_axis": "ctrl_a",
-          "why": "Invocation of Night blinds a room on a short-rest charge for rounds equal to Cleric level, and Ward of Shadows uses the spare reaction.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Invocation of Night blinds everything failing a Constitution save for Cleric-level rounds, and Shadow Magic's see-through Darkness stacks with it."
         }
       },
       "src": "50fbeb3c22f5",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "cleric/Dream": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
           "chassis": "Torpor",
-          "split": "Cleric 17 (Dream) / Sorcerer 3 (Draconic Bloodline)",
+          "split": "Cleric 17 (Dream) / Sorcerer 3 (Aberrant Mind)",
           "peak": 4,
           "peak_axis": "ctrl_a",
-          "why": "Inception imposes disadvantage on the first save of every Intelligence or Wisdom spell, which does not decay as enemy DCs climb.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Inception gives disadvantage on the first save against every Wisdom or Intelligence spell, which does not decay; Torpor taxes enemy action economy."
         }
       },
+      "uncertain": "The DTO page lists no bonus proficiencies for the domain, so light/medium armour and no martial weapons is assumed.",
       "src": "e2a046753f68",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Beast Master (base game + `Expansion`)": {
-      "verdict": "candidate",
-      "builds": {
-        "action-economy": {
-          "chassis": "Panther",
-          "split": "Ranger 15 (Beast Master) / Rogue 5 (Thief)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Panther scales off your proficiency bonus, saves like a character and Helps as a bonus action; Rogue 5 adds Uncanny Dodge and Sneak Attack.",
-          "breadth": 5
-        }
-      },
-      "src": "40608f25f274",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Gloom Stalker (base game + `Expansion`)": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Ambush",
-          "split": "Ranger 11 (Gloom Stalker) / Rogue 9 (Thief)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Dread Ambusher plus +3 initiative deletes a body before it acts; Rogue 9 turns the spare reaction into off-turn Sneak Attack.",
-          "breadth": 6
-        },
-        "reaction": {
-          "chassis": "Shadowstep",
-          "split": "Ranger 15 (Gloom Stalker) / Rogue 5 (Swashbuckler)",
-          "peak": 3,
-          "peak_axis": "sav",
-          "why": "Different clock and shape: Ranger 15 buys Shadowy Dodge and Iron Mind's Wisdom saves, spending both reactions on not being hit.",
-          "breadth": 4
-        }
-      },
-      "src": "be7257e1b7ae",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Hunter (base game + `Expansion`)": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Volley",
-          "split": "Ranger 15 (Hunter) / Rogue 5 (Thief)",
-          "peak": 4,
-          "peak_axis": "aoe",
-          "why": "Volley is the only real AoE in the class kit and clears the adds a duo cannot afford; Uncanny Dodge arrives at 15.",
-          "breadth": 5
-        }
-      },
-      "src": "26a5e9648501",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Swarmkeeper (base game, Patch 8 + `Expansion`)": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Moths",
-          "split": "Ranger 15 (Swarmkeeper) / Rogue 5 (Swashbuckler)",
-          "peak": 3,
-          "peak_axis": "st",
-          "why": "A free per-round reposition and a Blind rider, but the swarm die is flat and falls against Combat Extender's inflated health pools.",
-          "breadth": 4
-        }
-      },
-      "src": "a55aa703c257",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Drakewarden": {
-      "verdict": "candidate",
-      "builds": {
-        "action-economy": {
-          "chassis": "Wyrmling",
-          "split": "Ranger 15 (Drakewarden) / Rogue 5 (Thief)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Infused Strikes adds a die to your partner's attacks too, and the drake is a third body on the initiative order.",
-          "breadth": 5
-        }
-      },
-      "src": "d659da3ef36f",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Fey Wanderer": {
-      "verdict": "candidate",
-      "builds": {
-        "skills": {
-          "chassis": "Courtier",
-          "split": "Ranger 14 (Fey Wanderer) / Bard 6 (College of Lore)",
-          "peak": 4,
-          "peak_axis": "skl",
-          "why": "Wisdom applies to every Charisma check, so the Ranger is the face without Charisma; Lore's Expertise and skills close the rest.",
-          "breadth": 5
-        }
-      },
-      "src": "99210b00d6d9",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Horizon Walker": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Forceblade",
-          "split": "Ranger 15 (Horizon Walker) / Rogue 5 (Thief)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Planar Warrior converts all of a hit's damage to Force, which deletes Absolute Wrath's resistances; Distant Strike is a third attack.",
-          "breadth": 5
-        }
-      },
-      "src": "c2a50d2a0068",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Monster Slayer": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Quarry",
-          "split": "Ranger 15 (Monster Slayer) / Rogue 5 (Thief)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Slayer's Prey costs no concentration so it stacks with Hunter's Mark, and Hunter's Sense bypasses all resistances on the boss.",
-          "breadth": 5
-        }
-      },
-      "src": "8eb8cba193ed",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Primeval Guardian (UA)": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Heartwood",
-          "split": "Ranger 17 (Primeval Guardian) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Temp HP every turn, +2 max HP per level in form, and an aura healing a hurt partner; the price is five-foot movement.",
-          "breadth": 4
-        }
-      },
-      "src": "fb7562cd70f9",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Snowlight Conclave": {
-      "verdict": "candidate",
-      "builds": {
-        "lockdown": {
-          "chassis": "Whiteout",
-          "split": "Ranger 15 (Snowlight Conclave) / Cleric 5 (Light)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Any Cold or Radiant hit forces a blind, and at 15 it spreads to everything nearby; Light 5 supplies the radiant source.",
-          "breadth": 5
-        }
-      },
-      "src": "3156709391b3",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "ranger/Conclave of the Dawnstriders": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Valkyrie",
-          "split": "Ranger 17 (Conclave of the Dawnstriders) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "st",
-          "why": "Divine Flurry is five extra attacks at a reduced crit threshold, and Action Surge pays for the Faded turn that follows.",
-          "breadth": 5
-        }
-      },
-      "src": "d1e633514abe",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Lore (vanilla)": {
-      "verdict": "candidate",
-      "builds": {
-        "skills": {
-          "chassis": "Peerless",
-          "split": "Bard 14 (College of Lore) / Rogue 6 (Thief)",
-          "peak": 5,
-          "peak_axis": "skl",
-          "why": "Expertise four times, three bonus proficiencies, Jack of All Trades and a dialogue-usable Peerless Skill clears every named gate.",
-          "breadth": 6
-        },
-        "lockdown": {
-          "chassis": "Cutting",
-          "split": "Bard 14 (College of Lore) / Sorcerer 6 (Draconic Bloodline)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Same college as a controller: Magical Secrets at 6 pulls other lists' control spells, and Cutting Words spends the spare reaction.",
-          "breadth": 5
-        }
-      },
-      "src": "7ae6e0775df6",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Swords (vanilla)": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Flourish",
-          "split": "Bard 14 (College of Swords) / Paladin 6 (Oath of Devotion)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Charisma smites off Bard slots with Extra Attack at 6 and Paladin's aura; Master's Flourish makes flourishes free at 14.",
-          "breadth": 5
-        },
-        "reaction": {
-          "chassis": "Parry",
-          "split": "Bard 14 (College of Swords) / Rogue 6 (Swashbuckler)",
-          "peak": 3,
-          "peak_axis": "act",
-          "why": "Different turns: Goon's Flourish interrupts spend both reactions, and Swashbuckler 6 supplies Sneak Attack without an adjacent ally.",
-          "breadth": 4
-        }
-      },
-      "src": "c8544f19c7d0",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Valour (vanilla)": {
-      "verdict": "candidate",
-      "builds": {
-        "action-economy": {
-          "chassis": "Fanfare",
-          "split": "Bard 14 (College of Valour) / Sorcerer 6 (Draconic Bloodline)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Battle Magic bolts a bonus-action weapon attack onto every spell, and Sorcerer 6 Twins Haste across both characters.",
-          "breadth": 5
-        }
-      },
-      "src": "7d30ec14a7ff",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Glamour (vanilla)": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Mantle",
-          "split": "Bard 14 (College of Glamour) / Paladin 6 (Oath of Devotion)",
-          "peak": 3,
-          "peak_axis": "rsc",
-          "why": "Mantle of Inspiration hands the partner temp HP as a bonus action, but the aggro-shed that defines the college waits until 14.",
-          "breadth": 4
-        }
-      },
-      "src": "0552032a68b8",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Eloquence": {
-      "verdict": "candidate",
-      "uncertain": "Silver Tongue is listed as possibly broken on the mod's own Known Issues.",
-      "builds": {
-        "lockdown": {
-          "chassis": "Silvertongue",
-          "split": "Bard 14 (College of Eloquence) / Sorcerer 6 (Draconic Bloodline)",
-          "peak": 4,
-          "peak_axis": "ctrl_s",
-          "why": "Unsettling Words shows you the die before you commit, turning a coin-flip Hold Person into a likely one; Twinned doubles it.",
-          "breadth": 5
-        }
-      },
-      "src": "920ffe5a43de",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Dance": {
-      "verdict": "candidate",
-      "uncertain": "Tandem Footwork and Leading Evasion are documented only in mod-page images.",
-      "builds": {
-        "front-line": {
-          "chassis": "Tarantella",
-          "split": "Bard 14 (College of Dance) / Monk 6 (Way of the Friar)",
-          "peak": 3,
-          "peak_axis": "st",
-          "why": "Unarmed damage rides the Inspiration die so resource and damage scale together, but there is no Extra Attack and two stats compete.",
-          "breadth": 4
-        }
-      },
-      "src": "e653bd91976d",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Tragedy": {
-      "verdict": "candidate",
-      "builds": {
-        "reaction": {
-          "chassis": "Dirge",
-          "split": "Bard 14 (College of Tragedy) / Sorcerer 6 (Draconic Bloodline)",
-          "peak": 3,
-          "peak_axis": "ctrl_s",
-          "why": "Poetry in Misery and Tale of Hubris both fire off Lone Wolf's two reactions; Nimbus of Pathos ends fights and then drops its target.",
-          "breadth": 4
-        }
-      },
-      "src": "b0fa89c2e947",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "bard/College of Stormcalling": {
-      "verdict": "candidate",
-      "uncertain": "The DTO pack entered Listo explicitly for testing, so it is less battle-tested than the rest.",
-      "builds": {
-        "lockdown": {
-          "chassis": "Aria",
-          "split": "Bard 14 (College of Stormcalling) / Sorcerer 6 (Storm)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Electrifying Aria is a ten-turn area effect degrading enemy Constitution saves each turn, then Finale converts it into a mass stun.",
-          "breadth": 5
-        }
-      },
-      "src": "72944cb26b50",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "artificer/Alchemist": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Elixir",
-          "split": "Artificer 14 (Alchemist) / Wizard 6 (Evocation)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "Six elixirs plus free Heal and Greater Restoration per rest offsets the 120-supply long rest, and Alchemical Savant adds Intelligence to every heal.",
-          "breadth": 4
-        }
-      },
-      "src": "494b30989c65",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "artificer/Armorer": {
-      "verdict": "candidate",
-      "uncertain": "Whether Thunder Gauntlets use Intelligence for attack rolls is not stated; only Battle Smith's Battle Ready is.",
-      "builds": {
-        "durability": {
-          "chassis": "Bulwark",
-          "split": "Artificer 17 (Armorer) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Heavy armour on an Intelligence body with Extra Attack at 5, and a reaction that yanks an attacker off your partner.",
-          "breadth": 5
-        }
-      },
-      "src": "11739e7bd5dc",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "artificer/Artillerist": {
-      "verdict": "candidate",
-      "builds": {
-        "action-economy": {
-          "chassis": "Cannonade",
-          "split": "Artificer 14 (Artillerist) / Wizard 6 (Evocation)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Two independent cannons from 15 plus a Homunculus makes a four-body party, and Arcane Firearm is a flat die on every spell.",
-          "breadth": 5
-        }
-      },
-      "src": "3d07cbcb9934",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "artificer/Battle Smith": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Cogwork",
-          "split": "Artificer 17 (Battle Smith) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Intelligence drives attack, damage, saves and DCs at once; Flash of Genius spends both reactions on the partner's checks and saves.",
-          "breadth": 6
-        },
-        "action-economy": {
-          "chassis": "Watcher",
-          "split": "Artificer 14 (Battle Smith) / Rogue 6 (Thief)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Same stat, different turns: Thief's second bonus action plus the Steel Defender and Spell-Storing Item hands the partner spells.",
-          "breadth": 5
-        }
-      },
-      "src": "09dc7b81184b",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Battle Master": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Manoeuvre",
-          "split": "Fighter 11 (Battle Master) / Rogue 9 (Thief)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Fighter 11's third attack plus short-rest superiority dice; Thief 9 adds a second bonus action and off-turn Sneak Attack.",
-          "breadth": 6
-        },
-        "action-economy": {
-          "chassis": "Commander",
-          "split": "Fighter 14 (Battle Master) / Paragon 6 (Lionheart)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Commander's Strike and Red Banner both hand the partner an off-turn attack, and Paragon 6 puts banners on the short-rest clock.",
-          "breadth": 5
-        }
-      },
-      "src": "6398a70d9171",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Champion": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Razor",
-          "split": "Fighter 17 (Champion) / Barbarian 3 (Zealot)",
-          "peak": 5,
-          "peak_axis": "end",
-          "why": "At-will crit-fishing with no resource clock; Reckless Attack feeds the 18-20 range and Heroic Warrior rerolls every turn.",
-          "breadth": 4
-        }
-      },
-      "src": "87f2db9f8233",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Eldritch Knight": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Warmage",
-          "split": "Fighter 13 (Eldritch Knight) / Wizard 7 (Bladesinging)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "One Intelligence buys weapon and spell; Improved War Magic at 12 trades attacks for spells, Bladesong fixes the AC and concentration.",
-          "breadth": 6
-        }
-      },
-      "src": "daa41be3f0f1",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Arcane Archer": {
-      "verdict": "candidate",
-      "builds": {
-        "lockdown": {
-          "chassis": "Quiver",
-          "split": "Fighter 15 (Arcane Archer) / Rogue 5 (Swashbuckler)",
-          "peak": 4,
-          "peak_axis": "ctrl_s",
-          "why": "Banishing and Grasping arrows are concentration-free single-target removal on a short-rest clock; Ever-Ready Shot at 15 stops it running dry.",
-          "breadth": 5
-        }
-      },
-      "src": "53a0398925c3",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Banneret (Purple Dragon Knight, 2014)": {
-      "verdict": "candidate",
-      "builds": {
-        "action-economy": {
-          "chassis": "Herald",
-          "split": "Fighter 17 (Banneret) / Rogue 3 (Thief)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Two Action Surge charges at 17, each converting into a partner reaction attack via Inspiring Surge; Rallying Cry heals them too.",
-          "breadth": 5
-        }
-      },
-      "src": "99cbd0437c8f",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Brute (UA)": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Ironhide",
-          "split": "Fighter 14 (Brute) / Paragon 6 (Prodigy)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "Four save proficiencies from Fighter 1 and Lone Wolf, plus Brutish Durability's blanket +1d6 on every save; Sheer Will stacks flat reduction.",
-          "breadth": 4
-        }
-      },
-      "src": "c11cccee88fb",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Cavalier": {
-      "verdict": "candidate",
-      "builds": {
-        "reaction": {
-          "chassis": "Warden",
-          "split": "Fighter 18 (Cavalier) / Barbarian 2 (none)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "Warding Maneuver prevents damage on the partner as a reaction, and Vigilant Defender at 18 adds a reaction on every enemy turn.",
-          "breadth": 5
-        }
-      },
-      "src": "f15aa84aafa1",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Psi Warrior": {
-      "verdict": "candidate",
-      "builds": {
-        "reaction": {
-          "chassis": "Aegis",
-          "split": "Fighter 12 (Psi Warrior) / Wizard 8 (Bladesinging)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "Protective Field is outward damage prevention at 9m; dice scale on proficiency bonus not Fighter level, so the Wizard half costs nothing.",
-          "breadth": 6
-        }
-      },
-      "src": "36bd0f00ec0a",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Rune Knight": {
-      "verdict": "candidate",
-      "builds": {
-        "short-rest": {
-          "chassis": "Rune",
-          "split": "Fighter 17 (Rune Knight) / Barbarian 3 (Zealot)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Constitution-keyed runes on a short-rest clock; Hill Rune resistance plus rage plus heavy armour and shield stack on Lone Wolf's halving.",
-          "breadth": 5
-        }
-      },
-      "src": "9d7b41a25ba5",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Samurai": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Resolve",
-          "split": "Fighter 15 (Samurai) / Rogue 5 (Swashbuckler)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Fighting Spirit's advantage feeds Sneak Attack and Rapid Strike converts it into a fourth swing; Elegant Courtier buys a third save proficiency.",
-          "breadth": 4
-        }
-      },
-      "src": "5d53a92c41d4",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Sharpshooter (UA)": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Snapshot",
-          "split": "Fighter 15 (Sharpshooter) / Rogue 5 (Assassin)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Steady Aim adds +2 plus half Fighter level to every hit on a short-rest clock, across three attacks and Action Surge.",
-          "breadth": 3
-        }
-      },
-      "src": "9ab20fad063f",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Echo Knight": {
-      "verdict": "candidate",
-      "builds": {
-        "action-economy": {
-          "chassis": "Echo",
-          "split": "Fighter 15 (Echo Knight) / Rogue 5 (Thief)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Unleash Incarnation adds a melee attack per Attack action taken; the split leaves 18-20, where Legion of One is never implemented.",
-          "breadth": 5
-        }
-      },
-      "src": "f998accace1e",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Purple Dragon Knight (2024 UA)": {
-      "verdict": "candidate",
-      "uncertain": "Author warns the dragon's Osiris scripting likely needs a fresh playthrough, resets visibly, and pathfinds badly indoors; camp-supply cost also scales with camp population.",
-      "builds": {
-        "action-economy": {
-          "chassis": "Drakelord",
-          "split": "Fighter 17 (Purple Dragon Knight (2024 UA)) / Rogue 3 (Thief)",
-          "peak": 5,
-          "peak_axis": "act",
-          "why": "A third body on your initiative acting independently, plus two Action Surges at 17 each granting the partner a Rallying Surge reaction attack.",
-          "breadth": 5
-        }
-      },
-      "src": "6673ef11a8f9",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "fighter/Chronoknight": {
-      "verdict": "candidate",
-      "uncertain": "Added to Listo for testing per the changelog and mechanics come from the DTO reference site, not the Nexus page; least battle-tested Fighter option.",
-      "builds": {
-        "action-economy": {
-          "chassis": "Loan",
-          "split": "Fighter 15 (Chronoknight) / Wizard 5 (Bladesinging)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Borrowed Time hands the partner an Action, but Desynchronized claws part of it back and it never combines with Action Surge.",
-          "breadth": 5
-        }
-      },
-      "src": "a0fd6e86164e",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Draconic Bloodline (vanilla) + Draconic Bloodline Expanded": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Amethyst",
-          "split": "Sorcerer 17 (Draconic Bloodline (vanilla) + Draconic Bloodline Expanded) / Fighter 3 (Champion)",
+          "chassis": "Draconic",
+          "split": "Sorcerer 17 (Draconic Bloodline) / Fighter 3 (Battle Master)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "Amethyst adds Charisma to every Magic Missile dart in Force, which almost nothing resists; Fighter 1 fixes armour and saves.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Amethyst ancestry adds Charisma to every Magic Missile dart, force resists almost nothing, and Draconic Resilience fixes the d6 body."
         }
       },
       "src": "23d2f5bc2494",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Wild Magic (vanilla) + Wild Magic Subclass - Additional Spells": {
       "verdict": "candidate",
       "builds": {
-        "lockdown": {
-          "chassis": "Chaos",
-          "split": "Sorcerer 17 (Wild Magic (vanilla) + Wild Magic Subclass - Additional Spells) / Cleric 3 (Twilight)",
+        "reaction": {
+          "chassis": "Tides",
+          "split": "Sorcerer 17 (Wild Magic) / Fighter 3 (Battle Master)",
           "peak": 3,
-          "peak_axis": "ctrl_a",
-          "why": "Arcane Chaos buys Hypnotic Pattern and Confusion off points, but they still cost concentration; Bend Luck is the real duo feature.",
-          "breadth": 4
+          "peak_axis": "rsc",
+          "breadth": 4,
+          "why": "Bend Luck spends Lone Wolf's spare reaction to swing any roll; the surge table is a liability when one body is half the party."
         }
       },
       "src": "41c4812e7bed",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Storm Sorcery (vanilla)": {
       "verdict": "candidate",
       "builds": {
-        "lockdown": {
-          "chassis": "Gale",
-          "split": "Sorcerer 17 (Storm Sorcery (vanilla)) / Cleric 3 (Tempest)",
-          "peak": 4,
+        "action-economy": {
+          "chassis": "Storm",
+          "split": "Sorcerer 17 (Storm Sorcery) / Cleric 3 (Tempest)",
+          "peak": 3,
           "peak_axis": "aoe",
-          "why": "Destructive Wrath maximises lightning and thunder, but the type is commonly resisted under Absolute Wrath and Tempestuous Magic fights Quickened for the bonus action.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Tempest maximises lightning on a short-rest charge and hands a no-armour Sorcerer heavy armour; Tempestuous Magic keeps the caster out of melee."
         }
       },
       "src": "f7c277314e52",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Shadow Magic (vanilla) + Shadow Magic Expanded - Umbral Form": {
       "verdict": "candidate",
       "builds": {
-        "short-rest": {
-          "chassis": "Hound",
-          "split": "Sorcerer 18 (Shadow Magic (vanilla) + Shadow Magic Expanded - Umbral Form) / Cleric 2 (Twilight)",
+        "durability": {
+          "chassis": "Shadow",
+          "split": "Sorcerer 17 (Shadow Magic) / Cleric 3 (Twilight)",
           "peak": 4,
-          "peak_axis": "ctrl_s",
-          "why": "Hound of Ill Omen recharges on short rest and imposes disadvantage, which does not decay; Strength of the Grave anchors a d6 body.",
-          "breadth": 5
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Strength of the Grave refuses the first knockdown, and Twilight Sanctuary plus heavy armour turns the d6 chassis into a body that holds."
         }
       },
       "src": "49116be029ea",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Aberrant Mind": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
           "chassis": "Psion",
-          "split": "Sorcerer 15 (Aberrant Mind) / Cleric 3 (Twilight) / Fighter 2 (none)",
+          "split": "Sorcerer 17 (Aberrant Mind) / Mesmerist 3 (Eyebiter)",
           "peak": 4,
           "peak_axis": "ctrl_a",
-          "why": "Psionic Sorcery casts Hunger of Hadar and Black Tentacles off points with no components, and Action Surge buys a second control cast.",
-          "breadth": 6
+          "breadth": 5,
+          "why": "Psionic Sorcery casts the control list off sorcery points with no components, and Hypnotic Stare and Towering Ego sharpen both ends."
         }
       },
       "src": "965ad2249bc0",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Favored Soul": {
       "verdict": "candidate",
       "builds": {
         "durability": {
           "chassis": "Chosen",
-          "split": "Sorcerer 17 (Favored Soul) / Cleric 3 (Twilight)",
-          "peak": 5,
+          "split": "Sorcerer 17 (Favored Soul) / Cleric 3 (Life)",
+          "peak": 4,
           "peak_axis": "rsc",
-          "why": "Twinned Death Ward prevents, Revivify restores, and Twilight Sanctuary temp-HPs the partner every round with no action - all three rungs at once.",
-          "breadth": 6
+          "breadth": 6,
+          "why": "Cleric healing as Charisma Sorcerer spells, so Twinned Death Ward and Revivify cover both bodies; Life adds heavy armour and Disciple of Life."
         },
-        "action-economy": {
-          "chassis": "Twin",
-          "split": "Sorcerer 15 (Favored Soul) / Cleric 3 (Order) / Fighter 2 (none)",
-          "peak": 5,
-          "peak_axis": "act",
-          "why": "Different clock and turn use: Twinned Haste hands the partner an Action, Voice of Authority a free attack on every buff.",
-          "breadth": 5
+        "front-line": {
+          "chassis": "Armament",
+          "split": "Sorcerer 17 (Favored Soul) / Paragon 3 (Spellblade)",
+          "peak": 3,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Scholar's Armament moves weapon attacks to Charisma, pairing Favored Soul's Extra Attack at 6 with Quickened casting on one stat."
         }
       },
       "src": "e844a26b8092",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "sorcerer/Wretched Soul": {
       "verdict": "none",
-      "why": "Feature names, levels and progression are unverified - the Nexus page carries only a one-line pitch, and Listo added it for testing. Unassessable.",
+      "why": "The mod ships no feature list: levels, progression and Vile Affliction's effect are all unverified, and Listo added the pack for testing only.",
       "src": "1faccf012fbd",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
-    "paragon/Lionheart": {
+    "bard/College of Lore (vanilla)": {
       "verdict": "candidate",
       "builds": {
-        "action-economy": {
-          "chassis": "Banner",
-          "split": "Paragon 17 (Lionheart) / Fighter 3 (Battle Master)",
+        "skills": {
+          "chassis": "Peerless",
+          "split": "Bard 17 (College of Lore) / Rogue 3 (Thief)",
           "peak": 5,
-          "peak_axis": "act",
-          "why": "Red Banner and Commander's Strike both hand the partner attacks off two resource pools, and Paragon 6 puts Banner Charges on short rest.",
-          "breadth": 5
+          "peak_axis": "skl",
+          "breadth": 5,
+          "why": "Three free proficiencies on top of Bard's three, Expertise four times, and Magical Secrets at 6; Thief adds a second bonus action."
         }
       },
-      "src": "cac29bccbed0",
-      "seed_deps": "3f76b2d551bc"
+      "src": "7ae6e0775df6",
+      "seed_deps": "df64605c1846"
     },
-    "paragon/Nighthawk": {
+    "bard/College of Swords (vanilla)": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Scour",
-          "split": "Paragon 14 (Nighthawk) / Warlock 6 (The Fiend)",
+          "chassis": "Flourish",
+          "split": "Bard 17 (College of Swords) / Paladin 3 (Oath of Devotion)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "Searing Blade strips all resistances for three turns, answering Absolute Wrath for both characters; Warlock adds Charisma-scaled ranged damage on short-rest slots.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Extra Attack at 6 with Flourishes, and Paladin 3 converts full-caster Bard slots into smites; the burst runs dry in long fights."
         }
       },
-      "src": "d3267582871a",
-      "seed_deps": "3f76b2d551bc"
+      "src": "c8544f19c7d0",
+      "seed_deps": "df64605c1846"
     },
-    "paragon/Prodigy": {
+    "bard/College of Valour (vanilla)": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Bulwark",
+          "split": "Bard 17 (College of Valour) / Fighter 3 (Battle Master)",
+          "peak": 3,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "The only College handing a Charisma caster shields and martial weapons, with Extra Attack at 6 and Action Surge behind it."
+        }
+      },
+      "src": "7d30ec14a7ff",
+      "seed_deps": "df64605c1846"
+    },
+    "bard/College of Glamour (vanilla)": {
       "verdict": "candidate",
       "builds": {
         "durability": {
-          "chassis": "Bastion",
-          "split": "Paragon 17 (Prodigy) / Fighter 3 (Brute)",
-          "peak": 5,
-          "peak_axis": "dur",
-          "why": "Heavy armour, shield, Sheer Will's flat reduction and Heavy Armour Master all apply after Lone Wolf has already halved the number.",
-          "breadth": 5
+          "chassis": "Mantle",
+          "split": "Bard 17 (College of Glamour) / Mesmerist 3 (Trickster)",
+          "peak": 3,
+          "peak_axis": "rsc",
+          "breadth": 4,
+          "why": "Mantle of Inspiration is bonus-action temp HP for the partner, but the real feature, Unbreakable Majesty, arrives only at 14."
         }
       },
-      "src": "f49bc0d72194",
-      "seed_deps": "3f76b2d551bc"
+      "src": "0552032a68b8",
+      "seed_deps": "df64605c1846"
     },
-    "paragon/Regent": {
+    "bard/College of Eloquence": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Oberon",
-          "split": "Paragon 17 (Regent) / Fighter 3 (Champion)",
+          "chassis": "Verse",
+          "split": "Bard 17 (College of Eloquence) / Sorcerer 3 (Aberrant Mind)",
           "peak": 4,
-          "peak_axis": "ctrl_s",
-          "why": "Champion's 19-20 range stacks with Strike Of The Butterflies, so Fairy's Curse strips reactions and bonus actions nearly every turn.",
-          "breadth": 5
+          "peak_axis": "ctrl_a",
+          "breadth": 5,
+          "why": "Unsettling Words debuffs the save before you commit the spell, and Heightened Spell turns a coin-flip Hold into disadvantage that never decays."
         }
       },
-      "src": "3af553ed5dd7",
-      "seed_deps": "3f76b2d551bc"
+      "src": "920ffe5a43de",
+      "seed_deps": "df64605c1846"
     },
-    "paragon/Spellblade — the exception the skill suspected, but not a caster": {
+    "bard/College of Dance": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Scholar",
-          "split": "Paragon 13 (Spellblade) / Bard 7 (College of Lore)",
-          "peak": 4,
+          "chassis": "Pirouette",
+          "split": "Bard 17 (College of Dance) / Monk 3 (Way of the Friar)",
+          "peak": 3,
           "peak_axis": "st",
-          "why": "Scholar's Armament makes Charisma the attack stat, so one stat carries weapon, Focus damage types and Bard slots; Will Over Weave lands at 13.",
-          "breadth": 6
+          "breadth": 4,
+          "why": "Unarmed damage rides the Inspiration die and Monk 3 adds Martial Arts and Flurry, but nothing here grants Extra Attack."
         }
       },
-      "src": "10b41dd2c7bc",
-      "seed_deps": "3f76b2d551bc"
+      "uncertain": "Whether Bardic Unarmed Attack's die replaces the damage of Monk Flurry of Blows strikes is not stated by either mod.",
+      "src": "e653bd91976d",
+      "seed_deps": "df64605c1846"
     },
-    "paragon/Sword Saint": {
+    "bard/College of Tragedy": {
       "verdict": "candidate",
       "builds": {
-        "action-economy": {
-          "chassis": "Nirvana",
-          "split": "Paragon 17 (Sword Saint) / Fighter 3 (Echo Knight)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Falling Rain is a free-action attack on every Willpower Die spent, and the echo adds one more per Attack action.",
-          "breadth": 5
+        "reaction": {
+          "chassis": "Dirge",
+          "split": "Bard 17 (College of Tragedy) / Fighter 3 (Battle Master)",
+          "peak": 3,
+          "peak_axis": "ctrl_s",
+          "breadth": 4,
+          "why": "Sorrowful Fate moves a save to Charisma without concentration, and Poetry in Misery and Tale of Hubris both fit Lone Wolf's two reactions."
         }
       },
-      "src": "46cf8a2ca96e",
-      "seed_deps": "3f76b2d551bc"
+      "src": "b0fa89c2e947",
+      "seed_deps": "df64605c1846"
+    },
+    "bard/College of Stormcalling": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Aria",
+          "split": "Bard 17 (College of Stormcalling) / Cleric 3 (Tempest)",
+          "peak": 4,
+          "peak_axis": "ctrl_a",
+          "breadth": 5,
+          "why": "The only blaster College: Concussion denies reactions, and Destructive Wrath maximises every thunder and lightning cast on a short-rest charge."
+        }
+      },
+      "uncertain": "Whether Electrifying Aria requires concentration is not stated in the DTO documentation, which decides whether it stacks with a second control spell.",
+      "src": "72944cb26b50",
+      "seed_deps": "df64605c1846"
     },
     "bloodhunter/Order of the Ghostslayer": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Dawn",
-          "split": "Blood Hunter 17 (Order of the Ghostslayer) / Rogue 3 (Thief)",
+          "chassis": "Dawnrite",
+          "split": "Blood Hunter 17 (Order of the Ghostslayer) / Fighter 3 (Battle Master)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Crimson Rite is at-will damage with no clock, doubled against branded targets by Brand of Sundering; Curse Specialist front-loads the extra Maledict.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Crimson Rite is at-will damage on no clock, Brand of Sundering doubles its dice at 11, and Rite of the Dawn resists necrotic."
         }
       },
       "src": "01fbf2629923",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "bloodhunter/Order of the Lycan": {
       "verdict": "candidate",
       "builds": {
-        "front-line": {
-          "chassis": "Hybrid",
-          "split": "Blood Hunter 17 (Order of the Lycan) / Monk 3 (Way of the Friar)",
+        "durability": {
+          "chassis": "Feral",
+          "split": "Blood Hunter 17 (Order of the Lycan) / Rogue 3 (Thief)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Dexterity-scaled unarmed strikes carrying a rite, plus Flurry, on no clock; Bloodlust below half HP is a real duo liability until 15.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Hybrid Transformation stacks physical resistance, +1 AC and Dex-scaling unarmed strikes; Bloodlust turning you on your partner is the duo's worst failure."
         }
       },
       "src": "0ec1dfa21fa5",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "bloodhunter/Order of the Mutant": {
       "verdict": "candidate",
       "builds": {
         "short-rest": {
           "chassis": "Mutagen",
-          "split": "Blood Hunter 14 (Order of the Mutant) / Rogue 6 (Swashbuckler)",
+          "split": "Blood Hunter 17 (Order of the Mutant) / Ranger 3 (Gloom Stalker)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Rite plus Sneak Attack are both clockless, and Improved Mutagencraft's +4 to a raw ability costs only a short rest.",
-          "breadth": 6
+          "breadth": 5,
+          "why": "Celerity and Potency are raw ability score on a short-rest clock with the cap removed; every resistance mutagen sells a vulnerability."
         }
       },
       "src": "8bc4b6942dd2",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "bloodhunter/Order of the Profane Soul": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Sapping",
-          "split": "Blood Hunter 14 (Order of the Profane Soul) / Wizard 6 (Bladesinging)",
+          "chassis": "Scar",
+          "split": "Blood Hunter 17 (Order of the Profane Soul) / Fighter 3 (Eldritch Knight)",
           "peak": 5,
           "peak_axis": "ctrl_s",
-          "why": "Brand of the Sapping Scar at 11 is slot-free blanket disadvantage on saves; Intelligence carries hemocraft, pact DCs and Wizard slots together.",
-          "breadth": 6
+          "breadth": 5,
+          "why": "Brand of the Sapping Scar at 11 is blanket disadvantage on saves, slot-free and short-rest, which is what makes one control spell land."
         }
       },
       "src": "c0d2aeb22cd5",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
-    "inquisitor/Tactics Inquisition": {
+    "fighter/Battle Master": {
       "verdict": "candidate",
-      "src": "714f71fcac56",
-      "seed_deps": "3f76b2d551bc",
-      "uncertain": "Listo 10.2 ships Inquisitor 2.2.0, whose level-3 progression references a subclass GUID that resolves to nothing, so the class is unusable past level 2 on the shipped install. Scored here on the standing decision that 2.2.1's pak is dropped in over it if an Inquisitor chassis is actually picked. See data/classes/inquisitor.md.",
       "builds": {
         "front-line": {
-          "chassis": "Lockstep",
-          "split": "Inquisitor 20 (Tactics Inquisition)",
-          "peak": 5,
-          "peak_axis": "rsc",
+          "chassis": "Maneuver",
+          "split": "Fighter 14 (Battle Master) / Barbarian 3 (Zealot) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "st",
           "breadth": 5,
-          "why": "Shared Judgment copies every active Judgment onto the one partner you have, and the shared Resiliency upgrade is temp HP equal to your Inquisitor level every turn plus physical resistance from 11 — no action, outward, every round. Saving Grace rerolls the partner's failed save on a reaction and Vindicator's Shield hands over +3 AC and saves. Extra Attack at 5 and Hallowed Blade at 6 keep the body swinging; 15 drops Shared Judgment to once per combat and 20 doubles Battle Acumen, so this wants the full twenty."
+          "why": "Three attacks plus d10 superiority dice on the short-rest clock; Thief and Rage add a bonus action and physical resistance."
+        },
+        "action-economy": {
+          "chassis": "Commander",
+          "split": "Fighter 17 (Battle Master) / Bard 3 (College of Swords)",
+          "peak": 4,
+          "peak_axis": "act",
+          "breadth": 4,
+          "why": "Two Action Surges at 17, and Commander's Strike plus Bardic Inspiration spend the surplus on the partner's turn instead."
         }
-      }
+      },
+      "src": "6398a70d9171",
+      "seed_deps": "df64605c1846"
     },
-    "inquisitor/Vengeance Inquisition": {
+    "fighter/Champion": {
       "verdict": "candidate",
-      "src": "e607e5a523ac",
-      "seed_deps": "3f76b2d551bc",
-      "uncertain": "Listo 10.2 ships Inquisitor 2.2.0, whose level-3 progression references a subclass GUID that resolves to nothing, so the class is unusable past level 2 on the shipped install. Scored here on the standing decision that 2.2.1's pak is dropped in over it if an Inquisitor chassis is actually picked. See data/classes/inquisitor.md.",
       "builds": {
         "front-line": {
-          "chassis": "Scourge",
-          "split": "Inquisitor 20 (Vengeance Inquisition)",
+          "chassis": "Keen",
+          "split": "Fighter 18 (Champion) / Barbarian 2 (none)",
+          "peak": 5,
+          "peak_axis": "end",
+          "breadth": 5,
+          "why": "Reckless Attack plus an 18-20 crit range and a free reroll every turn: unbounded at-will damage on no clock, Survivor underneath."
+        }
+      },
+      "src": "87f2db9f8233",
+      "seed_deps": "df64605c1846"
+    },
+    "fighter/Eldritch Knight": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Warmage",
+          "split": "Fighter 17 (Eldritch Knight) / Wizard 3 (Bladesinging)",
           "peak": 4,
           "peak_axis": "st",
           "breadth": 6,
-          "why": "Divine Scourge recasts Monster Lore with no check and refunds the bonus action, so the Quarry stays marked; Studied Combat then gives the first attack each round advantage and rolls all damage against that creature with advantage. Monster Tactician stacks Expertise on an Intelligence skill with a doubled Wisdom modifier, and Inquisitor's Edge at 15 is two reactions' worth of defence — which Lone Wolf's second reaction actually pays for. Third Judgment at 20."
+          "why": "Full Wizard list on an Intelligence body; Action Surge resets War Magic so one turn carries two spells and four attacks."
         }
-      }
+      },
+      "src": "daa41be3f0f1",
+      "seed_deps": "df64605c1846"
     },
-    "inquisitor/Zeal Inquisition": {
+    "fighter/Arcane Archer": {
       "verdict": "candidate",
-      "src": "a06d16f30378",
-      "seed_deps": "3f76b2d551bc",
-      "uncertain": "Listo 10.2 ships Inquisitor 2.2.0, whose level-3 progression references a subclass GUID that resolves to nothing, so the class is unusable past level 2 on the shipped install. Scored here on the standing decision that 2.2.1's pak is dropped in over it if an Inquisitor chassis is actually picked. See data/classes/inquisitor.md.",
+      "builds": {
+        "short-rest": {
+          "chassis": "Quiver",
+          "split": "Fighter 14 (Arcane Archer) / Ranger 3 (Gloom Stalker) / Rogue 3 (Assassin)",
+          "peak": 4,
+          "peak_axis": "ctrl_s",
+          "breadth": 5,
+          "why": "Banishing and Grasping arrows are slot-free single-target control on a short rest; Gloom Stalker and Assassin pay for the opening round."
+        }
+      },
+      "src": "53a0398925c3",
+      "seed_deps": "df64605c1846"
+    },
+    "fighter/Banneret (Purple Dragon Knight, 2014)": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Rally",
+          "split": "Fighter 17 (Banneret) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "Inspiring Surge turns each of two Action Surges into a partner reaction-attack, and Rallying Cry heals them off Second Wind."
+        }
+      },
+      "src": "99cbd0437c8f",
+      "seed_deps": "df64605c1846"
+    },
+    "fighter/Brute (UA)": {
+      "verdict": "candidate",
       "builds": {
         "durability": {
-          "chassis": "Vigil",
-          "split": "Inquisitor 20 (Zeal Inquisition)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "breadth": 4,
-          "why": "Crusader's Conviction is fast healing for your full Inquisitor level at the end of every turn from 9, unblockable by anti-healing, and Unyielding Resolve holds up to 25% of max HP as a delayed pool that excess healing can erase before it lands, plus +1 to saves per 5 points held. Long-rest-free sustain against a 120-supply camp cost. Ardent Protector is damage redirection and is priced as such, not as rescue."
+          "chassis": "Brute",
+          "split": "Fighter 18 (Brute) / Barbarian 2 (none)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "Brutish Durability adds 1d6 to every save on top of four proficiencies; Brute Force and Survivor make it unconditional and resource-free."
         }
-      }
+      },
+      "src": "c11cccee88fb",
+      "seed_deps": "df64605c1846"
     },
-    "barbarian/Base game (Patch 8) — Berserker": {
+    "fighter/Cavalier": {
       "verdict": "candidate",
       "builds": {
         "reaction": {
-          "chassis": "Retaliate",
-          "split": "Barbarian 14 (Berserker) / Fighter 3 (Battle Master) / Rogue 3 (Thief)",
+          "chassis": "Warden",
+          "split": "Fighter 18 (Cavalier) / Cleric 2 (Twilight)",
           "peak": 4,
-          "peak_axis": "act",
-          "why": "L14 Retaliation and Riposte fill both Lone Wolf reactions while Frenzied Strike, Thief and Action Surge stack attacks on the turn itself.",
-          "breadth": 5
+          "peak_axis": "rsc",
+          "breadth": 6,
+          "why": "Warding Maneuver is prevention aimed at the partner; Vigilant Defender multiplies reactions and Twilight Sanctuary temp-HPs both bodies each round."
         }
       },
-      "src": "c61067bdeaa3",
-      "seed_deps": "3f76b2d551bc"
+      "src": "f15aa84aafa1",
+      "seed_deps": "df64605c1846"
     },
-    "barbarian/Base game (Patch 8) — Path of the Giant": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Colossus",
-          "split": "Barbarian 17 (Path of the Giant) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Elemental Cleaver and Huge size at 14 with rage resistance under Lone Wolf halving; damage is honest but never near par.",
-          "breadth": 5
-        },
-        "action-economy": {
-          "chassis": "Hurl",
-          "split": "Barbarian 17 (Path of the Giant) / Rogue 3 (Thief)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Thief's extra bonus action turns the best-supported throw line in the file into two thrown attacks off the bonus clock.",
-          "breadth": 4
-        }
-      },
-      "src": "5ed53a9180b0",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Base game (Patch 8) — Path of Wild Magic": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Bolster",
-          "split": "Barbarian 17 (Path of Wild Magic) / Fighter 3 (Champion)",
-          "peak": 4,
-          "peak_axis": "sav",
-          "why": "Goon's Magic Awareness adds proficiency bonus to spell saves as a blanket booster, and Bolstering Magic hands the partner a slot each cycle.",
-          "breadth": 4
-        }
-      },
-      "src": "6e1c5abf6a73",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Base game (Patch 8) — Wildheart": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Totem",
-          "split": "Barbarian 17 (Wildheart) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Bear Heart resistance to nearly everything stacks under Lone Wolf halving, and Bear Attunement at 14 is a real taunt off the partner.",
-          "breadth": 5
-        }
-      },
-      "src": "e1ed2d029519",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Ancestral Guardian": {
+    "fighter/Psi Warrior": {
       "verdict": "candidate",
       "builds": {
         "reaction": {
-          "chassis": "Ancestor",
-          "split": "Barbarian 17 (Path of the Ancestral Guardian) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "Spirit Shield is outward prevention spent on the spare reaction, and Ancestral Protectors both redirects fire and halves what leaks through.",
-          "breadth": 5
-        }
-      },
-      "src": "737ff1755941",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Battlerager": {
-      "verdict": "none",
-      "why": "Flat 1d4 spikes and 3 damage retribution never upcast, the grapple half is unshipped, and medium metal armour forfeits Unarmoured Defence.",
-      "src": "08034f6dea74",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Beast": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Claw",
-          "split": "Barbarian 17 (Path of the Beast) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Claws add a third attack, Infectious Fury steals an enemy reaction, and Call the Hunt puts a permanent d6 on the partner.",
-          "breadth": 5
-        }
-      },
-      "src": "b2d521910915",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Juggernaut (Critical Role)": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Immovable",
-          "split": "Barbarian 17 (Path of the Juggernaut) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Resolute Stance imposes disadvantage on every attack against you on demand, which is how one body tanks an encounter tuned for five.",
-          "breadth": 4
-        }
-      },
-      "src": "988622d31e2d",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Storm Herald": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Tundra",
-          "split": "Barbarian 17 (Path of the Storm Herald) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "Tundra aura temp-HPs the partner every turn off no rest resource, and Shielding Storm shares your resistance with a party of two.",
-          "breadth": 5
-        }
-      },
-      "src": "f6363bec89cf",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Zealot": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Fury",
-          "split": "Barbarian 17 (Path of the Zealot) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Fanatical Focus rerolls a save every rage, Warrior of the Gods removes scroll-cost revives, and Rage Beyond Death makes 14+ unkillable.",
-          "breadth": 6
-        }
-      },
-      "src": "2423496f8598",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of Ginnungagap": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Ginnung",
-          "split": "Barbarian 17 (Path of Ginnungagap) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "sav",
-          "why": "Advantage on all spell saves patches the class's Wis/Cha hole, and Magic Syphoning is a slot-free counterspell on a Constitution check.",
-          "breadth": 5
-        }
-      },
-      "src": "28c846bfc028",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Lightning Vessel": {
-      "verdict": "candidate",
-      "uncertain": "Listo ships CD's nerf patch, which is not in the manifest; every damage number above is the unmodified mod's and is unverified.",
-      "builds": {
-        "action-economy": {
-          "chassis": "Fulgurant",
-          "split": "Barbarian 17 (Path of the Lightning Vessel) / Fighter 3 (Battle Master)",
-          "peak": 3,
-          "peak_axis": "aoe",
-          "why": "Three Galvanic powers all compete for one bonus action until level 10 frees Lightning Step, and lightning is commonly resisted here.",
-          "breadth": 4
-        }
-      },
-      "src": "8432b3b3dbe1",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "barbarian/Path of the Revenant": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Wraith",
-          "split": "Barbarian 17 (Path of the Revenant) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "dur",
-          "why": "Heavy armour, shield, physical resistance and flat DR 2 all multiply under Lone Wolf halving; the cost is that no healing reaches you.",
-          "breadth": 5
-        }
-      },
-      "src": "1413a40f4f0c",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of Devotion": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Sanctify",
-          "split": "Paladin 14 (Oath of Devotion) / Sorcerer 3 (Draconic Bloodline) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "Aura of Protection over Wis/Cha plus Lone Wolf's pair covers both bodies, and Quickened plus Action Surge stack the smite round.",
-          "breadth": 6
-        }
-      },
-      "src": "2b9b74646447",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of the Ancients": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Warding",
-          "split": "Paladin 14 (Oath of the Ancients) / Warlock 3 (The Fiend) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "Aura of Warding halves spell damage on both bodies at 9m and pact slots refill smites on the short-rest clock.",
-          "breadth": 6
-        }
-      },
-      "src": "75bdac2d7c79",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of Vengeance": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Enmity",
-          "split": "Warlock 3 (The Hexblade) / Paladin 14 (Oath of Vengeance) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Hex Warrior makes the body Charisma-SAD, and Vow of Enmity advantage spends Action Surge and two Lone Wolf actions on smites.",
-          "breadth": 6
-        }
-      },
-      "src": "11b24bf8dedb",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of the Crown": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Regnant",
-          "split": "Paladin 17 (Oath of the Crown) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "Channel Oath taunt drags attacks onto the heavy-armour body already carrying Aura of Protection, keeping them off the squishier partner.",
-          "breadth": 5
-        }
-      },
-      "src": "9e7ae37cab8a",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oathbreaker": {
-      "verdict": "dupe",
-      "dupe_of": "paladin/Oath of Vengeance",
-      "why": "Same Charisma smite frontliner, but smites are locked to Necrotic against Act II's undead, and Aura of Hate buffs no ordinary partner.",
-      "src": "204ce26cc8e2",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of Conquest": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Conqueror",
-          "split": "Paladin 20 (Oath of Conquest)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "One of the few real capstone reasons to stay mono: resistance to all damage, an extra attack and 19-20 crits.",
-          "breadth": 5
-        },
-        "lockdown": {
-          "chassis": "Dread",
-          "split": "Paladin 14 (Oath of Conquest) / Warlock 3 (The Great Old One) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Conquering Presence is concentration-free mass Frightening on a short-rest charge, and Aura of Conquest bills the frightened every turn.",
-          "breadth": 4
-        }
-      },
-      "src": "87ce010937ac",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of the Bleak Walkers": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Bleak",
-          "split": "Paladin 14 (Oath of the Bleak Walkers) / Warlock 3 (The Hexblade) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "Aura of Protection plus a stacking crit-range aura on both bodies, with Black Flames and Death's Maw's flat reduction on top.",
-          "breadth": 6
-        }
-      },
-      "src": "3cceb8066c68",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of the Moon (Selûne-inspired)": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Moonlight",
-          "split": "Paladin 17 (Oath of the Moon) / Fighter 3 (Battle Master)",
-          "peak": 5,
-          "peak_axis": "sav",
-          "why": "Aura of Moonlight is flat Charisma-mod reduction on every hit either body takes, and Divine Guardian halves the partner's damage on a short rest.",
-          "breadth": 6
-        },
-        "front-line": {
-          "chassis": "Silver",
-          "split": "Warlock 3 (The Hexblade) / Paladin 14 (Oath of the Moon) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Hex Warrior makes it Charisma-SAD so the same stat drives de-concentrated Lunar Smite, oath DCs and Silvered Rebuke.",
-          "breadth": 5
-        }
-      },
-      "src": "3a5c5a1a94b1",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Oath of Illumination": {
-      "verdict": "none",
-      "uncertain": "Only Aura of Brilliance is recoverable, from the mod's changelog; no level-by-level feature list is published anywhere.",
-      "why": "The entry is unreadable without in-game verification, so no split can be ranked; Listo added the whole pack for testing.",
-      "src": "18688035cd28",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "paladin/Supporting library": {
-      "verdict": "not-a-subclass",
-      "why": "Oath Framework is an API mod, not a selectable oath; the heading is a library note that parses as a subclass.",
-      "src": "8eacdfa9003d",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of the Land": {
-      "verdict": "candidate",
-      "builds": {
-        "short-rest": {
-          "chassis": "Recovery",
-          "split": "Druid 17 (Circle of the Land) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "end",
-          "why": "Natural Recovery is the only in-day slot refund in the class, worth more where a long rest costs 120 supplies.",
-          "breadth": 4
-        }
-      },
-      "src": "d09cef94ad8a",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of the Moon": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Beastform",
-          "split": "Druid 14 (Circle of the Moon) / Paladin 3 (Oath of Vengeance) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Wild Shape Overhaul keeps Smite and Action Surge live inside a second HP bar that recharges twice per short rest.",
-          "breadth": 5
-        }
-      },
-      "src": "2f6cc0733d6b",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of the Spores": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Symbiote",
-          "split": "Druid 17 (Circle of the Spores) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Symbiotic Entity is four temp HP per Druid level as a damage buffer, and mod 4018 grants a real Extra Attack outside beast form.",
-          "breadth": 5
-        }
-      },
-      "src": "d3c88d3ece7a",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of the Stars": {
-      "verdict": "candidate",
-      "builds": {
-        "short-rest": {
-          "chassis": "Omen",
-          "split": "Druid 17 (Circle of the Stars) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "Star Druid Tweaks moves Cosmic Omen to the short clock, so three or four swings of a d6 on the partner's saves per cycle.",
-          "breadth": 6
-        }
-      },
-      "src": "9de0d9b954af",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of the Sea": {
-      "verdict": "candidate",
-      "builds": {
-        "lockdown": {
-          "chassis": "Undertow",
-          "split": "Druid 17 (Circle of the Sea) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "end",
-          "why": "Crashing Wave is a Wisdom-scaled bonus-action damage-and-push every turn off no rest resource, and Oceanic Gift projects it onto the partner.",
-          "breadth": 5
-        }
-      },
-      "src": "339102712220",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of Stormchasers": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Squall",
-          "split": "Druid 17 (Circle of Stormchasers) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Storm Shift is three times Druid level in temp HP lasting all day, and level 10 downgrades enemy immunity to resistance under Absolute Wrath.",
-          "breadth": 5
-        }
-      },
-      "src": "08e6a74b217c",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of Winter": {
-      "verdict": "candidate",
-      "builds": {
-        "lockdown": {
-          "chassis": "Rime",
-          "split": "Druid 17 (Circle of Winter) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Level 10 folds Prone into cold spells you were already casting, costing no extra concentration; five temp HP per Druid level backs it.",
-          "breadth": 6
-        }
-      },
-      "src": "9fac91f72eca",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "druid/Circle of Dreams": {
-      "verdict": "candidate",
-      "uncertain": "Nothing material. All four features were read out of BookOfDruids_NexusVersion 1.0.0.6c.pak on 21 Aug 2026 — Progressions.lsx, Passive.txt, Spell_Target.txt, ActionResourceDefinitions.lsx and the pack's own english.xml — so the earlier 'three of its four features are unreadable' verdict no longer holds. Open only: whether the Hearth's maximised healing applies to the Balm dice cast from outside the zone.",
-      "builds": {
-        "short-rest": {
-          "chassis": "Reverie",
-          "split": "Druid 17 (Circle of Dreams) / Fighter 3 (Battle Master)",
+          "chassis": "Kinetic",
+          "split": "Fighter 17 (Psi Warrior) / Artificer 3 (Battle Smith)",
           "peak": 4,
           "peak_axis": "rsc",
           "breadth": 5,
-          "why": "Balm of the Summer Court is a long-rest pool of d6 equal to Druid level — 17 at this split — of which half may be spent in ONE bonus action, healing the partner 8d6 plus Wisdom and handing over the same in temporary hit points, at 18m. Hearth of Moonlight and Shadow makes every one of those dice roll maximum, once per short rest. Hidden Paths is a bonus-action 9m extraction for the partner, Wisdom-modifier times per long rest. Walker in Dreams at 14 grants the party a free short rest plus every 1st and 2nd level slot, once per long rest, which is what makes this the short-rest chassis rather than a healer: it buys back the clock the whole duo runs on, at 120 supplies a camp."
+          "why": "Battle Ready makes Intelligence the only stat, and Protective Field spends psionic dice reducing damage on the partner from nine metres."
         }
       },
-      "src": "55ff56133cd1",
-      "seed_deps": "3f76b2d551bc"
+      "src": "36bd0f00ec0a",
+      "seed_deps": "df64605c1846"
     },
-    "druid/Circle of the Shepherd": {
+    "fighter/Rune Knight": {
       "verdict": "candidate",
-      "uncertain": "Mighty Summoner's level in this pack is unverified, and Guardian Spirit and Faithful Summons are not named on the mod page.",
+      "builds": {
+        "short-rest": {
+          "chassis": "Giant",
+          "split": "Fighter 17 (Rune Knight) / Barbarian 3 (Zealot)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 6,
+          "why": "Master of Runes at 15 fires every rune twice per short rest: Hill's physical resistance, Fire's restrain, Cloud's redirect off the partner."
+        }
+      },
+      "src": "9d7b41a25ba5",
+      "seed_deps": "df64605c1846"
+    },
+    "fighter/Samurai": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Resolve",
+          "split": "Fighter 17 (Samurai) / Rogue 3 (Assassin)",
+          "peak": 4,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "Elegant Courtier buys a fifth save proficiency, and Fighting Spirit's advantage feeds Sneak Attack; Strength Before Death refuses the run's failure mode."
+        }
+      },
+      "src": "5d53a92c41d4",
+      "seed_deps": "df64605c1846"
+    },
+    "fighter/Sharpshooter (UA)": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Marksman",
+          "split": "Fighter 17 (Sharpshooter) / Ranger 3 (Gloom Stalker)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 4,
+          "why": "Steady Aim's short-rest flat bonus stacks on three attacks, Archery and Gloom Stalker; Snap Shot plus Action Surge is the opening burst."
+        }
+      },
+      "src": "9ab20fad063f",
+      "seed_deps": "df64605c1846"
+    },
+    "fighter/Echo Knight": {
+      "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Herd",
-          "split": "Druid 17 (Circle of the Shepherd) / Ranger 3 (Beast Master)",
+          "chassis": "Echo",
+          "split": "Fighter 15 (Echo Knight) / Rogue 3 (Thief) / Barbarian 2 (none)",
           "peak": 4,
           "peak_axis": "act",
-          "why": "Conjure Animals, familiars and a Companion's Bond beast make a multi-body set, and every totem aura buffs the other character.",
-          "breadth": 6
+          "breadth": 5,
+          "why": "Unleash Incarnation adds a melee attack per Action taken, and the echo threatens a second zone; stop at 15 because Legion of One never ships."
         }
       },
-      "src": "3ceb17eb7229",
-      "seed_deps": "3f76b2d551bc"
+      "src": "f998accace1e",
+      "seed_deps": "df64605c1846"
     },
-    "druid/Circle of Wildfire": {
+    "fighter/Purple Dragon Knight (2024 UA)": {
       "verdict": "candidate",
-      "uncertain": "Exact levels for Cauterizing Flames and Blazing Revival are unverified in this pack.",
       "builds": {
         "action-economy": {
-          "chassis": "Ember",
-          "split": "Druid 17 (Circle of Wildfire) / Fighter 3 (Battle Master)",
+          "chassis": "Amethyst",
+          "split": "Fighter 17 (Purple Dragon Knight) / Rogue 3 (Thief)",
           "peak": 4,
           "peak_axis": "act",
-          "why": "A permanent extra body that also casts your spells from its own position, giving a two-person party a second AoE origin.",
-          "breadth": 5
+          "breadth": 4,
+          "why": "The dragon is a third combatant on your initiative, and two Action Surges each hand partner and dragon a reaction attack."
         }
       },
-      "src": "e4138198b129",
-      "seed_deps": "3f76b2d551bc"
+      "uncertain": "Author warns the dragon's Osiris scripting likely needs a fresh playthrough and breaks pathfinding indoors; camp-supply cost also scales with camp population.",
+      "src": "6673ef11a8f9",
+      "seed_deps": "df64605c1846"
     },
-    "druid/Circle of Wrath": {
+    "fighter/Chronoknight": {
       "verdict": "candidate",
-      "uncertain": "The author's documentation stops at level 14; 15 to 20 is unverified despite the pack advertising full progression.",
       "builds": {
-        "lockdown": {
-          "chassis": "Cataclysm",
-          "split": "Druid 17 (Circle of Wrath) / Fighter 3 (Battle Master)",
-          "peak": 3,
-          "peak_axis": "aoe",
-          "why": "Wrath stacks cap at Wisdom modifier and revelations fire once per Wild Shape, so the engine is self-contained but modest.",
-          "breadth": 4
+        "action-economy": {
+          "chassis": "Hourglass",
+          "split": "Fighter 17 (Chronoknight) / Artificer 3 (Battle Smith)",
+          "peak": 5,
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "Borrowed Time hands the partner a whole Action, Alacrity adds a third reaction, and Battle Smith makes Intelligence the single stat."
         }
       },
-      "src": "0c2469e00a45",
-      "seed_deps": "3f76b2d551bc"
+      "uncertain": "Borrowed Time and Action Surge are mutually exclusive per turn, so the two engines alternate; the subclass is flagged as added 'for testing'.",
+      "src": "a0fd6e86164e",
+      "seed_deps": "df64605c1846"
     },
     "warlock/The Archfey": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Glamour",
-          "split": "Warlock 14 (The Archfey) / Sorcerer 3 (Draconic Bloodline) / Fighter 3 (Battle Master)",
-          "peak": 5,
+          "chassis": "Archfey",
+          "split": "Warlock 17 (The Archfey) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
           "peak_axis": "ctrl_a",
-          "why": "Fey Presence is slot-free repeatable area charm-or-fear on the short-rest clock, which is exactly the top rung of the axis.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Fey Presence is slot-free area charm-or-fear on a short rest; Quickened and Twinned spend the pact slots twice a turn."
         }
       },
+      "uncertain": "Expansion lists no 14th-level Archfey feature, so Warlock 14 may be an empty level here.",
       "src": "b918d76ab07e",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "warlock/The Fiend": {
       "verdict": "candidate",
       "builds": {
         "durability": {
-          "chassis": "Bargain",
-          "split": "Paragon 3 (Spellblade) / Warlock 14 (The Fiend) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Paragon 1 opens with heavy armour and shields, then Dark One's Blessing, Dark One's Own Luck and Fiendish Resilience layer on top.",
-          "breadth": 5
+          "chassis": "Brimstone",
+          "split": "Warlock 14 (The Fiend) / Paladin 6 (Oath of the Ancients)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 6,
+          "why": "Aura of Protection is a blanket save booster over four proficiencies, and short-rest pact slots refuel Divine Smite twice a rest."
         }
       },
       "src": "177b11ada830",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "warlock/The Great Old One": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Whisper",
-          "split": "Warlock 14 (The Great Old One) / Sorcerer 3 (Draconic Bloodline) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Mortal Reminder fires far more often than it reads, because three or four blast beams a turn make crits routine.",
-          "breadth": 5
+          "chassis": "Whispers",
+          "split": "Warlock 17 (The Great Old One) / Mesmerist 3 (Trickster)",
+          "peak": 5,
+          "peak_axis": "ctrl_s",
+          "breadth": 5,
+          "why": "Chains of Carceri at 15 is slot-free hard control on the short clock; Hypnotic Stare and Mortal Reminder shave saves further."
         }
       },
       "src": "ea5dee09ae76",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "warlock/The Hexblade": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Bladepact",
-          "split": "Paladin 5 (Oath of Vengeance) / Warlock 12 (The Hexblade) / Fighter 3 (Battle Master)",
+          "chassis": "Hexplate",
+          "split": "Warlock 12 (The Hexblade) / Paladin 6 (Oath of the Ancients) / Fighter 2 (none)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "Paladin opens for heavy armour and Wis/Cha saves, then Hex Warrior puts the same Charisma on the weapon smiting off pact slots.",
-          "breadth": 6
+          "breadth": 6,
+          "why": "Hex Warrior puts Charisma on the weapon at level one; short-rest pact slots become smites, Aura covers both saves, Action Surge doubles the burst."
         },
         "short-rest": {
-          "chassis": "Carceri",
-          "split": "Warlock 15 (The Hexblade) / Sorcerer 5 (Draconic Bloodline)",
-          "peak": 5,
-          "peak_axis": "ctrl_s",
-          "why": "Warlock 15 reaches Expansion's Chains of Carceri, slot-free hard control on the short clock; Sorcerer 5 adds Quickened and Twinned Haste.",
-          "breadth": 4
+          "chassis": "Curse",
+          "split": "Warlock 17 (The Hexblade) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Same stat, different clock: Agonizing Blast beams and Quickened Mystic Arcanum off pact slots, with Hexblade's Curse widening the crit range."
         }
       },
       "src": "3b4fe2c740c6",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "warlock/The Celestial": {
       "verdict": "candidate",
       "builds": {
         "short-rest": {
-          "chassis": "Radiance",
-          "split": "Warlock 14 (The Celestial) / Sorcerer 3 (Draconic Bloodline) / Fighter 3 (Battle Master)",
+          "chassis": "Halo",
+          "split": "Warlock 17 (The Celestial) / Cleric 3 (Life)",
           "peak": 4,
           "peak_axis": "rsc",
-          "why": "Bonus-action outward healing costing no slot, plus Revivify on a short-rest slot; Healing Light's long-rest pool is the ceiling.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Bonus-action Healing Light plus Revivify on a short-rest slot, and Disciple of Life multiplies every heal the pair casts."
         }
       },
+      "uncertain": "Healing Light's pool refreshes only on a long rest, so it is a per-day budget rather than a per-fight one.",
       "src": "54ffcdb60aa7",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "warlock/The Psyker": {
       "verdict": "candidate",
-      "uncertain": "Whether Warp detonations count as Eldritch Blast for Agonizing Blast or Mizora's rider system is unverified; the pack was added for testing.",
       "builds": {
-        "action-economy": {
+        "short-rest": {
           "chassis": "Warp",
-          "split": "Warlock 17 (The Psyker) / Fighter 3 (Battle Master)",
-          "peak": 3,
-          "peak_axis": "aoe",
-          "why": "Detonations scale to 3d10 per beam but Perils drains max HP every turn and the mitigation only arrives at level 10.",
-          "breadth": 3
+          "split": "Warlock 17 (The Psyker) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Focused Eldritch Blast detonates Warp inside the same Action for roughly 1.6x par Force damage, costing no slot or concentration."
         }
       },
-      "src": "181faf7327e9",
-      "seed_deps": "3f76b2d551bc"
+      "uncertain": "Perils of the Warp's compounding max-HP drain reads as unplayable by round two on the stat block; one combat log decides whether durability is 1 or 0. Detonation level map may key off Warlock rather than character level.",
+      "src": "464e20799136",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Open Hand (vanilla)": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Palm",
+          "split": "Monk 17 (Way of the Open Hand) / Rogue 3 (Thief)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 6,
+          "why": "Diamond Soul proficiencies in all six saves at 14, and Thief's extra bonus action doubles Flurries carrying free Topple and Push."
+        }
+      },
+      "src": "22d39b83fb56",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of Shadow (vanilla)": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Umbra",
+          "split": "Monk 17 (Way of Shadow) / Rogue 3 (Assassin)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "Shadow Arts covers the scouting a duo lacks off the ki pool, and Assassin converts every stealth opener into guaranteed crits."
+        }
+      },
+      "src": "a1eeb15e67f6",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Four Elements (vanilla)": {
+      "verdict": "dupe",
+      "dupe_of": "monk/Warrior of the Elements (PHB2024 rework of Four Elements)",
+      "why": "Its best expression is the elemental Monk body, which Warrior of the Elements does strictly better; the class file says it is superseded in almost every respect.",
+      "src": "97ad65b39905",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Ascendant Dragon": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Wyrm",
+          "split": "Monk 17 (Way of the Ascendant Dragon) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "The only Way handing the partner a resistance aura; Breath replaces an attack for real area damage, Action Surge buys another pass."
+        }
+      },
+      "uncertain": "Ascendant Aspect's Blindsight needs a mod absent from 10.2; Breath dice stay far under Act II area par.",
+      "src": "c5fc27e8ed88",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Astral Self": {
+      "verdict": "candidate",
+      "builds": {
+        "reaction": {
+          "chassis": "Astral",
+          "split": "Monk 17 (Way of the Astral Self) / Cleric 3 (Twilight)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 6,
+          "why": "Wisdom alone drives attack, damage, AC and DC; Deflect Energy spends both Lone Wolf reactions and Twilight Sanctuary temp-HPs the partner."
+        }
+      },
+      "src": "c09572053f53",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Kensei": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Edge",
+          "split": "Monk 17 (Way of the Kensei) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "Puts the Monk on Listo's enormous weapon pool instead of its thin unarmed one; Agile Parry is near-permanent +2 AC."
+        }
+      },
+      "src": "5ad933192130",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Long Death": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Long",
+          "split": "Monk 17 (Way of the Long Death) / Barbarian 3 (Zealot)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 6,
+          "why": "Mastery of Death converts dying into one ki off a short-rest pool, and Rage plus Zealot stack two more refusals to fall."
+        }
+      },
+      "src": "09443f1f6f38",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of Mercy": {
+      "verdict": "candidate",
+      "builds": {
+        "short-rest": {
+          "chassis": "Mercy",
+          "split": "Monk 17 (Way of Mercy) / Cleric 3 (Life)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 6,
+          "why": "From 11 every Flurry strike is a free full heal, and Hand of Ultimate Mercy removes the duo's in-combat death mode."
+        }
+      },
+      "src": "d292c7282d03",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Sun Soul": {
+      "verdict": "candidate",
+      "builds": {
+        "short-rest": {
+          "chassis": "Corona",
+          "split": "Monk 17 (Way of the Sun Soul) / Rogue 3 (Thief)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "The one ranged Monk; Thief's second bonus action buys extra Sun Bolt volleys, and ki funds Searing Sunburst on the short clock."
+        }
+      },
+      "uncertain": "Scales on Dexterity rather than Wisdom, so it fights the rest of a Listo Monk's stat plan and is locked to commonly-resisted radiant.",
+      "src": "755ccc8c928f",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Warrior of the Elements (PHB2024 rework of Four Elements)": {
+      "verdict": "candidate",
+      "builds": {
+        "reaction": {
+          "chassis": "Warrior",
+          "split": "Monk 17 (Warrior of the Elements) / Fighter 3 (Cavalier)",
+          "peak": 5,
+          "peak_axis": "sav",
+          "breadth": 6,
+          "why": "Elemental Strikes put push-pull on opportunity attacks, and Cavalier's Hold the Line makes enemies provoke them for moving at all."
+        }
+      },
+      "uncertain": "The mod defers levels 6, 11 and 17 numbers to screenshots, so Elemental Burst, Stride and Epitome values are unverified.",
+      "src": "f43813f9a41c",
+      "seed_deps": "df64605c1846"
+    },
+    "monk/Way of the Friar": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Kin",
+          "split": "Monk 14 (Way of the Friar) / Cleric 6 (Twilight)",
+          "peak": 5,
+          "peak_axis": "rsc",
+          "breadth": 6,
+          "why": "Friar's Bond and Twilight Sanctuary both temp-HP the partner every round with no action, over Cleric restoration and a free teleport to them."
+        }
+      },
+      "uncertain": "Friar's Bond costs Concentration, which competes with every other concentration effect the body might want.",
+      "src": "79567d815a81",
+      "seed_deps": "df64605c1846"
+    },
+    "artificer/Alchemist": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Philtre",
+          "split": "Artificer 17 (Alchemist) / Cleric 3 (Life)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Flash of Genius adds Intelligence to the partner's saves twice a round, and free Heal, Greater Restoration and six elixirs offset long-rest supply cost."
+        }
+      },
+      "src": "494b30989c65",
+      "seed_deps": "df64605c1846"
+    },
+    "artificer/Armorer": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Carapace",
+          "split": "Artificer 17 (Armorer) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Heavy armour, shield, Enhanced Defense and Mirror Image, plus a Guardian reaction that yanks an attacker off the partner."
+        }
+      },
+      "uncertain": "Armorer never gains Intelligence-to-attack, so the body stays multi-attribute in a way Battle Smith does not.",
+      "src": "11739e7bd5dc",
+      "seed_deps": "df64605c1846"
+    },
+    "artificer/Artillerist": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Bombard",
+          "split": "Artificer 17 (Artillerist) / Wizard 3 (Bladesinging)",
+          "peak": 4,
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "Two resummonable cannons at 15 plus a Homunculus is a four-body party from two characters, with +1d8 on every spell."
+        }
+      },
+      "src": "3d07cbcb9934",
+      "seed_deps": "df64605c1846"
+    },
+    "artificer/Battle Smith": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Defender",
+          "split": "Artificer 17 (Battle Smith) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "act",
+          "breadth": 6,
+          "why": "Intelligence drives attack, damage and DC; the Steel Defender is a third body imposing disadvantage on attacks aimed at the partner."
+        }
+      },
+      "src": "09dc7b81184b",
+      "seed_deps": "df64605c1846"
     },
     "wizard/Abjuration": {
       "verdict": "candidate",
       "builds": {
         "durability": {
-          "chassis": "Ward",
-          "split": "Wizard 17 (Abjuration) / Paragon 3 (Lionheart)",
+          "chassis": "Abjuration",
+          "split": "Wizard 17 (Abjuration) / Cleric 3 (Twilight)",
           "peak": 4,
-          "peak_axis": "dur",
-          "why": "Arcane Ward recharging on short rests plus Paragon's armour and shields; Projected Ward spends the spare reaction on the partner.",
-          "breadth": 5
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Arcane Ward recharges every short rest at 10 and Projected Ward spends the spare reaction absorbing damage aimed at the partner."
         }
       },
       "src": "f7c03f236e02",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Bladesinging": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Warsong",
-          "split": "Wizard 15 (Bladesinging) / Fighter 2 (none) / Rogue 3 (Thief)",
+          "chassis": "Cantor",
+          "split": "Wizard 17 (Bladesinging) / Fighter 3 (Eldritch Knight)",
           "peak": 4,
-          "peak_axis": "st",
-          "why": "Extra Attack at Wizard 6 and Int to weapon damage at 14, with Action Surge and a second bonus action behind it.",
-          "breadth": 6
-        },
-        "lockdown": {
-          "chassis": "Cadence",
-          "split": "Wizard 17 (Bladesinging) / Sorcerer 3 (Draconic Bloodline)",
-          "peak": 4,
-          "peak_axis": "ctrl_a",
-          "why": "Different turn: Bladesong protects concentration on area control while Quickened lands a second cast off converted Wizard slots.",
-          "breadth": 5
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Bladesong's +4 AC and +4 Constitution saves plus Extra Attack and Intelligence-to-damage at 14 make the only durable full caster here."
         }
       },
       "src": "cdbd24c58f13",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Conjuration": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Menagerie",
-          "split": "Wizard 17 (Conjuration) / Druid 3 (Circle of the Moon)",
-          "peak": 4,
+          "chassis": "Gateway",
+          "split": "Wizard 17 (Conjuration) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 5,
           "peak_axis": "act",
-          "why": "Focused Conjuration at 10 makes summons immune to concentration breaks; Druid 3 adds Summon Beast and Flock of Familiars.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Focused Conjuration at 10 makes summons unbreakable by damage, and Twinned Haste from the Sorcerer dip hands the partner a whole Action."
         }
       },
       "src": "1b52c066cd39",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Divination": {
       "verdict": "candidate",
@@ -1899,204 +1199,773 @@
           "split": "Wizard 17 (Divination) / Cleric 3 (Twilight)",
           "peak": 4,
           "peak_axis": "ctrl_s",
-          "why": "Portent replaces a roll outright, so it never decays as saves scale, and Lone Wolf's second reaction spends two per round.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Portent dice are reaction-spent guaranteed failures on enemy saves, refunded on short rests at 6, and Lone Wolf grants a second reaction."
         }
       },
+      "uncertain": "Expansion's Greater Portent at 14 is listed as uncertain in the class file; not counted here.",
       "src": "8f402b40589f",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Enchantment": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Gaze",
-          "split": "Wizard 17 (Enchantment) / Mesmerist 3 (Aspect of the Eyebiter)",
+          "chassis": "Thrall",
+          "split": "Wizard 17 (Enchantment) / Sorcerer 3 (Draconic Bloodline)",
           "peak": 4,
           "peak_axis": "ctrl_s",
-          "why": "Hypnotic Gaze strips concentration and Split Enchantment doubles Hold Person; Hypnotic Stare shaves the saves Listo enemies keep making.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Hypnotic Gaze strips concentration with no slot, Split Enchantment doubles Hold Person at 10, and Heightened Spell offsets Listo's climbing save DCs."
         }
       },
-      "uncertain": "Mesmerist's multiclass node is undocumented, so whether a level-2+ Mesmerist dip still grants Hypnotic Stare's package is unverified.",
       "src": "358c2e50f92e",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Evocation": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Sculptor",
-          "split": "Wizard 17 (Evocation) / Sorcerer 3 (Draconic Bloodline)",
-          "peak": 5,
+          "chassis": "Cinder",
+          "split": "Wizard 17 (Evocation) / Cleric 3 (Tempest)",
+          "peak": 4,
           "peak_axis": "aoe",
-          "why": "Highest damage per slot in the class, Sculpt Spells keeps the partner safe inside it, Overchannel maximises at 14.",
-          "breadth": 3
+          "breadth": 4,
+          "why": "Sculpt Spells keeps the partner out of your own fireball, and Tempest's Destructive Wrath maximises lightning on a short-rest charge."
         }
       },
       "src": "8984e8f51ece",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Illusion": {
-      "verdict": "dupe",
-      "dupe_of": "wizard/Evocation",
-      "why": "Its best twenty-level expression is a generic full-caster body; Illusory Self is one miss per rest and nothing in the school scales.",
-      "uncertain": "None material; the school's features are all vanilla and read clearly.",
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Mirage",
+          "split": "Wizard 17 (Illusion) / Rogue 3 (Thief)",
+          "peak": 3,
+          "peak_axis": "act",
+          "breadth": 4,
+          "why": "Thinnest school here: bonus-action Minor Illusion and one guaranteed miss at 10; the Thief dip supplies the breadth the school lacks."
+        }
+      },
       "src": "9645eaaaec06",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Necromancy": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Thrall",
-          "split": "Wizard 17 (Necromancy) / Cleric 3 (Grave)",
+          "chassis": "Ossuary",
+          "split": "Wizard 17 (Necromancy) / Druid 3 (Circle of the Shepherd)",
           "peak": 5,
           "peak_axis": "act",
-          "why": "Animate Dead++ removes the undead cap, and Animate Dead is not concentration, so Haste still goes on the partner.",
-          "breadth": 6
+          "breadth": 5,
+          "why": "Animate Dead++ removes the undead cap and upcasts on 9th-level slots; Haste on the partner puts a fifth and sixth body up."
         }
       },
       "src": "e99b0c5daf33",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Transmutation": {
       "verdict": "candidate",
       "builds": {
         "durability": {
-          "chassis": "Stone",
-          "split": "Wizard 17 (Transmutation) / Fighter 3 (Eldritch Knight)",
+          "chassis": "Crucible",
+          "split": "Wizard 18 (Transmutation) / Artificer 2 (none)",
           "peak": 3,
-          "peak_axis": "rsc",
-          "why": "Transmuter's Stone is a Con-save proficiency you can hand the partner; past that the school is a blue jay.",
-          "breadth": 4
+          "peak_axis": "sav",
+          "breadth": 4,
+          "why": "Transmuter's Stone hands the partner Constitution save proficiency permanently; Artificer 2 buys medium armour, shields and +1 spell DC without costing a feat."
         }
       },
+      "uncertain": "Artificer's rounded-up spellcaster passive is documented as core-game-only; its interaction with Wizard slots was not verified.",
       "src": "b6a95c3eaa5e",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/War Magic": {
       "verdict": "candidate",
       "builds": {
         "reaction": {
-          "chassis": "Deflection",
-          "split": "Wizard 17 (War Magic) / Artificer 3 (Battle Smith)",
+          "chassis": "Fulcrum",
+          "split": "Wizard 17 (War Magic) / Cleric 3 (War)",
           "peak": 3,
           "peak_axis": "dur",
-          "why": "Reaction AC and save spikes plus initiative, on a chassis Artificer 2 gives medium armour, shields and Enhanced Arcane Focus.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "A reaction-based AC and save spike on the spare Lone Wolf reaction, plus War Priest's bonus-action attack; actual numbers are unpublished."
         }
       },
-      "uncertain": "Arcane Deflection, Tactical Wit, Power Surge and Durable Magic numbers are images-only on the mod page; every rung here is provisional.",
+      "uncertain": "Arcane Deflection, Tactical Wit, Power Surge and Durable Magic numbers are images-only on the mod page and unverified.",
       "src": "21372dbbdf37",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Order of Scribes": {
       "verdict": "candidate",
       "builds": {
-        "lockdown": {
-          "chassis": "Scrivener",
-          "split": "Wizard 17 (Order of Scribes) / Warlock 3 (The Fiend)",
+        "short-rest": {
+          "chassis": "Palimpsest",
+          "split": "Wizard 17 (Order of Scribes) / Warlock 3 (The Hexblade)",
           "peak": 4,
-          "peak_axis": "st",
-          "why": "Formulaic Attunement ignores resistance, so Absolute Wrath does not cap this caster; Warlock 3 refuels it on short rests.",
-          "breadth": 4
+          "peak_axis": "aoe",
+          "breadth": 4,
+          "why": "Formulaic Attunement ignores resistance to your attuned damage type, which Absolute Wrath hands out freely, and pact slots refuel on short rests."
         }
       },
-      "uncertain": "Wizardly Quill / Awakened Spellbook levels and the exact Formulaic Attunement damage bonus are unverified - mod page tables are images.",
+      "uncertain": "Levels for Wizardly Quill and Awakened Spellbook, and the size of the Formulaic Attunement damage bonus, are unverified.",
       "src": "ecc9967c0a58",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Hexcraft": {
       "verdict": "candidate",
       "builds": {
-        "short-rest": {
+        "durability": {
           "chassis": "Grimoire",
-          "split": "Wizard 17 (Hexcraft) / Warlock 3 (The Archfey)",
+          "split": "Wizard 17 (Hexcraft) / Cleric 3 (Nature)",
           "peak": 4,
-          "peak_axis": "end",
-          "why": "Heart of Darkness refunds slots on kills and pact slots refresh on short rests, which is the Wizard's real constraint here.",
-          "breadth": 5
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Two invocations at 2 and four by 14, ritual temp HP on every cast, and charm-and-fear immunity at 10 on an Intelligence chassis."
         }
       },
       "src": "fb61ded2c1fa",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/Hierophant": {
       "verdict": "candidate",
       "builds": {
-        "durability": {
-          "chassis": "Chalice",
+        "lockdown": {
+          "chassis": "Reliquary",
           "split": "Wizard 17 (Hierophant) / Cleric 3 (Life)",
-          "peak": 4,
+          "peak": 5,
           "peak_axis": "rsc",
-          "why": "Bonus-action healing plus chosen elemental resistance aimed at the partner, Raise Dead at 10 and a downed-ally revive at 14.",
-          "breadth": 5
+          "breadth": 6,
+          "why": "Erudite Remedy is bonus-action healing plus chosen elemental resistance on the partner; Warding Rejuvenation raises them downed and Disciple of Life inflates every die."
         }
       },
       "src": "aab7fd552d58",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/School of Death": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Wither",
-          "split": "Wizard 17 (School of Death) / Cleric 3 (Twilight)",
+          "chassis": "Death",
+          "split": "Wizard 17 (School of Death) / Sorcerer 3 (Shadow Magic)",
           "peak": 4,
           "peak_axis": "st",
-          "why": "Ignores necrotic resistance and converts Arcane Recovery into damage; Cleric 3 supplies the defensive layer the school entirely lacks.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Inescapable Destruction ignores necrotic resistance at 6, Reaper doubles necromancy cantrips, and Touch of Death converts Arcane Recovery charges into damage."
         }
       },
+      "uncertain": "Necrotic-only output still meets outright immunity, which Inescapable Destruction does not cover; no defensive layer from the school at all.",
       "src": "4bc66c55b0c7",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "wizard/School of Bombardment": {
       "verdict": "candidate",
-      "uncertain": "MATERIAL: Salvo (6) and Barrage (10) look unreachable — they require 2 and 3 Bombs and the only grant in the pak is ActionResource(Bombs,1,0), with the tooltip saying you may hold one at a time. Scored on the three features that do work. Also open: whether a bomb counts as a spell for Arcane Ordnance's own refill, which is the difference between one bomb per spell cast and one every turn; ctrl_a would go to 5 if it is.",
       "builds": {
         "lockdown": {
-          "chassis": "Ordnance",
-          "split": "Wizard 17 (School of Bombardment) / Sorcerer 3 (Draconic Bloodline)",
+          "chassis": "Bombardment",
+          "split": "Wizard 17 (School of Bombardment) / Fighter 3 (Battle Master)",
           "peak": 4,
           "peak_axis": "ctrl_a",
-          "breadth": 4,
-          "why": "Arcane Ordnance is a slot-free 3m area attack that lays its own surface every time it lands — fire, ice, acid or electrified ground — refilled by casting any spell, so the terrain keeps accumulating at no spell-slot cost while the wizard's real control list does its own work. Saturating Fire at 14 moves the bomb onto the bonus action after any levelled spell, so the Action never has to choose. The Big One is once per long rest but pays for itself: Devastating is 5d8+Int three times over in a 6m radius plus Strength-save Prone, and Reckoning breaks concentration outright."
+          "breadth": 5,
+          "why": "A slot-free bomb every turn laying its own surface, and from 14 it rides a levelled spell on the bonus action."
         }
       },
+      "uncertain": "Salvo and Barrage require 2 and 3 Bombs but the pak grants only 1, so both look unreachable; whether a bomb itself refills the charge is unverified.",
       "src": "2c6c4dd7246a",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of Devotion": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Sanctus",
+          "split": "Paladin 14 (Oath of Devotion) / Fighter 3 (Battle Master) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Sacred Weapon adds Charisma to attack rolls, Action Surge and Quickened stack smites into one turn, and the level 7 aura blanks charm."
+        }
+      },
+      "src": "2b9b74646447",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of the Ancients": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Verdant",
+          "split": "Paladin 14 (Oath of the Ancients) / Warlock 3 (The Hexblade) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Aura of Warding at 7 gives both characters resistance to spell damage, and Hexblade pact slots refuel smites on short rests."
+        }
+      },
+      "src": "75bdac2d7c79",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of Vengeance": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Enmity",
+          "split": "Paladin 14 (Oath of Vengeance) / Fighter 3 (Battle Master) / Warlock 3 (The Hexblade)",
+          "peak": 5,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Vow of Enmity is short-rest advantage spent across four attacks under Lone Wolf's second Action, with pact slots and manoeuvres feeding burst."
+        }
+      },
+      "src": "11b24bf8dedb",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of the Crown": {
+      "verdict": "candidate",
+      "builds": {
+        "reaction": {
+          "chassis": "Regent",
+          "split": "Paladin 17 (Oath of the Crown) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Crown's taunt drags attacks onto the heavy-armour body, and Battle Master Riposte spends both Lone Wolf reactions punishing them."
+        }
+      },
+      "src": "9e7ae37cab8a",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oathbreaker": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Blight",
+          "split": "Paladin 14 (Oathbreaker) / Warlock 3 (The Hexblade) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 4,
+          "why": "Smite is entirely necrotic here, which is wrong for Act 2, and Aura of Hate buffs nothing unless the partner is undead."
+        }
+      },
+      "uncertain": "Aura of Hate's duo value depends entirely on the partner playing a Ghastly Ghouls undead race, which the seed cannot assume.",
+      "src": "204ce26cc8e2",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of Conquest": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Dominion",
+          "split": "Paladin 20 (Oath of Conquest)",
+          "peak": 4,
+          "peak_axis": "ctrl_a",
+          "breadth": 5,
+          "why": "Only monoclass reaches Invincible Conqueror: all-damage resistance, an extra attack and 19-20 crits; Conquering Presence is short-rest area Frighten."
+        }
+      },
+      "uncertain": "The aura's speed-reduction clause does nothing in BG3, and Frightened is a Wisdom save that decays as enemy DCs climb.",
+      "src": "87ce010937ac",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of the Bleak Walkers": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Blackflame",
+          "split": "Paladin 14 (Oath of the Bleak Walkers) / Fighter 3 (Champion) / Warlock 3 (The Hexblade)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "The level 7 aura lowers both characters' crit threshold and stacks with Champion, and Black Flames adds burst on top of smites."
+        }
+      },
+      "src": "3cceb8066c68",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of the Moon (Selûne-inspired)": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Moonward",
+          "split": "Paladin 17 (Oath of the Moon) / Cleric 3 (Twilight)",
+          "peak": 5,
+          "peak_axis": "rsc",
+          "breadth": 6,
+          "why": "Aura of Moonlight is flat Charisma-modifier reduction on every hit either character takes, and Divine Guardian halves the partner's damage on a short-rest charge."
+        }
+      },
+      "uncertain": "Whether Listo's global 9m/15m aura patch reaches this v10.0-era subclass is unverified; Warding Bond is deliberately not scored.",
+      "src": "3a5c5a1a94b1",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Oath of Illumination": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Dawnray",
+          "split": "Paladin 14 (Oath of Illumination) / Warlock 3 (The Hexblade) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 3,
+          "peak_axis": "st",
+          "breadth": 4,
+          "why": "Ranged radiant paladin, the right damage type for Act 2, but no level-by-level feature list is published anywhere."
+        }
+      },
+      "uncertain": "Only Aura of Brilliance is recoverable by name; every level and number is unverified and Listo added the pack for testing.",
+      "src": "18688035cd28",
+      "seed_deps": "df64605c1846"
+    },
+    "paladin/Supporting library": {
+      "verdict": "not-a-subclass",
+      "why": "A note about Oath Framework, a developer-facing API mod with no player-facing features and no selectable oath of its own.",
+      "src": "8eacdfa9003d",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of the Land": {
+      "verdict": "candidate",
+      "builds": {
+        "short-rest": {
+          "chassis": "Wellspring",
+          "split": "Druid 17 (Circle of the Land) / Cleric 3 (Twilight)",
+          "peak": 3,
+          "peak_axis": "end",
+          "breadth": 4,
+          "why": "Natural Recovery is the only in-day slot refund in the class, which matters when a long rest costs 120 supplies."
+        }
+      },
+      "src": "d09cef94ad8a",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of the Moon": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Pelt",
+          "split": "Druid 17 (Circle of the Moon) / Barbarian 3 (Zealot)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 4,
+          "why": "Wild Shape is a second health bar and the overhaul keeps multiclass features working inside it; Rage stacks physical resistance on top."
+        }
+      },
+      "uncertain": "That Rage remains usable and beneficial inside an overhauled Wild Shape form was not verified.",
+      "src": "2f6cc0733d6b",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of the Spores": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Mycelium",
+          "split": "Druid 17 (Circle of the Spores) / Cleric 3 (Zeal)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Symbiotic Entity is four temp HP per druid level plus damage; Zeal buys heavy armour and a Wisdom-scaled bonus-action attack."
+        }
+      },
+      "uncertain": "That the Extra Attack mod and the Wild Shape overhaul resolve to exactly one Extra Attack is flagged unverified in the class file.",
+      "src": "d3c88d3ece7a",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of the Stars": {
+      "verdict": "candidate",
+      "builds": {
+        "short-rest": {
+          "chassis": "Omen",
+          "split": "Druid 17 (Circle of the Stars) / Cleric 3 (Life)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 6,
+          "why": "Cosmic Omens recharge on short rests here: three or four swings of a d6 on any save either character makes."
+        }
+      },
+      "src": "9de0d9b954af",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of the Sea": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Undertow",
+          "split": "Druid 17 (Circle of the Sea) / Cleric 3 (Nature)",
+          "peak": 3,
+          "peak_axis": "ctrl_a",
+          "breadth": 5,
+          "why": "Wrath of the Sea is a bonus-action Wisdom-scaled cold hit with forced movement, the cheapest way to peel something off the partner."
+        }
+      },
+      "src": "339102712220",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of Stormchasers": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Squall",
+          "split": "Druid 17 (Circle of Stormchasers) / Cleric 3 (Tempest)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Storm Shift is 51 temp HP until long rest for one charge, and at 10 your element ignores resistance entirely."
+        }
+      },
+      "uncertain": "Storm's Reach damage is locked at its level-12 value and stops scaling, so it is a flat feature that falls.",
+      "src": "08e6a74b217c",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of Winter": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Rime",
+          "split": "Druid 17 (Circle of Winter) / Ranger 3 (Monster Slayer)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Winter Spirit is 85 temp HP plus Wisdom on every damage spell, and cold spells knock failures prone from 10."
+        }
+      },
+      "src": "9fac91f72eca",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of Dreams": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Reverie",
+          "split": "Druid 17 (Circle of Dreams) / Cleric 3 (Peace)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "A 17d6 pool spent eight dice per bonus action at 18 metres, maximised inside the Hearth, plus a free short rest at 14."
+        }
+      },
+      "src": "55ff56133cd1",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of the Shepherd": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Shepherd",
+          "split": "Druid 17 (Circle of the Shepherd) / Ranger 3 (Beast Master)",
+          "peak": 4,
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "Every totem is an aura buffing the partner, and Beast Master's companion joins Conjure Animals and the familiar on the field."
+        }
+      },
+      "uncertain": "Mighty Summoner's level here, and Guardian Spirit and Faithful Summons entirely, are unverified in the class file.",
+      "src": "3ceb17eb7229",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of Wildfire": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Emberkin",
+          "split": "Druid 17 (Circle of Wildfire) / Cleric 3 (Grave)",
+          "peak": 4,
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "The spirit is a permanent body that casts your spells from its own position, a second AoE origin a duo cannot otherwise generate."
+        }
+      },
+      "uncertain": "Exact levels for Cauterizing Flames and Blazing Revival are unverified, and Blazing Revival fires only on the spirit's turn.",
+      "src": "e4138198b129",
+      "seed_deps": "df64605c1846"
+    },
+    "druid/Circle of Wrath": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Wrath",
+          "split": "Druid 17 (Circle of Wrath) / Cleric 3 (Tempest)",
+          "peak": 3,
+          "peak_axis": "aoe",
+          "breadth": 4,
+          "why": "A gear-free scaling elemental engine capped at Wisdom-modifier stacks; the level 14 shared immunity helps, but the numbers stay small."
+        }
+      },
+      "uncertain": "The author's documentation stops at level 14, so 15-20 is unverified despite the pack advertising full level-20 support.",
+      "src": "0c2469e00a45",
+      "seed_deps": "df64605c1846"
+    },
+    "mesmerist/Aspect of the Trickster — the support/buff archetype": {
+      "verdict": "candidate",
+      "builds": {
+        "short-rest": {
+          "chassis": "Implant",
+          "split": "Mesmerist 17 (Aspect of the Trickster) / Bard 3 (College of Lore)",
+          "peak": 5,
+          "peak_axis": "rsc",
+          "breadth": 6,
+          "why": "Tricks fire as free actions: Mesmeric Mirror auto-misses an attack on the partner, Gift of Will adds Charisma plus half level to their Wisdom saves."
+        }
+      },
+      "uncertain": "Mesmerist's maximum spell level (probably 5th) and its multiclass proficiency node are both undocumented by the mod.",
+      "src": "df17f93592a9",
+      "seed_deps": "df64605c1846"
+    },
+    "mesmerist/Aspect of the Eyebiter — the debuff/damage archetype": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Gaze",
+          "split": "Mesmerist 17 (Aspect of the Eyebiter) / Sorcerer 3 (Draconic Bloodline)",
+          "peak": 5,
+          "peak_axis": "ctrl_s",
+          "breadth": 5,
+          "why": "Hypnotic Stare is an at-will, concentration-free save penalty carrying Bold Stare riders, and Psychic Inception at 7 defeats mind-immune enemies."
+        }
+      },
+      "uncertain": "Same undocumented spell cap and multiclass node; the Resistance boon's all-damage tier at 10 was not verified against the pak.",
+      "src": "19f9b25e4f49",
+      "seed_deps": "df64605c1846"
+    },
+    "mesmerist/Aspect of the Daredevil — the melee/skirmisher archetype": {
+      "verdict": "candidate",
+      "builds": {
+        "reaction": {
+          "chassis": "Panache",
+          "split": "Mesmerist 14 (Aspect of the Daredevil) / Rogue 3 (Swashbuckler) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Superior Defense adds Charisma to unarmoured AC, and Deeds grants a third reaction at 9 for Riposte and Uncanny Dodge."
+        }
+      },
+      "uncertain": "Panache refills only on crits or piercing kills, otherwise long rest, so Extra Attack and the level 9 gate can lapse mid-day.",
+      "src": "24d86719bfac",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Base game (Patch 8) — Berserker": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Frenzy",
+          "split": "Barbarian 14 (Berserker) / Fighter 3 (Battle Master) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Frenzy's bonus-action attack plus Action Surge and a third bonus action; Retaliation at 14 spends Lone Wolf's spare reaction."
+        }
+      },
+      "src": "c61067bdeaa3",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Base game (Patch 8) — Path of the Giant": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Titan",
+          "split": "Barbarian 17 (Path of the Giant) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Listo's throw fixes stack Reckless Attack, Brutal Critical and a doubled Rage throw bonus at 16; Huge reach arrives at 14."
+        }
+      },
+      "src": "5ed53a9180b0",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Base game (Patch 8) — Path of Wild Magic": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Bolster",
+          "split": "Barbarian 17 (Path of Wild Magic) / Ranger 3 (Beast Master)",
+          "peak": 4,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "Magic Awareness adds proficiency to spell saves, Bolstering Magic hands the partner a slot each rest, and the companion is a third body."
+        }
+      },
+      "src": "6e1c5abf6a73",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Base game (Patch 8) — Wildheart": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Totem",
+          "split": "Barbarian 17 (Wildheart) / Monk 3 (Way of the Friar)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Bear Heart resistance under Lone Wolf's halving, Bestial Attunement's real taunt at 14, and Friar temp HP for both characters each turn."
+        }
+      },
+      "src": "e1ed2d029519",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Ancestral Guardian": {
+      "verdict": "candidate",
+      "builds": {
+        "reaction": {
+          "chassis": "Ancestor",
+          "split": "Barbarian 14 (Path of the Ancestral Guardian) / Fighter 3 (Battle Master) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Spirit Shield spends the spare reaction to cut 3d6 off the partner, and Ancestral Protectors redirects fire onto the durable body."
+        }
+      },
+      "src": "737ff1755941",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Battlerager": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Spikes",
+          "split": "Barbarian 17 (Path of the Battlerager) / Rogue 3 (Thief)",
+          "peak": 3,
+          "peak_axis": "st",
+          "breadth": 4,
+          "why": "Thief's extra bonus action is the only way to afford the 1d4 spike attack, and medium metal armour costs Unarmoured Defence."
+        }
+      },
+      "src": "08034f6dea74",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Beast": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Claw",
+          "split": "Barbarian 17 (Path of the Beast) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Claws add an attack per Attack action and Call the Hunt gives the partner +1d6 per turn for the whole Rage."
+        }
+      },
+      "src": "b2d521910915",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Juggernaut (Critical Role)": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Bastion",
+          "split": "Barbarian 17 (Juggernaut) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "dur",
+          "breadth": 4,
+          "why": "Resolute Stance imposes disadvantage on every attack against you on demand, and Hurricane Strike hands the partner a free reaction attack."
+        }
+      },
+      "src": "988622d31e2d",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Storm Herald": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Tundra",
+          "split": "Barbarian 17 (Path of the Storm Herald) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Tundra feeds the partner temp HP every turn off no rest resource, and Shielding Storm shares your resistance from level 10."
+        }
+      },
+      "src": "f6363bec89cf",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Zealot": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Fury",
+          "split": "Barbarian 17 (Path of the Zealot) / Bloodhunter 3 (Order of the Ghostslayer)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Divine Fury scales with Barbarian level and stacks with Crimson Rite; Fanatical Focus rerolls a failed save every Rage, not every rest."
+        }
+      },
+      "src": "2423496f8598",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of Ginnungagap": {
+      "verdict": "candidate",
+      "builds": {
+        "reaction": {
+          "chassis": "Null",
+          "split": "Barbarian 17 (Path of Ginnungagap) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "sav",
+          "breadth": 5,
+          "why": "Advantage on spell saves plus a Constitution-check counterspell and a crit downgrade, both reactions, against Listo's unusually caster-dense enemies."
+        }
+      },
+      "src": "28c846bfc028",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Lightning Vessel": {
+      "verdict": "candidate",
+      "uncertain": "Listo ships CD's nerf patch inside the Wabbajack; it is not in the manifest, so every Galvanic Heart number here is the unmodified mod's and is too high.",
+      "builds": {
+        "front-line": {
+          "chassis": "Vessel",
+          "split": "Barbarian 17 (Path of the Lightning Vessel) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 4,
+          "why": "Bonus-action congestion until 10, where the free Lightning Step unblocks it; the lightning scales off Constitution, already co-primary here."
+        }
+      },
+      "src": "8432b3b3dbe1",
+      "seed_deps": "df64605c1846"
+    },
+    "barbarian/Path of the Revenant": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Wraith",
+          "split": "Barbarian 17 (Path of the Revenant) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "dur",
+          "breadth": 4,
+          "why": "Heavy armour, physical resistance and flat DR 2 under Lone Wolf's halving, but nothing can heal you, which vetoes a healer partner."
+        }
+      },
+      "src": "1413a40f4f0c",
+      "seed_deps": "df64605c1846"
     },
     "rogue/Thief": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Larceny",
-          "split": "Rogue 11 (Thief) / Ranger 9 (Gloom Stalker)",
+          "chassis": "Quickhand",
+          "split": "Rogue 17 (Thief) / Ranger 3 (Gloom Stalker)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Fast Hands plus Lone Wolf is three bonus actions a turn, and Sneak Attack never runs out; Rogue 11 buys Reliable Talent.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Fast Hands plus Lone Wolf is a third bonus action, Dread Ambusher adds initiative and a first-round attack, and Sneak Attack never rests."
         }
       },
       "src": "5aefa2d32370",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Assassin": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Garrote",
-          "split": "Rogue 17 (Assassin) / Ranger 3 (Gloom Stalker)",
+          "chassis": "Ambush",
+          "split": "Rogue 17 (Assassin) / Fighter 3 (Battle Master)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Restored Action and Bonus Action at combat start, crits on the surprised, and d10+Dex initiative stacked with Dread Ambusher.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Alacrity, Action Surge and Lone Wolf give four opening Actions against creatures that have not acted; it contributes least in long fights."
         }
       },
       "src": "bdaa6a9611d3",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Arcane Trickster": {
       "verdict": "candidate",
@@ -2106,325 +1975,391 @@
           "split": "Rogue 17 (Arcane Trickster) / Wizard 3 (Bladesinging)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Permanent invisible Mage Hand as a third body, and Bladesong turns the shared Intelligence into +2 AC and Con saves.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Both halves run on Intelligence: Bladesong buys AC and concentration in light armour, and transcription turns Listo's scroll drops into a library."
         }
       },
       "src": "f577b45d0c74",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Swashbuckler": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Duelist",
-          "split": "Rogue 11 (Swashbuckler) / Paladin 9 (Oath of Vengeance)",
+          "chassis": "Swashbuckler",
+          "split": "Rogue 11 (Swashbuckler) / Fighter 6 (Battle Master) / Ranger 3 (Gloom Stalker)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Sneak Attack with no setup body, Charisma feeding Dirty Tricks and Aura of Protection; Rogue stops at 11 because 13-20 is empty.",
-          "breadth": 5
+          "breadth": 5,
+          "why": "Rakish Audacity needs no flanking body, which a duo lacks; the empty 13-20 table is why this one leaves at eleven."
         }
       },
       "src": "f4891b31de34",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Inquisitive": {
       "verdict": "candidate",
       "builds": {
-        "skills": {
+        "front-line": {
           "chassis": "Insight",
-          "split": "Rogue 17 (Inquisitive) / Bard 3 (College of Lore)",
+          "split": "Rogue 17 (Inquisitive) / Fighter 3 (Battle Master)",
           "peak": 5,
-          "peak_axis": "skl",
-          "why": "Six Expertise picks, Jack of All Trades and Reliable Talent clear every gate; Insightful Fighting keeps Sneak Attack online alone.",
-          "breadth": 5
+          "peak_axis": "end",
+          "breadth": 5,
+          "why": "Insightful Fighting is a repeatable, no-ally Sneak Attack enabler, and Steady Eye with Expertise covers Perception and Investigation for the campaign."
         }
       },
       "src": "e55590abd26a",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Mastermind": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
           "chassis": "Tactician",
-          "split": "Rogue 15 (Mastermind) / Bard 5 (College of Lore)",
+          "split": "Rogue 17 (Mastermind) / Bard 3 (College of Lore)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Bonus-action Help picks the partner up without spending an Action; Bard 5 adds short-rest Inspiration. Wisdom-scaled features underperform on Dex.",
-          "breadth": 4
+          "breadth": 6,
+          "why": "Bonus-action Help lifts the partner off the floor without spending an Action, and Lore Expertise plus Jack of All Trades covers every gate."
         }
       },
       "src": "6b34d691f6fa",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Phantom": {
       "verdict": "candidate",
       "builds": {
-        "short-rest": {
-          "chassis": "Wail",
+        "front-line": {
+          "chassis": "Wails",
           "split": "Rogue 17 (Phantom) / Fighter 3 (Battle Master)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Wails from the Grave splits Sneak Attack across two targets, Whispers refreshes on short rests, and Soul Trinkets feed off kills.",
-          "breadth": 6
+          "breadth": 6,
+          "why": "Wails from the Grave splits Sneak Attack across two targets, and Whispers of the Dead grants all skills of one ability per short rest."
         }
       },
-      "uncertain": "The Cunning Strike compatibility patch was authored against Book of Rogues 1.0.0.2 and its author did not test level 17.",
       "src": "3a48878b7c18",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Scout": {
       "verdict": "candidate",
       "builds": {
         "front-line": {
-          "chassis": "Skirmisher",
-          "split": "Rogue 17 (Scout) / Ranger 3 (Beast Master)",
+          "chassis": "Skirmish",
+          "split": "Rogue 17 (Scout) / Ranger 3 (Gloom Stalker)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Sudden Strike at 17 is a second Sneak Attack on a different target; Ambush Master's +5 initiative and mark buff both characters.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Ambush Master and Dread Ambusher stack on Listo's d10 initiative, and the first-round mark grants the partner advantage as well."
         }
       },
       "src": "faca771d6499",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Soulknife": {
       "verdict": "candidate",
+      "uncertain": "The mod page never states the number, size or recovery rate of Psionic Energy Dice, so the resource that powers the whole subclass is unpriced.",
       "builds": {
         "front-line": {
           "chassis": "Psiblade",
-          "split": "Rogue 14 (Soulknife) / Fighter 6 (Battle Master)",
+          "split": "Rogue 17 (Soulknife) / Fighter 3 (Battle Master)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Needs no gear at all, and Homing Strikes insures misses; psychic is commonly resisted late, which caps the single-target ceiling.",
-          "breadth": 4
+          "breadth": 4,
+          "why": "Weapon, accuracy fix, mobility and invisibility all come from one pool, but Psychic is commonly resisted under Absolute Wrath."
         }
       },
-      "uncertain": "Psionic Energy Die count, size and recovery rate are not stated by the mod, so the whole resource clock is a guess.",
       "src": "81d84afd10b7",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
     "rogue/Seeker": {
       "verdict": "candidate",
       "builds": {
         "reaction": {
-          "chassis": "Auspice",
-          "split": "Rogue 17 (Seeker) / Wizard 3 (Divination)",
+          "chassis": "Siphon",
+          "split": "Rogue 17 (Seeker) / Artificer 3 (Battle Smith)",
           "peak": 5,
           "peak_axis": "end",
-          "why": "Auspicious Parry reduces a hit to 1 damage and Lone Wolf's second reaction still covers Uncanny Dodge or a Portent.",
-          "breadth": 5
+          "breadth": 6,
+          "why": "Auspicious Parry and Spell Siphon both spend reactions Lone Wolf doubled, and Artificer infusions feed the same Intelligence the Seeker already needs."
         }
       },
       "src": "8b72cec42a4c",
-      "seed_deps": "3f76b2d551bc"
+      "seed_deps": "df64605c1846"
     },
-    "monk/Way of the Open Hand (vanilla)": {
-      "verdict": "candidate",
-      "builds": {
-        "lockdown": {
-          "chassis": "Topple",
-          "split": "Monk 14 (Way of the Open Hand) / Rogue 3 (Thief) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "act",
-          "why": "Topple and Push ride free on every Flurry off the Wisdom DC, with Action Surge and a third bonus action buying more Flurries.",
-          "breadth": 5
-        }
-      },
-      "src": "0a6cdd170d7b",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of Shadow (vanilla)": {
-      "verdict": "candidate",
-      "builds": {
-        "skills": {
-          "chassis": "Nightfall",
-          "split": "Monk 14 (Way of Shadow) / Rogue 6 (Assassin)",
-          "peak": 5,
-          "peak_axis": "end",
-          "why": "Shadow Arts covers the scouting a duo lacks off a short-rest pool, and opening Rogue buys Expertise plus first-round crits.",
-          "breadth": 6
-        }
-      },
-      "src": "19b6fc822171",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of the Four Elements (vanilla)": {
-      "verdict": "none",
-      "why": "Flat ki dice with no upcast path decay against Combat Extender's inflated HP, and Warrior of the Elements supersedes it in every respect.",
-      "uncertain": "Nothing material; Expansion's 13-20 continuation does not change the scaling problem.",
-      "src": "7a55f4afff0e",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of the Ascendant Dragon": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Wyrm",
-          "split": "Monk 14 (Way of the Ascendant Dragon) / Cleric 6 (Twilight)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "The only Way whose aura covers the partner; Twilight Sanctuary stacks a per-round temp-HP aura on the same Wisdom stat.",
-          "breadth": 5
-        }
-      },
-      "src": "a6ab34cf43b9",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of the Astral Self": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Astral",
-          "split": "Monk 14 (Way of the Astral Self) / Cleric 6 (Zeal)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Wisdom drives attack, damage, AC and DCs at once, dealing force damage; Zeal adds a Wisdom-scaled bonus-action attack.",
-          "breadth": 4
-        }
-      },
-      "src": "2b5fa39e41da",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of the Kensei": {
-      "verdict": "candidate",
-      "builds": {
-        "front-line": {
-          "chassis": "Edge",
-          "split": "Monk 17 (Way of the Kensei) / Fighter 3 (Battle Master)",
-          "peak": 4,
-          "peak_axis": "st",
-          "why": "Turns Monk into a weapon character, which matters because Listo's weapon pool is enormous; Agile Parry is near-free AC every turn.",
-          "breadth": 5
-        }
-      },
-      "uncertain": "Sharpen the Blade does nothing on an already-enchanted weapon, so its value falls as loot arrives - size of that loss unquantified.",
-      "src": "734b835ab3be",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of the Long Death": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Deathless",
-          "split": "Monk 17 (Way of the Long Death) / Cleric 3 (Grave)",
-          "peak": 4,
-          "peak_axis": "dur",
-          "why": "Mastery of Death converts going down into one ki, repeatably, from a short-rest pool - the failure mode that ends duo fights.",
-          "breadth": 5
-        }
-      },
-      "src": "807e92f3dfe8",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of Mercy": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Physician",
-          "split": "Monk 14 (Way of Mercy) / Cleric 6 (Peace)",
-          "peak": 4,
-          "peak_axis": "rsc",
-          "why": "From 11 every Flurry strike is a free full heal, and Peace 1 puts a permanent d4 on both characters.",
-          "breadth": 6
-        }
-      },
-      "src": "8a1f77e553cb",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "monk/Way of the Sun Soul": {
+    "ranger/Beast Master (base game + `Expansion`)": {
       "verdict": "candidate",
       "builds": {
         "action-economy": {
-          "chassis": "Sunbolt",
-          "split": "Monk 17 (Way of the Sun Soul) / Rogue 3 (Thief)",
+          "chassis": "Panther",
+          "split": "Ranger 17 (Beast Master) / Druid 3 (Circle of the Land)",
           "peak": 4,
           "peak_axis": "act",
-          "why": "The only ranged Monk, and a second bonus action doubles the ki-bought bolt volleys; Searing Sunburst only reaches par AoE.",
-          "breadth": 4
+          "breadth": 5,
+          "why": "Panther scales off your proficiency bonus and Helps as a bonus action, Wild Companion adds a familiar, and both halves run on Wisdom."
         }
       },
-      "src": "d24299d61b05",
-      "seed_deps": "3f76b2d551bc"
+      "src": "40608f25f274",
+      "seed_deps": "df64605c1846"
     },
-    "monk/Warrior of the Elements (PHB2024 rework of Four Elements)": {
+    "ranger/Gloom Stalker (base game + `Expansion`)": {
       "verdict": "candidate",
       "builds": {
-        "reaction": {
-          "chassis": "Zephyr",
-          "split": "Monk 16 (Warrior of the Elements) / Fighter 2 (none) / Barbarian 2 (none)",
+        "front-line": {
+          "chassis": "Gloom",
+          "split": "Ranger 17 (Gloom Stalker) / Rogue 3 (Assassin)",
           "peak": 4,
-          "peak_axis": "ctrl_s",
-          "why": "Push and pull ride opportunity attacks with no save and no concentration, so both reactions become control on the enemy's turn.",
-          "breadth": 5
+          "peak_axis": "st",
+          "breadth": 6,
+          "why": "Dread Ambusher and Assassin's Alacrity delete one enemy before it acts, and Iron Mind at 7 patches the Ranger's missing Wisdom save."
         }
       },
-      "uncertain": "Elemental Burst, Stride of the Elements and Elemental Epitome numbers are deferred to in-game screenshots and unverified.",
-      "src": "a118cb095906",
-      "seed_deps": "3f76b2d551bc"
+      "src": "be7257e1b7ae",
+      "seed_deps": "df64605c1846"
     },
-    "monk/Way of the Friar": {
+    "ranger/Hunter (base game + `Expansion`)": {
       "verdict": "candidate",
       "builds": {
-        "durability": {
-          "chassis": "Kinship",
-          "split": "Monk 14 (Way of the Friar) / Cleric 6 (Life)",
-          "peak": 5,
-          "peak_axis": "rsc",
-          "why": "Per-turn temp HP on both characters with no action, Friar's Faith resistance as prevention, Cleansing Wave and Revivify as restoration.",
-          "breadth": 6
+        "front-line": {
+          "chassis": "Volley",
+          "split": "Ranger 17 (Hunter) / Fighter 3 (Battle Master)",
+          "peak": 4,
+          "peak_axis": "aoe",
+          "breadth": 5,
+          "why": "Volley at 11 is the class's only real AoE, and Action Surge fires it twice in the round that has to clear adds."
         }
       },
-      "src": "1368a0c8d600",
-      "seed_deps": "3f76b2d551bc"
+      "src": "26a5e9648501",
+      "seed_deps": "df64605c1846"
     },
-    "mesmerist/Aspect of the Trickster — the support/buff archetype": {
-      "verdict": "candidate",
-      "builds": {
-        "durability": {
-          "chassis": "Implant",
-          "split": "Mesmerist 14 (Aspect of the Trickster) / Paladin 6 (Oath of Devotion)",
-          "peak": 5,
-          "peak_axis": "rsc",
-          "why": "Tricks fire as free actions on the partner: guaranteed miss, Greater Restoration, and Gift of Will stacking on Aura of Protection.",
-          "breadth": 6
-        }
-      },
-      "src": "df17f93592a9",
-      "seed_deps": "3f76b2d551bc"
-    },
-    "mesmerist/Aspect of the Eyebiter — the debuff/damage archetype": {
+    "ranger/Swarmkeeper (base game, Patch 8 + `Expansion`)": {
       "verdict": "candidate",
       "builds": {
         "lockdown": {
-          "chassis": "Stare",
-          "split": "Mesmerist 14 (Aspect of the Eyebiter) / Sorcerer 6 (Draconic Bloodline)",
-          "peak": 5,
+          "chassis": "Swarm",
+          "split": "Ranger 17 (Swarmkeeper) / Fighter 3 (Battle Master)",
+          "peak": 4,
           "peak_axis": "ctrl_s",
-          "why": "Bold Stares are at-will, slot-free and concentration-free single-target lockdown; Psychic Inception at 7 closes the immunity hole.",
-          "breadth": 5
+          "breadth": 4,
+          "why": "Moths blind once per round off your own attack at no concentration cost, and the free reposition answers being focused with no third body."
         }
       },
-      "uncertain": "Mesmerist's maximum spell level is never stated by the mod; 5th is inferred from the half-caster table.",
-      "src": "19f9b25e4f49",
-      "seed_deps": "3f76b2d551bc"
+      "src": "a55aa703c257",
+      "seed_deps": "df64605c1846"
     },
-    "mesmerist/Aspect of the Daredevil — the melee/skirmisher archetype": {
+    "ranger/Drakewarden": {
       "verdict": "candidate",
       "builds": {
-        "reaction": {
-          "chassis": "Panache",
-          "split": "Mesmerist 17 (Aspect of the Daredevil) / Fighter 3 (Battle Master)",
+        "action-economy": {
+          "chassis": "Drake",
+          "split": "Ranger 17 (Drakewarden) / Fighter 3 (Battle Master)",
           "peak": 4,
-          "peak_axis": "dur",
-          "why": "Superior Defense adds Charisma to AC and Parry subtracts 1d20+Dex+Cha; the extra reaction at 9 auto-Feints everyone who misses.",
-          "breadth": 5
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "Infused Strikes adds 1d6 to the partner's attacks too, and Reflexive Resistance is a second life-saving reaction Lone Wolf makes affordable."
         }
       },
-      "uncertain": "Panache only refreshes on crits or kills with a one-handed piercing weapon, otherwise long rest - the Extra Attack gate may go dark mid-day.",
-      "src": "24d86719bfac",
-      "seed_deps": "3f76b2d551bc"
+      "src": "d659da3ef36f",
+      "seed_deps": "df64605c1846"
+    },
+    "ranger/Fey Wanderer": {
+      "verdict": "candidate",
+      "builds": {
+        "skills": {
+          "chassis": "Glamour",
+          "split": "Ranger 17 (Fey Wanderer) / Bard 3 (College of Lore)",
+          "peak": 4,
+          "peak_axis": "skl",
+          "breadth": 6,
+          "why": "Wisdom added to every Charisma check plus Lore's Expertise and three proficiencies makes one character the face with no Charisma investment."
+        }
+      },
+      "src": "99210b00d6d9",
+      "seed_deps": "df64605c1846"
+    },
+    "ranger/Horizon Walker": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Planar",
+          "split": "Ranger 17 (Horizon Walker) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Planar Warrior converts all of the hit to Force, deleting Absolute Wrath's resistances; Thief's bonus action pays for it beside Hunter's Mark."
+        }
+      },
+      "src": "c2a50d2a0068",
+      "seed_deps": "df64605c1846"
+    },
+    "ranger/Monster Slayer": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Slayer",
+          "split": "Ranger 17 (Monster Slayer) / Bloodhunter 3 (Order of the Ghostslayer)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Slayer's Prey costs no concentration, so it stacks with Hunter's Mark and Crimson Rite; Magic-User's Nemesis is a free counterspell."
+        }
+      },
+      "src": "8eb8cba193ed",
+      "seed_deps": "df64605c1846"
+    },
+    "ranger/Primeval Guardian (UA)": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Grove",
+          "split": "Ranger 17 (Primeval Guardian) / Cleric 3 (Life)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Guardian Aura heals a hurt partner every turn for no action and no camp supplies; the five-foot form speed means a bow, not a charge."
+        }
+      },
+      "src": "fb7562cd70f9",
+      "seed_deps": "df64605c1846"
+    },
+    "ranger/Snowlight Conclave": {
+      "verdict": "candidate",
+      "builds": {
+        "lockdown": {
+          "chassis": "Whiteout",
+          "split": "Ranger 17 (Snowlight Conclave) / Paladin 3 (Oath of Devotion)",
+          "peak": 4,
+          "peak_axis": "ctrl_a",
+          "breadth": 5,
+          "why": "Divine Smite is Radiant, so every smite triggers Glaring Frost's blind, and Snowborn Anthelion at 15 spreads that save to everything nearby."
+        }
+      },
+      "src": "3156709391b3",
+      "seed_deps": "df64605c1846"
+    },
+    "ranger/Conclave of the Dawnstriders": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Valkyrie",
+          "split": "Ranger 17 (Conclave of the Dawnstriders) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Divine Flurry at 11 is five extra attacks at a reduced crit threshold and Action Surge buys a second Valkyrie; Faded is the cost."
+        }
+      },
+      "src": "d1e633514abe",
+      "seed_deps": "df64605c1846"
+    },
+    "paragon/Lionheart": {
+      "verdict": "candidate",
+      "builds": {
+        "action-economy": {
+          "chassis": "Banner",
+          "split": "Paragon 17 (Lionheart) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "act",
+          "breadth": 5,
+          "why": "Red Banner hands the partner a reaction attack, banners count as attacks after 5, and level 6 moves the charges to short rest."
+        }
+      },
+      "src": "cac29bccbed0",
+      "seed_deps": "df64605c1846"
+    },
+    "paragon/Nighthawk": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Nightfire",
+          "split": "Paragon 17 (Nighthawk) / Warlock 3 (The Fiend)",
+          "peak": 4,
+          "peak_axis": "ctrl_s",
+          "breadth": 5,
+          "why": "Stripping resistances, blocking healing and treating the target as sunlit makes the partner's damage type stop mattering; Bird Cage punishes disengaging."
+        }
+      },
+      "src": "d3267582871a",
+      "seed_deps": "df64605c1846"
+    },
+    "paragon/Prodigy": {
+      "verdict": "candidate",
+      "builds": {
+        "durability": {
+          "chassis": "Willful",
+          "split": "Paragon 17 (Prodigy) / Fighter 3 (Battle Master)",
+          "peak": 5,
+          "peak_axis": "dur",
+          "breadth": 5,
+          "why": "Flat damage reduction is worth double under Lone Wolf's halving, physical resistance lands at 13, and Competitive Streak refunds dice off partner crits."
+        }
+      },
+      "src": "f49bc0d72194",
+      "seed_deps": "df64605c1846"
+    },
+    "paragon/Regent": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Oberon",
+          "split": "Paragon 17 (Regent) / Rogue 3 (Thief)",
+          "peak": 4,
+          "peak_axis": "rsc",
+          "breadth": 5,
+          "why": "Shifting Court swaps the armoured body into the pack and pulls the partner out, and Thief's bonus action pays for it every turn."
+        }
+      },
+      "src": "3af553ed5dd7",
+      "seed_deps": "df64605c1846"
+    },
+    "paragon/Spellblade — the exception the skill suspected, but not a caster": {
+      "verdict": "candidate",
+      "builds": {
+        "short-rest": {
+          "chassis": "Scholar",
+          "split": "Paragon 20 (Spellblade)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 6,
+          "why": "Scholar's Armament makes Charisma the attack stat, so Paragon Of Legend's +4 past the 20 cap lands entirely on the one stat."
+        }
+      },
+      "src": "10b41dd2c7bc",
+      "seed_deps": "df64605c1846"
+    },
+    "paragon/Sword Saint": {
+      "verdict": "candidate",
+      "builds": {
+        "front-line": {
+          "chassis": "Ronin",
+          "split": "Paragon 18 (Sword Saint) / Fighter 2 (none)",
+          "peak": 4,
+          "peak_axis": "st",
+          "breadth": 5,
+          "why": "Falling Rain is a free-action attack on every Willpower Die spent, and Beyond All Limits at 18 refills the pool each turn."
+        }
+      },
+      "src": "46cf8a2ca96e",
+      "seed_deps": "df64605c1846"
+    },
+    "inquisitor/Tactics Inquisition": {
+      "verdict": "none",
+      "why": "The subclass lands at level 3, where the shipped install has a dangling subclass GUID; the mod needs updating to 2.2.1.",
+      "src": "714f71fcac56",
+      "seed_deps": "df64605c1846"
+    },
+    "inquisitor/Vengeance Inquisition": {
+      "verdict": "none",
+      "why": "Unreachable: Inquisitor is unusable past level 2 on the shipped install because of the dangling level-3 subclass GUID; needs the mod updated to 2.2.1.",
+      "src": "e607e5a523ac",
+      "seed_deps": "df64605c1846"
+    },
+    "inquisitor/Zeal Inquisition": {
+      "verdict": "none",
+      "why": "Every feature sits at Inquisitor 3 or later, and the shipped install breaks at level 3 on a dangling GUID; needs updating to 2.2.1.",
+      "src": "a06d16f30378",
+      "seed_deps": "df64605c1846"
     }
   }
 }
