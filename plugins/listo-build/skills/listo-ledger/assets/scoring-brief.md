@@ -108,12 +108,38 @@ untrained; the named gates are optional, because there absence *is* the answer. 
 is pinned at **+3 / +4 / +5 by act**, never derived from character level. `ledger-schema.md`,
 "the `skills` block", is the authority.
 
-**You do not author that map** — the evidence and routine-skills passes do, against
-`evidence-brief.md` and `routine-skills-brief.md`. It is described here because `skills_pair`
-recomputes the pair's `skl` from the map and ignores your rung. Your integer reaches the solo
-radar on the roster card and the presentation-order tiebreak; the map reaches every pair score.
-Score index 7 the way the rubric says and let the two agree — if your read of the body's checks
-contradicts what a `skills` map would have to say, that belongs in `uncertain`.
+**Whether you author that map depends on your assignment.** On a split assignment you do not —
+the evidence and routine-skills passes do, against `evidence-brief.md` and
+`routine-skills-brief.md`. On a **unified** assignment you do, and `put` rejects a record without
+it. Either way the map is described here because `skills_pair` recomputes the pair's `skl` from it
+and ignores your rung: your integer reaches the solo radar on the roster card and the
+presentation-order tiebreak; the map reaches every pair score. Score index 7 the way the rubric
+says and let the two agree — if your read of the body's checks contradicts what a `skills` map
+would have to say, that belongs in `uncertain`.
+
+### Unified assignments
+
+Three passes used to visit every chassis in turn, and all three reconstructed the same split,
+ability assumptions, proficiencies, feats and subclass features before they could say anything.
+Scoring authored the scores; `listo-evidence` came back for `skills` and `types`;
+`listo-routine-skills` came back again for the three mandatory skills. The reconstruction was paid
+for three times, and the two evidence passes overlapped *each other* as well, both writing into
+the same map.
+
+A unified assignment does it once. Your manifest says `"unified": true`, and your record then also
+carries:
+
+- **`skills`** — the complete map above. All three of Perception, Investigation and Persuasion in
+  all three acts, integers, even when the answer is untrained. Named gates where the body has
+  something on them; omitted where it genuinely has nothing, because there absence *is* the answer.
+- **`types`** — required on every assignment, unified or not.
+- **`redirect`** — only if the body has a bond that transfers damage; omit it otherwise. A
+  *present* one that is half-filled fails closed, since it would silently transfer nothing.
+
+`put` checks the map before it lands, including the falling-series rule: **a modifier cannot fall
+between acts.** The proficiency bonus rises +3 / +4 / +5 and ability scores only ever go up, so a
+series like `7, 7, 6` is an error rather than a judgement, and it is caught while you can still fix
+it rather than repaired afterwards by `apply_falls.py`.
 
 Acts: **I** = characters 3–8, **II** = 9–15, **III** = 16–20.
 

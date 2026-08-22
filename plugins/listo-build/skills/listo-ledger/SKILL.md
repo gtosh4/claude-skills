@@ -559,6 +559,36 @@ published ids alone, carries forward every field the scoring pass does not own �
 all, which the evidence passes author — and emits a field-level change report. It writes a
 *candidate* beside the published ledger and never over it.
 
+### One pass for the chassis, instead of three visits to the same body
+
+`listo-score` authors the scores. `listo-evidence` came back to each chassis for `skills` and
+`types`. `listo-routine-skills` came back again for the three mandatory routine skills. All three
+reconstruct the same split, ability assumptions, proficiencies, feats and subclass features before
+they can say anything, so the reconstruction was paid for three times — and the two evidence
+passes overlapped *each other* too, both writing into the same `skills` map.
+
+A **unified** assignment does it once:
+
+```sh
+scripts/result_store.py manifest --run RUN --assignment score-001 --addresses @batch-1.txt --unified
+```
+
+The flag lives on the assignment, not on the record, so a pass that simply *forgot* the map is
+rejected rather than read as a score-only result. `put` then checks the evidence where the agent
+that wrote it can still fix it — mandatory skills in every act, closed skill vocabulary, integers,
+and the falling-series rule that `apply_falls.py` otherwise repairs after the fact.
+
+Index 8 (`sav`) stays `null` and the pair's Skills stays derived. Fusing the passes changes who
+authors the evidence, never who scores it.
+
+**The old passes stay until parity is demonstrated.** `evidence-brief.md`,
+`routine-skills-brief.md` and their agents are untouched, and a split assignment still leaves the
+published `skills` map exactly where it is — that guard is what lets both contracts run side by
+side. The migration is: a checked slice scored both ways and compared field by field, every
+difference classified as extraction error, old-ledger correction or permitted judgement change;
+then the full roster with the old passes kept as audit-only comparators; then, and only then,
+retirement. **That comparison needs live scoring runs and has not been done.**
+
 ### Commissioning entry prose from the selection, not wholesale
 
 Pair-specific entry prose is model-authored output, which is the expensive kind, and rewriting all

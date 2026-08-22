@@ -29,10 +29,12 @@ import naming                                                  # noqa: E402
 import scoring                                                 # noqa: E402
 
 ASSETS = os.path.join(os.path.dirname(HERE), "assets")
-# Fields the scoring pass owns and may therefore overwrite. Everything else in a published record
-# — `skills` above all — belongs to another pass and is carried forward untouched.
+# Fields a scoring result may write. `skills` and `redirect` are on the list but a *split* pass
+# never carries them, so the `if f in rec` guard below is what keeps the evidence passes'
+# authorship intact: a unified result overwrites the map it authored, a score-only result leaves
+# the published one exactly where it was.
 OWNED = ("split", "reach", "concentration", "saves", "types", "scores",
-         "note", "strength", "wants", "uncertain", "meta")
+         "note", "strength", "wants", "uncertain", "meta", "skills", "redirect")
 # `address` is written by this merger rather than authored, and is not in OWNED for that reason.
 
 

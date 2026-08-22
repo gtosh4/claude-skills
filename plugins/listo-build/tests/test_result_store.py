@@ -125,6 +125,68 @@ class Store(unittest.TestCase):
             RS.put(self.run, "score-001", A1, rec)
 
 
+SKILLS = {"I": {"Perception": 5, "Investigation": 1, "Persuasion": 4},
+          "II": {"Perception": 7, "Investigation": 2, "Persuasion": 6},
+          "III": {"Perception": 8, "Investigation": 3, "Persuasion": 8}}
+
+
+class Unified(unittest.TestCase):
+    """One pass authors the scores AND the evidence, instead of three passes rebuilding the body."""
+
+    def setUp(self):
+        self.run = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.run)
+        RS.write_manifest(self.run, "score-001", [(A1, S1)], unified=True)
+
+    def test_a_score_only_record_is_refused(self):
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, record(S1))
+
+    def test_a_complete_record_lands(self):
+        RS.put(self.run, "score-001", A1, record(S1, skills=SKILLS))
+        self.assertEqual(RS.status(self.run, "score-001")["valid"], [A1])
+
+    def test_a_missing_mandatory_skill_is_refused(self):
+        skills = copy.deepcopy(SKILLS)
+        del skills["II"]["Persuasion"]
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, record(S1, skills=skills))
+
+    def test_an_unknown_skill_is_refused(self):
+        skills = copy.deepcopy(SKILLS)
+        skills["I"]["Basketweaving"] = 4
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, record(S1, skills=skills))
+
+    def test_a_falling_series_is_refused(self):
+        """The proficiency bonus rises +3/+4/+5 and abilities only go up."""
+        skills = copy.deepcopy(SKILLS)
+        skills["III"]["Perception"] = 6
+        with self.assertRaises(RS.StoreError):
+            RS.put(self.run, "score-001", A1, record(S1, skills=skills))
+
+    def test_the_evidence_reaches_the_merged_record(self):
+        RS.put(self.run, "score-001", A1, record(S1, skills=SKILLS))
+        merged, report = MR.merge(self.run)
+        cid = report["merged"][0]["chassis"]
+        self.assertEqual(merged["chassis"][cid]["skills"], SKILLS)
+        self.assertEqual(report["evidence_gaps"], [],
+                         "a unified pass leaves no evidence gap behind")
+
+    def test_a_split_pass_still_leaves_the_published_map_alone(self):
+        """The guard that lets both contracts coexist during the parity trial."""
+        run = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, run)
+        RS.write_manifest(run, "score-001", [(A1, S1)], unified=False)
+        RS.put(run, "score-001", A1, record(S1))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "ledger.json")
+            with open(path, "w") as fh:
+                json.dump({"chassis": {"Reaper": {"address": A1, "skills": SKILLS}}}, fh)
+            merged, _rep = MR.merge(run, into=path)
+        self.assertEqual(merged["chassis"]["Reaper"]["skills"], SKILLS)
+
+
 class Merge(unittest.TestCase):
 
     def setUp(self):

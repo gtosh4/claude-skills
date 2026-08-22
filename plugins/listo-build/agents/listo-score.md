@@ -32,6 +32,10 @@ explicitly forbidden from doing that, because their output is discarded. Yours i
   +3 / +4 / +5 by act.
 - Boosters come from the closed registry in `ledger-schema.md`. An unknown id raises; an id you
   simply left out scores as nothing and is invisible.
+- **If your manifest says `"unified": true`, you author the evidence too** — the `skills` modifier
+  map and `types` — instead of leaving them to `listo-evidence` and `listo-routine-skills`. All
+  three passes reconstruct the same body to do their work; doing it once is the whole point. The
+  brief's "Unified assignments" section is the contract, and `put` enforces it.
 - **Write one file per chassis, through `result_store.py`, and nothing else.** Never the live
   ledger, never a source file, never a brief or catalogue — only inside your assignment's result
   directory, and only through the helper, which validates before it promotes. Your final message

@@ -32,15 +32,23 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)),
                                 "listo-build", "scripts"))
 import score_deps as SD                                        # noqa: E402
 import seed_index as SI                                        # noqa: E402
-from scoring import KEYS, SAV_IDX, REACH, DAMAGE_TYPES         # noqa: E402
+from scoring import (KEYS, SAV_IDX, REACH, DAMAGE_TYPES,        # noqa: E402
+                     RECORDED_SKILLS, REQUIRED_SKILLS)
 
 FORMAT = 1
 ACTS = ("I", "II", "III")
 
-# The fields the scoring pass owns. `skills` is deliberately absent: the evidence passes author
-# the modifier map, and a scoring result that invented one would be a second authority on it.
+# The fields every scoring result carries.
 REQUIRED = ("split", "reach", "concentration", "saves", "types", "scores",
             "note", "strength", "wants")
+
+# A *unified* assignment additionally carries the evidence the separate `listo-evidence` and
+# `listo-routine-skills` passes used to revisit each chassis for. All three passes reconstruct the
+# same split, ability assumptions, proficiencies, feats and subclass features to do their job;
+# fusing them removes two full-roster traversals of that reconstruction. The flag lives on the
+# assignment rather than being inferred from the record, so a pass that simply *forgot* the map is
+# rejected instead of being read as a split-pass result.
+UNIFIED_REQUIRED = ("skills",)
 
 
 class StoreError(Exception):
@@ -69,7 +77,37 @@ def _paths(run, assignment):
             os.path.join(run, "results", assignment))
 
 
-def write_manifest(run, assignment, entries, pak_evidence=None):
+def validate_skills(address, skills):
+    """The `skills` map, checked to the same contract `scoring.validate_chassis` enforces.
+
+    Perception, Investigation and Persuasion are mandatory in every act even at a negative
+    modifier: they recur through the whole run and cannot be respecced for, so an absent value
+    would be read as hopeless rather than as the evidence gap it is. The named gates are optional,
+    because there absence genuinely *is* the answer.
+    """
+    _require(isinstance(skills, dict), f"{address}: `skills` must be a modifier map")
+    for act in ACTS:
+        _require(act in skills, f"{address}: `skills` missing act {act}")
+        for name, mod in skills[act].items():
+            _require(name in RECORDED_SKILLS, f"{address} {act}: unknown skill {name!r}")
+            _require(isinstance(mod, int) and not isinstance(mod, bool),
+                     f"{address} {act}: {name} modifier must be an integer")
+        for name in REQUIRED_SKILLS:
+            _require(name in skills[act],
+                     f"{address} {act}: `skills` has no {name} modifier — it is mandatory in "
+                     f"every act, even untrained, because an absent value reads as hopeless")
+    # A modifier cannot fall between acts: the pinned proficiency bonus rises +3/+4/+5 and ability
+    # scores only ever go up. `apply_falls.py` repairs these after the fact; catching one here
+    # means it never enters the ledger to be repaired.
+    for sk in skills["I"]:
+        run = [skills[a].get(sk) for a in ACTS]
+        if all(isinstance(x, int) for x in run):
+            _require(run[0] <= run[1] <= run[2],
+                     f"{address}: {sk} falls across acts ({run}) — the proficiency bonus rises "
+                     f"+3/+4/+5 and abilities only go up, so a falling series is an error")
+
+
+def write_manifest(run, assignment, entries, pak_evidence=None, unified=False):
     """`entries` is `[(address, split), ...]`. Agents never invent a filename; this hands them out.
 
     The manifest is also where the dependency set is fixed for the assignment, so every result in
@@ -87,7 +125,8 @@ def write_manifest(run, assignment, entries, pak_evidence=None):
         doc = SD.deps_for(address, split, (pak_evidence or {}).get(address, ()), inv=inv)
         builds.append({"address": address, "split": split, "file": filename(address),
                        "deps": doc["deps"], "selection_provenance": doc["selection_provenance"]})
-    man = {"format": FORMAT, "assignment": assignment, "builds": builds}
+    man = {"format": FORMAT, "assignment": assignment, "unified": bool(unified),
+           "builds": builds}
     _atomic(man_path, man)
     return man
 
@@ -111,15 +150,19 @@ def _atomic(path, doc):
     os.replace(tmp, path)
 
 
-def validate_record(address, rec):
-    """The score-only checks, mirroring `scoring.py` for exactly the fields this pass authors.
+def validate_record(address, rec, unified=False):
+    """The checks for exactly the fields this assignment's pass authors.
 
-    `scoring.validate_chassis` is the full contract and runs at merge time, once the evidence
-    passes have supplied `skills`. Running it here would either reject every score result for a
-    map the scoring pass is not allowed to author, or tempt someone into inventing a placeholder
-    one — and a placeholder skills map is the invisible under-score the whole model refuses.
+    On a split assignment that is the score-only set: `scoring.validate_chassis` is the full
+    contract and runs at merge time, once the evidence passes have supplied `skills`. Running it
+    here would either reject every score result for a map the scoring pass is not allowed to
+    author, or tempt someone into inventing a placeholder one — and a placeholder skills map is
+    the invisible under-score the whole model refuses.
+
+    On a unified assignment the pass authors the evidence too, so it is checked here, where the
+    agent that wrote it is still in a position to fix it.
     """
-    for f in REQUIRED:
+    for f in REQUIRED + (UNIFIED_REQUIRED if unified else ()):
         _require(f in rec, f"{address}: missing `{f}`")
     _require(rec["reach"] in REACH, f"{address}: unknown reach {rec['reach']!r}")
     _require(isinstance(rec["concentration"], bool),
@@ -143,6 +186,8 @@ def validate_record(address, rec):
                      f"{address} {act}: {KEYS[i]} is {v!r}, expected an integer 0-5")
     for f in ("note", "strength", "wants"):
         _require(isinstance(rec[f], str) and rec[f].strip(), f"{address}: `{f}` is empty")
+    if "skills" in rec:
+        validate_skills(address, rec["skills"])
 
 
 def put(run, assignment, address, rec, man=None):
@@ -157,7 +202,7 @@ def put(run, assignment, address, rec, man=None):
     _require(entry, f"{address!r} is not in assignment {assignment!r}")
     _require(rec.get("split") == entry["split"],
              f"{address}: record splits {rec.get('split')!r}, assignment says {entry['split']!r}")
-    validate_record(address, rec)
+    validate_record(address, rec, man.get("unified", False))
     _, res_dir = _paths(run, assignment)
     path = os.path.join(res_dir, entry["file"])
     if os.path.exists(path):
@@ -241,6 +286,9 @@ def main():
                         "carry the comma-bearing subclass headings")
     m.add_argument("--seeds", default=None,
                    help="seeds file the splits come from (default: the published one)")
+    m.add_argument("--unified", action="store_true",
+                   help="this assignment's pass authors the evidence as well as the scores, so "
+                        "`skills` is required and checked here rather than at merge time")
 
     p = sub.add_parser("put", help="validate one candidate record and promote it")
     p.add_argument("--run", required=True)
@@ -262,7 +310,7 @@ def main():
             for addr in _addresses(a.addresses):
                 _require(addr in builds, f"{addr!r} is not a build address")
                 entries.append((addr, builds[addr]["split"]))
-            man = write_manifest(a.run, a.assignment, entries)
+            man = write_manifest(a.run, a.assignment, entries, unified=a.unified)
             print(f"{len(man['builds'])} builds in {a.assignment}", file=sys.stderr)
             json.dump(man, sys.stdout, indent=2, ensure_ascii=False)
         elif a.cmd == "put":
