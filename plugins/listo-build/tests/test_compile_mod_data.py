@@ -202,6 +202,45 @@ class SqliteSchema(unittest.TestCase):
         self.assertEqual(row[:4], ("Example MO2 Mod", "mod", 7, "Alert"))
         self.assertEqual(json.loads(row[4])["attributes"]["Name"], "Alert")
 
+class ParallelExtraction(unittest.TestCase):
+    def test_scheduler_bounds_work_and_keeps_job_order(self):
+        events = []
+
+        class Future:
+            def __init__(self, value):
+                self.value = value
+
+            def result(self):
+                events.append(("result", self.value))
+                return self.value
+
+        class Executor:
+            def __init__(self, max_workers):
+                self.max_workers = max_workers
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_):
+                return None
+
+            def submit(self, _, job):
+                events.append(("submit", job))
+                return Future(job)
+
+        original = CMD.ProcessPoolExecutor
+        try:
+            CMD.ProcessPoolExecutor = Executor
+            results = list(CMD._parallel_extract([1, 2, 3, 4], 2))
+        finally:
+            CMD.ProcessPoolExecutor = original
+        self.assertEqual(results, [1, 2, 3, 4])
+        self.assertEqual(events[:3], [("submit", 1), ("submit", 2), ("result", 1)])
+
+    def test_workers_must_be_positive(self):
+        with self.assertRaisesRegex(ValueError, "at least 1"):
+            list(CMD._parallel_extract([], 0))
+
 
 class EntryClassification(unittest.TestCase):
     def test_character_build_resources_are_extracted_and_assets_are_only_indexed(self):

@@ -12,6 +12,7 @@ BG3 Forge supplies the PAK, LSF/LSJ, and binary localization decoders:
 
 from __future__ import annotations
 
+from concurrent.futures import ProcessPoolExecutor
 import argparse
 import json
 import os
@@ -27,10 +28,12 @@ from typing import Any
 
 
 try:
+    from bg3forge.pak.format import PakHeader as _forge_pak_header
     from bg3forge.pak.reader import PakReader as _forge_pak_reader
     from bg3forge.parsers.localization import parse_loca as _forge_parse_loca
     from bg3forge.parsers.resource import parse_resource as _forge_parse_resource
 except ImportError:
+    _forge_pak_header = None
     _forge_pak_reader = None
     _forge_parse_loca = None
     _forge_parse_resource = None
@@ -107,6 +110,36 @@ class Record:
     using: str | None
     data: dict[str, Any]
     raw: str | None = None
+
+@dataclass(frozen=True)
+class PakJob:
+    path: Path
+    source: str
+    source_kind: str
+    profile_order: int | None
+    default_load_order: int | None
+    relative_pak: str
+    by_uuid: dict[str, Module]
+    by_folder: dict[str, Module]
+
+
+@dataclass(frozen=True)
+class ExtractedResource:
+    origin: Origin
+    entry: str
+    compressed_size: int
+    uncompressed_size: int
+    kind: str
+    records: tuple[Record, ...]
+    status: str
+    error: str | None
+
+
+@dataclass(frozen=True)
+class ExtractedPak:
+    job: PakJob
+    load_rows: frozenset[tuple[Any, ...]]
+    resources: tuple[ExtractedResource, ...]
 
 
 def _decode_quoted(value: str) -> str:
@@ -230,7 +263,12 @@ def parse_lsx(payload: bytes, entry: str | None = None) -> Iterator[Record]:
 
 
 def _require_bg3forge() -> None:
-    if _forge_pak_reader is None or _forge_parse_resource is None or _forge_parse_loca is None:
+    if (
+        _forge_pak_header is None
+        or _forge_pak_reader is None
+        or _forge_parse_resource is None
+        or _forge_parse_loca is None
+    ):
         raise RuntimeError(
             'BG3 Forge 0.2.0 is required for PAK, LSF/LSJ, and .loca data; '
             'install it with: python3 -m pip install "bg3forge[zstd]==0.2.0"'
@@ -529,31 +567,58 @@ class Database:
         self.tables[record_type] = table
         return table
 
-    def insert_record(self, origin: Origin, entry: str, format_name: str, record: Record) -> None:
-        table = self.table_for(record.record_type).replace('"', '""')
+    @staticmethod
+    def _record_values(
+        origin: Origin,
+        entry: str,
+        format_name: str,
+        record: Record,
+    ) -> tuple[Any, ...]:
         module = origin.module
-        self.connection.execute(
-            f'''INSERT INTO "{table}"
-                (source, source_kind, load_order, archive_priority, module_uuid, module_name,
-                 pak_path, entry_path, format, record_name, record_uuid, using_record, data, raw)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-            (
-                origin.source,
-                origin.source_kind,
-                origin.load_order,
-                origin.archive_priority,
-                module.uuid if module else None,
-                module.name if module else None,
-                origin.pak_path,
-                entry,
-                format_name,
-                record.name,
-                record.uuid,
-                record.using,
-                json.dumps(record.data, ensure_ascii=False, separators=(",", ":")),
-                record.raw,
-            ),
+        return (
+            origin.source,
+            origin.source_kind,
+            origin.load_order,
+            origin.archive_priority,
+            module.uuid if module else None,
+            module.name if module else None,
+            origin.pak_path,
+            entry,
+            format_name,
+            record.name,
+            record.uuid,
+            record.using,
+            json.dumps(record.data, ensure_ascii=False, separators=(",", ":")),
+            record.raw,
         )
+
+    def insert_records(
+        self,
+        origin: Origin,
+        entry: str,
+        format_name: str,
+        records: Iterable[Record],
+    ) -> int:
+        grouped: dict[str, list[tuple[Any, ...]]] = {}
+        count = 0
+        for record in records:
+            table = self.table_for(record.record_type).replace('"', '""')
+            grouped.setdefault(table, []).append(
+                self._record_values(origin, entry, format_name, record)
+            )
+            count += 1
+        for table, values in grouped.items():
+            self.connection.executemany(
+                f'''INSERT INTO "{table}"
+                    (source, source_kind, load_order, archive_priority, module_uuid, module_name,
+                     pak_path, entry_path, format, record_name, record_uuid, using_record, data, raw)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                values,
+            )
+        return count
+
+    def insert_record(self, origin: Origin, entry: str, format_name: str, record: Record) -> None:
+        self.insert_records(origin, entry, format_name, (record,))
 
 
 def _pak_paths(mod_dir: Path) -> list[Path]:
@@ -586,13 +651,17 @@ def _base_pak_paths(game_data: Path) -> list[Path]:
 def _base_archive_order(game_data: Path) -> list[tuple[int, Path]]:
     archives = []
     for path in _base_pak_paths(game_data):
-        with _forge_pak_reader(path) as pak:
-            archives.append((pak.header.priority, path))
+        with path.open("rb") as pak_file:
+            header = _forge_pak_header.parse(pak_file.read(64))
+        archives.append((header.priority, path))
     archives.sort(key=lambda item: (item[0], item[1].name.casefold()))
     return archives
 
 
-def _insert_load_rows(connection: sqlite3.Connection, rows: set[tuple[Any, ...]]) -> None:
+def _insert_load_rows(
+    connection: sqlite3.Connection,
+    rows: Iterable[tuple[Any, ...]],
+) -> None:
     connection.executemany(
         """INSERT INTO mod_load_order
            (source, source_kind, profile_order, load_order, archive_priority,
@@ -602,144 +671,193 @@ def _insert_load_rows(connection: sqlite3.Connection, rows: set[tuple[Any, ...]]
     )
 
 
-def _compile_pak(
-    database: Database,
-    connection: sqlite3.Connection,
-    pak: Any,
-    *,
-    source: str,
-    source_kind: str,
-    profile_order: int | None,
-    default_load_order: int | None,
-    relative_pak: str,
-    by_uuid: dict[str, Module],
-    by_folder: dict[str, Module],
-    counts: dict[str, int],
-) -> set[tuple[Any, ...]]:
-    archive_priority = pak.header.priority
-    pak_modules = _metadata_modules(pak, by_uuid)
-    if default_load_order is not None:
-        pak_modules = [
-            Module(module.uuid, module.name, module.folder, default_load_order)
-            for module in pak_modules
-        ]
-    local_folders = dict(by_folder)
-    for module in pak_modules:
-        if module.folder:
-            local_folders[module.folder.casefold()] = module
+def _extract_pak(job: PakJob) -> ExtractedPak:
+    with _forge_pak_reader(job.path) as pak:
+        archive_priority = pak.header.priority
+        pak_modules = _metadata_modules(pak, job.by_uuid)
+        if job.default_load_order is not None:
+            pak_modules = [
+                Module(module.uuid, module.name, module.folder, job.default_load_order)
+                for module in pak_modules
+            ]
+        local_folders = dict(job.by_folder)
+        for module in pak_modules:
+            if module.folder:
+                local_folders[module.folder.casefold()] = module
 
-    load_rows: set[tuple[Any, ...]] = set()
-    for module in pak_modules:
-        load_rows.add(
-            (
-                source,
-                source_kind,
-                profile_order,
-                module.load_order,
-                archive_priority,
-                module.uuid,
-                module.name,
-                module.folder,
-                relative_pak,
-            )
-        )
-
-    for archive_entry in pak.entries:
-        entry = archive_entry.name
-        module = _entry_module(entry, local_folders, pak_modules)
-        load_order = (
-            module.load_order
-            if module is not None and module.load_order is not None
-            else default_load_order
-        )
-        if module:
+        load_rows: set[tuple[Any, ...]] = set()
+        for module in pak_modules:
             load_rows.add(
                 (
-                    source,
-                    source_kind,
-                    profile_order,
-                    load_order,
+                    job.source,
+                    job.source_kind,
+                    job.profile_order,
+                    module.load_order,
                     archive_priority,
                     module.uuid,
                     module.name,
                     module.folder,
-                    relative_pak,
+                    job.relative_pak,
                 )
             )
-        origin = Origin(
-            source,
-            source_kind,
-            profile_order,
-            load_order,
-            archive_priority,
-            relative_pak,
-            module,
-        )
-        kind = classify_entry(entry)
-        extracted = 0
-        status = "indexed"
-        error = None
-        if kind != "indexed":
-            try:
-                payload = pak.read(archive_entry)
-                if kind == "stats":
-                    records = parse_stats(payload.decode("utf-8-sig"))
-                elif kind == "lsx":
-                    records = parse_lsx(payload, entry)
-                elif kind == "resource":
-                    records = parse_binary_resource(payload, entry)
-                else:
-                    records = parse_localization(payload, entry.lower().endswith(".loca"))
-                for record in records:
-                    database.insert_record(origin, entry, kind, record)
-                    extracted += 1
-                status = "extracted"
-                counts["records"] += extracted
-            except (ET.ParseError, UnicodeError, ValueError) as exc:
-                status = "error"
-                error = str(exc)
-                counts["errors"] += 1
-        connection.execute(
-            """INSERT INTO resources
-               (source, source_kind, profile_order, load_order, archive_priority,
-                module_uuid, module_name, pak_path, entry_path, compressed_size,
-                uncompressed_size, kind, extracted_rows, status, error)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (
-                source,
-                source_kind,
-                profile_order,
+
+        resources = []
+        for archive_entry in pak.entries:
+            entry = archive_entry.name
+            module = _entry_module(entry, local_folders, pak_modules)
+            load_order = (
+                module.load_order
+                if module is not None and module.load_order is not None
+                else job.default_load_order
+            )
+            if module:
+                load_rows.add(
+                    (
+                        job.source,
+                        job.source_kind,
+                        job.profile_order,
+                        load_order,
+                        archive_priority,
+                        module.uuid,
+                        module.name,
+                        module.folder,
+                        job.relative_pak,
+                    )
+                )
+            origin = Origin(
+                job.source,
+                job.source_kind,
+                job.profile_order,
                 load_order,
                 archive_priority,
-                module.uuid if module else None,
-                module.name if module else None,
-                relative_pak,
-                entry,
-                archive_entry.size_on_disk,
-                archive_entry.uncompressed_size,
-                kind,
-                extracted,
-                status,
-                error,
-            ),
-        )
-        counts["resources"] += 1
+                job.relative_pak,
+                module,
+            )
+            kind = classify_entry(entry)
+            records: tuple[Record, ...] = ()
+            status = "indexed"
+            error = None
+            if kind != "indexed":
+                try:
+                    payload = pak.read(archive_entry)
+                    if kind == "stats":
+                        parsed = parse_stats(payload.decode("utf-8-sig"))
+                    elif kind == "lsx":
+                        parsed = parse_lsx(payload, entry)
+                    elif kind == "resource":
+                        parsed = parse_binary_resource(payload, entry)
+                    else:
+                        parsed = parse_localization(
+                            payload,
+                            entry.lower().endswith(".loca"),
+                        )
+                    records = tuple(parsed)
+                    status = "extracted"
+                except (ET.ParseError, UnicodeError, ValueError) as exc:
+                    status = "error"
+                    error = str(exc)
+            resources.append(
+                ExtractedResource(
+                    origin,
+                    entry,
+                    archive_entry.size_on_disk,
+                    archive_entry.uncompressed_size,
+                    kind,
+                    records,
+                    status,
+                    error,
+                )
+            )
 
     if not load_rows:
         load_rows.add(
             (
-                source,
-                source_kind,
-                profile_order,
-                default_load_order,
+                job.source,
+                job.source_kind,
+                job.profile_order,
+                job.default_load_order,
                 archive_priority,
                 None,
                 None,
                 None,
-                relative_pak,
+                job.relative_pak,
             )
         )
-    return load_rows
+    return ExtractedPak(job, frozenset(load_rows), tuple(resources))
+
+
+def _store_extracted_pak(
+    database: Database,
+    connection: sqlite3.Connection,
+    extracted: ExtractedPak,
+    counts: dict[str, int],
+) -> None:
+    resource_rows = []
+    for resource in extracted.resources:
+        record_count = database.insert_records(
+            resource.origin,
+            resource.entry,
+            resource.kind,
+            resource.records,
+        )
+        module = resource.origin.module
+        resource_rows.append(
+            (
+                resource.origin.source,
+                resource.origin.source_kind,
+                resource.origin.profile_order,
+                resource.origin.load_order,
+                resource.origin.archive_priority,
+                module.uuid if module else None,
+                module.name if module else None,
+                resource.origin.pak_path,
+                resource.entry,
+                resource.compressed_size,
+                resource.uncompressed_size,
+                resource.kind,
+                record_count,
+                resource.status,
+                resource.error,
+            )
+        )
+        counts["records"] += record_count
+        counts["errors"] += resource.status == "error"
+    connection.executemany(
+        """INSERT INTO resources
+           (source, source_kind, profile_order, load_order, archive_priority,
+            module_uuid, module_name, pak_path, entry_path, compressed_size,
+            uncompressed_size, kind, extracted_rows, status, error)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        resource_rows,
+    )
+    _insert_load_rows(connection, extracted.load_rows)
+    counts["resources"] += len(resource_rows)
+    counts["paks"] += 1
+
+
+def _parallel_extract(jobs: Iterable[PakJob], workers: int) -> Iterator[ExtractedPak]:
+    if workers < 1:
+        raise ValueError("workers must be at least 1")
+    iterator = iter(jobs)
+    if workers == 1:
+        for job in iterator:
+            yield _extract_pak(job)
+        return
+
+    with ProcessPoolExecutor(max_workers=workers) as executor:
+        pending = []
+        for _ in range(workers):
+            try:
+                pending.append(executor.submit(_extract_pak, next(iterator)))
+            except StopIteration:
+                break
+        while pending:
+            future = pending.pop(0)
+            yield future.result()
+            try:
+                pending.append(executor.submit(_extract_pak, next(iterator)))
+            except StopIteration:
+                pass
 
 
 def compile_database(
@@ -749,10 +867,14 @@ def compile_database(
     sources: Iterable[str] | None = None,
     progress: bool = True,
     game_data: Path = DEFAULT_GAME_DATA,
+    workers: int | None = None,
 ) -> dict[str, int]:
     _require_bg3forge()
     if not game_data.is_dir():
         raise FileNotFoundError(f"BG3 Data directory does not exist: {game_data}")
+    workers = workers if workers is not None else min(16, os.cpu_count() or 1)
+    if workers < 1:
+        raise ValueError("workers must be at least 1")
 
     profile_root = install_root / "profiles" / profile_name
     profile_entries = parse_profile(profile_root / "modlist.txt")
@@ -762,6 +884,45 @@ def compile_database(
     by_uuid, by_folder = _modules_from_settings(native_order, metadata, len(base_archives))
     mods_root = install_root / "mods"
 
+    jobs = [
+        PakJob(
+            pak_path,
+            f"Base Game: {pak_path.relative_to(game_data).as_posix()}",
+            "base_game",
+            None,
+            base_order,
+            pak_path.relative_to(game_data).as_posix(),
+            {},
+            {},
+        )
+        for base_order, (_, pak_path) in enumerate(base_archives)
+    ]
+    empty_sources = []
+    source_count = 0
+    for profile_order, source in selected:
+        mod_dir = mods_root / source
+        if not mod_dir.is_dir():
+            continue
+        source_count += 1
+        pak_paths = _pak_paths(mod_dir)
+        if not pak_paths:
+            empty_sources.append(
+                (source, "mod", profile_order, None, 0, None, None, None, None)
+            )
+        for pak_path in pak_paths:
+            jobs.append(
+                PakJob(
+                    pak_path,
+                    source,
+                    "mod",
+                    profile_order,
+                    None,
+                    pak_path.relative_to(mods_root).as_posix(),
+                    by_uuid,
+                    by_folder,
+                )
+            )
+
     output = output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(
@@ -770,8 +931,9 @@ def compile_database(
     os.close(descriptor)
     temporary = Path(temporary_name)
     counts = {
-        "sources": 0,
+        "sources": source_count,
         "base_paks": len(base_archives),
+        "workers": workers,
         "paks": 0,
         "resources": 0,
         "records": 0,
@@ -780,6 +942,14 @@ def compile_database(
 
     try:
         connection = sqlite3.connect(temporary)
+        connection.executescript(
+            """
+            PRAGMA journal_mode = OFF;
+            PRAGMA synchronous = OFF;
+            PRAGMA temp_store = MEMORY;
+            PRAGMA locking_mode = EXCLUSIVE;
+            """
+        )
         database = Database(connection)
         connection.execute("PRAGMA user_version = 2")
         connection.executemany(
@@ -788,6 +958,7 @@ def compile_database(
                 ("install_root", str(install_root)),
                 ("game_data", str(game_data)),
                 ("profile", profile_name),
+                ("workers", str(workers)),
                 ("scope", "base game plus enabled character-build gameplay records"),
                 ("source_semantics", "base-game archive or Mod Organizer mod directory"),
                 ("profile_order_semantics", "one-based line number in modlist.txt; null for base game"),
@@ -798,67 +969,15 @@ def compile_database(
             ],
         )
         try:
-            for base_order, (priority, pak_path) in enumerate(base_archives):
-                relative_pak = pak_path.relative_to(game_data).as_posix()
-                source = f"Base Game: {relative_pak}"
+            for index, extracted in enumerate(_parallel_extract(jobs, workers), 1):
+                _store_extracted_pak(database, connection, extracted, counts)
                 if progress:
                     print(
-                        f"[base {base_order + 1}/{len(base_archives)}] {relative_pak}",
+                        f"[pak {index}/{len(jobs)}] {extracted.job.relative_pak}",
                         file=sys.stderr,
                     )
-                with _forge_pak_reader(pak_path) as pak:
-                    rows = _compile_pak(
-                        database,
-                        connection,
-                        pak,
-                        source=source,
-                        source_kind="base_game",
-                        profile_order=None,
-                        default_load_order=base_order,
-                        relative_pak=relative_pak,
-                        by_uuid={},
-                        by_folder={},
-                        counts=counts,
-                    )
-                _insert_load_rows(connection, rows)
-                counts["paks"] += 1
-
-            for profile_order, source in selected:
-                mod_dir = mods_root / source
-                if not mod_dir.is_dir():
-                    continue
-                pak_paths = _pak_paths(mod_dir)
-                counts["sources"] += 1
-                if progress:
-                    print(
-                        f"[mod {counts['sources']}/{len(selected)}] {source} ({len(pak_paths)} paks)",
-                        file=sys.stderr,
-                    )
-                source_load_rows: set[tuple[Any, ...]] = set()
-                for pak_path in pak_paths:
-                    relative_pak = pak_path.relative_to(mods_root).as_posix()
-                    with _forge_pak_reader(pak_path) as pak:
-                        source_load_rows.update(
-                            _compile_pak(
-                                database,
-                                connection,
-                                pak,
-                                source=source,
-                                source_kind="mod",
-                                profile_order=profile_order,
-                                default_load_order=None,
-                                relative_pak=relative_pak,
-                                by_uuid=by_uuid,
-                                by_folder=by_folder,
-                                counts=counts,
-                            )
-                        )
-                    counts["paks"] += 1
-                if not source_load_rows:
-                    source_load_rows.add(
-                        (source, "mod", profile_order, None, 0, None, None, None, None)
-                    )
-                _insert_load_rows(connection, source_load_rows)
+            if empty_sources:
+                _insert_load_rows(connection, empty_sources)
             connection.commit()
         finally:
             connection.close()
@@ -876,6 +995,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--game-data", type=Path, default=DEFAULT_GAME_DATA)
     parser.add_argument("--profile", default=DEFAULT_PROFILE)
     parser.add_argument("--source", action="append", help="compile only this enabled MO2 source; repeatable")
+    parser.add_argument("--workers", type=int, help="parallel PAK processes; default: up to 16")
     parser.add_argument("--quiet", action="store_true", help="suppress per-mod progress")
     arguments = parser.parse_args(argv)
     counts = compile_database(
@@ -885,12 +1005,13 @@ def main(argv: list[str] | None = None) -> int:
         sources=arguments.source,
         progress=not arguments.quiet,
         game_data=arguments.game_data,
+        workers=arguments.workers,
     )
     summary = (
         f"wrote {arguments.output}: {counts['records']} records from "
         f"{counts['resources']} resources in {counts['paks']} paks "
-        f"({counts['base_paks']} base, {counts['sources']} mod sources, "
-        f"{counts['errors']} extraction errors)"
+        f"with {counts['workers']} workers ({counts['base_paks']} base, "
+        f"{counts['sources']} mod sources, {counts['errors']} extraction errors)"
     )
     print(summary)
     return 1 if counts["errors"] else 0
