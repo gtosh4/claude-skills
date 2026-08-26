@@ -873,6 +873,7 @@ weighted damage figure alongside it.
 | `data/listo-10.2-manifest.json` | Raw manifest; holds which *file variant* was pulled per mod |
 | `data/docs/*.md` | The four Listo doc pages as raw markdown |
 | `scripts/strip.sh` | HTML-to-text helper for Nexus and bg3.wiki pages |
+| `scripts/compile_mod_data.py` | Compiles retail BG3 plus enabled Listo character-build records and effective load order into SQLite; requires `bg3forge[zstd]==0.2.0` |
 | `assets/sheet-template.html` | Character-sheet artifact template, themed |
 | `assets/pair-schema.md` | **Pair sheet wire format** — author this, not HTML |
 | `assets/pair-example.json` | Filled-in pair-sheet skeleton to copy |
