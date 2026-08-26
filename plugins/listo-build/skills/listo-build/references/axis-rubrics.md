@@ -369,8 +369,19 @@ once-per-fight burst by far more than any single-target engine outruns another.
 | **1** | 0.35 – 0.7 |
 | **2** | 0.7 – 1.3 |
 | **3** | 1.3 – 2.0 |
-| **4** | 2.0 – 3.0 |
-| **5** | ≥ 3.0 |
+| **4** | 2.0 – 2.65 |
+| **5** | ≥ 2.65 |
+
+> **The top band is fitted to the finished field, not to a theoretical extreme.** It read ≥ 3.0
+> through v7's scoring run and **no chassis in any act reached it** — the roster's maximum is
+> 2.998 — which is `audit_roster`'s "a rung no chassis reaches: the ladder does not span". The
+> unreachable configuration is the last anchor row below: committing a whole pool to area damage
+> and buying no control or rescue with it is a corner no real body takes. 2.65 is placed in the
+> widest gap in the upper tail, between 2.628 and 2.763, so nothing sits within noise of the line;
+> four chassis hold the ceiling. **§1's 1.8 was checked the same way and kept** — its tail stops
+> dead at 1.959 with the next block down at 1.783, the largest gap anywhere above 1.35, and three
+> chassis hold rung 5. Neither `LADDER` nor `PAR` is in `score_deps`, so a band can be refitted
+> against a completed roster and re-derives every chassis without re-scoring one.
 
 Worked anchors — instances per round, then damage **with `k` already added** over par:
 
@@ -386,7 +397,7 @@ Worked anchors — instances per round, then damage **with `k` already added** o
 | Consuming Fervor: maximised Fireball ×2 per short rest | 2 | 80 → 1.67 → **3** | 84 → 1.29 → **2** | 90 → 1.10 → **2** |
 | Eldritch Cone (Warlock 9), at-will, ×2 Actions | 8 | — | 142 → 2.18 → **4** | 166 → 2.02 → **4** |
 | **damage half of a full caster's pool + cantrip filler** | 4/5/6 | 76 → 1.58 → **3** | 130 → 2.00 → **4** | 194 → 2.37 → **4** |
-| **whole pool committed to area, no control or rescue** | 5/7/8 | 98 → 2.04 → **4** | 178 → 2.74 → **4** | 269 → 3.28 → **5** |
+| **whole pool committed to area, no control or rescue** | 5/7/8 | 98 → 2.04 → **4** | 178 → 2.74 → **5** | 269 → 3.28 → **5** |
 
 > **Instance density is what this axis rewards.** Par is a Fireball — four instances a cast, two
 > casts a fight, so **two instances a round**, the lowest density of any engine on the table.
@@ -394,8 +405,9 @@ Worked anchors — instances per round, then damage **with `k` already added** o
 > everything delivering in one lump barely moves.
 
 > **Score a caster at its pool, not at one named spell.** A full caster is a rung-4 area body on
-> the damage half of its slots alone and a rung-5 one if it spends everything — which is the trade
-> rule 3 makes explicit, because those slots were also its §5, §6 and §7.
+> the damage half of its slots alone and a rung-5 one from Act II if it spends everything — which
+> is the trade rule 3 makes explicit, because those slots were also its §5, §6 and §7. No scored
+> chassis actually takes that trade whole, which is why the band was refitted to 2.65.
 
 > **Eldritch Cone does not drop a rung in Act III.** `Zone_EldritchCone` reads
 > `LevelMapValue(EldritchZoneDamage)` — 1d10 at 1–4, 2d10 at 5–9, **3d10 from 10, where it ends** —

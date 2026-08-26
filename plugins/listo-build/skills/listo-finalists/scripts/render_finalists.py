@@ -32,12 +32,44 @@ from scoring import (                                       # noqa: E402
     ScoringError, score_bodies, derive_saves)
 
 
+def split_classes(display):
+    """The bare class split out of a card's display string.
+
+    `splits` carries "Ranger 15 / Monk 3 / Cleric 2 &middot; Wood Elf &middot; Sage" — the race
+    and background trail the classes behind a separator, and `scoring._classes` matches
+    `^(.+?)\\s+\\d{1,2}$` per "/" segment, so the final class silently fails to parse with them
+    attached. Cut at the first separator and hand `score_bodies` the classes only.
+    """
+    for sep in ("&middot;", "\u00b7"):
+        display = display.split(sep)[0]
+    return display.strip()
+
+
 def score(p):
-    """Adapter: a finalists pairing is two bodies rather than a chassis map."""
+    """Adapter: a finalists pairing is two bodies rather than a chassis map.
+
+    `split`, `types` and `meta` are passed through because the model reads all three and
+    silently degrades without them: `split` drives `same_class`, and `types` plus `meta` are
+    what `gear_key` needs to reach `CONTEND` instead of falling back to the blunt `SAME_CLASS`.
+    A page that omitted them scored every pairing as though no two builds ever competed for an
+    item — which is wrong most sharply exactly where it matters, on two bodies sharing a primary
+    ability at 4x merchant prices.
+
+    `skills` matters more bluntly still: `skills_pair` derives the Skills rung from per-act
+    modifier maps and NOT from the authored rung, so a pairing that passes none derives it from
+    `{}`, scores 0, and reports `skl` as a hole. Every page rendered without it flagged a Skills
+    hole on every card.
+    """
     def body(who):
-        return {"_id": p["names"][who], "reach": p["reach"][who],
-                "scores": p["scores"][who], "saves": p["saves"][who],
-                "concentration": p.get("concentration", {}).get(who, False)}
+        b = {"_id": p["names"][who], "reach": p["reach"][who],
+             "scores": p["scores"][who], "saves": p["saves"][who],
+             "concentration": p.get("concentration", {}).get(who, False),
+             "split": split_classes(p.get("splits", {}).get(who, ""))}
+        for field in ("types", "meta", "skills"):
+            v = p.get(field, {}).get(who)
+            if v:
+                b[field] = v
+        return b
     return score_bodies(body("a"), body("b"))
 
 
@@ -53,13 +85,35 @@ def scrape(slug, sheetdir):
             m = re.search(r'data-%s%d="([^"]*)"' % (letter, i), s)
             if not m:
                 sys.exit(f"--scrape: {slug} has no data-{letter}{i}")
-            out[act] = [int(x) for x in m.group(1).split(",")]
+            row = [int(x) for x in m.group(1).split(",")]
+            # A rendered pair sheet carries the RESOLVED saves value at index 8, because it
+            # derived it for that pairing and drew it on the radar. The finalists model derives
+            # saves itself, from the `saves` blocks, and refuses a row that arrives pre-filled —
+            # rightly, since a value derived beside one partner is wrong beside another.
+            row[SAV_IDX] = None
+            out[act] = row
         return out
     return {"a": series("a"), "b": series("b")}
 
 
-def cell(v):
-    return f'<td class="v v{v}">{v}</td>'
+def cell(v, ax=None):
+    """One matrix cell, shaded by where the value sits on THAT AXIS's own range.
+
+    Pair values are uncapped by kind — `scoring.KIND_MAX` puts additive at 10, complementary at
+    7 and personal at 5 — so shading them on a flat 0-5 ramp was wrong twice. It ran off the end
+    of the palette, because `.v6`-`.v10` are not defined and those cells rendered as bare ink on
+    the surface; and it lied about what it showed, because a personal 5 is *maxed* while an
+    additive 5 is *half*. Normalising by `KIND_MAX` fixes both at once.
+
+    `ax` is a `scoring.KEYS` name for a pair row, and None for a single body's own row — one
+    body tops out at 5 on every axis regardless of the axis's kind, so those shade against 5 and
+    are unchanged.
+
+    The cell still prints the raw value; only the shading is normalised.
+    """
+    denom = KIND_MAX[KINDS[ax]] if ax else 5
+    step = 0 if v <= 0 else max(1, min(5, round(5 * v / denom)))
+    return f'<td class="v v{step}">{v}</td>'
 
 
 def _own(p, who, act):
@@ -83,7 +137,7 @@ def matrix(p, rec):
     for act in ACTS:
         r = rec["acts"][act]
         body.append(f'<tr class="pairrow"><th>Pair {act}</th>'
-                    + "".join(cell(r["pair"][k]) for k in KEYS)
+                    + "".join(cell(r["pair"][k], k) for k in KEYS)
                     + f'<td class="tot">{r["tempo"]*100:.0f}%</td></tr>')
     return (f'<div class="scroll"><table class="matrix"><thead><tr><th>Series</th>{head}'
             f'<th class="tot"><span>Tempo</span></th></tr></thead><tbody>'
@@ -180,7 +234,7 @@ def render(d, sheetdir=None):
     frows = "".join(
         f'<tr><th scope="row"><span class="ent">{i:02d}</span>'
         f'<a href="#{p["slug"]}">{p["names"]["a"]} + {p["names"]["b"]}</a></th>'
-        + "".join(cell(rec["acts"]["III"]["pair"][k]) for k in KEYS)
+        + "".join(cell(rec["acts"]["III"]["pair"][k], k) for k in KEYS)
         + "".join(f'<td class="n{" sep" if n == 0 else ""}">{rec["acts"][a]["tempo"]*100:.0f}</td>' for n, a in enumerate(ACTS))
         + f'<td class="n dm sep">{rec["nontempo"]*100:.0f}</td>' 
           f'<td class="n b">{rec["score"]}</td></tr>' 

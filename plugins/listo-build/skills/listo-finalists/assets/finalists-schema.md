@@ -47,11 +47,55 @@ per pairing out of a sheet is how transcription errors get in.
       "scores": {                           // omit and use --scrape
         "a": {"I": [10 values], "II": [...], "III": [...]},   // index 8 (saves) is null
         "b": {"I": [...],    "II": [...], "III": [...]}
-      }
+      },
+
+      // ── the five the model reads and --scrape cannot fill ──────────────
+      "saves":  {"a": {"I": {"prof": ["wis","con"], "boosters": ["aura-of-protection"]},
+                       "II": {...}, "III": {...}}, "b": {...}},
+      "concentration": {"a": false, "b": true},
+      "types":  {"a": ["cold","radiant"], "b": ["slashing","radiant"]},
+      "meta":   {"a": "wis", "b": "cha"},   // primary ability, lowercase
+      "skills": {"a": {"I": {"Perception": 9, "Investigation": 5, "Persuasion": -1},
+                       "II": {...}, "III": {...}}, "b": {...}}
     }
   }
 }
 ```
+
+## The five fields `--scrape` cannot fill — author all of them
+
+`--scrape` reads the six per-act series and nothing else. The model reads more
+than that, and **degrades silently rather than failing** when a field is absent.
+Each of these was missing from a rendered page at some point, and each was worth
+points:
+
+| field | what reads it | what its absence does |
+|---|---|---|
+| `saves` | `saves_pair` | required — the render fails without it |
+| `concentration` | `derive_saves` | Constitution stops counting double on the body holding a concentration spell |
+| `skills` | `skills_pair` | **derives the Skills rung from `{}`, scores 0, and reports `skl` as a hole on every card** |
+| `types` | `type_spread`, `gear_key` | the Absolute Wrath damage-type penalty never applies, and contention falls back to the blunt `SAME_CLASS` |
+| `meta` | `gear_key` | same fallback — two bodies sharing a primary ability stop being charged for it |
+
+`splits` is read twice: as display text on the card, and — cut at the first
+`&middot;` — as the class split behind `same_class`. Keep the classes first.
+
+**`skills` uses `scoring.RECORDED_SKILLS` names, capitalised**, and
+`Perception`, `Investigation` and `Persuasion` are required on every body: an
+absent modifier on one of those reads as missing evidence, not as untrained.
+
+## `--scrape` nulls the saves index for you
+
+A rendered pair sheet carries the **resolved** saves value at index 8, because
+it derived it for that pairing and drew it on the radar. The finalists model
+derives saves itself and refuses a pre-filled row — rightly, since a value
+derived beside one partner is wrong beside another. `scrape()` nulls index 8 on
+import; do the same by hand if you ever transcribe a row.
+
+> **`assets/finalists-v1.json` is stale and will not render.** It predates the
+> Control split, so its rows carry **nine** axes rather than ten, and it has no
+> `saves` block. Keep it as a record of that run; do not use it as a template.
+> `finalists-example.json` is the current shape.
 
 ## Lift the prose, don't rewrite it
 

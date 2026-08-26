@@ -44,6 +44,33 @@ KINDS = {"st": "add", "aoe": "add", "dur": "per", "act": "comp",
          "ctrl_s": "comp", "ctrl_a": "comp", "rsc": "comp", "skl": "derived",
          "sav": "derived", "end": "per"}
 KIND_MAX = {"add": 10, "comp": 7, "per": 5, "derived": 5}
+
+# ── display calibration: the party the encounters are tuned for ──────────────
+# KIND_MAX is a theoretical ceiling (two maxed bodies), not a demand line, so a radar plotted
+# against it says nothing about whether the pair is actually keeping up. Listo tunes encounters
+# for a full party, and §1 of axis-rubrics.md fixes the unit: par is the act's REFERENCE BODY,
+# and rung 2 is 0.8–1.15× par — a par body is a rung 2. So:
+#
+#   throughput axes scale with the party's ACTIONS, not its headcount. The baseline is a
+#     five-seat party WITHOUT Lone Wolf: one Action each, and — this is the part a headcount
+#     misses — nothing like a planned duo's optimisation pressure, because five bodies cover
+#     each other's gaps and no single sheet has to be right. Priced at **four actions of
+#     ordinary play**, which is 4 × 2 = **8** rung-units. A pair reading 8 is at parity, and
+#     that is what Lone Wolf's doubled actions and halved damage are supposed to buy: two
+#     bodies doing four bodies' work.
+#   coverage axes do not.  A five-stack does not field five healers; it fields one, with a
+#     backup. §5a's ladder puts "covers this axis alone" at rung 4, so parity for a
+#     complementary axis is one body covering plus a real second source: 4 + ⌊2/2⌋ = 5.
+#   personal axes cannot be delegated at all, so parity is each body reaching 4 itself — the
+#     pair operator is already a min, and a five-stack's spare bodies cannot lend Wisdom saves.
+#   shared axes saturate at the first real source: 4.
+#
+# Used for DISPLAY only — no operator, block or score reads it. Values above parity clip to the
+# outer ring, which is correct: past a five-stack's worth, more is surplus.
+NEED = {"st": 8, "aoe": 8,
+        "act": 5, "ctrl_s": 5, "ctrl_a": 5, "rsc": 5,
+        "dur": 4, "sav": 4, "end": 4,
+        "skl": 4}
 KINDNAME = {"add": "Additive", "comp": "Complementary", "per": "Personal",
             "derived": "Derived from evidence"}
 
@@ -117,6 +144,121 @@ HOLE = 0.95         # per holed axis, on the block that axis belongs to
 # two bodies that are being outrun", which is the structural claim the penalty exists to make.
 # It drops the field to 1.08 holes per pairing-act, concentrated in `aoe` and `skl`.
 HOLE_AT = 0.20
+
+# ── illithid: one shared pool, and every number keys off power count ─────────
+# scoring-model.md's illithid section and data/listo-10.2-illithid.md. IPO2 with the Half
+# Potency patch; every charge figure here is the halved, live one.
+#
+# THE COUNT EXCLUDES ILLITHID PERSUASION. The first tadpole grants Persuasion, which carries
+# the 2.5-charge base and the Illithid Mind tax hook; every tadpole after it buys one power
+# worth 0.5 charges. So `powers` — the variable IMR and the pool both key off — is
+# `tadpoles - 1`, and the doc's own table falls out of it exactly: 15 buyable outer powers,
+# IMR capped at 3 before the astral gate, and pools of 5 / 7.5 / 10 / 12.5 / 15 at 5 / 10 /
+# 15 / 20 / 25 powers.
+IMR_STEP = 5            # powers per Illithid Mind Rank
+IMR_CAP = 5
+POOL_BASE = 2.5         # SiaelIPORes carried by Illithid Persuasion itself
+POOL_PER_POWER = 0.5
+
+# Tadpoles reaching the PARTY, per act. Approximate and unverified — vanilla placement lives
+# in base-game level files the pak reader cannot open — so the shape is the finding, not the
+# totals: half the run's supply lands in Act III, and several Act I/II tadpoles sit behind
+# mutually exclusive choices. Cumulative: 12 / 24 / 50.
+SUPPLY = {"I": 12, "II": 12, "III": 26}
+
+# Ring 3 needs half-illithid, which comes only from the Astral-Touched Tadpole at the START of
+# Act III. Nothing inner-ring exists before then, whatever the tadpole count.
+ASTRAL_ACT = "III"
+
+# The tree, as installed. `ring` gates availability; `axis` is the axis a power scores on —
+# powers get no axis of their own (SKILL.md §5a). Illithid Persuasion is not here: it is not
+# bought, it is what the first tadpole grants.
+Power = collections.namedtuple("Power", "name ring axis cost")
+POWERS = {p.name.lower().replace(" ", "-"): p for p in (
+    # ring 1 — from Act I, needs only Persuasion
+    Power("Psionic Overload", 1, "st", "toggle, 1"),
+    Power("Peace Breaker", 1, "skl", "passive"),
+    Power("Force Tunnel", 1, "ctrl_a", "bonus, 1"),
+    Power("Concentrated Blast", 1, "st", "action, 3"),
+    Power("Transfuse Health", 1, "dur", "action, 1"),
+    # ring 2 — from Act I, one ring-1 power deep
+    Power("Stage Fright", 2, "st", "action, 2"),
+    Power("Ability Drain", 2, "ctrl_s", "action"),
+    Power("Luck of the Far Realms", 2, "st", "interrupt, 2"),
+    Power("Eldritch Ward", 2, "dur", "interrupt, 1+lvl"),
+    Power("Displace", 2, "aoe", "passive"),
+    Power("Repulsor", 2, "ctrl_a", "action, 2"),
+    Power("Cull the Weak", 2, "aoe", "1–2/turn"),
+    Power("Psychic Fortress", 2, "sav", "passive"),
+    Power("Shield of Thralls", 2, "rsc", "action, 2"),
+    Power("Mind Flayer", 2, "ctrl_a", "toggle"),
+    # ring 3 — half-illithid only, Act III
+    Power("Mind Blast", 3, "aoe", "action, 4"),
+    Power("Black Hole", 3, "ctrl_a", "action, 5"),
+    Power("Psionic Dominance", 3, "ctrl_s", "action, 4"),
+    Power("Fracture Psyche", 3, "st", "action, 2"),
+    Power("Psionic Backlash", 3, "ctrl_s", "reaction, 2"),
+    Power("Elevated Mind", 3, "skl", "action, 2"),
+    Power("Psykinetic Toss", 3, "ctrl_s", "action, 3"),
+    Power("Psykinetic Pull", 3, "ctrl_a", "action, 2"),
+    Power("Fly", 3, "act", "action"),
+    Power("Astral Stillness", 3, "act", "passive"),
+)}
+OUTER_RING = sum(1 for p in POWERS.values() if p.ring < 3)   # 15, so IMR 3 before Act III
+
+
+def illithid_imr(powers):
+    """Illithid Mind Rank — ⌊powers ÷ 5⌋, capped at 5. Rank updates on long rest."""
+    return min(powers // IMR_STEP, IMR_CAP)
+
+
+def illithid_pool(powers, held=True):
+    """SiaelIPORes per long rest. A body holding no tadpole at all has no pool."""
+    return POOL_BASE + POOL_PER_POWER * powers if held else 0.0
+
+
+def illithid_plan(picks, half_illithid):
+    """Resolve one body's authored picks into its per-act holding.
+
+    `picks` is {act: [power-key, ...]}, each act listing what that act ADDS. Returns a list of
+    three dicts — powers, tadpoles, imr, pool, tax, and the powers held — in act order.
+
+    Fails closed on an unknown power, on a ring-2 pick with no ring-1 power under it, on
+    inner-ring picks before Act III or on a body that never became half-illithid, and on a
+    pre-astral holding above the 15 powers that exist to buy.
+    """
+    out, held, seen = [], [], set()
+    for act in ACTS:
+        for key in picks.get(act, []):
+            p = POWERS.get(key)
+            _require(p is not None, f"unknown illithid power {key!r} — "
+                                    f"one of: {', '.join(sorted(POWERS))}")
+            _require(key not in seen, f"{p.name} picked twice")
+            seen.add(key)
+            if p.ring == 2:
+                _require(any(h.ring == 1 for h in held),
+                         f"{p.name} is ring 2 and needs a ring-1 power under it")
+            if p.ring == 3:
+                _require(act == ASTRAL_ACT,
+                         f"{p.name} is inner-ring — it does not exist before Act {ASTRAL_ACT}")
+                _require(half_illithid,
+                         f"{p.name} is inner-ring and this body never became half-illithid")
+            held.append(p)
+        n = len(held)
+        if act != ASTRAL_ACT:
+            _require(n <= OUTER_RING, f"act {act}: {n} powers, but only {OUTER_RING} exist "
+                                      "to buy before the Astral-Touched Tadpole")
+        out.append({"powers": n, "tadpoles": n + 1 if n else 0,
+                    "imr": illithid_imr(n), "pool": illithid_pool(n, bool(n)),
+                    "tax": illithid_imr(n), "held": list(held)})
+    return out
+
+
+def illithid_appetite(plan):
+    """SKILL.md §1b's three appetites, read off the plan rather than authored beside it."""
+    end = plan[-1]["imr"]
+    return "none" if not plan[-1]["powers"] else "opportunistic" if end < 3 else "committed"
+
 
 # ── gates: Skills is DERIVED, like Saves ─────────────────────────────────────
 # `Use Highest Modifier in dialogue` reads every party member's total for all eighteen skills and
@@ -425,6 +567,60 @@ REDIRECT = {
 # The Eyebiter Mirror boon is real and is *self* durability — `BOLDSTARE_MIRROR_GENERAL` boosts
 # `DamageReduction(All,Flat,1)` on the Mesmerist — so it belongs in that body's authored `dur`
 # rung, which is where the ledger already carries it. It buys the pair no floor it can share.
+
+
+# ── shared accuracy ──────────────────────────────────────────────────────────
+# What `mult` in a damage block is allowed to be, and what each source is worth.
+#
+# Advantage is not always a self buff. Reckless Attack is — it rides the attacker, it is melee
+# only, and `axis-rubrics.md` prices it inside the chassis's own `st_raw`. But most sources in this
+# install are **target-side or ally-side**: Blindness grants advantage to everyone attacking the
+# blinded creature, Spiteful Suffering marks a target, Battlemind Link buffs the ally it is cast
+# on. One body supplies them and BOTH collect, on every attack roll either one makes.
+#
+# So it is a property of the *pairing*. Rule 1's logic — "a rented capability is not a chassis
+# property" — applies to a partner exactly as it applies to an item: a ledger record that baked in
+# a partner's buff would be false the moment it was paired with anyone else. Hence `mult` is
+# authored in a pair sheet's damage block and refused in a ledger record.
+#
+# Two tiers, the same shape the save registry uses and for the same reason — what an effect costs
+# to keep up is most of what it is worth:
+#
+#   2  no save, no concentration, encounter duration   ->  x1.35
+#   1  save-gated or resource-gated                    ->  x1.19
+#
+# Tier 2 is `1 - (1-h)² ÷ h` at h = 0.65, quoted from `axis-rubrics.md`'s constants table — the
+# same number that file's advantage multiplier already carries. Tier 1 is `1 + 0.35 × s` at the
+# rubric's act-invariant `s = 0.55`: a save-gated effect delivers the advantage only on the share
+# of targets that fail it, so it collects that share of the bonus.
+#
+# **A tier is a ceiling, not a value to copy.** `axis-rubrics.md` applies the multiplier to the
+# ATTACK-ROLL PORTION of the raw only, and most bodies are hybrids — Snowlight's own §1 routine
+# mixes weapon attacks with Snowblind ticks, Retribution and Armour of Agathys, none of which is an
+# attack roll. A body whose raw is 60% attack rolls under a tier-1 source authors
+# `1 + 0.6 × 0.19 = 1.11`, and says so in `why`. Authoring the bare tier over-credits every hybrid
+# in the roster.
+ACCURACY = {
+    "battlemind-link":    {"tier": 2},   # Mesmerist 9 — no save, not concentration, 10 rounds or
+                                         # end of encounter, +2 damage and +2 AC alongside. Both
+                                         # bodies, while within 3m.
+    "nimbus-of-pathos":   {"tier": 2},   # Bard 14 — 1/long rest, and the target DROPS TO 0 HP when
+                                         # it ends. Tier 2 on mechanics; the sheet claiming it owns
+                                         # the survival argument.
+    "blind-engine":       {"tier": 1},   # Snowlight Glaring Frost + Snowborn Anthelion — every Cold
+                                         # or Radiant instance is a CON save; Blindness grants
+                                         # advantage against. Area-shaped, so strongest on `aoe`.
+    "spiteful-suffering": {"tier": 1},   # Oathbreaker Channel Oath — one target, short-rest charge
+    "vow-of-enmity":      {"tier": 1},   # Oath of Vengeance Channel Oath — one target, short rest
+    "feinting-blade":     {"tier": 1},   # Paragon 5 — Wis save or -(½PB + Cha) AC. Not advantage,
+                                         # but the same kind of accuracy transfer, and -9 AC at
+                                         # Act III sits inside tier 1's band rather than above it.
+}
+ACC_MULT = {0: 1.00, 1: 1.19, 2: 1.35}
+
+# What `mult` may be: advantage and its mirror, straight from the constants table.
+MULT_CEIL = ACC_MULT[2]     # x1.35 — advantage
+MULT_FLOOR = 0.65           # x0.65 — disadvantage, `h² / h` at h = 0.65
 
 
 # ── combining ────────────────────────────────────────────────────────────────
@@ -803,8 +999,32 @@ PAR = {"st":  {"I": 60, "II": 87, "III": 123},
        "aoe": {"I": 48, "II": 65, "III": 82}}
 
 # Upper bound of each rung, from axis-rubrics.md §1 and §2. Index i is the ceiling of rung i.
+#
+# THE TOP BAND IS FITTED TO THE FINISHED FIELD, NOT TO A THEORETICAL EXTREME. Rung 5 reads "the
+# act's ceiling", so a band no chassis reaches is `audit_roster`'s "the ladder does not span" and
+# means the band is mis-set. Both lines were checked against all 525 scored act-blocks in v7 and
+# placed at the WIDEST GAP in each axis's upper tail, so that no chassis sits within noise of a
+# boundary:
+#
+#   st  1.8  — KEPT. The tail runs 1.959, 2.034, 2.049, 2.183, 2.183, 2.328, 2.583 and then stops;
+#              the next block down is 1.783. That 0.176 gap is the largest anywhere above 1.35 and
+#              1.8 sits inside it. Moving the line to 1.7 would cut a dense cluster instead —
+#              seven chassis tie at exactly 1.667 — and buy nothing. Three chassis hold rung 5.
+#   aoe 2.65 — WAS 3.0, which nothing reached: the field's maximum is 2.998 and the band held zero
+#              blocks in every act. The rubric's own rung-5 anchor is "whole pool committed to
+#              area, no control or rescue" at 3.28, a corner no scored body takes, because a real
+#              chassis spends part of that pool on §5/§6/§7. 2.65 sits in the 0.135 gap between
+#              2.628 and 2.763 and gives four chassis at the ceiling, matching `st`'s three.
+#
+# Neither `LADDER` nor `PAR` is in `score_deps`, so changing a band re-derives every chassis at
+# render time without re-staling a single record. That is why the bands are fitted after the
+# roster is complete rather than guessed before it.
+#
+# `dur` joins them because §3 is a ratio too — effective HP over par's — and its bands come
+# straight from that section rather than from a fit against the field.
 LADDER = {"st":  (0.5, 0.8, 1.15, 1.5, 1.8),
-          "aoe": (0.35, 0.7, 1.3, 2.0, 3.0)}
+          "aoe": (0.35, 0.7, 1.3, 2.0, 2.65),
+          "dur": (0.7, 0.9, 1.15, 1.6, 2.4)}
 
 ACTION_BUDGET = 8      # 2 Actions x 4 rounds, Lone Wolf floor economy
 BONUS_BUDGET = 8       # 2 Bonus Actions x 4 rounds
@@ -813,7 +1033,7 @@ ROUNDS = 4
 REFRESH = ("short", "long", "fight")
 
 
-def damage_rung(ratio, axis):
+def ratio_rung(ratio, axis):
     """Ratio to par -> 0-5 on that axis's ladder."""
     for i, hi in enumerate(LADDER[axis]):
         if ratio < hi:
@@ -910,6 +1130,48 @@ def derive_damage(block, act, cid="?"):
     st += GEAR[act] * inst["st"]
     aoe += GEAR[act] * inst["aoe"]
 
+    # ACCURACY IS THE ONE CORRECTION THAT DOES NOT CANCEL, and it lands AFTER the gear constant
+    # because the rider rides the same roll: a body with routine advantage collects `k` on the
+    # hits the advantage bought as well. Par has no accuracy buff, so ADVANTAGE (x1.35) and its
+    # mirror are the only place a chassis is measured on something par cannot answer.
+    #
+    # It is a separate field rather than a fatter raw so that a sheet re-scoring a chassis under
+    # a partner's buff has to SAY SO. The ledger scores each body alone and a pair does not:
+    # Spiteful Suffering is situational for one chassis and routine beside the body that hands
+    # it out. That difference belongs in the record, not folded invisibly into a number.
+    #
+    # BOUNDED BY WHAT THE RUBRIC ACTUALLY PRICES. `axis-rubrics.md`'s constants table gives
+    # advantage as x1.35 and its mirror, disadvantage, as x0.65 — nothing above or below either.
+    # `m > 0` let a sheet write 5.0 and clear validation, which is the unfalsifiable number this
+    # block exists to refuse. `ACCURACY` names the sources already priced and the tier each earns;
+    # a hybrid body takes the tier times its attack-roll share, not the bare tier.
+    mult = block.get("mult") or {}
+    _require(isinstance(mult, dict), f"{where}: `mult` must be an object")
+    for key in mult:
+        _require(key in ("st", "aoe", "why"),
+                 f"{where}: `mult` has key {key!r}; expected 'st', 'aoe' or 'why'. A misspelt "
+                 f"axis would apply nothing and score as though the correction were honest.")
+    vals = {}
+    for axis in ("st", "aoe"):
+        m = mult.get(axis, 1.0)
+        _require(isinstance(m, (int, float)) and not isinstance(m, bool),
+                 f"{where}: `mult.{axis}` must be a number, got {m!r}")
+        _require(MULT_FLOOR - 1e-9 <= m <= MULT_CEIL + 1e-9,
+                 f"{where}: `mult.{axis}` is {m:g}; must be between {MULT_FLOOR:g} and "
+                 f"{MULT_CEIL:g}. Those are advantage and its mirror, and the rubric prices "
+                 f"nothing outside them — a save-gated or resource-gated source is worth "
+                 f"{ACC_MULT[1]:g}, and a body whose raw is only partly attack rolls collects "
+                 f"that share of the bonus rather than all of it. See `ACCURACY`.")
+        vals[axis] = float(m)
+        if abs(m - 1.0) > 1e-9:
+            _require(isinstance(mult.get("why"), str) and mult["why"].strip(),
+                     f"{where}: a {axis} multiplier of {m:g} without a `why`. An accuracy or "
+                     f"resistance correction is the one term par cannot answer, so it is the "
+                     f"one term that may not be applied silently. Name the effect, the body that "
+                     f"supplies it, and what it costs to keep up.")
+    st *= vals["st"]
+    aoe *= vals["aoe"]
+
     # POTENTIAL ON BOTH AXES (axis-rubrics.md "Four rules" #3, as amended). A fungible resource
     # serves whichever axis the fight calls for; scoring it on one only charges the chassis for
     # flexibility it has.
@@ -921,8 +1183,113 @@ def derive_damage(block, act, cid="?"):
                      f"resource is fungible it counts as potential on both (rule 3); if it "
                      f"genuinely is not, say why in `single_axis_reason`.")
 
-    return (damage_rung(st / PAR["st"][act], "st"),
-            damage_rung(aoe / PAR["aoe"][act], "aoe"), st, aoe)
+    return (ratio_rung(st / PAR["st"][act], "st"),
+            ratio_rung(aoe / PAR["aoe"][act], "aoe"), st, aoe)
+
+
+def damage_terms(block, act, cid="?"):
+    """`derive_damage`'s arithmetic, with the intermediate terms kept for display.
+
+    Same validation, same numbers — a sheet that shows the working must show the working of the
+    figure the rung was actually taken against, not a second calculation that happens to agree.
+    """
+    st_rung, aoe_rung, st, aoe = derive_damage(block, act, cid)
+    mult = block.get("mult") or {}
+    out = {}
+    for axis, scored, rung in (("st", st, st_rung), ("aoe", aoe, aoe_rung)):
+        inst = float(block.get(f"{axis}_instances", 0.0))
+        raw = float(block.get(f"{axis}_raw", 0.0))
+        par = PAR[axis][act]
+        out[axis] = {"raw": raw, "inst": inst, "k": GEAR[act], "gear": GEAR[act] * inst,
+                     "mult": float(mult.get(axis, 1.0)), "why": mult.get("why", ""),
+                     "scored": scored, "par": par, "ratio": scored / par, "rung": rung}
+    return out
+
+
+# ── §3: effective HP ─────────────────────────────────────────────────────────
+# Durability is the third computed axis and the last one still being judged by eye. Counting
+# mitigation LAYERS makes every layer one step and cannot say what a layer is worth against the
+# act it faces — flat reduction is several times better against a crowd than against a boss — so
+# this prices both directly and no hand-written "flat sits a rung below" correction is needed.
+#
+# Par is the act's reference body: medium armour and a shield, no magic AC, no defensive feat, no
+# resistance, no self-healing. Its configuration never improves; what changes is the enemy.
+PAR_POOL = {"I": 65.0, "II": 115.0, "III": 160.0}
+PAR_AC = 17
+BASE_P_HIT = 0.65      # against par AC. The mirror of the damage side's `h`, and a convention for
+AC_STEP = 0.05         # the same reason: only the DIFFERENCE from par AC is ever read.
+P_HIT_MIN, P_HIT_MAX = 0.05, 0.95      # the natural-20 floor, and its mirror
+
+# The anchor that turns a hit count into a hit size: par is dropped in four rounds, taking three
+# crowd hits or one boss hit a round. This is the input that splits flat mitigation from
+# proportional, and the one a pak sweep could later replace.
+TYPICAL_HIT = {"I": (5.4, 16.3), "II": (9.6, 28.8), "III": (13.3, 40.0)}   # (crowd, boss)
+
+# Flat reduction against a small crowd hit is unbounded — Aura of Moonlight against Act I's 5.4
+# returns a multiplier above 13, which alone would read as four times par effective HP. The v7
+# roster clamped that term by hand at x3 and recorded the clamp as the largest judgement in the
+# record. It is a rule, so it lives here rather than in one chassis's note.
+MIT_CAP = 3.0
+
+
+def derive_ehp(block, act, cid="?"):
+    """One body's Durability rung, worked. Returns the terms as well as the ratio.
+
+    `block` is::
+
+        {"pool": 138,            # max HP + temp HP + self-healing spendable INSIDE the fight
+         "ac": 21,
+         "prop": [["Bear Heart rage", 0.5]],    # what MULTIPLIES a typical hit
+         "flat": [["Heavy Armour Master", 5]]}  # what is SUBTRACTED from it
+
+    Self-healing is Durability, not Rescue — Second Wind, Lay on Hands spent on yourself, temp HP
+    on yourself, Durable's short rests. Only what a body can aim at its PARTNER is Rescue, and
+    nothing is ever scored in both.
+
+    The ratio is computed twice, on the crowd hit and on the boss hit, and blended on that act's
+    MIX weights.
+    """
+    where = f"{cid} {act} durability"
+    _require(isinstance(block, dict), f"{where}: must be an object")
+    _require(act in ACTS, f"{where}: unknown act {act!r} — expected one of {ACTS}")
+    for f in ("pool", "ac"):
+        _require(f in block, f"{where}: missing {f!r}")
+    pool, ac = float(block["pool"]), float(block["ac"])
+    _require(pool > 0, f"{where}: pool must be > 0")
+
+    prop = [[w, float(v)] for w, v in block.get("prop", [])]
+    flat = [[w, float(v)] for w, v in block.get("flat", [])]
+    for w, v in prop:
+        # Authored the wrong way round — 2.0 for "halves the hit" — this would read as a body
+        # taking DOUBLE damage and score it a rung it does not have. Fail rather than guess.
+        _require(0 < v <= 1, f"{where}: {w!r} is {v:g}. A proportional factor is what multiplies "
+                             f"the incoming hit, so resistance is 0.5, not 2 — it lies in (0, 1].")
+    for w, v in flat:
+        _require(v >= 0, f"{where}: {w!r} is {v:g}. Flat reduction is subtracted from the hit, "
+                         f"so it is stated positive.")
+
+    pool_ratio = pool / PAR_POOL[act]
+    p_hit = min(P_HIT_MAX, max(P_HIT_MIN, BASE_P_HIT - (ac - PAR_AC) * AC_STEP))
+    acc = BASE_P_HIT / p_hit
+    prop_mult = 1.0
+    for _w, v in prop:
+        prop_mult /= v
+    cut = sum(v for _w, v in flat)
+
+    fights, ratio = [], 0.0
+    for (name, hit), weight in zip(zip(("crowd", "boss"), TYPICAL_HIT[act]), MIX[act]):
+        landed = max(hit - cut, 0.0)
+        raw_mult = MIT_CAP if landed <= 0 else hit / landed
+        flat_mult = min(raw_mult, MIT_CAP)
+        r = pool_ratio * acc * prop_mult * flat_mult
+        fights.append({"fight": name, "hit": hit, "weight": weight, "landed": landed,
+                       "flat_mult": flat_mult, "capped": raw_mult > MIT_CAP, "ratio": r})
+        ratio += weight * r
+
+    return {"act": act, "pool": pool, "par_pool": PAR_POOL[act], "pool_ratio": pool_ratio,
+            "ac": ac, "par_ac": PAR_AC, "p_hit": p_hit, "acc": acc,
+            "prop": prop, "prop_mult": prop_mult, "flat": flat, "cut": cut,
+            "fights": fights, "ratio": ratio, "rung": ratio_rung(ratio, "dur")}
 
 
 def legacy_damage_axes(C):
@@ -1038,6 +1405,13 @@ def validate_chassis(cid, c):
                      f"{cid} {act}: a `damage` block is present, so indices {ST_IDX} (st) and "
                      f"{AOE_IDX} (aoe) must both be null — deriving one and authoring the other "
                      f"gives two sources of truth that can disagree.")
+            # A LEDGER RECORD SCORES A BODY ALONE. `mult` is the pair sheet's re-score of what a
+            # partner changes, and a chassis carrying one would claim a buff it only has next to
+            # one specific other body — the same objection rule 1 raises against named items.
+            _require("mult" not in dmg,
+                     f"{cid} {act}: `damage.mult` is a pair-sheet field and may not appear in a "
+                     f"ledger record. The ledger scores each body alone; an accuracy effect a "
+                     f"partner supplies belongs in that pairing's sheet, not in this chassis.")
             derive_damage(dmg, act, cid)
         for i, v in enumerate(row):
             if i == SAV_IDX:
@@ -1147,6 +1521,7 @@ def score_bodies(ca, cb):
 
     Each needs `_id`, `reach`, `scores` (act -> 10 values, index 8 null),
     `saves` (act -> {prof, boosters}) and optionally `concentration`.
+
     """
     _require(ca["reach"] in REACH, f"{ca['_id']}: unknown reach {ca['reach']!r}")
     _require(cb["reach"] in REACH, f"{cb['_id']}: unknown reach {cb['reach']!r}")

@@ -91,8 +91,21 @@ gimmick — 16 and 17 buy Cone of Cold and 5th-level slots, the live alternative
 
 ## Stats
 
-WIS 22 route: **16** after the racial bonus at creation → Lone Wolf **+4** → 20 → **Enweaved**
-half-feat +2 → **22** (Enweaved's own cap).
+WIS 22 route: **16** after the racial bonus at creation → Lone Wolf **+4** → 20 → **Magic
+Initiate: Druid** +1 → 21 → **Dungeon Delver** +1 → **22**. Both feats are on this list already
+for their own sake, so the climb costs **no dedicated selection at all** — see *Feats*.
+
+| source | char | DEX | CON | WIS | AC |
+|---|---:|---:|---:|---:|---:|
+| creation, after racial | 1 | 15 | 16 | 16 | — |
+| Lone Wolf +4 (WIS + CON) | 1 | 15 | **20** | **20** | 19 |
+| Magic Initiate: Druid | 3 | 15 | 20 | 21 | 19 |
+| Dungeon Delver | 6 | 15 | 20 | **22** | **20** |
+| Skilled Expert | 12 | **16** | 20 | 22 | **21** |
+| *Mirror of Loss* | *16+* | *16* | *20* | ***24*** | ***22*** |
+
+AC is Unarmoured Defence plus a shield — `10 + DEX + WIS + 2` — which is why the Mirror's Wisdom
+also buys a point of armour class. See *The Mirror of Loss* below.
 
 Lone Wolf grants **+4 to two abilities and save proficiency in both**, plus +30% max HP, halved
 damage from all sources, and a second Action / Bonus Action / Reaction.
@@ -167,19 +180,85 @@ and grants **advantage on Concentration checks**, the second half of protecting 
 ## Feats — seven
 
 Cadence is per **class level**, 3 / 6 / 9 / 12 / 13 / 15 / 18: Ranger 3, 6, 9, 12, 13, 15 (six) +
-Monk 3 (one). Cleric 2 contributes none.
+Monk 3 (one). Cleric 2 contributes none. Against the progression order below they land at
+characters **3, 6, 9, 12, 17, 18, 20**.
 
-1. **Enweaved** — +2 WIS, the only route from 20 to 22. Mandatory.
-2. **Alert** — the one unaddressed weakness is going second.
-3. **Savage Attacker** — `2473` extends the reroll to unarmed strikes; you make a lot of rolls.
-4. **Magic Initiate: Druid** — 2 druid cantrips + 1 L1. Take **Frostbite** (Cold, CON save) and
-   **Moonflare** (Radiant) for two at-will triggers at range, where Word of Radiance cannot reach.
-5. **Tough** — more HP is more rounds of the engine running.
-6–7. Free. `Dungeon Delver` / `Performer` carry +1 DEX or WIS plus real expertise, and a
-two-person party needs the skills. On **Line A**, one of these is spent on War Caster or
-Resilient (CON) instead.
+1. **Magic Initiate: Druid (WIS)** — char 3. WIS 20 → 21, plus two druid cantrips and a level 1.
+   Take **Frostbite** (Cold, CON save) and **Moonflare** (Radiant) for two at-will triggers at
+   range, where Word of Radiance cannot reach.
+2. **Dungeon Delver (WIS)** — char 6. WIS 21 → **22**, Expertise in **Perception** and Sleight of
+   Hand, Advantage finding hidden objects and resisting traps. The Perception Expertise is what
+   carries the pair's automatic trap and cache checks, which nothing else covers.
+3. **Alert** — char 9. The one unaddressed weakness is going second.
+4. **Skilled Expert (DEX)** — char 12. DEX 15 → **16**, which is the last point of AC, plus a
+   skill proficiency and an **Expertise — put it on Investigation**. That is the pair's worst
+   recurring check and the only one no other source reaches before Act III.
+5. **Tough** — char 17. More HP is more rounds of the engine running.
+6. **Savage Attacker** — char 18. `2473` extends the reroll to unarmed strikes; you make a lot of
+   rolls.
+7. **Free** — char 20. `Performer`, `Resilient` or a second `Magic Initiate`. On **Line A**, this
+   is where War Caster or Resilient (CON) goes instead.
 
 `Arcanist` is **removed** from Listo — do not plan around it, whatever `monk.md:433` says.
+
+### Why `Enweaved` is off the line
+
+Enweaved is the list's only **+2** half-feat and it used to hold slot 1 as "the only route from
+20 to 22". It is not the only route, and it was never free.
+
+**It grants wild magic and magic allergy**, and Listo ships `Wild Magic D100 Table`, `More Wild
+Magic effects` and `Increasingly Likely Wild Magic Surge (Combat Only)` alongside it. This
+chassis holds **Friar's Bond in its only concentration slot, permanently, for the whole run** —
+Bond *is* the engine — and it casts an at-will cantrip most rounds once the Cleric dip lands. A
+surge here does not cost a spell; it costs the build.
+
+And the climb never needed it. **Magic Initiate: Druid grants +1 WIS** and was already taken for
+Frostbite and Moonflare. **Dungeon Delver grants +1 DEX *or* WIS** and was already wanted for
+Perception Expertise. Pointing Dungeon Delver's increase at Wisdom rather than Dexterity reaches
+the same 22 with **no dedicated selection**, and `Skilled Expert` then buys the Dexterity point
+back along with an Expertise. Net: same WIS 22, same DEX 16, same AC — one fewer commitment and
+no wild magic.
+
+> **Every increase above 20 on this line is a Feats Overhaul feat, deliberately.**
+> `data/listo-10.2-feats.md` flags an *unresolved* question over whether the ability-cap removal
+> reaches **Essential Feats** half-feats, and that patch mod is not in the 10.2 list. Magic
+> Initiate and Dungeon Delver are Feats Overhaul, so the 20 → 22 climb is clear of it. Skilled
+> Expert *is* an Essential Feat, which is exactly why its increase is placed at **DEX 15 → 16**,
+> below 20, where the question cannot bite.
+
+---
+
+## The Mirror of Loss
+
+`references/listo-rules.md`: **+2 to a chosen ability against a hard cap of 24, plus a separate
++1 Charisma, per character**, behind **Religion DC 25** in Act III.
+
+Put the +2 on **Wisdom**. On this chassis Wisdom is not merely the primary — it is the *only*
+stat, and it pays four ways at once:
+
+```text
+WIS 22 -> 24    Friar's Retribution   2 x WIS   12 -> 14 Radiant per incoming hit
+                Glaring Frost DC      8+PB+WIS  20 -> 21
+                Anthelion DC          8+PB+WIS  20 -> 21
+                Unarmoured Defence    10+DEX+WIS+shield  21 -> 22
+```
+
+**No other body in this pairing has a stat that also buys armour class.** That last line is worth
+naming: at AC 22 the Act III effective-HP ratio goes from 2.16x par to **2.43x**, over the rung-5
+line of 2.4. It is not scored — `axis-rubrics.md`'s first rule keeps named rewards out of every
+chassis — and it would not move the *pair* either, since Durability is personal and reads the
+weaker half. It is simply the largest single upgrade available to this character.
+
+WIS 22 + 2 also lands **exactly** on the cap, so nothing spills. That is the reason not to buy a
+third Wisdom half-feat: a pre-Mirror 23 would be thrown away.
+
+The free **+1 Charisma** lands on 8 → 9 and moves no modifier. It is free, so take it anyway.
+
+**Lectern cannot roll the check itself.** Religion keys off Intelligence, and INT 10 with
+proficiency does not reach DC 25. The pair's answer is the partner's **Elevated Mind**, which
+grants Expertise and proficiency in every Intelligence skill from Act III; failing that, the
+documented **100-gold respec at Withers** into Religion Expertise, or the **Necromancy of Thay**
+sacrifice for a guaranteed +2 at the cost of Forbidden Knowledge.
 
 ---
 
@@ -252,14 +331,21 @@ Rubric: `skills/listo-build/references/axis-rubrics.md`. §1 and §2 computed ag
 (single-target **60 / 87 / 123**, AoE **48 / 65 / 82**), both sides carrying the per-instance gear
 constant; the rest act-relative.
 
+> **Superseded by the pair sheet.** These were re-derived against `ledger-v7.json`'s worked
+> damage blocks when *Lectern & Amethyst* was built, and fourteen cells moved across the two
+> bodies. **Single-target is 3 / 3 / 3, not 2 / 2 / 3** — the `?` rows below were never derived
+> and the ledger's own record says so — and **Durability is 4 / 4 / 4**. AoE stands at 1 / 2 / 4.
+> The pair sheet shows the working for all three and refuses to render if a rung disagrees with
+> it; treat the table below as this document's history rather than its answer.
+
 > **These numbers are on the corrected rubric, and the ledger is not.** Three rules changed:
 > §2's par was re-based from one Fireball per fight to two (the old 22/28/32 let a full caster read
 > 4.6× par, pegging 130 of 298 chassis at rung 5), gear now enters as a constant per damage
 > instance on both sides of the ratio, the resource formula now fills unspent
 > action-slots with cantrips or attacks instead of scoring them at zero, and rule 3 was scoped to
 > build-time picks so a fungible resource counts as potential on every axis it could be spent on.
-> `ledger-v6.json` still holds values authored under the old rules, so **do not compare the table
-> below to ledger scores** until the roster is re-derived.
+> `ledger-v6.json` held values authored under the old rules. That roster **has since been
+> re-derived as `ledger-v7.json`**, which is what the pair sheet reads.
 
 | axis | I | II | III |
 |---|---|---|---|
@@ -315,11 +401,14 @@ no reaction. Saves is 4 on Line B only.
 
 ## Known weaknesses
 
-- **Single-target is flat 2 in every act.** This never threatens a boss on damage.
+- **Single-target is flat 3 in every act** — re-derived; the old flat 2 was a carry-forward the
+  ledger record explicitly declines to stand behind. It is ahead of par and still never the body
+  that threatens a boss.
 - **Blind is a CON save.** Brutes and undead resist it, and a blinded caster still casts —
   Blindness in BG3 only imposes attack disadvantage and grants advantage against.
-- **AoE is thin until Cleric 2 lands**, and only peaks at Ranger 15 — rungs 1 / 1 / 3, not the
-  4 the old par suggested.
+- **AoE is thin until Cleric 2 lands**, and only peaks at Ranger 15 — rungs **1 / 2 / 4** on the
+  re-derivation, and the Act III 4 is competent area damage attached to a control engine rather
+  than a damage identity.
 - **Retribution fires on `IsAttack() and IsHit()` only.** Enemy spells and save-based damage feed
   it nothing.
 - **The loop partly suppresses itself** — blinded enemies attack at disadvantage, so they hit you

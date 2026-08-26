@@ -262,6 +262,20 @@ complete odd scores. **The background is not a late afterthought but part of the
 pass** — it is two fixed proficiencies, so it is solved together with the class picks, not after
 them.
 
+**When choosing feats, read `data/listo-10.2-feats.md` § “Half-feat index” before fixing the
+ability spread.** Treat each listed ability increase as part of the stat budget, compare the
+half-feat's real feature against spending the pick on plain ASI, and observe the Essential Feats
+cap caveat. Do not leave an odd score in the final spread unless a named half-feat completes it at
+a stated rung of the progression ladder.
+
+**For every melee or unarmed damage build, explicitly price `Savage Attacker` from the complete
+damage packet.** It rerolls eligible dice from the weapon or unarmed strike **and** attached item,
+spell and class-feature riders — including melee Sneak Attack, smites, Manoeuvres and Flourishes —
+so comparing it on the base weapon die alone badly understates it. Count the eligible dice in the
+routine attack at each act; exclude flat bonuses, independent spell/status damage, later ticks and
+the extra riders on thrown attacks. The exact boundary and examples are in
+`data/listo-10.2-feats.md` § “Savage Attacker”.
+
 ### 3. Build the skill map explicitly — never eyeball the Skills axis
 
 **Every character has a background, and the sheets must name it.** A background is two skill
@@ -446,13 +460,22 @@ Publish an artifact using `assets/sheet-template.html`. Keep it to **picks and w
 select at each level, the stat spread, the gear targets. Reasoning belongs in conversation, not
 on the sheet. State unverified assumptions explicitly rather than smoothing over them.
 
-**An illithid plan is picks-and-when, so it goes on the sheet.** There is no dedicated section for
-it: put the powers in the **progression ladder** at the rung they are bought — naming the count and
-the resulting IMR, since that is what the numbers key off — and put the turn they change in the
-**play loop**. State the **tadpole share it assumes** as an explicit assumption, because the pool is
-shared and the sheet is read next to a partner's, and say whether the plan communes with the
-Astral-Touched Tadpole or eats it. A build that takes none should say so once, rather than leaving
-the reader to wonder whether it was considered.
+**An illithid plan is picks-and-when, so it goes on the sheet.** On a **single-character sheet**
+there is no dedicated section for it: put the powers in the **progression ladder** at the rung they
+are bought — naming the count and the resulting IMR, since that is what the numbers key off — and
+put the turn they change in the **play loop**. State the **tadpole share it assumes** as an explicit
+assumption, because the pool is shared and the sheet is read next to a partner's, and say whether
+the plan communes with the Astral-Touched Tadpole or eats it. A build that takes none should say so
+once, rather than leaving the reader to wonder whether it was considered.
+
+**A pair sheet has a dedicated section, because the pair is the surface the share is decided on.**
+Author `illithid.picks` — what each body's holding adds per act — and the renderer derives IMR, the
+charge pool, the `+IMR` tax, the tadpoles spent and the act's supply headroom, and refuses to draw a
+plan the run cannot fund. `assets/pair-schema.md` has the block. Two things it does *not* do: it
+does not move the radar (that is §5a's job and yours), and it does not decide the split for you.
+Say which of concentrate-for-tempo or split-for-resilience the plan chose and why, name the powers
+deliberately **not** taken, and state what caps the plan — supply, the tax, or the Action — because
+those are three different findings about the pair.
 
 **A build that needs a mod change is blocked until the change is made, and the sheet has to say
 so.** Two exist in this install: **Inquisitor** requires updating its pak to 2.2.1 (the shipped
@@ -509,6 +532,16 @@ It is the same chassis as the single-character sheet, with the duo-specific stru
   one character, with the benefit to the winner and what the loser gives up stated in the row.
   Hag's Hair is one per *run*; the Mirror of Loss is per character.
 - **One combined quest-reward table**, with an owner chip per reward.
+- **The working, in the Roster section** (`.wk`). `st`, `aoe` and `dur` are the three axes that
+  are **arithmetic rather than judgement**, and the table shows the arithmetic: raw plus the gear
+  constant over that act's par, and pool times accuracy times mitigation over par's. Author the
+  `derived` block's *inputs* — the action split, the raws with their instance counts, the pool,
+  the AC and the mitigation layers — and nothing else. **A rung that disagrees with the one in
+  `profile.scores` refuses to render**, which is the point: before this block the working lived
+  in prose, where a sheet could claim a rung its own derivation did not support. `damage` is the
+  same wire format `ledger-v7.json` uses, so a chassis already in the ledger lifts straight
+  across; `mult` is how the sheet re-scores a body its **partner** changes, and it demands a
+  reason.
 - **A damage-coverage table under the radar** (`.dmg`) and a **gate audit** (`.gt`) that the
   Skills scores are derived from. Both are in the single-character template too. See §5b for the
   damage arithmetic and `data/listo-10.2-backgrounds.md` for the gate arithmetic. On a pair sheet
@@ -680,7 +713,9 @@ it does not sit at baseline; a sheet showing both bodies at even-share numbers w
 says one of them is the illithid carry is internally inconsistent. **Score the fit, not the
 appetite** — a body that converts the share unusually well (a cheap Action, a casting stat on the
 last class added, an idle reaction, armour that shrugs off the tax) earns the rung; a body that
-merely *spends* a lot of tadpoles badly does not.
+merely *spends* a lot of tadpoles badly does not. On a pair sheet, write the moved cells and the
+reason into a `profile.notes` entry: the illithid section states the plan, and the note is what ties
+it to the numbers that changed.
 
 **On splitting the pool between the two characters, score what is authored — but do the
 arithmetic.** Illithid returns are **convex in power count on one body**: potency scales with IMR
@@ -829,7 +864,7 @@ weighted damage figure alongside it.
 | `data/classes/<class>.md` | One file per class — every subclass's mechanics, dip value, gaps |
 | `data/listo-10.2-races.md` | Every race and subrace, with the traits each grants |
 | `data/listo-10.2-backgrounds.md` | The twelve backgrounds, the eighteen skills, the campaign's skill gates, and the skill-map method |
-| `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances |
+| `data/listo-10.2-feats.md` | Every feat and fighting style, with Listo's rebalances and the complete half-feat index used when solving ability spreads |
 | `data/listo-10.2-spells.md` | **Spell-list access as installed** — what each class's list actually holds, Magical Secrets pool sizes, the feat pick-lists, and which "cross-class" lists are wired vs shelfware |
 | `data/listo-10.2-equipment.md` | Items, slots, attunement, upgrade paths, drop locations |
 | `data/listo-10.2-illithid.md` | **IPO2 as installed** — the 25-power tree, charge costs, IMR scaling and its tax, tadpole supply per act, the astral gate |

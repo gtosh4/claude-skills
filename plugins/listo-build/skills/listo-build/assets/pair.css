@@ -212,6 +212,13 @@
   .pane[data-who="a"] .pane-head { box-shadow: inset 3px 0 0 var(--brass); }
   .pane[data-who="b"] .pane-head { box-shadow: inset 3px 0 0 var(--astral); }
 
+  /* The Mirror of Loss is the one permanent stat change that arrives mid-run rather than at
+     creation, and it raises that ability's cap to 24. It gets its own column so Final can carry
+     it without hiding what the build actually rolls in Acts I and II — subtract this column and
+     you have the figure every score on the sheet was taken against. Dim, because it is the only
+     column that is not true yet when the sheet is first read. */
+  .pane-body td.mirror { color: var(--text-faint); }
+
   .kit { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .45rem; }
   .kit li { font-size: .88rem; color: var(--text-dim); }
   .kit li b { color: var(--text); font-weight: 600; }
@@ -332,7 +339,24 @@
   }
   .r-table td.sc.on { background: var(--brass-bg); }
   .r-table thead th.on { color: var(--brass); }
-  .r-note { font-size: .82rem; color: var(--text-dim); padding: .5rem .25rem 0; }
+  /* Prose under the chart. The kinds key belongs to the chart, so it sits in the chart
+     column and fills the space beside a table that is always taller; the authored notes
+     take the full width underneath in as many columns as the width allows, because a
+     66ch paragraph in a 1fr column left two thirds of the row empty. */
+  .p-chart { display: flex; flex-direction: column; gap: .9rem; }
+  .p-main  { display: flex; flex-direction: column; gap: .9rem; }
+  .r-key {
+    font-size: .78rem; line-height: 1.55; color: var(--text-dim);
+    border: 1px solid var(--rule-soft); background: var(--surface);
+    padding: .75rem .9rem; margin: 0; max-width: none;
+  }
+  .r-notes {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: .9rem 2.25rem; align-items: start;
+  }
+  .r-note { font-size: .82rem; color: var(--text-dim); margin: 0; max-width: 66ch; }
+  .r-notes .r-note { padding-left: .8rem; border-left: 1px solid var(--rule); }
 
   /* ── damage coverage ──────────────────────────────────────────────────
      The radar's Single-target and AoE cells cap at 5 and say nothing about
@@ -411,6 +435,78 @@
   .gt td.g-bad b { color: var(--rust); }
   .gt td.g-bad .pc { color: var(--rust); }
   .gt tr.fail td.gate { box-shadow: inset 3px 0 0 var(--rust); }
+
+  /* ── illithid plan ────────────────────────────────────────────────────
+     Tadpoles are the ONE resource the two bodies share, so the section is a
+     pair of pick lists over a single allotment table. Nothing here is
+     authored except the picks: IMR, the charge pool, the +IMR tax and the
+     supply check are computed in render_pair.py off scoring.py's constants,
+     and the renderer refuses to draw a plan that spends more tadpoles than
+     the act supplies.
+
+     .tax is rust because it is a cost, not a stat — it is the only column
+     that goes UP as the plan gets better, and reading it as an achievement
+     is exactly the mistake the section exists to prevent. A dash means
+     IMR 0, where the tax genuinely does not exist.
+     ──────────────────────────────────────────────────────────────────── */
+  .ill td.act { white-space: nowrap; font-weight: 600; }
+  .ill td.imr { font-weight: 600; }
+  .ill td.tax { color: var(--rust); font-weight: 600; }
+  .ill td.spare { color: var(--text-faint); }
+  .ill .ring, .ill .cost {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: .68rem; color: var(--text-faint); white-space: nowrap;
+  }
+  .ill .cost::before { content: "· "; }
+
+  /* ── the working ──────────────────────────────────────────────────────
+     Single-target, AoE and Durability are the three axes that are ARITHMETIC
+     rather than judgement, and until this table existed the arithmetic lived
+     in prose where nothing could check it. Every figure here is derived in
+     render_pair.py off scoring.py's par tables; only the inputs are authored,
+     and a ratio that disagrees with the rung in the profile table refuses to
+     render rather than letting the sheet carry two answers.
+
+     .work is the widest column on the sheet and the one that is read last, so
+     it is set small and dim with only the terms that carry weight in .b —
+     the eye should land on the ratio and the rung at the right first and
+     come back leftward for the derivation.
+     ──────────────────────────────────────────────────────────────────── */
+  .working { display: flex; flex-direction: column; gap: 1rem; }
+  .wk { border: 1px solid var(--rule); background: var(--surface); }
+  .wk table { border-collapse: collapse; width: 100%; font-size: .82rem; }
+  .wk th, .wk td { padding: .45rem .7rem; text-align: left;
+                   border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  .wk thead th {
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint);
+    font-weight: 600; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  .wk tbody tr:last-child td { border-bottom: 0; }
+  .wk td.act { white-space: nowrap; font-weight: 600; border-right: 1px solid var(--rule); }
+  .wk td.act .budget {
+    display: block; margin-top: .2rem; font-weight: 400;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: .62rem; letter-spacing: .04em; color: var(--text-faint);
+  }
+  .wk td.metric { white-space: nowrap; color: var(--text-dim); }
+  .wk td.work {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: .72rem; line-height: 1.6; color: var(--text-faint);
+  }
+  .wk td.work b { color: var(--text); font-weight: 600; }
+  .wk td.work .faint { color: var(--rule); }
+  .wk td.work .cap { color: var(--rust); }
+  .wk td.u { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+             color: var(--text-faint); }
+  .wk td.u b { color: var(--text); font-weight: 600; }
+  .wk td.w { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700;
+             border-left: 1px solid var(--rule); }
+  .wk[data-who="a"] .pane-name { color: var(--brass); }
+  .wk[data-who="b"] .pane-name { color: var(--astral); }
+  .wk[data-who="a"] .pane-head { box-shadow: inset 3px 0 0 var(--brass); }
+  .wk[data-who="b"] .pane-head { box-shadow: inset 3px 0 0 var(--astral); }
+  .wk .r-note { padding: .7rem .8rem; border-top: 1px solid var(--rule); }
 
   section { display: flex; flex-direction: column; gap: 1.15rem; }
   .eyebrow {
@@ -512,6 +608,12 @@
     font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--astral); font-weight: 600;
   }
   .stack { display: flex; flex-direction: column; gap: .9rem; }
+  /* One combo per full-width box wasted the right half of every line. */
+  .combos {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+    gap: .9rem; align-items: start;
+  }
+  .combos .ck p { max-width: none; }
 
   .phase {
     font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
@@ -526,6 +628,20 @@
     font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
     padding: .12rem .45rem; background: var(--astral-bg); color: var(--astral); border: 1px solid var(--rule);
   }
+  /* A CHOICE the level forces — a fighting style, a subclass, a boon, a Bold
+     Stare, a metamagic, a cantrip or a spell known. Distinct from .tag, which
+     is the feat: a feat has its own column, and everything else used to be
+     buried in the prose of the Pick cell. Dashed border so a run of them in
+     one cell reads as a list of open selectors rather than as a sentence. */
+  .pick {
+    display: inline-block;
+    font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .66rem; letter-spacing: .08em;
+    padding: .1rem .4rem; margin: 0 .3rem .18rem 0;
+    color: var(--rust); border: 1px dashed var(--rule);
+  }
+  .pick b { color: var(--rust); font-weight: 700; }
+
   /* Ownership chip for the equipment and quest tables — says which character
      an item ends up on. Never leave a unique item unassigned. */
   .who {

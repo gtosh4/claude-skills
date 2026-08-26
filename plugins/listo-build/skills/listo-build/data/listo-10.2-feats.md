@@ -80,6 +80,182 @@ Consequences for build math:
 
 ---
 
+## Build-selection priorities — use this during creation and every respec
+
+This is the recommendation layer for the mechanical catalogue below. **Do not fill seven feat
+slots from a fixed tier list.** At every creation/respec rung, first price the feat against a
+class level or dip that supplies the same proficiency, then against a half-feat that completes an
+odd score, and finally against the other feats in its build-specific package. A temporary Act I
+feat is valid: Withers lets the ladder replace it when the chassis or equipment solves its job.
+
+The audit covers every selectable family documented below and is calibrated for this skill's
+two-person Lone Wolf run: two Actions, Bonus Actions, and Reactions per character; expensive long
+rests; seven feats; and no spare body to rescue a downed character. The strongest candidates are:
+
+| Priority | Feat | Why the builder must test it |
+|---|---|---|
+| **Default first comparison** | **Skeleton Crew** | A free, scaling third body at the start of **every combat**, with no action, slot, concentration, or rest cost. This is the only near-universal pick and the best direct repair for duo action economy. Reject it only for a deliberate no-summons concept or if its random body is operationally unacceptable. |
+| **Default defensive comparison** | **Resilient (Wisdom or Constitution first)** | Repeatable half-feat, uncapped by Feats Overhaul, and the only feat that adds a save proficiency. In a duo, a failed Hold/Fear save can remove half the party; concentration builds also price Constitution. Never choose it before checking the level-1 class and Lone Wolf save grants for duplication. |
+| **Default endurance comparison** | **Durable** | +1 CON, full healing on every short rest, and in-combat regeneration below 60%. It converts the cheap clock into effective HP and is particularly strong early, before healing and camp supplies stabilize. |
+| **Weapon-build benchmark** | **Weapon Master** | +1 STR/DEX, all weapon proficiencies, a fighting style, and always-on extra weapon damage scaling to +3. This unusually dense package is the baseline that Fighting Initiate, Martial Adept, and a proficiency dip must beat. Do not take it merely for proficiency if the chassis already grants every weapon actually used. |
+| **Melee damage benchmark** | **Savage Attacker** | Price it from the **entire eligible melee/unarmed damage packet**, not the weapon die. It becomes premier on smites, melee Sneak Attack, Manoeuvres, Flourishes, coatings, and item-rider stacks; it is modest on mostly-flat or independent damage. |
+| **Shield benchmark** | **Shield Master** | Passive Evasion, +2 DEX saves, flat damage reduction, and a bonus-action Shield Blow. It is exceptionally dense for a shield user and uses Lone Wolf's spare bonus action without consuming a reaction. Do not duplicate Rogue Evasion. |
+| **Spell-attack benchmark** | **Spell Sniper** | Stacking spell critical threshold reduction, no low-ground penalty, a cantrip, and damage-die advantage on attack-roll spells (first hit only on multi-hit spells). Particularly strong for crit-supported Eldritch Blast/ray builds; not a default for save-based casters. |
+| **Melee-caster benchmark** | **War Magic** | A full basic/weapon-action attack as a bonus action after casting from level 5. This is one of the largest repeatable action-economy gains for casters without Extra Attack; carefully compare it on War Cleric, and reject it for Eldritch Knight, Booming Blade plans, or another non-stacking bonus-action grant. |
+| **Short-rest caster benchmark** | **Fey Touched** / **Shadow Touched** | A half-feat plus two slot-free casts **per short rest**. Misty Step is the generally useful mobility winner; Invisibility and a level 1/2 illusion or necromancy spell can be stronger for scouting or a specific spell package. Respect the Essential Feats cap caveat. |
+| **Skill/face benchmark** | **Actor**, **Dungeon Delver**, or **Skilled Expert** | Actor is four face expertises plus CHA; Dungeon Delver is two high-value expertises, trap defence, and DEX/WIS; Skilled Expert fills any one proficiency/expertise/stat hole. Two characters must cover the campaign, so explicitly compare one of these when the level-1 map misses a gate. |
+
+### Strong packages, not automatic picks
+
+- **Heavy Armour Master + a level-1 heavy-armour source** is a premier anchor package: a
+  STR/CON half-feat and reduction of every damage instance by PB (cap 5). Taking **Heavily
+  Armoured** first makes it a two-feat package, so always compare a Fighter or Paragon start.
+- **Mage Slayer** is broad spell-save advantage plus PB spell-damage reduction, not merely an
+  anti-concentration reaction. It is a top defensive choice when encounter/caster pressure is
+  the problem; **Tough** is the generic alternative (+1 CON, +2 CON saves, +2 HP/level).
+- **Duellist** is exceptional accuracy (PB), crit range, and +1 DEX for a finesse one-hander,
+  but the empty off-hand costs a shield. Treat it as a complete offensive style, not a free
+  half-feat. **Deadly Alacrity** can extend the crit package but lost its +1 in Listo.
+- **Great Weapon Master** remains good because the crit/kill bonus attack is untouched even when
+  All In is unattractive. **Polearm Master + Sentinel** is the control/reaction package; Lone
+  Wolf's extra reaction raises its ceiling. Verify weapon overlap before adding Shillelagh.
+- **Dual Wielder** is a full package here: non-Light dual wielding, +1 AC, and Two-Weapon Fighting
+  Style. It becomes much stronger when the build has two worthwhile weapon riders and enough
+  bonus actions; it is not automatically better than a shield.
+- **Medium Armour Master** is a strong half-feat on an existing medium-armour chassis: +1 AC,
+  no Stealth disadvantage, and PB temporary HP every combat. The familiar vanilla 18-DEX plan is
+  gone, so value these actual grants instead. **Light Armor Master** and **Mobile** are the more
+  aggressive mobility packages; both can impose disadvantage on opportunity attacks, while
+  Light Armor Master also completes STR/DEX and Mobile cannot be slowed.
+- **Bow Expert** is an excellent DEX half-feat for bow/crossbow users who exploit special arrows
+  or fight at close range. **Sharpshooter** is a terrain/accuracy tool first and a toggleable
+  damage feat second; price Listo's PB-scaled penalty rather than vanilla −5/+10 lore.
+- **Martial Adept** is two short-rest dice, two Manoeuvres, and +1 STR/DEX. This is efficient on
+  a martial that needs control/burst and can exploit attached dice, but Weapon Master is the
+  competing always-on package.
+- **Battle Medic** can preserve an Action after weapon attacks and is a high-value rescue tool in
+  a duo. Take it only when the build actually attacks and owns useful healing spells.
+- **Telekinetic**, **Dirty Fighting**, **Charger**, and **Thief's Apprentice** turn spare bonus
+  actions or movement into repeatable control/tempo. Lone Wolf makes that resource abundant, but
+  non-stacking bonus-action grants and an already-crowded hotbar can erase their value.
+- **War Caster** is the clean concentration half-feat; compare it directly with Resilient CON.
+  Advantage is usually better at low DC, proficiency scales, and only Resilient grants the save
+  proficiency. Opportunity Spell matters only when the build can trigger and exploit it.
+- **Elemental Adept** is strong for a build committed to one elemental type because ignoring
+  resistance preserves its engine. **Poison Adept** needs its equipment passive to downgrade
+  immunity and is therefore a gear package, not a standalone general recommendation.
+- **Ritual Caster** is an unusually broad utility half-feat in the Listo patch and has small
+  short-rest slot recovery. **Magic Initiate** is better when its cantrips and one added slot are
+  specifically part of the engine. Neither should be chosen as vague “more spells.”
+- **Meta Magic Adept** (3 points, 2 options) and repeatable **Eldritch Adept** can import a
+  build-defining class tool without a dip. Compare the small resource pool or invocation against
+  what 2–3 class levels return; do not assume the feat automatically wins because dips are cheap
+  in feat cadence.
+- **Enweaved** is the fastest one-feat route to 22 casting ability, but it deliberately adds two
+  wild-magic liabilities in a list with expanded surges. Offer it as a high-variance player
+  choice, never silently optimize into it. **Arcane Chaos** belongs only on a sorcery-point/wild
+  surge plan where the guaranteed surge and instability reset are desired.
+- **Alert** is still the anti-ambush/initiative pick, but here it is PB rather than +5 on a d10
+  initiative die. Value Surprise immunity and Perception; do not copy vanilla “always first feat”
+  advice.
+
+### Contextual picks and common opportunity costs
+
+These are not forbidden; they need a named reason that beats the packages above.
+
+| Use only when this exact job exists | Feats |
+|---|---|
+| Complete an odd score or buy a physical perk that the chassis can exploit | **Athlete**, **Mobile**, **Light Armor Master**, **Medium Armour Master** |
+| Buy missing armour/shields without a better level-1 start | **Lightly Armoured**, **Moderately Armoured**, **Heavily Armoured** |
+| Add a narrow spell/defence package | **Heaven Touched**, **Hell Touched**, **Nimble Fingers**, **Lucky** |
+| Add skill/economy breadth after checking overlap | **Skilled**, **Performer**, **Alchemist**, **Thief's Apprentice** |
+| Add a fighting style when Weapon Master or a dip is wasteful | **Fighting Initiate** |
+| Solve a specific movement/control plan | **Mobile**, **Light Armor Master**, **Muscular**, **Dirty Fighting**, **Telekinetic**, **Charger** |
+
+**Usually dominated without a special interaction:** plain **ASI** after the primary reaches 20
+(it cannot cross 20), **Lightly Armoured** merely as a prerequisite for shields, **Muscular**
+when Athletics advantage is the whole grant, and **Lucky** when the run cannot afford frequent
+long rests. **Tavern Brawler is not the vanilla autopick**: it lost the half-feat and grants only
+PB−1 to unarmed/thrown attack and damage. It can still be correct, but the build must show that
+math beating Savage Attacker, Weapon Master, or another half-feat at the rung where it is taken.
+
+### Respec checklist
+
+At each planned respec, record these checks in the working notes (the finished sheet needs only
+the resulting picks):
+
+1. Remove any feat whose proficiency, Expertise, movement, or save is now duplicated by the new
+   level-1 class, race, subclass, equipment, or partner coverage.
+2. Recompute the ability spread around the selected half-feats; do not preserve an odd score from
+   the previous cut, and do not use plain ASI to plan above 20.
+3. Re-price **Skeleton Crew**, the relevant damage benchmark (**Weapon Master**, **Savage
+   Attacker**, **Spell Sniper**, or **War Magic**), one endurance feat, and missing Wisdom/CON save
+   coverage even if the prior version omitted them.
+4. Check clocks and action collisions: long-rest feats in the supply budget; bonus-action and
+   reaction feats against both Lone Wolf actions; non-stacking grants called out below.
+5. Name why every contextual feat survives. “Good feat” is insufficient; state the interaction,
+   missing proficiency, stat breakpoint, or act-specific problem it solves.
+
+---
+
+## Half-feat index
+
+For this reference, **half-feat** means any feat that also increases an ability score. This
+includes `Enweaved` even though it grants +2 rather than the usual +1. The table is the complete
+shipped roster: **35 feat families / 40 selectable entries** when the six Magic Initiate variants
+are counted separately. Ability choices were swept from the installed feat selectors and passive
+boosts in `FeatsOverhaul.pak`, `FeatsOverhaul_ListoPatch.pak`, `Essential_Feats.pak`,
+`Enweaved.pak`, and the Dirty Fighting pak.
+
+| Feat | Ability increase | Source / important qualification |
+|---|---|---|
+| **Actor** | +1 CHA | Feats Overhaul |
+| **Alchemist** | +1 CON, INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Athlete** | +1 STR or DEX | Feats Overhaul |
+| **Bow Expert** (renamed Crossbow Expert) | +1 DEX | Feats Overhaul |
+| **Dirty Fighting** | +1 STR or DEX | Standalone |
+| **Duellist** (renamed Defensive Duellist) | +1 DEX | Feats Overhaul |
+| **Dungeon Delver** | +1 DEX or WIS | Feats Overhaul |
+| **Durable** | +1 CON | Feats Overhaul |
+| **Eldritch Adept** | +1 INT, WIS, or CHA | Essential Feats; repeatable; subject to its cap caveat above |
+| **Elemental Adept** | +1 INT, WIS, or CHA | Feats Overhaul; each element uses the same ability selector |
+| **Enweaved** | **+2 INT, WIS, or CHA** | Standalone; explicit cap of 22 |
+| **Fey Touched** | +1 INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Fighting Initiate** | +1 STR or DEX | Essential Feats; subject to its cap caveat above |
+| **Heaven Touched** | +1 INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Heavily Armoured** | +1 STR or CON | Feats Overhaul; requires medium-armour proficiency |
+| **Heavy Armour Master** | +1 STR or CON | Feats Overhaul; requires heavy-armour proficiency |
+| **Hell Touched** | +1 INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Light Armor Master** | +1 STR or DEX | Essential Feats; subject to its cap caveat above |
+| **Lightly Armoured** | +1 STR or DEX | Feats Overhaul |
+| **Magic Initiate: Bard** | +1 CHA | Feats Overhaul |
+| **Magic Initiate: Cleric** | +1 WIS | Feats Overhaul |
+| **Magic Initiate: Druid** | +1 WIS | Feats Overhaul |
+| **Magic Initiate: Sorcerer** | +1 CHA | Feats Overhaul |
+| **Magic Initiate: Warlock** | +1 CHA | Feats Overhaul |
+| **Magic Initiate: Wizard** | +1 INT | Feats Overhaul |
+| **Martial Adept** | +1 STR or DEX | Feats Overhaul |
+| **Medium Armour Master** | +1 STR or DEX | Feats Overhaul; requires medium-armour proficiency |
+| **Meta Magic Adept** | +1 INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Moderately Armoured** | +1 STR or DEX | Feats Overhaul; requires light-armour proficiency |
+| **Nimble Fingers** | +1 DEX | Essential Feats; subject to its cap caveat above |
+| **Performer** | +1 DEX or CHA | Feats Overhaul |
+| **Resilient** | +1 to any ability | Feats Overhaul; repeatable for different abilities |
+| **Ritual Caster** | +1 INT, WIS, or CHA | Feats Overhaul |
+| **Shadow Touched** | +1 INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Skilled** | +1 to any ability | Feats Overhaul |
+| **Skilled Expert** | +1 to any ability | Essential Feats; subject to its cap caveat above |
+| **Telekinetic** | +1 INT, WIS, or CHA | Essential Feats; subject to its cap caveat above |
+| **Tough** | +1 CON | Feats Overhaul |
+| **War Caster** | +1 INT, WIS, or CHA | Listo patch selects the 2024 version |
+| **Weapon Master** | +1 STR or DEX | Feats Overhaul |
+
+**Not half-feats in the shipped setup:** `Deadly Alacrity` has its +1 removed by the Listo
+patch, and `Tavern Brawler` has its +1 STR/CON removed by Feats Overhaul. Plain `ASI` is omitted
+because increasing abilities is its entire grant rather than an additional half-feat benefit.
+
+---
+
 ## Listo-specific patches to feats
 
 `Feats Overhaul` ships with a **`FeatsOverhaul_ListoPatch`** archive (v1.1.3), confirmed
@@ -369,9 +545,30 @@ Base-mod features that remain relevant:
 > premise.
 
 ### Savage Attacker
-No changes in Feats Overhaul. Separately, `Add Unarmed Attacks to Savage Attacker and Savage
-Attacks` (`2473`) extends the damage rerolls to **unarmed attacks**, and adds unarmed to the
-Half-Orc **Savage Attacks** trait.
+The installed passive remains `Reroll(MeleeWeaponDamage,20,false)`: on every qualifying melee
+attack, **each eligible damage die is rolled twice independently and keeps the higher result**.
+This is not limited to the weapon's printed die. It also covers dice attached to that attack by:
+
+- **items and weapon effects** — elemental weapon dice, dips/coatings, and dice-based equipment
+  riders;
+- **spells** — when their dice are added to the melee hit, most importantly smites; and
+- **class features** — melee **Sneak Attack**, Battle Master Manoeuvres, and Blade Flourishes.
+
+Flat damage bonuses have no die to reroll. An independent spell damage roll, separate explosion or
+save, surface, condition, and later damage tick is not part of the melee packet merely because the
+weapon hit caused it. Thrown weapons are a special case: Savage Attacker can affect the base
+thrown-weapon damage die, but not added riders such as Ring of Flinging.
+
+> **Build consequence — count the whole packet.** Savage Attacker gains value with every die
+> stacked onto each hit, so it is a major damage feat for smiters, melee Rogues, manoeuvre/Flourish
+> users, and item-rider builds. Comparing it only against the base weapon die badly undervalues it;
+> compare its expected gain from all eligible dice in the routine attack against the competing
+> feat's gain, act by act.
+
+Separately, `Add Unarmed Attacks to Savage Attacker and Savage Attacks` (`2473`) extends these
+damage rerolls to **unarmed attacks**, and adds unarmed attacks to the Half-Orc **Savage Attacks**
+trait. Do not confuse the feat (reroll every eligible die) with the racial trait (add a weapon die
+on a critical hit).
 
 ### Sentinel
 Three components — **only Vengeance was changed**:
@@ -451,7 +648,7 @@ what supplies the 2024/2014 split; the 2024 version gives **+1 ability score**, 
 version allows Polearm Master and Echo Knight interactions.
 
 ### Weapon Master
-Proficiency in **all weapons** (vanilla: 4 of your choice). Pick a fighting style from
+**+1 Strength or Dexterity.** Proficiency in **all weapons** (vanilla: 4 of your choice). Pick a fighting style from
 Archery, Duelling, Great Weapon Fighting, Two-Weapon Fighting — **plus the UA styles**, since
 `UA Fighting Styles` is in the list. Deals extra weapon damage equal to **half Proficiency
 Bonus rounded down** (+1 at level 1, +2 at 9, +3 at 17).

@@ -282,8 +282,22 @@ Source keeps the full granularity. Presentation collapses it so a radar stays re
 | **Tables** | may expose all ten |
 | **Idle-body flag** | computed on the uncollapsed values, so it now catches "no answer to crowds" on the **control** side as well as the damage side |
 
-Every spoke plots **percent of that axis's achievable maximum**, so all nine are visually
-commensurable despite personal capping at 5 and complementary at 7.
+**Every spoke plots percent of PARITY, not percent of the ceiling.** `KIND_MAX` is a
+theoretical sum — two maxed bodies — and nothing is measured against it, so a polygon drawn on
+it cannot say whether the pair is keeping up. `scoring.py`'s `NEED` is the demand line instead:
+
+| axis kind | parity | derivation |
+|---|---:|---|
+| additive (`st`, `aoe`) | **8** | §1's par is one *reference body* and rung 2 is par, so throughput is counted in par bodies. The baseline party is priced at **four actions of ordinary, un-Lone-Wolfed play** — five seats at one Action each, with none of a planned duo's optimisation pressure, is not five par bodies. `4 × 2 = 8`. |
+| complementary (`act`, `ctrl_s`, `ctrl_a`, `rsc`) | **5** | coverage does not scale with party size. That party fields one healer and a backup, and §5a puts "covers this axis alone" at rung 4: `4 + ⌊2/2⌋ = 5`. |
+| personal (`dur`, `sav`, `end`) | **4** | cannot be delegated, so each body must reach 4 itself. The operator is already a min. |
+| shared (`skl`) | **4** | saturates at the first real source. |
+
+All three series — A, B and pair — use it, so they are commensurable on every spoke and the
+pair polygon lands outside the bodies wherever the operator actually adds. Values past parity
+**clip to the outer ring**, which is the intended reading: past what the encounters demand,
+more is surplus, and surplus belongs in prose. `NEED` is display-only — no operator, block or
+score reads it.
 
 **Order within a pairing is presentation, not model.** A pair score is symmetric, so which body
 is "first" would otherwise fall out of whatever order the caller iterated in, and the same duo

@@ -33861,15 +33861,223 @@
     }
    },
    "address": "wizard/War Magic:reaction"
+  },
+  "Stormglass": {
+   "split": "Fighter 3 (Champion) / Warlock 3 (The Great Old One) / Druid 3 (Circle of Stormchasers) / Ranger 11 (Snowlight Conclave)",
+   "reach": "ranged",
+   "concentration": false,
+   "saves": {
+    "I": {
+     "prof": [
+      "str",
+      "dex",
+      "wis",
+      "cha"
+     ],
+     "boosters": []
+    },
+    "II": {
+     "prof": [
+      "str",
+      "con",
+      "wis",
+      "cha"
+     ],
+     "boosters": []
+    },
+    "III": {
+     "prof": [
+      "str",
+      "con",
+      "wis",
+      "cha"
+     ],
+     "boosters": [
+      "war-caster"
+     ]
+    }
+   },
+   "types": [
+    "cold",
+    "radiant"
+   ],
+   "scores": {
+    "I": [
+     null,
+     null,
+     3,
+     2,
+     4,
+     3,
+     2,
+     3,
+     null,
+     4
+    ],
+    "II": [
+     null,
+     null,
+     4,
+     3,
+     4,
+     4,
+     2,
+     3,
+     null,
+     4
+    ],
+    "III": [
+     null,
+     null,
+     4,
+     3,
+     4,
+     4,
+     2,
+     3,
+     null,
+     4
+    ]
+   },
+   "damage": {
+    "I": {
+     "actions": {
+      "attacks": 0,
+      "spells": 0,
+      "filler": 8
+     },
+     "pools": [
+      {
+       "name": "pact slots",
+       "refresh": "short",
+       "size": 2,
+       "spent": 0,
+       "underspend_reason": "The pact slots are this body's control, Armour of Agathys and utility budget, not its damage; the damage engine is the at-will Hellrime volley and needs no slot."
+      }
+     ],
+     "slots": {
+      "caster_level": 2,
+      "pool": 4,
+      "to_damage": 0.0
+     },
+     "st_raw": 62.0,
+     "aoe_raw": 52.0,
+     "st_instances": 4.0,
+     "aoe_instances": 4.0
+    },
+    "II": {
+     "actions": {
+      "attacks": 0,
+      "spells": 0,
+      "filler": 8
+     },
+     "pools": [
+      {
+       "name": "pact slots",
+       "refresh": "short",
+       "size": 2,
+       "spent": 0,
+       "underspend_reason": "The pact slots are this body's control, Armour of Agathys and utility budget, not its damage; the damage engine is the at-will Hellrime volley and needs no slot."
+      }
+     ],
+     "slots": {
+      "caster_level": 3,
+      "pool": 8,
+      "to_damage": 0.0
+     },
+     "st_raw": 99.0,
+     "aoe_raw": 83.0,
+     "st_instances": 6.0,
+     "aoe_instances": 6.0
+    },
+    "III": {
+     "actions": {
+      "attacks": 0,
+      "spells": 0,
+      "filler": 8
+     },
+     "pools": [
+      {
+       "name": "pact slots",
+       "refresh": "short",
+       "size": 2,
+       "spent": 0,
+       "underspend_reason": "The pact slots are this body's control, Armour of Agathys and utility budget, not its damage; the damage engine is the at-will Hellrime volley and needs no slot."
+      }
+     ],
+     "slots": {
+      "caster_level": 3,
+      "pool": 10,
+      "to_damage": 0.0
+     },
+     "st_raw": 132.0,
+     "aoe_raw": 110.7,
+     "st_instances": 8.0,
+     "aoe_instances": 8.0
+    }
+   },
+   "note": "Fighter, Warlock and Druid stop at exactly three each so that Ranger is the last class introduced and the passive-granted Hellrime Blast casts off Wisdom: Elemental Blast supplies the beams, Agonizing Blast adds Charisma to every one and Stormchasers' Storm Shift adds Wisdom to every one on top. What it gives up is Snowborn Anthelion at Ranger 15 - the area blind - in exchange for Storm Shift, Mortal Reminder and Action Surge.",
+   "strength": "The whole engine is at-will and holds no concentration: eight Cold beams a round off the two Lone Wolf Actions, a Constitution save for Blind on each of them, and a Wisdom-save area Fear off an 18-20 critical range. Nothing in it is spent against a long rest costing 120+ supplies, and the pair's two concentration slots both stay free for the other body - control that costs no slot is strictly additional where the partner's is substitutional.",
+   "wants": "Investigation and outward rescue that scales into Act III - this body rolls Investigation at -1 in every act and its rescue stops at Revivify - plus a Dexterity-save answer, since its own disjoint four covers Strength, Constitution, Wisdom and Charisma and leaves Dexterity uncovered from the Act II respec onward.",
+   "uncertain": [
+    "The engine rests on two unresolved in-game checks. Generic/passive-granted spells use the casting ability of the most recently introduced class, so Fighter -> Warlock -> Druid -> Ranger should make Hellrime roll PB + Wisdom; and each beam is a separate projectile and damage event, so Glaring Frost should force one Constitution save per beam. If the second fails and the save fires once per cast, ctrl_s falls to 3 in every act.",
+    "No advantage multiplier is applied anywhere in the damage rows. Glaring Frost's Blind does grant Advantage against the target, but whether a Blind landed by an early beam applies to later beams of the same cast is untested, so the x1.35 is withheld as situational rather than routine. Applying it to Act III would read 1.97x par on st - rung 5 rather than 4 - which is the single largest piece of uncertainty in this record.",
+    "aoe_raw carries the attack-roll-versus-save-for-half factor 0.65/0.775, because par on that axis is a Fireball and this body resolves its area mode with attack rolls. The gear constant is added unscaled by the renderer while par's own k sits inside its 0.775, so the area rows are marginally generous; the correction does not move any rung.",
+    "Hellrime is scored at 1d8 per beam, not the 1d10 in Projectile_HellrimeBlast, because Listo's Eldritch Blast-alike rebalance governs the inherited variant. Beams arrive at character 5/10/17, so this body fires 2/3/4 a cast by act, and both Charisma (Agonizing Blast) and Wisdom (Storm Shift) ride every one.",
+    "Elemental Adept (Cold) is what exempts this body from rule 4's 0.5 multiplier on a single commonly-resisted type; Snow Blindness' Radiant tick is the second type. Cold immunity still beats Elemental Adept, and the only downgrade for it is Stormchasers 10, which this split cannot reach.",
+    "The feat budget is six, not seven: 3+3+3+11 gives floor(3/3)x3 + floor(11/3) = 6 and no class reaches 13. Both Act I feats go to Elemental Adept and Dungeon Delver purely to reach Wisdom 22, which means Act I has no Spell Sniper and crits only on a natural 20 - that, not beam count, is why ctrl_a sits at 3 there and 4 from Act II.",
+    "Dungeon Delver, Actor and Performer are read as granting Expertise outright under Feats Overhaul, which is what carries Perception to 12/14/16 and Persuasion to 4/13/15. If they grant bare proficiency instead, Perception falls to 9/10/11 and the Act I skl rung falls to 2. Investigation is -1 in all three acts on Intelligence 8 and is what caps skl at 3 regardless.",
+    "Durability is derived at AC 19 in Act I (half plate, shield, Defence style, Dexterity 12) and AC 21 from Act II (plate, shield, Defence), with the pool carrying Storm Shift's temporary hit points, Second Wind and Armour of Agathys. That gives eHP ratios of roughly 1.49 / 2.02 / 1.86 - rung 3 then 4 twice. Act III sits comfortably inside the band; Act I does not, and one point of AC either way moves it.",
+    "Rescue is held at 2 in Act III rather than falling to 1: Ranger 11 reaches Revivify and Druid 3 reaches Lesser Restoration, which is more than the rubric's Act III rung-1 line of a bare Cure Wounds, but well short of its rung-3 line of ninth-tier restoration.",
+    "war-caster is recorded in the Act III saves block because the feat is genuinely taken, but this chassis is concentration:false and the id is registered as concentration-only, so it contributes nothing to the derived rung. It is listed for the record, not for the number.",
+    "The damage rows use the resource-free two-Action Hellrime routine only. Hex, Wet from Create or Destroy Water, Action Surge and every named item are excluded - Action Surge because it is scored under act, Wet because this body cannot establish it without consuming one of the Actions being measured."
+   ],
+   "meta": "Wis 22 · Cha 20 · 6 feats",
+   "skills": {
+    "I": {
+     "Perception": 12,
+     "Investigation": -1,
+     "Persuasion": 4,
+     "Deception": 4,
+     "Intimidation": 4,
+     "Sleight of Hand": 7,
+     "Acrobatics": 1,
+     "Medicine": 6,
+     "Athletics": -1
+    },
+    "II": {
+     "Perception": 14,
+     "Investigation": -1,
+     "Persuasion": 13,
+     "Deception": 13,
+     "Intimidation": 13,
+     "Sleight of Hand": 9,
+     "Acrobatics": 9,
+     "Medicine": 6,
+     "Athletics": -1
+    },
+    "III": {
+     "Perception": 16,
+     "Investigation": -1,
+     "Persuasion": 15,
+     "Deception": 15,
+     "Intimidation": 15,
+     "Sleight of Hand": 11,
+     "Acrobatics": 11,
+     "Medicine": 6,
+     "Athletics": -1
+    }
+   },
+   "address": "ranger/Snowlight Conclave:short-rest"
   }
  },
- "title": "Listo Pairing Ledger",
+ "title": "Listo Pairing Ledger v7",
  "eyebrow": "Listonomicon 10.2 · two-player Lone Wolf · v7",
  "lede": "Which two bodies are worth building together. Every subclass in the modlist was swept, every split it can express was searched, and every promoted body was scored on ten axes across three acts — then paired with every other and ranked. The damage axes are not judgements: each carries the arithmetic it was derived from, so a re-based ladder re-derives the roster instead of stranding it.",
  "facts": [
-  "174 chassis",
+  "175 chassis",
   "150 subclasses swept",
-  "15,051 pairings ranked",
+  "15,225 pairings ranked",
   "level cap 20",
   "ten axes × three acts"
  ],
@@ -33974,6 +34182,65 @@
    "verdict": "The most direct answer to two players facing encounters tuned for five is to stop being two. Animate Dead++ removes the cap on how many undead this body holds and extends Undead Thralls' hit points and damage to all of them, Shepherd totems buff the result, and the set survives short rests and ordinary healing instead of being re-bought every long rest. Aria is the multiplier on the other side: one Action buys a whole fight of area lightning that degrades every caught enemy's Constitution save while sharpening the partner's crits, then cashes out as a mass stun, with Chorus of Thunder's Concussion as slot-free hard control underneath. Tempo carries the pairing, and this is the one entry here where the crowded side of the field is yours.",
    "cost": "Durability is a genuine hole — two robe casters, nothing that can interpose, and a wall of undead does not stop what simply walks through it. Neither body brings much aimed at the other: Thrall asks for a front line and a healer and gets neither, and both hold concentration, which is uncomfortable when one of them is holding a fight-long aria. They also draw on the same caster gear pool, though their damage types at least stay disjoint, which is the one thing Aria explicitly needed.",
    "vars": []
+  },
+  "Stormglass": {
+   "tag": "at-will cold blind engine + advantage-granting oathbreaker",
+   "verdict": "Two bodies that each multiply the other's attack rolls, and neither multiplier costs a spell slot. Spiteful Suffering is Advantage against the marked creature for <em>everyone</em>, off a Channel Oath charge a short rest refunds — and Stormglass throws eight separate attack rolls a round into that mark, so one charge is bought once and collected eight times. Going the other way, Glaring Frost turns every landed beam into a Constitution save, and a blinded enemy hands Spitegrave's melee the same Advantage while swinging back at Disadvantage. The pair reads st 8 and aoe 6 by Act III on a tempo block of 83%, and it carries five damage types between them — the widest spread anywhere in the top ten, which matters precisely because every point of Spitegrave's smite damage is Necrotic and Act II is the act that resists it.",
+   "cost": "Rescue is the thin block and it gets thinner: 4 / 4 / 3, because Stormglass's outward kit stops at Revivify and Spitegrave's own falls a rung in Act III. Neither body is a real answer to a downed partner in the last act, and Lone Wolf means a downed partner is half the party. Skills sit at 3 in all three acts — both bodies roll Investigation untrained, which is the one recurring check nothing here covers. And the pair's control ceiling is a save, not a lock: Stormglass's Blind attacks Constitution, the ability ordinary enemies are best at, and the whole engine still rests on Glaring Frost firing once per beam rather than once per cast.",
+   "vars": [
+    {
+     "partner": "Silverward",
+     "note": "Trades the Advantage engine for three stacked mitigation layers — the most survivable body in the roster asking for exactly the damage this one supplies."
+    },
+    {
+     "partner": "Whiteout",
+     "note": "The other Snowlight body. Two blind engines is redundant rather than additive, and it costs the pair its Necrotic and Lightning coverage."
+    }
+   ]
+  },
+  "Silverward": {
+   "tag": "moonlight mitigation stack + at-will cold blind engine",
+   "verdict": "Silverward is the most survivable chassis in the roster — durability 5 in every act — and its stated ask is simply <em>damage</em>, because it removes enemy action points at close to par and cannot end fights. Stormglass is the answer with the fewest strings attached: it needs no concentration slot, no levelled slot and no positioning, so nothing it does competes with Aura of Moonlight's flat reduction on every hit either character takes, Divine Guardian halving everything landing on the <em>other</em> body, or Twilight Sanctuary topping both up every round. All three of those reload on a short rest, which is the same clock Action Surge and the pact slots run on. Resilience climbs 0.78 → 0.82 → 0.83, the highest of the top three, and the crowd side Silverward is flagged for goes from pair aoe 3 to 7.",
+   "cost": "Tempo at 75% in Act III is the lowest of the three Stormglass entries, and the shape of that is one body doing nearly all the killing. Every piece of hard control in the pairing is Silverward's, spent out of the one concentration slot it holds — Stormglass adds volume of Blind attempts rather than a lock, and those attempts attack Constitution. Skills stay at 3 throughout with Investigation untrained on both sheets. Both bodies also want Charisma gear and a Charisma-facing dialogue role, which is duplicated rather than complementary even where the model's contention term does not charge for it.",
+   "vars": [
+    {
+     "partner": "Lectern",
+     "note": "The reaction engine instead of the beam engine: steadier and better rested, but area damage becomes a declared hole."
+    }
+   ]
+  },
+  "Moonpact": {
+   "tag": "short-rest paladin + short-rest beam engine",
+   "verdict": "The purest short-rest pairing in the ledger, against a run where a long rest costs 120+ supplies. Almost every line on both sheets reloads twice a cycle: three Channel Oath options, two third-level pact slots, Second Wind and Divine Sense on one side; Action Surge, pact slots and an entirely at-will damage engine on the other. It is also the only entry in the twelve where <b>both</b> bodies are non-concentration, so the pair's two slots are genuinely spare rather than spoken for — every point of control here costs nothing that anything else wanted. Moonpact asks for skills and a concentration holder; Stormglass supplies the first and makes the second question moot.",
+   "cost": "The two bodies overlap where a duo can least afford abstraction: they share Fighter and Warlock levels, and Moonpact's Eldritch Blast and Stormglass's Hellrime are the same spell wearing different riders. More concretely, Moonpact is flagged on the crowd side and Stormglass's area mode is beam-splitting, so the pairing has no burst area damage at all — every crowd answer it owns is at-will and resolves one target at a time, which is slower than it looks against Listo's added bodies. Rescue plateaus at 5 from Act I and never improves, and skills hold at 3 with Investigation untrained on both.",
+   "vars": [
+    {
+     "partner": "Wardkeep",
+     "note": "The next-best partner is five and a half points down; this chassis is unusually dependent on the pairing it gets."
+    }
+   ]
+  },
+  "Duelbrand": {
+   "tag": "swashbuckler face + single-stat vengeance paladin",
+   "verdict": "The only pairing in the twelve at a perfect utility block, 1.0 in all three acts, and the arithmetic behind that is two separate holes being closed at once. Rakish Audacity lets Sneak Attack land without a second melee body to flank with — the exact structural hole a two-character party has — while Dirty Tricks put the face role on the same body that fights, so skills read 5 in every act. Vow of Enmity is ten turns of Advantage off a Channel Oath charge a short rest refunds, which is routine rather than an opener and is the highest single-target ratio in the Paladin set. Saves sit at 5 throughout: four disjoint proficiencies on both sheets, with an aura over the top.",
+   "cost": "Area damage is a declared hole — pair aoe 1 / 1 / 4 — and it stays a hole through the act where Listo adds the most bodies. Duelbrand is also the most front-loaded chassis in the roster: Swashbuckler receives nothing from Rogue 13 to 20, its single-target control falls a rung by Act III with nothing about it having changed, and the pairing's tempo block only reaches 62%. Both bodies want Charisma and the same Dexterity-facing kit, which the contention term does charge for here.",
+   "vars": [
+    {
+     "partner": "Stormglass",
+     "note": "Duelbrand's genuine best partner, and the crowd answer this pairing lacks — it lands here only because Stormglass is claimed higher up the table."
+    }
+   ]
+  },
+  "Hybrid": {
+   "tag": "lycan unarmed engine + moonlight mitigation stack",
+   "verdict": "Two proportional mitigation layers stacked on one another, which is the multiplication Lone Wolf rewards and inflated enemy damage cannot wash out. Resilient Hide's resistance to non-magical physical multiplies with Lone Wolf's halving rather than being outrun by it; Aura of Moonlight's flat reduction and Divine Guardian's halving sit on top of that, and Twilight Sanctuary refills both bodies every round off a charge the short rest refunds. The resilience block reads 0.84 / 0.87 / 0.87, the highest anywhere in the twelve, and saves are 5 in every act. Hybrid's stated ask is a body that can pick it up; Silverward is the roster's clearest answer to that sentence.",
+   "cost": "This is the worst crowd coverage in the table: area damage is a hole at 0 / 2 / 3, Silverward is separately flagged on the crowd side, and tempo tops out at 55%. A fight that arrives as six bodies rather than one is where this pairing simply loses. There is also a duo-specific hazard the numbers do not carry: Bloodlust turns a Lycan below half hit points on the nearest creature, and in a party of two the nearest creature is the partner you just spent three mitigation layers keeping upright.",
+   "vars": [
+    {
+     "partner": "Stormglass",
+     "note": "Hybrid's best partner on raw score, and it closes the crowd hole outright rather than mitigating it."
+    }
+   ]
   }
  },
  "method": {

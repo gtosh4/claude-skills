@@ -305,13 +305,22 @@ Eleven circles: four vanilla (Land, Moon, Spores, Stars), seven modded.
   (a bonus 2nd-level spell the mod adds: 3d6 Cold in a 1.5m sphere, DEX save for half, +1d6 per slot
   above 2nd); **5**: Sleet Storm, Slow; **7**: Fire Shield, Ice Storm; **9**: Cone of Cold, Hold
   Monster. **Level 2 Winter Spirit:** an **Action**, spend a Wild Shape charge — **5 temp HP per Druid
-  level**, **add your WIS modifier as bonus Cold damage to every damage-dealing Druid cantrip or
-  spell** (not just cold ones), and **+1d6 Cold on melee weapon attacks**. Lasts until Long Rest, until
-  the temp HP runs out, or until you Wild Shape again. **Level 6:** Bonus Action each turn while
-  Winter Spirit is up — CON save or −3m movement until end of its next turn; plus immunity to slipping
-  on ice. **Level 10:** creatures that fail a save against a Cold-damage Druid spell of yours fall
-  **Prone** (the Winter Spirit bonus damage does not count as such a spell). **Level 14:** **Immunity
-  to Cold**, and melee attackers take Cold damage equal to half your Druid level.
+  level**, **add your WIS modifier as bonus Cold damage to every damage-dealing cantrip or spell**
+  — not just cold ones, and **not just Druid ones**: the shipped boost is `IF((IsSpell() or
+  IsCantrip()) and HasDamageEffectFlag(DamageFlags.Hit)):DamageBonus(max(0, WisdomModifier),Cold,
+  Magical)`, which carries **no class predicate**, and the in-game description reads "a cantrip or a
+  spell" where the mod page says "Druid". **[pak]** Also **+1d6 Cold on weapon attacks**
+  (`CharacterWeaponDamage(1d6,Cold)` — the tooltip says *melee*, the boost has no melee predicate).
+  Lasts until Long Rest, until the temp HP runs out, or until you Wild Shape again. **Level 6:**
+  Bonus Action each turn while Winter Spirit is up — CON save or −3m movement until end of its
+  next turn; plus immunity to slipping on ice. **Level 10:** creatures that fail a **saving
+  throw** against Cold damage of yours fall **Prone** — `SlipperyMagic` likewise has no
+  Druid-spell predicate (`IsDamageTypeCold() and IsSavingThrow() and not
+  IsLastConditionRollSuccess(...)`), so attack-roll Cold such as Ray of Frost never triggers it.
+  **Level 12 — not 14 [pak]:** **Immunity to Cold**, and melee attackers take Cold damage equal to
+  half your Druid level (`ColdSoul`). The mod page says 14 and this file repeated it; the shipped
+  `CircleOfWinter` progression grants `ColdSoul` at level **12** and **ends there**, so Druid 13+
+  adds nothing further from this circle.
 - **Duo relevance:** the mod author explicitly flags the melee rider as a Shillelagh pairing, and it
   is the best of the three "spirit" circles for a caster who also swings: WIS added to *every* damage
   spell and +1d6 on every melee hit off one charge. Prone-on-failed-save at 10 is real crowd control

@@ -32,7 +32,10 @@ working comparison of eleven pairings.
    live URL is worse than no card.
 2. **Import the scores with `--scrape`**, pointing at the directory of rendered
    sheets. It reads the `data-a1…b3` attributes the sheets already carry and
-   writes them into the JSON. Do not re-type them.
+   writes them into the JSON. Do not re-type them. It fills **scores only** —
+   `saves`, `concentration`, `skills`, `types` and `meta` are authored by hand,
+   and four of those five degrade *silently* when missing rather than failing.
+   See `assets/finalists-schema.md`.
 3. **Lift the prose from each sheet** — its tagline and its two headline `<h2>`s.
    Rewriting them lets the card drift from the page it links to.
 4. **Render, then read the reorder.** The interesting output is not the ranking;
@@ -53,6 +56,34 @@ When a sheet disagrees with the ledger, the sheet is usually right and the
 
 Both are cases where building the thing exposed an arithmetic error that
 estimating it could not. Feed them back into the ledger's chassis scores.
+
+A third, from the five-chassis round: **an accuracy multiplier on the wrong
+tier.** A published sheet scored Spiteful Suffering at `1.35`, which
+`listo-build/assets/pair-schema.md` reserves for a *no-save, no-concentration*
+source. Spiteful Suffering is save-gated and belongs on tier 1 at `1.19` —
+alongside Snowlight's blind engine, which that file names as the exemplar. The
+chassis lost two rungs of single-target across Acts I–II. **Check every `mult`
+against the tier table before a sheet reaches this page**, because a comparison
+built on one is not comparing like with like.
+
+## Keep the adapter in step with the model
+
+`score(p)` in `render_finalists.py` is a hand-written bridge into
+`scoring.score_bodies`, and the model has grown fields the bridge did not.
+Three were found missing at once — `split`, `types`, `meta` — with the result
+that **every pairing scored as though nothing competed for gear**, and
+`skills` was missing with the result that **every card reported a Skills hole**.
+When `scoring.py` gains a field a body can carry, add it to the bridge and to
+`assets/finalists-schema.md` in the same pass. The failure mode is not an
+exception; it is a plausible number.
+
+The same drift reaches the *rendering*. Pair values are uncapped by kind —
+`KIND_MAX` puts additive at 10, complementary at 7, personal at 5 — and the
+matrix shaded them on a flat 0-5 ramp, so every cell above 5 fell through to a
+`.v6`-`.v10` class the stylesheet does not define and rendered as bare ink.
+`cell()` now normalises by `KIND_MAX`, which fixes the missing classes and the
+misreading at once: a personal 5 is *maxed* and an additive 5 is *half*, and
+they must not shade the same.
 
 ## Keep the spread
 

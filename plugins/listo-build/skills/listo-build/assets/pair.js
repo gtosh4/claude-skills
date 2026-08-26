@@ -8,6 +8,17 @@
      additive       a + b        (uncapped; max 10)
      complementary  hi + floor(lo / 2)  (uncapped; max 7)
      personal       min(a, b)    (max 5)
+     shared         max(a, b)    (max 5)
+
+   Every series — A, B and pair — plots against data-need, the parity line for that
+   axis (scoring.py NEED): four actions of ordinary un-Lone-Wolfed play. The rings therefore read as
+   20/40/60/80/100% of a five-stack, and the outer ring is "keeping up", not
+   "theoretical maximum". Values past parity clip, which is intended.
+
+   The radar also COLLAPSES spokes for legibility, per scoring-model.md s10:
+   data-collapse="1+0:Damage,5+4:Control" blends the crowd member (first index)
+   and the priority member (second) by the act's own fight mix. The table keeps
+   all ten rows — the collapse is presentation, never source.
 
    The pair value is NOT capped at 5 any more: capping made 5+4 and 5+0 read
    identically, which is the saturation that made a plain maximum wrong. Each
@@ -33,8 +44,15 @@
     var a = attr.split(",").map(function (n) { return parseFloat(n.trim()); });
     return a.every(function (n) { return isFinite(n); }) ? a : null;
   }
-  var KIND_MAX = { additive: 10, complementary: 7, personal: 5 };
+  var KIND_MAX = { additive: 10, complementary: 7, personal: 5, shared: 5 };
+  /* Fallback parity line per kind, used only if data-need is absent. The renderer emits
+     scoring.py's NEED: what the party Listo tunes for actually delivers — four actions of
+     ordinary, un-Lone-Wolfed play. See scoring.py "display calibration". */
+  var KIND_NEED = { additive: 8, complementary: 5, personal: 4, shared: 4 };
+  /* act fight mix (crowd, priority) — the same weights the damage table uses. */
+  var MIX = [[0.70, 0.30], [0.60, 0.40], [0.50, 0.50]];
   function kindMax(kind) { return KIND_MAX[kind] || MAX; }
+  function kindNeed(kind) { return KIND_NEED[kind] || MAX; }
   /* v is plotted as a fraction of `full`, scaled onto the 0..MAX grid. */
   function at(u, v, full) {
     full = full || MAX;
@@ -55,6 +73,8 @@
       return Math.max(a, b) + Math.floor(Math.min(a, b) / 2);
     }
     if (kind === "additive") return a + b;
+    /* shared: the pair rolls its better half, so the weaker one adds nothing. */
+    if (kind === "shared") return Math.max(a, b);
     throw new Error("unknown axis kind: " + kind);
   }
 
@@ -67,6 +87,18 @@
       .map(function (s) { return s.trim(); });
     var bands = (fig.getAttribute("data-bands") || "").split(",")
       .map(function (s) { return s.trim(); });
+    var need = nums(fig.getAttribute("data-need"));
+
+    /* Display collapse. Each group is "crowdIndex+priorityIndex:Label"; the two
+       members leave the chart and one blended spoke takes the crowd member's slot. */
+    var groups = (fig.getAttribute("data-collapse") || "").split(",")
+      .map(function (g) { return g.trim(); }).filter(Boolean)
+      .map(function (g) {
+        var bits = g.split(":"), ix = bits[0].split("+");
+        return { c: parseInt(ix[0], 10), p: parseInt(ix[1], 10), label: bits[1] || "" };
+      });
+    var folded = {};   /* axis index -> the group it belongs to, or null if it leads one */
+    groups.forEach(function (g) { folded[g.c] = g; folded[g.p] = null; });
 
     function set(prefix) {
       return [1, 2, 3].map(function (n) {
@@ -87,8 +119,31 @@
     });
     if (!acts.some(Boolean)) return;
 
-    var U = axes.map(function (_, i) {
-      var a = (-90 + i * 360 / axes.length) * Math.PI / 180;
+    /* the spokes actually drawn: collapsed groups in place, everything else as-is. */
+    var disp = [];
+    axes.forEach(function (ax, i) {
+      var g = folded[i];
+      if (g === null) return;                       /* folded into its group's spoke */
+      /* a group's two members share a parity line by construction — st/aoe both 10,
+         the two control axes both 5 — so either member's value is the group's. */
+      if (g) disp.push({ label: g.label || ax, kind: kinds[g.c], g: g,
+                         need: need ? need[g.c] : kindNeed(kinds[g.c]) });
+      else disp.push({ label: ax, kind: kinds[i], i: i,
+                       need: need ? need[i] : kindNeed(kinds[i]) });
+    });
+    function fold(vec, act) {
+      var w = MIX[act];
+      return disp.map(function (d) {
+        return d.g ? w[0] * vec[d.g.c] + w[1] * vec[d.g.p] : vec[d.i];
+      });
+    }
+    acts.forEach(function (s, i) {
+      if (!s) return;
+      s.da = fold(s.a, i); s.db = fold(s.b, i); s.dp = fold(s.p, i);
+    });
+
+    var U = disp.map(function (_, i) {
+      var a = (-90 + i * 360 / disp.length) * Math.PI / 180;
       return [Math.cos(a), Math.sin(a)];
     });
 
@@ -125,7 +180,7 @@
         y: (CY + u[1] * LR + (u[1] < -0.5 ? -1 : u[1] > 0.5 ? 7 : 3)).toFixed(1),
         "text-anchor": u[0] > 0.2 ? "start" : u[0] < -0.2 ? "end" : "middle"
       });
-      t.textContent = axes[i];
+      t.textContent = disp[i].label;
       svg.appendChild(t);
     });
 
@@ -147,24 +202,32 @@
       var s = acts[n - 1];
       if (!s) return;
 
-      shapeA.setAttribute("points", poly(U, function (i) { return s.a[i]; }));
-      shapeB.setAttribute("points", poly(U, function (i) { return s.b[i]; }));
-      /* the pair series is the only one that can exceed 5, so it is plotted
-         against each axis kind's own maximum rather than the 0..5 grid. */
-      shapeP.setAttribute("points", poly(U, function (i) { return s.p[i]; },
-                                         function (i) { return kindMax(kinds[i]); }));
+      /* All three series share one denominator per spoke: the PARITY line — what a
+         five-person party, the size Listo tunes encounters for, delivers on that axis.
+         Two earlier schemes were both wrong. Bodies on a 0..5 grid with the pair on the
+         kind ceiling made the scales silently incomparable (an additive pair of 7 and a
+         body of 3.5 both landed at 70%, so the pair line sat ON the bodies). Everything
+         on the kind ceiling fixed that but left the outer ring meaning "two maxed bodies",
+         a theoretical sum nothing is measured against. Parity is a real demand line, so a
+         reading of 80% means four fifths of a five-stack — and clipping past it is right,
+         because surplus is surplus. */
+      var full = function (i) { return disp[i].need; };
+      shapeA.setAttribute("points", poly(U, function (i) { return s.da[i]; }, full));
+      shapeB.setAttribute("points", poly(U, function (i) { return s.db[i]; }, full));
+      shapeP.setAttribute("points", poly(U, function (i) { return s.dp[i]; }, full));
 
       while (dots.firstChild) dots.removeChild(dots.firstChild);
       U.forEach(function (u, i) {
-        var pa = at(u, s.a[i]), pb = at(u, s.b[i]);
+        var pa = at(u, s.da[i], full(i)), pb = at(u, s.db[i], full(i));
         dots.appendChild(el("circle", { "class": "r-dot-a", r: 3.4, cx: pa[0].toFixed(1), cy: pa[1].toFixed(1) }));
         dots.appendChild(el("circle", { "class": "r-dot-b", r: 3.4, cx: pb[0].toFixed(1), cy: pb[1].toFixed(1) }));
       });
 
       caption.textContent = "Act " + ROMAN[n - 1] + " pair profile, scored 0 to 5: " +
-        axes.map(function (ax, i) {
-          return ax + " — " + names[0] + " " + s.a[i] + ", " + (names[1] || "B") + " " + s.b[i] +
-                 ", pair " + s.p[i];
+        disp.map(function (d, i) {
+          var r = function (v) { return Math.round(v * 10) / 10; };
+          return d.label + " — " + names[0] + " " + r(s.da[i]) + ", " +
+                 (names[1] || "B") + " " + r(s.db[i]) + ", pair " + r(s.dp[i]);
         }).join("; ");
 
       if (band) {

@@ -5,3 +5,6 @@
 __pycache__/
 *.pyc
 .playwright-mcp/
+CLAUDE.md
+AGENTS.md
+*.json

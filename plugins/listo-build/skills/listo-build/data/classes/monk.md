@@ -347,17 +347,28 @@ Elements`, and `Way of the Friar` from the DTO archetype pack.
 ### Way of the Friar
 - **Mod:** `(DTO) Otherworldy Archetypes` (`21822`)
 - **File pulled:** `Otherworldly Archetypes 21822 1.2.0.67 2026-06-17T17-15Z PYJWETtYB.zip` —
-  **v1.2.0.67**, current on Nexus. Mechanics below are from the author's own reference site
-  (prizzels.github.io/DTO), not the Nexus blurb.
+  **v1.2.0.67**, current on Nexus. Mechanics below were cross-checked against the installed pak;
+  the author's own reference site (prizzels.github.io/DTO) supplied the original summary. A scan
+  of every readable installed pak—including `ListoPatches.pak` and `ListoMasterSpells.pak`—found
+  **no patch or other mod overriding or referencing the Friar stat entries, level maps, spells,
+  passives, statuses, or progression UUIDs**; the DTO pak's definitions therefore stand as
+  shipped.
 - **Mechanics:**
   - **3 — Friar's Bond:** Bonus action, **1 ki**, range **12 m**, **Concentration**. Designate an
-    ally as your Kin. You **and** your Kin gain **temporary HP equal to your WIS modifier at the
-    start of each turn**. Four **Blessing variants** to choose from:
+    ally as your Kin. You **and** your Kin gain **temporary HP equal to your WIS modifier +
+    `FriarVitality` at the start of each turn** (`FriarVitality` is +1 through level 10, +2 at
+    11, +3 at 14, +4 at 17 and +5 at 20). Four **Blessing variants** to choose from:
     - *Friar's Blessing* — **+1d4 to attack rolls and saving throws**
     - *Friar's Valor* — **+1d4 radiant** on weapon attacks
-    - *Friar's Retribution* — **twice your WIS modifier in radiant damage** back at any attacker
-    - *Friar's Faith* — **+1 AC** and **resistance to psychic, necrotic and radiant** while you
-      have temporary HP
+    - *Friar's Retribution* — **twice your WIS modifier in radiant damage** to an attacker after
+      a **successful hit**, not merely any attack as the tooltip claims. The Friar's own passive
+      explicitly requires `IsHit()`; retaliation for an attack on a Kin uses an `OnCastHit`
+      interrupt and additionally requires **total damage greater than 0**, so misses never
+      trigger either path and a fully negated hit does not trigger the Kin path.
+    - *Friar's Faith* — **+1 AC**, increasing to **+2 AC with Shared Resolve at level 11**. The
+      AC applies while the bond is active; only the psychic, necrotic and radiant resistances
+      require the bond's temporary HP. In the installed pak, the Psychic and Radiant checks are
+      malformed (unlike the Necrotic check), so those two resistances may fail to activate.
   - **3 — Friar's Grace:** Bonus action, **no ki cost**, base range 9 m **scaling with WIS** —
     teleport to a space beside your Kin. Unlocked by casting Friar's Bond.
   - **3 — Guardian of Light:** **shield proficiency**, and while a shield is equipped you get
@@ -371,13 +382,17 @@ Elements`, and `Way of the Friar` from the DTO archetype pack.
     hit; WIS save or **Pacified for 2 turns** (cannot take actions unless damaged).
   - **9 — Cleansing Wave:** Action, **3 ki**, 9 m 75° cone — cures you and allies of Poison,
     Blind, Paralysis, Disease, Charm, Petrify, Stun and Curse. **Once per battle.**
-  - **11 — Shared Resolve:** bond a **second** ally, and gain additional temp HP per turn.
+  - **11 — Shared Resolve:** modifies **every Friar's Bond variant**: bond a **second** ally and
+    raise `FriarVitality` from +1 to +2 temporary HP per turn. It additionally upgrades
+    *Friar's Faith* from **+1 AC to +2 AC** for the Friar and every bonded Kin receiving Faith.
   - **17 — Community:** bond a **third** ally.
 - **Duo relevance:** **this Way is built for exactly this run.** With two characters, Friar's Bond
-  covers the *entire party* from level 3 — Shared Resolve and Community are dead weight for you,
-  but the level 3 package alone is per-turn temp HP on both characters, a free-teleport repositioning
-  tool to your partner, a shield you're allowed to wear, and Guiding Strike handing your partner
-  advantage. Friar's Retribution scales on WIS, the stat the rest of the class already wants.
+  covers the *entire party* from level 3, so Shared Resolve's extra Kin and Community's third Kin
+  are dead weight; **Shared Resolve itself is not**, because it improves the recurring temporary
+  HP and doubles Friar's Faith's AC bonus. The level 3 package already supplies per-turn temp HP
+  to both characters, a free-teleport repositioning tool to your partner, a shield you're allowed
+  to wear, and Guiding Strike handing your partner advantage. Friar's Retribution scales on WIS,
+  the stat the rest of the class already wants.
 
 ---
 

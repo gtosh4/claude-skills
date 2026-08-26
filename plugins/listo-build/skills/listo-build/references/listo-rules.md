@@ -40,8 +40,11 @@ remains capped.
 Non-feat sources that stack above 20: **Hag's Hair** (+1) and the **Tomes and Manuals** mod
 (+1 each). The **Mirror of Loss** gives +2 to a chosen ability *plus* a separate +1 Charisma, per
 character, and **raises a score as high as 24**. A fourth source exists in this modlist: the
-**Potion of Everlasting Vigour** is +2 above 20, and two installed mods make it **+2 to a chosen
-ability** and obtainable **by pickpocketing Araj Oblodra in Act II**. Acquisition costs for all
+**Potion of Everlasting Vigour** is +2 above 20. It is **Strength only** — `Better Potion of
+Everlasting Vigour` (`16368`) makes it apply to **everyone in the party and camp**, not to a
+chosen ability (*"Permanently increase the Strength of everyone in your party and camp by 2"*
+**[pak]**), and `Stealable Potion of Everlasting Vigour` (`20205`) makes it obtainable **by
+pickpocketing Araj Oblodra in Act II**, which is the only route in a duo with no Astarion. Acquisition costs for all
 four are in `references/gates.md`.
 
 ### Feat cadence and count
@@ -215,7 +218,7 @@ Sources, and their ceilings:
 | ASI feat | +2 | stops at 20 |
 | Half-feats (Feats Overhaul) | +1 each | **bypass 20** |
 | Mirror of Loss | +2 chosen, +1 Cha | Act 3, **raises to 24** |
-| Potion of Everlasting Vigour | +2 chosen | Act 2, pickpocket Araj |
+| Potion of Everlasting Vigour | **+2 Strength only**, party-wide | Act 2, pickpocket Araj |
 | Hag's Hair | +1 | Act 1, one per run |
 | Tomes and Manuals | +1 each | — |
 | **Paragon 20 capstone** | **+4 to STR/CHA or DEX/CHA** | **caps at 25** — requires pure Paragon 20 |

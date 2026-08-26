@@ -11,7 +11,8 @@ grep -i "resistance" "$S/data/listo-10.2-races.md"              # by mechanic
 grep -i -A6 "^## Removed" "$S/data/listo-10.2-races.md"         # what's gone
 ```
 
-**Provenance.** Compiled 17 August 2026. Every mod named here was confirmed present in
+**Provenance.** Compiled 17 August 2026, with pak corrections 23 August 2026 to Lizardfolk,
+Fey Eladrin, Astral Elf and Astral Half-Elf — see each entry. Every mod named here was confirmed present in
 `listo-10.2-mods.tsv` by ModID. Mechanics come from the mod pages, which describe each mod's
 **current** version — Listo may have pulled an older archive. Marked `(unverified)` where not
 confirmed.
@@ -92,21 +93,39 @@ compatible with elf cosmetic mods.
 From Spelljammer. Close to RAW.
 - **Astral Fire:** learn one of Dancing Lights, Light, or **Sacred Flame**.
 - **Keen Senses:** proficiency in **Perception**.
-- **Starlight Step:** **bonus action** teleport up to **9m** to a space you can see. Uses equal
-  to your **Proficiency Bonus**, restored on long rest; charges increase at levels **5, 9, 13,
-  17**.
+- **Starlight Step:** **bonus action** teleport up to **9m** to a space you can see. One charge
+  at level 1 and one more at each of **5, 9, 13, 17** — **five at cap**, restored on long rest.
+  *Not* Proficiency Bonus, which reaches 6 **[pak]**.
+- **Astral Trance / Astral Knowledge:** `Shout_AstralKnowledgeAstralElf_<Ability>` applies
+  `ASTRAL_KNOWLEDGE_<ABILITY>` at duration `-1` **[pak]**. Choosing **Intelligence** is
+  proficiency in Arcana, History, Investigation, Nature and Religion — the only route in this
+  file to a **Religion** proficiency for the Mirror of Loss on a body that has no Intelligence.
 - **Astral Trance:** implemented as the vanilla **Astral Knowledge** action rather than RAW.
 
 Ships with `Mori's Astral Elves - Patch 7 Fix` (`13867`). The RAW +2 CHA / +1 DEX was
 **removed in v1.1** — Larian moved ASI to class.
 
-> Starlight Step is a **repeatable bonus-action teleport scaling on proficiency** — 3–6 uses per
-> long rest. Strong positioning on any build, and it does not compete with a spell slot.
+> Starlight Step is a **repeatable bonus-action teleport** — 5 uses per long rest at cap. Strong
+> positioning on any build, and it does not compete with a spell slot.
 
 ### Astral Half-Elves (`9676`)
-A Half-Elf variant of the above, standalone from v2.00. The only mechanical difference:
+A Half-Elf variant of the above, standalone from v2.00 — meaning it does not require Mori's mod,
+**not** that it stands outside the race tree. The only mechanical difference:
 **Astral Knowledge is swapped for a custom Astral Intuition** granting **advantage on all
-Intelligence checks**.
+Intelligence checks** — `Astral_Intuition  Boosts "Advantage(Ability, Intelligence);"`, level 1,
+permanent **[pak]**.
+
+> **It is a Half-Elf subrace and inherits the shield.** `Races.lsx` gives it
+> `ParentGuid "45f4ac10-3c89-4fb2-b37d-f973bb9110c0"` — vanilla Half-Elf — and the mod grants no
+> proficiencies of its own. Vanilla Half-Elf carries **Light armour, Shields**,
+> spears/pikes/halberds/glaives, Darkvision and Fey Ancestry
+> (`https://bg3.wiki/wiki/Half-Elf`, vanilla fallback: base-game paks are not under the mods
+> root). **All 810 installed paks were listed and every `Progressions.lsx` inside them read; none
+> references that GUID**, so nothing in Listo overrides it. Shield proficiency on a
+> full-Charisma caster is the single most valuable thing any race in this file hands a robe
+> body — it stacks with Draconic Resilience and Mage Armour, neither of which counts as armour.
+> `(unverified)`: that a subrace inherits its parent's grants is inferred from the omission, not
+> read; confirm in character creation.
 
 ### Playable Shadar-kai (`21382`)
 - **Necrotic Resistance.**
@@ -122,11 +141,16 @@ Intelligence checks**.
 > Wolf's halved damage. The raven is a free extra body on a long-rest clock.
 
 ### Spirited Seasons — Playable Fey Eladrin (`7037`)
-- **Fey Step:** bonus action teleport to a space you can see. Uses equal to **Proficiency
-  Bonus**, restored on long rest.
+- **Fey Step:** bonus action teleport to a space you can see. **2 charges at level 1, +1 at
+  level 5 and +1 at level 9 — four at cap**, restored on long rest. *Not* Proficiency Bonus;
+  the progression grants `ActionResource(FeyStepCharges,…)` at exactly those three levels
+  **[pak]**.
 - From level **3**, Fey Step gains a season-based rider:
-  - **Autumn** — Charm and teleport to an enemy
-  - **Winter** — Frighten and teleport to an enemy
+  - **Autumn** — Charm and teleport to an enemy —
+    `not SavingThrow(Ability.Wisdom, SourceSpellDC(), AdvantageOnCharmPerson())` **[pak]**
+  - **Winter** — Frighten and teleport to an enemy —
+    `not SavingThrow(Ability.Wisdom, SourceSpellDC())` → `ApplyStatus(FEARED,100,2)` **[pak]**.
+    No slot, no concentration, and it rides the caster's own spell save DC
   - **Spring** — swap places with another creature you can see
   - **Summer** — deal fire damage and teleport to an enemy
 - **Trance:** from level 3, change your season **once per long rest**.
@@ -179,10 +203,14 @@ Related mods in the list: `Ghouls Custom Piercings`, `Ghouls Customization Compe
 Faithful adaptation from *Monsters of the Multiverse*. **Mechanically the strongest race
 addition in the list.**
 
-- **Bite:** a fanged maw usable for unarmed strikes, dealing **1d6 + Strength modifier**
-  slashing.
+- **Bite:** a fanged maw usable for unarmed strikes, **once per turn**, dealing
+  `1d6 + UnarmedMeleeAbilityModifier` slashing — **not Strength**, so it follows Martial Arts on
+  a Monk. `Target_Bite_Lizardfolk  Cooldown "OncePerTurn"` **[pak]**
 - **Hungry Jaws:** **bonus action** special Bite attack; on hit, deals normal damage **and
-  grants temporary HP equal to your Proficiency Bonus**.
+  grants temporary HP equal to your Proficiency Bonus**. **Once per short rest, not per turn** —
+  `Target_HungryJaws  Cooldown "OncePerShortRest"`, and the passive carries
+  `Properties "Highlighted;OncePerShortRest"` **[pak]**. It also refuses undead, plant,
+  elemental, construct and ooze targets.
 - **Natural Armor:** while **not wearing armour**, base AC is **13 + Dexterity modifier**.
 - **Hold Breath:** always active; **immune to Stinking Cloud and certain poison gasses**.
 - **Nature's Intuition:** proficiency in **two** of Animal Handling, Medicine, Nature,
@@ -190,12 +218,17 @@ addition in the list.**
 
 Uses Dragonborn jaw/chin assets; extensive customisation.
 
-> Three separate things a build normally pays for: an **unarmed attack that scales on STR**, a
-> **bonus-action attack with self-sustaining temp HP**, and **unarmored AC** that competes with
-> Barbarian/Monk without needing either class. Note **Tavern Brawler is heavily nerfed** here
-> (`data/listo-10.2-feats.md`), so the classic unarmed payoff is smaller than it looks — but
-> Hungry Jaws' temp HP is on a **per-turn bonus action**, which is exactly the kind of repeatable
-> durability a two-person party wants. Two skill proficiencies also feed the duo's
+> Two things a build normally pays for: an **unarmed attack on the best melee ability**, and
+> **unarmored AC** that competes with Barbarian/Monk without needing either class — though
+> `UnarmoredDefense_Lizardfolk` is `ACOverrideFormula(13,true,Dexterity)` gated only on
+> `not WearingArmor`, so it does **not** stack with Monk's `10 + Dex + Wis` or Draconic
+> Resilience; you take whichever is higher. Note **Tavern Brawler is heavily nerfed** here
+> (`data/listo-10.2-feats.md`).
+>
+> **Corrected 23 August 2026:** an earlier revision of this file called Hungry Jaws' temp HP a
+> repeatable per-turn bonus action and rated Lizardfolk the strongest race in the list largely on
+> that. The pak says once per short rest, which is a different feature. The two skill
+> proficiencies from Nature's Intuition are still real and still feed the duo's
 > "two characters must cover every check" premise.
 
 ---
