@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from concurrent.futures import ProcessPoolExecutor
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -262,6 +263,20 @@ def parse_lsx(payload: bytes, entry: str | None = None) -> Iterator[Record]:
             yield Record(_record_type(node.get("id"), entry), name or uuid, uuid, None, data)
 
 
+def _forge_version() -> str:
+    """Record which parser produced the database.
+
+    Extraction results depend on the bg3forge build, so a rebuild that starts
+    failing on resources an earlier one read needs this to be diagnosable.
+    """
+    try:
+        from importlib.metadata import version
+
+        return version("bg3forge")
+    except Exception:
+        return "unknown"
+
+
 def _require_bg3forge() -> None:
     if (
         _forge_pak_header is None
@@ -367,6 +382,107 @@ def parse_localization(payload: bytes, binary: bool = False) -> Iterator[Record]
         yield Record("Localization", handle, handle, None, data)
 
 
+_LUA_STATIC_DATA = re.compile(r"Ext\.StaticData")
+_LUA_ASSIGN = re.compile(r"\.([A-Z][A-Za-z0-9_]*)\s*=(?!=)")
+_LUA_SUBSCRIBE = re.compile(r"Ext\.Events\.([A-Za-z0-9_]+)")
+
+
+def parse_lua(payload: bytes, entry: str) -> Iterator[Record]:
+    """Index a Script Extender script and note whether it can rewrite records.
+
+    No Lua is interpreted here. This only records the source and the shallow
+    signals that decide whether the sandbox needs to run the mod at all, so
+    that a runtime override is discoverable instead of invisible.
+    """
+    text = payload.decode("utf-8-sig", errors="replace")
+    data = {
+        "path": entry,
+        "lines": text.count("\n") + 1,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "references_static_data": bool(_LUA_STATIC_DATA.search(text)),
+        "assigns_fields": sorted({match.group(1) for match in _LUA_ASSIGN.finditer(text)}),
+        "subscribes_events": sorted({match.group(1) for match in _LUA_SUBSCRIBE.finditer(text)}),
+    }
+    yield Record("ScriptExtenderLua", entry.rsplit("/", 1)[-1], None, None, data, text)
+
+
+def _strip_json_extras(text: str) -> str:
+    """Remove comments and trailing commas that hand-written SE configs carry.
+
+    A regex cannot do this safely because `//` and `,` also occur inside string
+    values, so this tracks string state in a single pass.
+    """
+    out: list[str] = []
+    pending_ws: list[str] = []
+    pending_comma = False
+    in_string = False
+    index = 0
+    length = len(text)
+    while index < length:
+        char = text[index]
+        if in_string:
+            out.append(char)
+            if char == "\\" and index + 1 < length:
+                out.append(text[index + 1])
+                index += 2
+                continue
+            if char == '"':
+                in_string = False
+            index += 1
+            continue
+        if char == "/" and index + 1 < length and text[index + 1] == "/":
+            while index < length and text[index] != "\n":
+                index += 1
+            continue
+        if char == "/" and index + 1 < length and text[index + 1] == "*":
+            closing = text.find("*/", index + 2)
+            index = length if closing == -1 else closing + 2
+            continue
+        if char == ",":
+            pending_comma = True
+            pending_ws = []
+            index += 1
+            continue
+        if char in " \t\r\n":
+            (pending_ws if pending_comma else out).append(char)
+            index += 1
+            continue
+        if pending_comma:
+            # Drop the comma only when it turns out to be trailing.
+            if char not in "}]":
+                out.append(",")
+            out.extend(pending_ws)
+            pending_comma = False
+            pending_ws = []
+        if char == '"':
+            in_string = True
+        out.append(char)
+        index += 1
+    return "".join(out)
+
+
+def parse_se_config(payload: bytes, entry: str) -> Iterator[Record]:
+    """Index a Script Extender / MCM JSON document shipped inside a PAK.
+
+    A malformed UI blueprint is the mod author's problem, not a failure to
+    extract gameplay data, so an unparseable document is still recorded -- with
+    the reason attached -- rather than raised as an extraction error. Query
+    `json_extract(data, '$.parse_error')` to find them.
+    """
+    text = payload.decode("utf-8-sig", errors="replace")
+    data: dict[str, Any] = {"path": entry}
+    try:
+        data["config"] = json.loads(text)
+    except ValueError:
+        try:
+            data["config"] = json.loads(_strip_json_extras(text))
+            data["lenient"] = True
+        except ValueError as exc:
+            data["config"] = None
+            data["parse_error"] = str(exc)
+    yield Record("ScriptExtenderConfig", entry.rsplit("/", 1)[-1], None, None, data, text)
+
+
 def parse_profile(path: Path) -> list[tuple[int, str]]:
     enabled: list[tuple[int, str]] = []
     with path.open(encoding="utf-8-sig") as profile:
@@ -467,6 +583,12 @@ def classify_entry(entry: str) -> str:
             return "resource"
     if (lower.startswith("localization/") or "/localization/" in lower) and lower.endswith((".xml", ".loca")):
         return "localization"
+    if "/scriptextender/" in lower and lower.endswith(".lua"):
+        return "lua"
+    if "/scriptextender/" in lower and lower.endswith(".json"):
+        return "se_config"
+    if lower.endswith("mcm_blueprint.json"):
+        return "se_config"
     return "indexed"
 
 
@@ -527,6 +649,44 @@ class Database:
                 record_type TEXT PRIMARY KEY,
                 table_name TEXT NOT NULL UNIQUE
             );
+            CREATE TABLE runtime_config (
+                id INTEGER PRIMARY KEY,
+                source TEXT NOT NULL,
+                config_name TEXT NOT NULL,
+                config_path TEXT NOT NULL,
+                active INTEGER NOT NULL,
+                data TEXT NOT NULL CHECK(json_valid(data))
+            );
+            CREATE INDEX runtime_config_name ON runtime_config(config_name);
+            CREATE TABLE runtime_lua (
+                id INTEGER PRIMARY KEY,
+                source TEXT NOT NULL,
+                mod_table TEXT,
+                load_order INTEGER,
+                scripts INTEGER NOT NULL,
+                status TEXT NOT NULL,
+                error TEXT,
+                scripts_run TEXT,
+                events_fired TEXT,
+                configs_read TEXT,
+                missing_api TEXT,
+                log TEXT,
+                mutations INTEGER NOT NULL DEFAULT 0
+            );
+            CREATE TABLE runtime_mutations (
+                id INTEGER PRIMARY KEY,
+                source TEXT NOT NULL,
+                mod_table TEXT,
+                load_order INTEGER,
+                record_type TEXT NOT NULL,
+                record_uuid TEXT NOT NULL,
+                record_name TEXT,
+                record_level INTEGER,
+                field TEXT NOT NULL,
+                value TEXT
+            );
+            CREATE INDEX runtime_mutations_lookup
+                ON runtime_mutations(record_type, field, record_name);
             """
         )
 
@@ -746,6 +906,10 @@ def _extract_pak(job: PakJob) -> ExtractedPak:
                         parsed = parse_lsx(payload, entry)
                     elif kind == "resource":
                         parsed = parse_binary_resource(payload, entry)
+                    elif kind == "lua":
+                        parsed = parse_lua(payload, entry)
+                    elif kind == "se_config":
+                        parsed = parse_se_config(payload, entry)
                     else:
                         parsed = parse_localization(
                             payload,
@@ -860,6 +1024,243 @@ def _parallel_extract(jobs: Iterable[PakJob], workers: int) -> Iterator[Extracte
                 pass
 
 
+def _collect_loose_configs(
+    install_root: Path, selected: list[tuple[int, str]]
+) -> list[tuple[Any, ...]]:
+    """Index `SE_CONFIG` JSON that lives loose in a mod directory, not in a PAK.
+
+    Script Extender configuration is deployed as loose files, so the copy the
+    game actually reads is invisible to PAK extraction. `Ext.IO.LoadFile("X")`
+    resolves against the Script Extender data root, which Mod Organizer maps
+    from `SE_CONFIG/`; a file directly under that root is therefore the active
+    one, and deeper copies (MCM profile trees, backups) are indexed but flagged
+    inactive so a stale duplicate cannot be mistaken for the live setting.
+    """
+    rows: list[tuple[Any, ...]] = []
+    mods_root = install_root / "mods"
+    for _, source in selected:
+        config_root = mods_root / source / "SE_CONFIG"
+        if not config_root.is_dir():
+            continue
+        for path in sorted(config_root.rglob("*.json")):
+            if not path.is_file():
+                continue
+            relative = path.relative_to(config_root).as_posix()
+            try:
+                raw_text = path.read_text(encoding="utf-8-sig")
+            except OSError:
+                continue
+            try:
+                parsed = json.loads(raw_text)
+            except ValueError:
+                try:
+                    parsed = json.loads(_strip_json_extras(raw_text))
+                except ValueError:
+                    continue
+            rows.append(
+                (
+                    source,
+                    path.name,
+                    path.relative_to(mods_root).as_posix(),
+                    1 if "/" not in relative else 0,
+                    json.dumps(parsed, ensure_ascii=False, separators=(",", ":")),
+                )
+            )
+    return rows
+
+
+def _lua_mod_scripts(connection: sqlite3.Connection) -> dict[tuple[str, str], dict[str, Any]]:
+    """Group indexed Script Extender scripts by mod directory."""
+    row = connection.execute(
+        "SELECT table_name FROM data_types WHERE record_type = 'ScriptExtenderLua'"
+    ).fetchone()
+    if row is None:
+        return {}
+    quoted = str(row[0]).replace('"', '""')
+    grouped: dict[tuple[str, str], dict[str, Any]] = {}
+    for source, load_order, entry_path, data, raw in connection.execute(
+        f'SELECT source, load_order, entry_path, data, raw FROM "{quoted}"'
+    ):
+        marker = "/ScriptExtender/Lua/"
+        if marker.casefold() not in str(entry_path).casefold():
+            continue
+        head, _, tail = str(entry_path).partition(marker)
+        mod_table = head.rsplit("/", 1)[-1]
+        bucket = grouped.setdefault(
+            (str(source), mod_table),
+            {"load_order": load_order, "scripts": {}, "static": False},
+        )
+        bucket["scripts"][tail.replace("\\", "/")] = raw or ""
+        if json.loads(data).get("references_static_data"):
+            bucket["static"] = True
+        if load_order is not None and (
+            bucket["load_order"] is None or load_order > bucket["load_order"]
+        ):
+            bucket["load_order"] = load_order
+    return grouped
+
+
+def _run_lua_mods(connection: sqlite3.Connection, counts: dict[str, int]) -> None:
+    """Execute every mod that can rewrite static records, and record what it did.
+
+    The gate is `Ext.StaticData`: a mod that never names it cannot mutate a
+    record, so running it would buy nothing. Mods that do name it are executed
+    and their writes stored as evidence, which is what keeps the effective
+    value derivable from the database instead of from a hand transcription.
+    """
+    try:
+        import lua_harness
+    except ImportError:
+        counts["lua_skipped"] = 1
+        return
+    if not lua_harness.available():
+        connection.execute(
+            """INSERT INTO runtime_lua
+               (source, mod_table, load_order, scripts, status, error)
+               VALUES ('*', NULL, NULL, 0, 'unavailable',
+                       'lupa is not installed; runtime overrides were not evaluated')"""
+        )
+        counts["lua_unavailable"] = 1
+        return
+
+    # One shared config map: Script Extender has a single data root, so a mod's
+    # config routinely ships in a different mod directory than its scripts.
+    configs: dict[str, str] = {}
+    for config_name, data in connection.execute(
+        "SELECT config_name, data FROM runtime_config WHERE active = 1 ORDER BY id"
+    ):
+        configs[str(config_name)] = str(data)
+
+    static_data = lua_harness.SqliteStaticData(connection)
+    for (source, mod_table), bucket in sorted(_lua_mod_scripts(connection).items()):
+        script_count = len(bucket["scripts"])
+        if not bucket["static"]:
+            connection.execute(
+                """INSERT INTO runtime_lua
+                   (source, mod_table, load_order, scripts, status)
+                   VALUES (?, ?, ?, ?, 'skipped_no_static_data')""",
+                (source, mod_table, bucket["load_order"], script_count),
+            )
+            continue
+        result = lua_harness.run_mod(mod_table, bucket["scripts"], configs, static_data)
+        connection.execute(
+            """INSERT INTO runtime_lua
+               (source, mod_table, load_order, scripts, status, error,
+                scripts_run, events_fired, configs_read, missing_api, log, mutations)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (
+                source,
+                mod_table,
+                bucket["load_order"],
+                script_count,
+                result.status,
+                result.error,
+                json.dumps(list(result.scripts_run)),
+                json.dumps(list(result.events_fired)),
+                json.dumps(list(result.configs_read)),
+                json.dumps(list(result.missing_api)),
+                json.dumps(list(result.log)),
+                len(result.mutations),
+            ),
+        )
+        if result.status != "ran":
+            counts["lua_failures"] = counts.get("lua_failures", 0) + 1
+        if result.mutations:
+            connection.executemany(
+                """INSERT INTO runtime_mutations
+                   (source, mod_table, load_order, record_type, record_uuid,
+                    record_name, record_level, field, value)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                [
+                    (
+                        source,
+                        mod_table,
+                        bucket["load_order"],
+                        mutation.record_type,
+                        mutation.uuid,
+                        mutation.record_name,
+                        mutation.record_level,
+                        mutation.field,
+                        json.dumps(mutation.value, ensure_ascii=False),
+                    )
+                    for mutation in result.mutations
+                ],
+            )
+            counts["lua_mutations"] = counts.get("lua_mutations", 0) + len(result.mutations)
+        counts["lua_mods"] = counts.get("lua_mods", 0) + 1
+
+
+def _create_effective_views(connection: sqlite3.Connection) -> None:
+    """Views that resolve a runtime override over the static definition.
+
+    `type_progression.AllowImprovement` is left untouched: it is still the
+    correct answer for what the LSX declares. `progression_feats` is the answer
+    for what the installed profile actually grants, and it names the mod
+    responsible whenever the two differ.
+    """
+    connection.executescript(
+        """
+        CREATE VIEW progression_feats AS
+        WITH ranked AS (
+            SELECT record_uuid,
+                   json_extract(data, '$.attributes.Name.value') AS class_name,
+                   CAST(json_extract(data, '$.attributes.Level.value') AS INTEGER) AS level,
+                   lower(coalesce(
+                       json_extract(data, '$.attributes.AllowImprovement.value'), 'false'
+                   )) = 'true' AS static_feat,
+                   lower(coalesce(
+                       json_extract(data, '$.attributes.IsMulticlass.value'), 'false'
+                   )) = 'true' AS is_multiclass,
+                   row_number() OVER (
+                       PARTITION BY record_uuid
+                       ORDER BY load_order IS NULL, load_order DESC, id DESC
+                   ) AS rank
+            FROM type_progression
+            WHERE json_extract(data, '$.attributes.Level.value') IS NOT NULL
+        ),
+        override AS (
+            SELECT record_uuid,
+                   value = 'true' AS runtime_feat,
+                   source,
+                   mod_table,
+                   row_number() OVER (
+                       PARTITION BY record_uuid
+                       ORDER BY load_order IS NULL, load_order DESC, id DESC
+                   ) AS rank
+            FROM runtime_mutations
+            WHERE record_type = 'Progression' AND field = 'AllowImprovement'
+        )
+        SELECT r.class_name,
+               r.level,
+               r.is_multiclass,
+               r.static_feat,
+               o.runtime_feat,
+               coalesce(o.runtime_feat, r.static_feat) AS effective_feat,
+               o.source AS overridden_by,
+               o.mod_table AS overridden_by_mod_table,
+               r.record_uuid
+        FROM ranked AS r
+        LEFT JOIN override AS o ON o.record_uuid = r.record_uuid AND o.rank = 1
+        WHERE r.rank = 1;
+
+        -- One row per class and level. Several progression tables can share a
+        -- class name, so `progression_feats` legitimately holds more than one
+        -- row per level; this collapses them so counting feats is correct
+        -- without needing to know that.
+        CREATE VIEW class_feat_levels AS
+        SELECT class_name,
+               level,
+               max(effective_feat) AS grants_feat,
+               max(static_feat) AS static_grants_feat,
+               max(effective_feat) != max(static_feat) AS changed_at_runtime,
+               group_concat(DISTINCT overridden_by) AS overridden_by
+        FROM progression_feats
+        WHERE is_multiclass = 0
+        GROUP BY class_name, level;
+        """
+    )
+
+
 def compile_database(
     output: Path,
     install_root: Path = DEFAULT_INSTALL_ROOT,
@@ -938,6 +1339,10 @@ def compile_database(
         "resources": 0,
         "records": 0,
         "errors": 0,
+        "configs": 0,
+        "lua_mods": 0,
+        "lua_mutations": 0,
+        "lua_failures": 0,
     }
 
     try:
@@ -951,7 +1356,7 @@ def compile_database(
             """
         )
         database = Database(connection)
-        connection.execute("PRAGMA user_version = 2")
+        connection.execute("PRAGMA user_version = 3")
         connection.executemany(
             "INSERT INTO metadata VALUES (?, ?)",
             [
@@ -959,12 +1364,19 @@ def compile_database(
                 ("game_data", str(game_data)),
                 ("profile", profile_name),
                 ("workers", str(workers)),
+                ("parser_version", f"bg3forge {_forge_version()}"),
                 ("scope", "base game plus enabled character-build gameplay records"),
                 ("source_semantics", "base-game archive or Mod Organizer mod directory"),
                 ("profile_order_semantics", "one-based line number in modlist.txt; null for base game"),
                 (
                     "load_order_semantics",
                     "global zero-based order: retail PAK priority/name, then modsettings.lsx; higher values override lower values",
+                ),
+                (
+                    "runtime_semantics",
+                    "Script Extender mods can rewrite static records at load; runtime_lua records"
+                    " which mods ran, runtime_mutations records their writes, and progression_feats"
+                    " resolves the override over the static LSX value",
                 ),
             ],
         )
@@ -978,6 +1390,26 @@ def compile_database(
                     )
             if empty_sources:
                 _insert_load_rows(connection, empty_sources)
+            config_rows = _collect_loose_configs(install_root, selected)
+            if config_rows:
+                connection.executemany(
+                    """INSERT INTO runtime_config
+                       (source, config_name, config_path, active, data)
+                       VALUES (?, ?, ?, ?, ?)""",
+                    config_rows,
+                )
+                counts["configs"] = len(config_rows)
+            if progress:
+                print(f"[runtime] {counts['configs']} loose configs", file=sys.stderr)
+            _run_lua_mods(connection, counts)
+            if progress:
+                print(
+                    f"[runtime] {counts['lua_mods']} lua mods ran, "
+                    f"{counts['lua_mutations']} mutations, "
+                    f"{counts['lua_failures']} failures",
+                    file=sys.stderr,
+                )
+            _create_effective_views(connection)
             connection.commit()
         finally:
             connection.close()
@@ -1011,9 +1443,14 @@ def main(argv: list[str] | None = None) -> int:
         f"wrote {arguments.output}: {counts['records']} records from "
         f"{counts['resources']} resources in {counts['paks']} paks "
         f"with {counts['workers']} workers ({counts['base_paks']} base, "
-        f"{counts['sources']} mod sources, {counts['errors']} extraction errors)"
+        f"{counts['sources']} mod sources, {counts['errors']} extraction errors); "
+        f"runtime: {counts['lua_mods']} lua mods, {counts['configs']} configs, "
+        f"{counts['lua_mutations']} mutations, {counts['lua_failures']} lua failures"
     )
     print(summary)
+    # Only extraction errors fail the build. A framework mod that cannot run
+    # under a stubbed API is expected and says nothing about gameplay records;
+    # `runtime_lua.status` carries that detail without crying wolf here.
     return 1 if counts["errors"] else 0
 
 

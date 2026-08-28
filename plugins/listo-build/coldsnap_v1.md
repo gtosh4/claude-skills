@@ -289,22 +289,23 @@ Shillelagh protected was a quarterstaff swing this body takes a handful of times
 Guidance is not a reason either: **Druid 1 and Cleric 1 both carry it on the cantrip list**, so
 the style was selling a spell the chassis already owns.
 
-**Carry Mourning Frost and a shield.** It is a quarterstaff, so it keeps the shield while serving
-as the engine's casting stat stick. Listo's enabled Mourning Frost
-Tweaks gives it **Arcane Enchantment +1**, makes Insidious Cold scale from the wielder's Spell DC,
-adds Freezing Gust and a unique Ray of Frost, and grants immunity to slipping on ice. Heart of Ice
-adds **+1 Cold whenever the wielder deals Cold damage**. The vanilla staff is assembled in the
-Underdark from the Icy Crystal, Icy Helve and Icy Metal; Listo modifies the finished item rather
-than its assembly. **[data + wiki fallback for placement]**
+**Carry Mourning Frost through Acts I and II, then replace it with Markoheshkir.** Mourning Frost
+is assembled in the Underdark and keeps the shield: the installed tweak gives it Arcane
+Enchantment +1, Spell-DC Insidious Cold, Heart of Ice's **+1 Cold per damage event**, Freezing
+Gust and `PRONE_ICE` immunity. **[database: `MAG_Cold_IncreaseColdDamageOnCast_Staff`]**
 
-The weapon attack is now a bare fallback at `1d8 + Str` plus the staff's Cold riders, and Strength
-is 8 — **treat it as unavailable and use Flurry of Blows instead**, which keys off the Monk
-progression and not the weapon. The routine is the 18 m multi-beam Hellrime. Mourning Frost
-still replaces the generic morningstar because its spell attack/DC and Cold riders work while the
-staff is merely held.
+Markoheshkir is the Act III upgrade. Its installed Cold attunement reads
+`IF(SpellDamageTypeIs(Cold) and IsSpell()):DamageBonus(ProficiencyBonus, Cold, false)`, so at level
+20 it adds **+6 Cold to each Hellrime beam**, versus Mourning Frost's +1; both weapons carry the
+same +1 spell attack/DC passive. It also applies two Encrusted-with-Frost turns once per attack
+and unlocks Ice Storm and Cone of Cold. By then Winter Spirit already supplies ice-slip immunity,
+so Mourning Frost's defensive edge is redundant. **[database: Markoheshkir Expanded + AOE Status
+Fixer]**
 
-**A shield is mandatory** — Guardian of Light keeps Unarmoured Defence working with one equipped
-and grants **advantage on Concentration checks**, which is half of protecting Bond.
+Neither staff is a melee plan. Strength is 8, so a staff swing is unavailable in practice; use
+the 18 m beams or Flurry of Blows. **A shield remains mandatory** — Guardian of Light keeps
+Unarmoured Defence working and grants advantage on Concentration checks for Friar's Bond.
+
 
 ---
 
@@ -346,18 +347,46 @@ resistance halves all of it. Three grants, all live:
 
 **Alert's Perception proficiency is dead weight** — Dungeon Delver already gives Expertise. What
 you are buying is the initiative bonus, now **proficiency bonus** rather than +5 **[data]**, and
-**immunity to being Surprised**. The Surprise half is *not* redundant with Battlemind Link: the
-Link is a 3rd-level cast that drops on `OnCombatEnded`, so unless it is pre-buffed it is not up
-when an ambush fires — which is exactly what `Hunted - Dynamic Ambushes` and `Sensible Ambushing`
-generate. Initiative is `d10 + Dex + bonuses` from `Initiative Variants` (`1247`).
+**immunity to being Surprised**. The Surprise half is *not* redundant with Battlemind Link, and
+the Link is a great deal larger than earlier drafts of this sheet allowed: **[database]**
+
+```
+Mesmerist_Target_BattlemindLink  SpellFlags "IsSpell"        — no IsConcentration
+                                 UseCosts   "ActionPoint:1;SpellSlotsGroup:1:1:3"
+                                 ApplyStatus(MESMERIST_BATTLEMINDLINK,100,10)   — self and target
+MESMERIST_BATTLEMINDLINK  AuraRadius   "6"
+                          AuraStatuses "TARGET:IF(HasStatus('MESMERIST_BATTLEMINDLINK')):
+                                        ApplyStatus(BATTLEMIND_BONUS)"
+                          RemoveEvents "OnCombatEnded"
+BATTLEMIND_BONUS  Boosts "Initiative(2);DamageBonus(2);AC(2);StatusImmunity(FLANKED);
+                          StatusImmunity(SURPRISED);IgnoreLeaveAttackRange();Advantage(AttackRoll)"
+```
+**[database: `Mesmerist`, load order 431]**
+
+**`Advantage(AttackRoll)` is the load-bearing term, and no earlier description on this sheet
+carried it.** It is unconditional advantage on attack rolls, so it lands on **every one of the
+eight Hellrime beams**, not merely on beams aimed at a target Glaring Frost has already blinded.
+One 3rd-level slot, cast by the partner, buys that plus `AC(2)`, `DamageBonus(2)`, `Initiative(2)`
+and immunity to `FLANKED` and `SURPRISED` — **no saving throw and no concentration**, since the
+spell's `SpellFlags` is `IsSpell` alone.
+
+**The aura is mutual and doubly gated.** `AuraStatuses` fires on a `TARGET` that itself holds
+`MESMERIST_BATTLEMINDLINK`, so both bodies must carry the status *and* each must stand inside the
+other's **6 m** `AuraRadius`; step outside and both lose `BATTLEMIND_BONUS` at once. It is also
+`RemoveEvents "OnCombatEnded"` on a 10-turn duration, so it is **recast every fight** rather than
+pre-buffed — which is exactly why Alert still earns its place: the Link's own
+`StatusImmunity(SURPRISED)` only covers rounds where the Link is already up, and an ambush from
+`Hunted - Dynamic Ambushes` or `Sensible Ambushing` fires before that. Initiative is
+`d10 + Dex + bonuses` from `Initiative Variants` (`1247`).
 
 **Shield Master is swappable for `Mage Slayer`.** Both are last-feat shapes — instantaneous value,
 nothing that ramps with level. Shield Master's passive Evasion covers the threat this body is
 worst against, since Dexterity is the weakest of its four proficient saves at `+8` and Dexterity is
 what large area damage rolls against. Mage Slayer instead gives advantage on saves against **all**
 spells and reduces spell damage by the proficiency bonus, but Wisdom is already `+12` and
-Constitution `+14`, so it is insurance on rolls that rarely fail — and Fixation is already taking
-it, where the same grant covers saves that have no proficiency at all. **If area damage turns out
+Constitution `+14`, so it is insurance on rolls that rarely fail — and Fixation's rebuilt feat list
+takes Mage Slayer *and* Shield Master, so the swap changes nothing the pair already covers on that
+body, where the same grant reaches saves that have no proficiency at all. **If area damage turns out
 to be the smaller problem in play, swap them.** The shield is already there: Guardian of Light
 keeps Unarmoured Defence working with one equipped, and Monk's own Evasion is a level 7 feature,
 so there is no duplication at Monk 3.
@@ -503,12 +532,11 @@ finished.
 | 20 | Druid 13 | feat | 7th-level slots. Circle of Winter has nothing left to give | **Shield Master** |
 | *III* | — | ***Mirror of Loss* → Wisdom** — `22 → 24`, on the cap | Beam damage, beam attack, Glaring Frost's DC, Retribution and Unarmoured Defence all move together | — |
 
-**Two picks on character 1 are not free, and the sheet has not re-scored them.**
-`Deft Explorer`'s **Canny** is a straight Expertise on one already-proficient skill **[data]** —
-put it on Investigation and the pair's stated Investigation-Expertise hole closes; `Beast Tamer`
-is a Find Familiar on a short-rest clock, which is a third body on the axis this pair is thinnest
-on. Both are recorded under *Open decisions* rather than folded into the rungs, because moving
-Skills or Actions here cascades into three pair sheets and the finalists board.
+**Two picks on character 1 are not free.** `Deft Explorer`'s **Canny** is a straight Expertise on
+one already-proficient skill **[data]** — put it on Investigation, and it is now **priced into
+§8** and the pair sheet's gate table. `Beast Tamer` is a Find Familiar on a short-rest clock — a
+third body on the axis this pair is thinnest on — and stays under *Open decisions*, because
+moving Actions cascades into three pair sheets and the finalists board.
 
 **What is *not* a locked choice, and so is not in the column.** Druid and Cleric spells are
 **prepared**, not known — swappable at every level-up and after every long rest, so the Spells
@@ -540,23 +568,44 @@ thirteen extra levels, that is not close.
 
 ---
 
-## Gear — cold instances are the item engine
+## Gear — notable options by act
 
-| Slot | Target | Why it belongs here |
-|---|---|---|
-| **Main hand** | **Mourning Frost** | Core from the moment its three Underdark pieces are assembled. Arcane Enchantment `+1` improves every beam attack and Glaring Frost's DC; Heart of Ice adds `+1 Cold`; Listo's tweak makes Insidious Cold use Spell DC, adds Freezing Gust and ice-slip immunity. **[data]** |
-| **Off-hand** | **Guardian of Light** | Mandatory shield. It preserves Unarmoured Defence and grants Advantage on Concentration checks, protecting Friar's Bond without spending War Caster. **[pak]** |
-| **Gloves** | **Winter's Clutches** | Every Cold-damage attack applies 2 turns of Encrusted with Frost. Hellrime supplies multiple independent attack hits, so this builds toward the seven-stack freeze far faster than a normal one-hit cold spell. Buy from Lady Esther in the Mountain Pass; an Act III duplicate sits in Sorcerous Sundries. **[wiki fallback]** |
-| **Ring 1** | **Snowburst Ring** | Every Cold hit creates a 4.5 m ice surface around its target. It is the ranged surface-control extension of the beam engine and is found under the loose plank at Last Light Inn. Coldsnap is personally immune to slipping from Winter Spirit/Mourning Frost; Fixation still needs ice-proof boots or careful positioning. **[wiki fallback]** |
-| **Ring 2** | **Callous Glow Ring or a crit-threshold ring** | Callous Glow keeps Glaring Frost alive against Cold-immune enemies because its Radiant instance satisfies the alternate predicate; it requires Light on the target. If that matchup is absent, use Ring of Viciousness/Critfisher to improve beam accuracy-through-crits and damage. |
-| **Amulet** | **Necklace of Elemental Augmentation** | Hellrime is natively a Cold cantrip, so the necklace should add the active Wisdom spellcasting modifier. Its implementation checks the cantrip's native damage flag and multiclassing uses the last-added class's casting ability; this ladder remains Wisdom-based. **Verify whether the modifier lands per beam or once per cast before adding it to the damage ledger.** Found in the Crèche Y'llek Inquisitor's Chamber, with a second copy at Wyrm's Crossing. **[wiki fallback]** |
-| **Head** | **Coldbrim Hat** | Applying a spell condition adds 2 turns of Encrusted with Frost once per turn. It complements Winter's Clutches but is lower priority than raw Wisdom/DC headwear because it triggers once per turn, not per beam. Found in Balthazar's secret room at Moonrise. **[data/wiki fallback]** |
-| **Boots** | **Hoarfrost Boots until Mourning Frost** | Early insurance against falling Prone on ice. Mourning Frost Tweaks and Winter Spirit later make this redundant, freeing the slot for movement or saves. **[wiki fallback]** |
+Bold entries are the default pair allocation. Alternatives are real swaps, not a second
+simultaneous loadout.
 
-**Do not wear Icebite Robe or another frost-themed body piece just to complete the visual set.**
-Unarmoured Defence is already better, and the build's actual cold package lives in weapon,
-gloves, rings and amulet. Likewise, Ring of Elemental Infusion is a melee follow-up rider and does
-not belong in the two-Action beam routine.
+| Slot | Act I | Act II | Act III |
+|---|---|---|---|
+| **Main hand** | **Mourning Frost** once its three Underdark pieces are assembled; Melf's First Staff is the earlier +1 attack/DC bridge | **Mourning Frost** — +1 attack/DC, +1 Cold, Spell-DC Insidious Cold, Freezing Gust, ice immunity | **Markoheshkir** on Cold attunement — +1 attack/DC and **+PB Cold per Cold-spell damage event**; keep Mourning Frost as the Insidious Cold swap |
+| **Off-hand** | Any +1 shield; Safeguard Shield is +1 all saves, but Fixation's rebuilt chassis carries a shield too, so the only copy is contested | **Guardian of Light** from Friar 3 — preserves Unarmoured Defence and gives Concentration advantage | **Guardian of Light**; no normal shield beats protecting the permanent Friar's Bond slot |
+| **Ranged stat stick** | No engine piece; Bow of Awareness is +1 initiative and uncontested — Fixation carries no weapon | **Bow of Awareness**; Fixation's engine is Eldritch Blast with a shield in the off-hand, so it never wants a bow | **The Dead Shot** for its unconditional global critical-threshold −1; Hellrider Longbow is the initiative/Perception swap |
+| **Body** | Chain Shirt through character 7, then **The Graceful Cloth** at Monk 1 for +2 Dexterity and the resulting +1 AC | **Robe of Exquisite Focus** for +1 spell DC; Graceful Cloth is the +1 AC/Dex-save swap | **Vest of Investiture** for +2 AC, physical resistance and regeneration; Robe of the Weave trades that defence for +1 spell attack/DC |
+| **Head** | Haste Helm for opening movement; Shadespell Circlet is the conditional DC option | **Fistbreaker Helm** for +1 spell DC and +1 initiative; Coldbrim Hat adds two Frost turns only once per turn | **Hood of the Weave** for +2 spell attack/DC; Mask of Soul Perception trades the DC for +2 attack and initiative |
+| **Cloak** | Cloak of Spell Focus (+1 DC) or Arcane Exercise (+1 spell attack) from Cloaks of Faerûn's common pool | Cloak of Spell Focus; Cloak of Protection is the +1 AC/all-saves defensive swap | **Cloak of the Weave** for +1 spell attack/DC and Absorb Elements |
+| **Gloves** | **Winter's Clutches** from Lady Esther or the Myconid reward — two Frost turns per Cold attack | **Winter's Clutches**; each Hellrime beam is an independent attack, so AOE Status Fixer's placeholder clears between beams | **Winter's Clutches**; Markoheshkir adds another two Frost turns once per attack |
+| **Boots** | Hoarfrost Boots only until Mourning Frost is assembled, then **Boots of Stormy Clamour** | **Boots of Stormy Clamour** — Blind and Frost applications feed two Reverberation once per attack; Winter Spirit supplies ice immunity from character 13 | **Boots of Stormy Clamour**; Fixation gets the pair's ice-proof footwear |
+| **Amulet** | **Necklace of Elemental Augmentation** from Crèche Y'llek; Amulet of Misty Step before the crèche | **Necklace of Elemental Augmentation** | **Necklace of Elemental Augmentation**; Amulet of the Devout is the +2 DC control swap |
+| **Rings** | Crusher's Ring / Ring of Protection as uncommitted utility; no Act I ring is part of the engine | **Snowburst Ring + Callous Glow Ring** — ice around every Cold target, plus 2 Radiant per illuminated damage event for Glaring Frost's alternate branch | **Snowburst + Callous Glow**; Coruscation is the attack-debuff swap when Cold immunity is not in the encounter |
+| **Trinket** | Pearl of Power from Dhourn; Professor Orb is the skill swap | Lens of Astute Observation (+3 Investigation) or Hourglass of Distorted Perception (three-turn Haste, once/short rest) if Fixation is not using it | **Codex of the Arcanes** from Lorroakan — +3 spell attacks and +3 spell save DC; it also grants Cone of Cold, Flame Strike and Blade Barrier |
+
+### Decisive installed implementations
+
+- **The necklace is settled, not an open test.** Its final passive is an `OnDamage`
+  `DamageBonus(max(1,SpellCastingAbilityModifier))` gated by a native elemental cantrip damage
+  type. Hellrime is natively Cold and every beam is a damage event, so this is **Wisdom per beam**.
+  **[database: Homebrew Spells, load order 247]**
+- **Winter's Clutches remains a multi-beam item.** AOE Status Fixer holds a placeholder until one
+  attack resolves, converts it to two real Frost turns, then removes the placeholder. Hellrime's
+  beams are independent attacks. Coldbrim's `DO_NOT_REMOVE` placeholder is instead once per turn.
+  **[database + indexed runtime Lua fallback]**
+- **Fixation, not Coldsnap, owns the ice-proof boots, and Battlemind Link is why it is not
+  optional.** Mourning Frost covers Coldsnap in Act I; Winter Spirit supplies personal
+  `PRONE_ICE` immunity from character 13. Fixation, unarmoured on the rebuilt chassis, has
+  neither — and `MESMERIST_BATTLEMINDLINK`'s `AuraRadius "6"` **[database: `Mesmerist`, load order
+  431]** keeps it standing inside the beams' `WaterFrozen` carpet for the whole fight, because
+  `Advantage(AttackRoll)` from `BATTLEMIND_BONUS` stops the moment either body leaves the 6 m aura.
+
+Do not wear Icebite Robe merely to complete the visual set. Ring of Elemental Infusion is also a
+melee follow-up rider and has no place in the two-Action beam routine.
 
 ---
 
@@ -571,6 +620,14 @@ constant `k` = **+3 / +5 / +8**; §3 is computed; the rest read against the act 
 than +6 of Winter Spirit rider on each beam in Act III, and dropping `Skilled Expert` leaves
 Dexterity at 15, so Act II's AC reads **20** rather than 21.
 
+**Re-derived a second time against the checkpoints.** Three more inputs moved: ki is the Monk
+level, so the Act I checkpoint (character 8, Monk 1) has **2**, not 4 — a Flurry every other
+round; the Act II checkpoint (character 15) is **Druid 8**, so the strongest credited area cast
+is **Ice Storm**, not Cone of Cold, which arrives at character 16; and §2's beam share now takes
+the rubric's `0.65/0.775` attack-roll-area correction — the same term the partner's sheet has
+always carried, because par's area damage is save-for-half and a beam that misses deals nothing.
+The blind's advantage stays on §1 only: spread beams open on fresh, un-blinded targets.
+
 > **This table is the body scored alone, with no accuracy multiplier.** The pair sheets apply one
 > for Glaring Frost's own routine Blind — `pair-schema.md` tier 1, save-gated, `1.19` — times this
 > body's **attack-roll share**, because Friar's Retribution is Radiant and ColdSoul is Cold and
@@ -578,7 +635,7 @@ Dexterity at 15, so Act II's AC reads **20** rather than 21.
 >
 > | act | attack rolls | share | lag | `mult.st` |
 > |---|---|---:|---:|---:|
-> | **I** | 4 beams (38) + Flurry (11) of 53 | 92.5% | 5/6 | **1.15** |
+> | **I** | 4 beams (38) + Flurry (5.5) of 47.5 | 91.6% | 5/6 | **1.15** |
 > | **II** | 6 beams (69) + Flurry (13) of 87 | 94.3% | 7/8 | **1.16** |
 > | **III** | 8 beams (100) + Flurry (13) of 121 | 93.4% | 9/10 | **1.16** |
 >
@@ -589,23 +646,25 @@ Dexterity at 15, so Act II's AC reads **20** rather than 21.
 
 | axis | I | II | III |
 |---|---|---|---|
-| Single-target | **3** | 3 | **4** |
-| AoE | 3 | **5** | **5** |
+| Single-target | **2** | 3 | **4** |
+| AoE | 2 | **5** | **5** |
 | Durability | 4 | **5** | **5** |
 | Actions | 2 | 3 | 3 |
 | Control (single) | 4 | 4 | 4 |
 | Control (area) | 3 | 4 | 4 |
 | Rescue | 4 | 4 | 4 |
-| Skills | 3 | 3 | 3 |
+| Skills | 2 | 3 | 4 |
 | Saves | 4 | 4 | 4 |
 | Endurance | 4 | 4 | 4 |
 
 **§1 Single-target.** Both Actions on one target. Beams are `LevelMapValue(EldritchBlast)` — 2 per
-Action at char 8, 3 at 15, 4 at 20 — and one Flurry a round is what 4 ki supports across a fight.
+Action at char 8, 3 at 15, 4 at 20. Ki is the Monk level: **2 at the Act I checkpoint** (Monk 1 at
+character 8), 4 from Monk 3 — so Act I supports a Flurry every other round, the later acts one a
+round.
 
 | | beams | Flurry | Retribution | ColdSoul | raw | inst | with `k` | ratio | rung |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **I** (char 8, WIS 21) | 4 × 9.5 = 38 | 11 | 4 | — | 53 | 6.4 | 72 | 1.20 | **3** |
+| **I** (char 8, WIS 21) | 4 × 9.5 = 38 | 5.5 | 4 | — | 47.5 | 5.4 | 64 | 1.06 | **2** |
 | **II** (char 15, WIS 22) | 6 × **11.5** = 69 | 13 | 5 | — | **87** | 8.4 | 129 | 1.48 | **3** |
 | **III** (char 20, WIS 24) | 8 × **12.5** = 100 | 13 | 5 | 3 | **121** | 10.8 | 207 | 1.69 | **4** |
 
@@ -624,23 +683,27 @@ is why the same two features are worth three times as much there.
 
 **§2 AoE.** Beams spread across four targets, one Action on a slot spell about 70% of rounds, and
 retaliation discounted to ~2 procs because blinded enemies attack at disadvantage and miss. At the
-Act II checkpoint Coldsnap is Druid 9, so **Cone of Cold**, not Ice Storm, is the strongest credited
-four-target cast. Its `8d8` plus Winter Spirit's `+6 Cold` rider is `42` per target before the
-availability discount: `4 × 42 × 0.7 = 118`.
+Act II checkpoint Coldsnap is **Druid 8**, not Druid 9 — Cone of Cold arrives at character 16 — so
+**Ice Storm** (Druid 7, character 14) is the strongest credited four-target cast: `2d8 + 4d6` (23)
+plus Winter Spirit's `+6` rider plus Elemental Adept's `+1` is `30` per target,
+`4 × 30 × 0.7 = 84`. The beam share then takes the rubric's `0.65/0.775` attack-roll-area
+correction (`× corr` below), because par's area damage is save-for-half and a beam that misses
+deals nothing; the blind's advantage is credited on §1 only.
 
-| | beams | slot spell | retaliation | raw | inst | with `k` | ratio | rung |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| **I** | 4 × 9.5 = 38 | none — Druid 2 | 15 | 53 | 5.5 | 70 | 1.45 | **3** |
-| **II** | 3 × **11.5** = 34 | Cone of Cold × 0.7 = **120** | 24 | **179** | 7.8 | 218 | 3.35 | **5** |
-| **III** | 4 × **12.5** = 50 | Cone of Cold × 0.7 = **123** | 31 | **204** | 9.8 | 282 | 3.44 | **5** |
+| | beams | slot spell | retaliation | raw | inst | with `k` | × corr | ratio | rung |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **I** | 4 × 9.5 = 38 | none — Druid 2 | 15 | 53 | 5.5 | 70 | 0.884 | **1.28** | **2** |
+| **II** | 3 × **11.5** = 34.5 | Ice Storm × 0.7 = **84** | 24 | **142.5** | 7.8 | 182 | 0.961 | **2.68** | **5** |
+| **III** | 4 × **12.5** = 50 | Cone of Cold × 0.7 = **123** | 31 | **204** | 9.8 | 282 | 0.960 | **3.31** | **5** |
 
-Cone of Cold moves for the same two reasons the beams do: its `8d8` carries Winter Spirit's rider
-at `+6` then `+7`, and Elemental Adept adds a point to each of the four target instances —
-`4 × 43 × 0.7` in Act II and `4 × 44 × 0.7` in Act III.
-
-Both later acts clear the rung-5 line even with the retaliation lines discounted. Snilloc's and Ice
-Storm remain the cheaper and longer-range tactical casts, but the damage axis credits the strongest
-available four-target routine rather than averaging weaker alternatives into it.
+Both slot spells move for the same two reasons the beams do: their dice carry Winter Spirit's
+rider at `+6` then `+7`, and Elemental Adept adds a point per target instance. Act I falls to
+rung 2 under the correction — four bare beams against par's two Fireballs. Act II clears the
+rung-5 line by `0.03`, and it leans on Winter Spirit's rider landing on a save spell — the same
+Hit-flag reading the open items already carry; if that reading fails, the act reads `2.44` and
+rung 4. Act III clears with room. Snilloc's and Sleet Storm remain the cheaper tactical casts, but
+the axis credits the strongest available four-target routine rather than averaging weaker
+alternatives into it.
 
 **§3 Durability.** `pool ratio × 0.65/p_hit`, with Lone Wolf's +30% HP and halving excluded as
 universal to every chassis in the ledger.
@@ -674,12 +737,13 @@ Flurry of Healing and Harm, which is Way of Mercy.
 the rubric's own Warlock ruling — there is a real slot pool here and it is worth naming.
 
 > **Skills, derived rather than judged.** `scoring.py`'s `derive_skills` on this body's own
-> modifiers gives **2 / 3 / 2**, not the 3 / 3 / 3 this table used to assert. Dropping
-> `Skilled Expert` costs Investigation Expertise but **moves no rung** — the derivation reads the
-> same both ways, because Perception against the 15–25 trap band is what binds and Dungeon Delver
-> already maxes it. What the axis actually reports is a pair value, and it is computed on the
-> *evidence* rather than on these rungs: see the pair sheets, where Coldsnap and Fixation together
-> read **4 / 4 / 4**.
+> modifiers — Perception `+11/+16/+18` (Dungeon Delver's Expertise), Investigation `+6/+10/+12`
+> (**Deft Explorer's Canny, now priced**), Persuasion `+2/+4/+5`, plus the untrained
+> Sleight of Hand `+2` that keeps Araj from reading as unrollable — gives the **2 / 3 / 4** the
+> table carries. What the axis actually reports is a pair value, computed on the *evidence*
+> rather than on these rungs: with Expertise on both Perception and Investigation the pair reads
+> **5 / 5 / 5** — double Expertise on a Wisdom body is what finally clears the 15–25 trap band's
+> mean, which no proficiency-only pair does.
 
 > **The race moves no rung either.** Ranger 1 already carried Perception and Investigation, so
 > Astral Knowledge and Keen Senses both land on proficiencies the chassis held. The only skill
@@ -697,16 +761,32 @@ the rubric's own Warlock ruling — there is a real slot pool here and it is wor
   Retribution is Cold. Two answers now: switch the beam container to **Brimstone** or
   **Vitriolic**, which keeps the `1d8` at full weight and loses only the rider, and **Word of
   Radiance / Sacred Flame** for the Radiant branch of Glaring Frost. Cold *resistance* is no
-  longer a problem at all from character 10 — `Elemental Adept: Cold` pierces it.
-- **Investigation Expertise is uncovered in the scored rungs.** `Skilled Expert` left both sheets.
-  Coldsnap keeps plain proficiency from Ranger 1 (`+6` at level 20) and Fixation has advantage on
-  it from Astral Intuition — worth about `+3.3` — and secret doors and switches run DC 15–20.
-  **The Natural Explorer pick closes it for free**: `Deft Explorer`'s Canny is double proficiency
-  bonus on one already-proficient skill **[data]**, so Investigation reads `+12` at level 20. The
-  scores below are the pre-Canny numbers and have not been re-derived — see *Open decisions*.
-- **The ice is a liability for the partner.** Every beam lays `CreateSurface(2,2,WaterFrozen)`
-  and this body is immune to `PRONE_ICE` from Druid 6; Fixation is not, and no feat in the list
-  grants that immunity. See the pair sheet.
+  longer a problem at all from character 10 — `Elemental Adept: Cold` pierces it. The pair's
+  off-type cover is **Force**, not Psychic: Fixation's rebuilt chassis is **Mesmerist 12 (Aspect of
+  the Eyebiter) / Sorcerer 6 (Draconic Bloodline — Amethyst) / Warlock 2 (Hexblade)**, and Amethyst
+  routes Elemental Affinity to Force **[database: Draconic Bloodline Expanded, load order 408 —
+  `ElementalAffinity_Damage`]**, so its eight Eldritch Blast beams are `1d8` Force with Charisma
+  riders. The Psychic `Projectile_IllusionaryDart` **[database: Homebrew Spells, load order 247]**
+  survives on that sheet only as an off-type fallback, so Force immunity, not Psychic immunity,
+  is the case where both bodies need a third type.
+- **Investigation Expertise is covered, and it is now priced.** `Skilled Expert` left both sheets,
+  but `Deft Explorer`'s Canny — a locked character-1 pick — is double proficiency on Investigation
+  **[data]**, so it reads `+6/+10/+12` across the acts. The §8 rungs above and the pair sheet's
+  gate table are derived with it; it is the single input that lifts the pair's Skills to 5/5/5.
+- **The ice is a liability for the partner, and Battlemind Link's 6 m leash makes it structural.**
+  Every beam lays `CreateSurface(2,2,WaterFrozen)` and this body is immune to `PRONE_ICE` from
+  Druid 6; Fixation is not, and no feat in the list grants that immunity. The two facts now
+  interact: the pair's accuracy runs through `MESMERIST_BATTLEMINDLINK`'s `AuraRadius "6"`
+  **[database: `Mesmerist`, load order 431]**, whose `Advantage(AttackRoll)` only pays while each
+  body stands inside the other's 6 m aura — so **holding the bonus live pulls Fixation into the
+  ice carpet this body is generating**, eight surfaces a round. Mitigation is already routed in the
+  gear table: the pair's `PRONE_ICE`-immune footwear goes to **Fixation** in every act it is not
+  needed here, which is from the moment Mourning Frost's own ice immunity covers Coldsnap and
+  permanently once Winter Spirit's `StatusImmunity(PRONE_ICE)` gate opens at character 13. The
+  residual tension is the Act I window before Mourning Frost is assembled — when Coldsnap is
+  wearing the ice-proof boots itself — and any round Fixation swaps them for another effect. Then
+  the choice is Fixation prone or the pair's attack-roll advantage dropped for a turn. See the
+  pair sheet.
 - **Blind is a CON save** at DC 20. Brutes and undead pass it, and a blinded caster still casts —
   BG3's Blindness only imposes attack disadvantage and grants advantage against.
 - **No Extra Attack anywhere, and the melee fallback is now genuinely bad.** Dropping Druidic
@@ -724,20 +804,12 @@ the rubric's own Warlock ruling — there is a real slot pool here and it is wor
 
 ## Open decisions and unverified items
 
-- **Three character-1 and character-7 picks are unpriced against the rungs.** The progression
-  table now names every locked selector, and three of them do things the score table above was
-  written without:
-  - **Natural Explorer → Deft Explorer, Canny on Investigation.** Expertise, so `+6` → `+12`.
-    §8 is derived from modifiers by `scoring.py`'s `derive_skills`, so this is a live input.
-  - **Favoured Enemy → Beast Tamer.** Find Familiar once per short rest is a third body, and
-    §4 Actions is this body's weakest axis at 2 / 3 / 3.
-  - **Peace's level-1 skill → Persuasion.** `−1` → `+5` at level 20. It does not move the
-    *pair* gate against Fixation, whose Deception and Persuasion both beat it, but it is a
-    scored skill and it moves this body alone.
-
-  All three are upgrades, so the rungs above are a floor rather than a claim that is now wrong.
-  **Re-derive §4 and §8 before the next ledger publish** — the cascade is three pair sheets and
-  the finalists board, which is why it is not folded in here.
+- **One character-1 pick is still unpriced against the rungs.** Canny on Investigation and
+  Peace's Persuasion are now folded into §8's derivation (**2 / 3 / 4** alone, **5 / 5 / 5** on
+  the pair sheet). **Favoured Enemy → Beast Tamer** is not: Find Familiar once per short rest is
+  a third body, and §4 Actions is this body's weakest axis at 2 / 3 / 3. **Re-derive §4 before
+  the next ledger publish** — the cascade is three pair sheets and the finalists board, which is
+  why it is not folded in here.
 - **`~~Eldritch Blast's attack ability~~` — closed.** The previous sheet's largest open risk was
   whether Spell Sniper's class-UUID-free selector resolved the cantrip to Wisdom. Elemental Blast
   is granted through `UnlockSpell` in a passive's `Boosts` field instead, so the inference is no
@@ -767,9 +839,9 @@ the rubric's own Warlock ruling — there is a real slot pool here and it is wor
   proficiency list before you commit; confirm there. Astral Knowledge, Keen Senses, Astral Fire
   and Starlight Step are all in the mod's own pak and are not at issue.
 - **The author's intent was Druid-only.** The Winter Spirit rider's missing class predicate is a
-  bug, not a design. A Circle of Winter update that closes it removes +6 per beam. The build still
-  functions without it — `1d8` Force plus nothing is no longer a blind engine, so the correct
-  fallback in that world is Elemental Blast after all.
+  bug, not a design. A Circle of Winter update that closes it removes the Wisdom rider from every
+  beam, but **does not switch the engine off**: Hellrime is natively Cold and still fires Glaring
+  Frost. Damage falls; the Blind loop survives.
 - **Two Eldritch Adept feats coexist** — `SYR_EldritchAdept` (Essential, +1 ability, vanilla
   invocations only) and `EldritchAdept` (Mizora, no ability, the Level 2 list). Different names,
   different UUIDs, neither overrides the other. `listo-10.2-feats.md` calls the load-order winner

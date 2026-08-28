@@ -8,6 +8,7 @@ whichever skills you want.
 ```
 /plugin marketplace add gtosh4/claude-skills
 /plugin install listo-build@gtosh4-skills
+/plugin install artifact-publisher@gtosh4-skills
 ```
 
 Restart Claude Code (or run `/plugin`) and the skill is live — Claude picks it up
@@ -33,6 +34,13 @@ ships 10.2). The skill checks everything load-bearing against a bundled copy of 
 
 Ask for a build — "plan me a Listo gloomstalker", "what feats are worth taking on a Lone
 Wolf paladin" — and it'll work from what the modlist actually contains.
+
+### `artifact-publisher`
+
+Adds MCP tools for listing, reading, and updating existing `claude.ai/code/artifact` pages.
+Updates require reading the live source first and carry its version as an optimistic-concurrency
+precondition, so a concurrent publish is refused instead of overwritten. It uses an existing OMP
+or Claude Code OAuth login and never returns credentials through MCP.
 
 ## Adding more skills
 

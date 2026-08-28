@@ -302,8 +302,12 @@ Seven playable, and one Metamagic-adjacent note. All confirmed present.
     ancestry (a damage type and a free spell). **L6** Elemental Affinity — add your **Charisma
     modifier** to damage of your ancestry's type, and spend 1 sorcery point for Resistance to it.
     **L11** Draconic Wings (flight). **L18** Draconic Presence (`Expansion`).
-  - `13563` adds **27 new ancestries** on top of the vanilla 10, each with a granted spell and a
-    damage type:
+  - **[database]** `13563` **owns** the selectable ancestry list
+    `c69c33a2-671c-46e1-a92c-656fe64ed447` (`source` **Draconic Bloodline Expanded**,
+    `load_order` **408**) and fills it with **37 entries**, replacing base game's 10 outright.
+    Every ancestry named here and in the map below is therefore **genuinely pickable at
+    character creation**, not merely defined somewhere in the pak. The **27 new** ones, each
+    with a granted spell and a damage type:
     - **5e**: Shadow (Arms of Hadar / **Necrotic**), Dracolich (Hex / Poison), Hallow (Sanctuary /
       **Radiant**), Deep (Dissonant Whispers / **Psychic**), Moonstone (Faerie Fire / **Radiant**),
       Solar (Searing Smite / Fire), Lunar (Ice Knife / Cold)
@@ -329,6 +333,58 @@ Seven playable, and one Metamagic-adjacent note. All confirmed present.
   that it holds up across all three Acts. Draconic is also the only bloodline that fixes the d6
   hit die (+1 HP/level) and the no-armour problem (AC 13 base), which matters more when losing
   one of two characters ends the fight.
+
+#### Elemental Affinity — the authoritative ancestry → damage-type map
+
+**[database]** Parsed out of the `StatsFunctors` of **`ElementalAffinity_Damage`** (`source`
+**Draconic Bloodline Expanded**, `load_order` **408**) — the single record that decides which
+damage type each ancestry actually scales. Where an ancestry's flavour text, a mod page or a
+wiki disagrees with this table, **this table wins**.
+
+| Elemental Affinity damage type | Ancestries |
+|---|---|
+| **Force** | Amethyst, Force, Cobalt |
+| **Acid** | Black, Nickel, Steel, Brown, Copper |
+| **Cold** | Silver, White, Chromium, Lunar |
+| **Fire** | Red, Gold, Brass, Solar, Iron, Purple, Orange, Prismatic |
+| **Lightning** | Blue, Bronze |
+| **Poison** | Green, Dracolich |
+| **Radiant** | Crystal, Hallow, Moonstone, Mercury |
+| **Psychic** | Emerald, Deep, Pink |
+| **Thunder** | Sapphire |
+| **Necrotic** | Topaz, Shadow |
+| **Bludgeoning** | Yellow, Tungsten |
+| **Piercing** | Grey |
+
+#### How Elemental Affinity actually fires — a two-hop chain
+
+**[database]** Anyone who opens `DraconicAncestry_<X>`, finds no damage bonus and concludes the
+mod is broken has read the wrong record. Three records are involved:
+
+1. **The ancestry passive** — `DraconicAncestry_Amethyst`, `DraconicAncestry_Force`,
+   `DraconicAncestry_Cobalt` and the rest (`source` **Draconic Bloodline Expanded**,
+   `load_order` **408**) — **only unlocks a free spell.** It carries no damage bonus at all.
+2. **`ElementalAffinity_Damage`**, granted at **Draconic level 6** alongside
+   `ElementalAffinity_Resistance_Check` (same `source`, `load_order` **408**), fires `OnCreate`
+   and applies **a per-type technical status** chosen from the character's ancestry.
+3. **The technical status carries the actual boost.** On the Force branch,
+   **`ELEMENTALAFFINITY_FORCE_EXTRA_DAMAGE_TECHNICAL`** =
+   `IF(IsSpell() and IsDamageTypeForce()):DamageBonus(max(0, CharismaModifier))`.
+
+Read the gate carefully: **`IsSpell()`**, applied **per damage instance**. That is why the bonus
+multiplies across every Magic Missile dart and every Eldritch Blast beam rather than landing
+once per cast — and why Draconic 6 is the whole reason to take six Sorcerer levels on a
+multi-instance Force engine.
+
+**Picking inside a damage type.** Ancestries sharing a row of the map above are mechanically
+identical for Elemental Affinity purposes, so **the free spell is the only tiebreak.** For the
+three Force ancestries (`load_order` **408**):
+
+| Ancestry | Free spell |
+|---|---|
+| **Amethyst** | `Projectile_MagicMissile` |
+| **Force** | `Shout_Shield_Sorcerer` |
+| **Cobalt** | `Zone_Thunderwave` |
 
 ### Wild Magic (vanilla) + Wild Magic Subclass - Additional Spells
 

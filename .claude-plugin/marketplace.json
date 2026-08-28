@@ -11,6 +11,11 @@
       "name": "listo-build",
       "source": "./plugins/listo-build",
       "description": "Plan Baldur's Gate 3 character builds for the Listonomicon modlist, verified against the shipped 10.2 manifest."
+    },
+    {
+      "name": "artifact-publisher",
+      "source": "./plugins/artifact-publisher",
+      "description": "List, read, and conflict-safely update claude.ai Code artifacts through MCP."
     }
   ]
 }

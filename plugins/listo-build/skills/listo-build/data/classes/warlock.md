@@ -45,7 +45,9 @@ Cross-references, not restated here: feats in `data/listo-10.2-feats.md`, gear i
 From `5-ChangeLog.md` v10.0 (item 38) — **these are current in 10.2**:
 
 - **Eldritch Blast base damage reduced to 1d8 per beam, from 1d10.**
-- **Repelling Blast now allows a Strength saving throw** (vanilla is automatic).
+- **Repelling Blast now allows a Strength saving throw** (vanilla is automatic) — **and in the
+  shipped 10.2 database the push does not fire at all.** See *Defect: Repelling Blast and Grasp
+  of Hadar are non-functional in this install* under `## Invocations`.
 
 Older, still in force:
 
@@ -208,6 +210,24 @@ Six are available. Four vanilla, two modded.
 - **Mechanics:** Level 1 **Hex Warrior**, **Bind Hexed Weapon**, **Hexblade's Curse**; expanded
   spells from 1 (Shield, Wrathful Smite). Level 6 **Accursed Spectre**. Level 10 **Armour of
   Hexes**. Level 14 **Master of Hexes** (Expansion `279`).
+- **[database] Exact Warlock 1 package** — records `HexWarrior`, `HexbladesCurse` and
+  `Target_HexbladesCurse`, `source` **Base Game (`GustavX.pak`)**, `load_order` **3**:
+  - **`HexWarrior`** =
+    `Proficiency(MediumArmor);Proficiency(Shields);Proficiency(MartialWeapons);UnlockSpell(Shout_Hexblade_Bind)`.
+    Hexblade is therefore the **only Warlock 1 that returns proficiencies** — medium armour,
+    **shields** and martial weapons — which is what makes it the dip of choice for an
+    unarmoured Charisma caster who still wants a shield in hand.
+  - **`Target_HexbladesCurse`** (the action): `UseCosts BonusActionPoint:1`, `TargetRadius 18`,
+    `ApplyStatus(HEXBLADES_CURSE,100,10)` — **10 turns** — `Cooldown OncePerShortRest`,
+    `SpellFlags IsHarmful`. **It carries no `IsConcentration` flag**, so holding the curse costs
+    nothing and does not compete with a concentration spell.
+  - **`HexbladesCurse`** (the passive) =
+    `IF(HasStatus('HEXBLADES_CURSE',context.Target,context.Source)):DamageBonus(ProficiencyBonus)`
+    and `IF(...):ReduceCriticalAttackThreshold(1)` against the cursed target.
+  - **The `DamageBonus(ProficiencyBonus)` has no weapon gate** — the condition tests only that
+    the target carries the curse. Whether it therefore adds **+ProficiencyBonus to every
+    Eldritch Blast beam** landing on that target is `(unverified)`: the stat block permits it,
+    and one in-game damage tooltip on a cursed target settles it.
 - **Duo relevance:** the only patron that makes Warlock 1 a *melee* dip — Hex Warrior puts
   Charisma on a weapon at level 1, without waiting for Pact of the Blade at 3. Note that
   Mizora's Rewards modifies **Hexblade's Pact** alongside Pact of the Blade (below), and that
@@ -301,6 +321,13 @@ Six are available. Four vanilla, two modded.
     `PERILSOFWARP` to **you** for 1 turn. The status is `Additive`, so duration accumulates, and
     it carries `MultiplyEffectsByDuration` on `IncreaseMaxHP(-LevelMapValue(Perils))`:
     **maximum hit points lost = the die × the remaining duration.**
+    - **[database]** confirmed against the compiled DB: the level 1 passive `WarpMagic`
+      (`source` **(DTO) Otherworldly Archetypes**, `load_order` **343**) fires
+      `ApplyStatus(SELF,PERILSOFWARP,100,1)` on each Eldritch Blast cantrip hit, and
+      `PERILSOFWARP` is `IncreaseMaxHP(-LevelMapValue(Perils))` with `StackType Additive`.
+      **This is a level 1 patron grant that scales self-harm with beam count**, so it is a
+      hazard for exactly the build that wants Eldritch Blast most, and it gets strictly worse
+      at character 5 / 10 / 17 as beams are added.
     - Die by **character** level: **1d4** (1–4), **1d6** (5–8), **1d8** (9–12), **1d10**
       (13–16), **1d12** (17–20). The site's "1d6/1d8/1d10 at 5/11/17" is wrong on both the
       steps and the breakpoints.
@@ -449,6 +476,34 @@ Base game gives you 2 at Warlock 2, then +1 each at 5, 7, 9 and 12 (six total by
 Expansion's optional picks at 15 and 18. Three mods add to the pool, and they are explicitly
 compatible with each other.
 
+### What the Warlock 2 invocation list actually contains (`333fb1b0-9398-4ca8-953e-6c0f9a59bbed`)
+
+**[database]** The level 2 pick is
+`SelectPassives(333fb1b0-9398-4ca8-953e-6c0f9a59bbed,2,WarlockInvocations)`. That list is
+**owned by Invocations Expanded** (`load_order` **414**) and receives `MergedInto` unions from
+**Expansion Level 13-20** (`load_order` **321**), **Mizoras Rewards** (`load_order` **416**) and
+**Pact of the Shroud** (`load_order` **417**). Effective contents:
+
+FrightfulBlast · SickeningBlast · ElementalBlast · BeshadowedBlast · DeterioratingBlast ·
+HammerBlast · EldritchMind · RepellingBlast · GraspOfHadar · InvestmentOfTheChainMaster ·
+ArmorOfShadows · AgonizingBlast · EldritchSpear · EldritchSmite · LanceOfLethargy · DragonWard ·
+LeapsAndBounds · CloakOfFlies · AspectOfTheMoon · OneWithShadows · ImprovedPactWeapon ·
+GiftOfTheEverLivingOnes · BeastSpeech · BeguilingInfluence · DevilsSight · FiendishVigor ·
+MaskOfManyFaces · ThiefOfFiveFates · EldritchSight · POTS_ShroudOfSafePassage
+
+**This corrects the level brackets printed in the mod sections below.** **Repelling Blast,
+Eldritch Mind, Investment of the Chain Master, Armour of Shadows, Frightful Blast, Sickening
+Blast and Elemental Blast are all level 2 in this install** — the merged list flattens most of
+the prerequisites the individual mod pages advertise. **A plan does not need Warlock 5 to reach
+them.**
+
+**Full cadence, from the DB's progression rows:** **two picks at Warlock 2**
+(`333fb1b0-9398-4ca8-953e-6c0f9a59bbed`), then one each at **5** (`8adab8f9`), **7**
+(`39efef92`), **9** (`a2d72748`), **12** (`ab56f79f`), and **15 and 18** (`be21d8e3`, from
+**Expansion Level 13-20**, `load_order` **321**). **`EldritchCone` and `EldritchLine` first
+appear in the level 9 list**, via Mizora's merge — they are absent from the level 2 list, so
+neither Eldritch Adept feat can reach them and they cost a real **Warlock 9**.
+
 ### Invocations Expanded — Patch 8 Update (`15872`)
 **File pulled:** `Invocations Expanded 1.7-15872-1-7-1775654229.zip`. A community update of
 WinterBrick's original; the page's notes describe up to v1.5 while the archive is 1.7.
@@ -461,7 +516,10 @@ WinterBrick's original; the page's notes describe up to v1.5 while the archive i
 Adds (level prerequisite in brackets):
 
 - **[1] Eldritch Spear** — Eldritch Blast range ×1.5 *(tooltip does not update)*
-- **[1] Eldritch Mind** — advantage on Con saves for concentration
+- **[1] Eldritch Mind** — **[database]** `EldritchMind` (`source` **Mizoras Rewards**,
+  `load_order` **416**) is `using WarCaster_Bonuses` and declares **no boosts of its own**; its
+  only effect is the inherited `Advantage(Concentration)`. It is a **strict subset of the War
+  Caster feat**, not an independent effect — take one or the other, never both
 - **[1] Grasp of Hadar** — Eldritch Blast pulls the target 15 ft toward you
 - **[1] Lance of Lethargy** — Eldritch Blast reduces movement by 10 ft *(Listo added a Con save)*
 - **[1] Eldritch Smite** — spend pact slots for extra damage with pact weapons
@@ -485,8 +543,33 @@ Adds (level prerequisite in brackets):
 - **[12] Shroud of Shadow** — Invisibility once per short rest, no slot
 - Fixes **Mire the Mind**, **Sign of Ill Omen** and **Lifedrinker** (the last now works with
   ranged weapons), and broadens base **Pact of the Blade**'s summonable weapon types.
-- **Known issue:** Grasp of Hadar and Repelling Blast can both be toggled on; the one selected
-  last wins. Keep one active.
+- **Known issue, now superseded:** the mod's notes warn that Grasp of Hadar and Repelling Blast
+  can both be toggled on with the last-selected winning. In this install the question is moot —
+  **both do nothing at all.** See the defect note immediately below.
+
+### Defect: Repelling Blast and Grasp of Hadar are non-functional in this install
+
+**[database]** Dead in the compiled DB, and **confirmed dead in game by the user.**
+
+- The load-order-winning `Projectile_EldritchBlast` (`source` **Listo Master Spells Patch**,
+  `load_order` **755**) gates the push on
+  `HasStatus('REPELLING_BLAST_TRIGGER',context.Source)`.
+- **`REPELLING_BLAST_TRIGGER` is defined by no record anywhere in the database.** Its only
+  occurrence DB-wide is that one condition string in that one spell, so the gate can never open.
+- The `RepellingBlast` passive (same mod, `load_order` **755**) applies
+  `PASSIVE_REPELLING_BLAST` instead — a base-game status whose `Boosts` is `None`. Nothing in
+  the load order applies the trigger the spell is looking for.
+- `GraspOfHadar` is `using RepellingBlast` and declares **no `Boosts` and no `StatsFunctors` of
+  its own**, so it inherits the same dead chain.
+- The passive still carries `Properties = IsToggled;ToggledDefaultOn`, so **it appears live in
+  the hotbar and toggles like a working invocation.** There is no in-game signal that it is
+  inert; the only signal is that enemies never move.
+
+**Plan consequence:** never spend an invocation, an Eldritch Adept feat, or a build's
+positioning assumptions on Repelling Blast or Grasp of Hadar, and discount Listo's "Repelling
+Blast now allows a Strength saving throw" changelog line — there is no push to save against.
+It is a **one-line fix** on the pack's side (apply `REPELLING_BLAST_TRIGGER`, or restore the
+original unconditional push) if it is ever repaired, so re-check after a pack update.
 
 ### Mizora's Rewards — More Warlock Invocations (`17046`)
 **File pulled:** `Mixora's Rewards-17046-1-0-0-10-1758856875.zip` (the typo is in the archive
@@ -538,14 +621,37 @@ subclasses' spell lists**, which they otherwise miss because of how Larian handl
 lists. **This is what makes The Celestial and The Psyker see the list's expanded spell pool.**
 Vanilla patrons already get them. Load near the bottom.
 
-### Eldritch Adept — two mods claim this feat name
+### Eldritch Adept — resolved: two separate feats, both selectable
 
-`listo-10.2-feats.md` documents **Essential Feats' (`5623`) Eldritch Adept**: learn one Eldritch
-Invocation (any that doesn't require a Warlock spell slot), **+1 INT/WIS/CHA**, and **can be
-taken multiple times**. **Mizora's Rewards also adds an "Eldritch Adept"** limited to one
-**2nd-level** invocation with no ability bonus. Which one wins in Listo's load order is
-`(unverified)` — but the feats file is the compiled reference and describes the Essential Feats
-version, so plan against that and expect the 2nd-level restriction to be the pessimistic case.
+**[database]** The load-order question is settled, and the answer is that there is no conflict:
+**the two feats have different internal names and different UUIDs, so neither overrides the
+other and both appear in the feat list.** `listo-10.2-feats.md` documents only the Essential
+Feats version; the Mizora one is a second, independent entry.
+
+| | `SYR_EldritchAdept` | `EldritchAdept` |
+|---|---|---|
+| `source` | **Essential Feats** | **Mizoras Rewards** |
+| `load_order` | **256** | **416** |
+| UUID | `8d0d3732-995d-43c3-ba07-dce6cc3e6223` | `dc1eca3b-f920-43bd-9f83-a10da912ec6c` |
+| Invocation picker | `SelectPassives(ae25190d-8513-40aa-9e7a-d2d57202b6a3,1)` | `SelectPassives(333fb1b0-9398-4ca8-953e-6c0f9a59bbed,1)` |
+| Ability bonus | `SelectAbilities(6d64a5f2-c26a-4af9-8957-7370ff51f0de,1,1)` — **Intelligence, Wisdom or Charisma** | **none** |
+| `CanBeTakenMultipleTimes` | **true** | **true** |
+| `Requirements` | **none** | **none** |
+
+**The decision-relevant difference is the picker list, not the ability bonus.**
+
+- **`ae25190d-8513-40aa-9e7a-d2d57202b6a3`** — Essential Feats' own list, **no merge
+  contributors**, exactly **eight** entries: **AgonizingBlast, ArmorOfShadows, BeastSpeech,
+  BeguilingInfluence, DevilsSight, FiendishVigor, MaskOfManyFaces, RepellingBlast**.
+- **`333fb1b0-9398-4ca8-953e-6c0f9a59bbed`** — the merged Warlock 2 list documented above,
+  roughly thirty entries.
+
+**Consequence, stated plainly:** the Mizora rider blasts — **Frightful, Sickening, Beshadowed,
+Deteriorating, Hammer** — and **Elemental Blast** are reachable **only** through Mizora's
+`EldritchAdept` or a real Warlock invocation slot. Through the half-feat version,
+**Agonizing Blast is the one useful invocation available**: Repelling Blast is dead (defect note
+above) and the remaining six are utility. Both feats are repeatable and neither carries
+`Requirements`, so a non-Warlock can take either, or both, or each of them twice.
 
 **Why this matters:** a non-Warlock can buy **Agonizing Blast** (a 2nd-level invocation, no slot
 required) with a feat — but Eldritch Blast itself comes from **Magic Initiate: Warlock** or
