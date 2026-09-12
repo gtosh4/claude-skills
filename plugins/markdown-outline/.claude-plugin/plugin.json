@@ -1,0 +1,8 @@
+{
+  "name": "markdown-outline",
+  "description": "Navigate markdown structurally over MCP: heading outlines carrying line ranges, section locate, and backlink lookup, so a caller reads or edits one section instead of paging a whole file.",
+  "version": "1.0.0",
+  "author": {
+    "name": "gtosh4"
+  }
+}

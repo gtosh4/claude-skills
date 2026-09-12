@@ -16,6 +16,11 @@
       "name": "artifact-publisher",
       "source": "./plugins/artifact-publisher",
       "description": "List, read, and conflict-safely update claude.ai Code artifacts through MCP."
+    },
+    {
+      "name": "markdown-outline",
+      "source": "./plugins/markdown-outline",
+      "description": "Structural markdown navigation over MCP: heading outlines with line ranges, section locate, and backlinks."
     }
   ]
 }

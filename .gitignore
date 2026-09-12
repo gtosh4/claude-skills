@@ -8,3 +8,6 @@ __pycache__/
 CLAUDE.md
 AGENTS.md
 *.json
+# plugin manifests are load-bearing: a clone without them is a broken plugin
+!plugins/**/.mcp.json
+!plugins/**/.claude-plugin/plugin.json
