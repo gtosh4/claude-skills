@@ -1,0 +1,8 @@
+{
+  "name": "artifact-publisher",
+  "description": "List, read, and conflict-safely update claude.ai Code artifacts from MCP clients using an existing OMP or Claude Code login.",
+  "version": "1.0.0",
+  "author": {
+    "name": "gtosh4"
+  }
+}
