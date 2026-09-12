@@ -54,6 +54,14 @@ WIKI_RE = re.compile(r"\[\[([^\]|#]*?)(?:#([^\]|]*))?(?:\|([^\]]*))?\]\]")
 MDLINK_RE = re.compile(
     r"\[[^\]]*\]\([ \t]*(?!https?://|mailto:|data:|#)([^)\s#]+)(?:#([^)\s]*))?[ \t]*\)"
 )
+# A bare or backticked filename in prose. Corpora that cite by name rather than
+# by link - `(*Heading* in `doc.md`)` - have real references that no link regex
+# can see, and renaming a doc breaks them exactly as it breaks a link.
+MENTION_RE = re.compile(r"[A-Za-z0-9_][\w.-]*\.(?:md|markdown|mdx)\b")
+# Masked out before mention scanning. Without these, `[ext](https://x/a.md)`
+# and a bare URL both yield a phantom mention of `a.md`.
+ANY_LINK_RE = re.compile(r"\[[^\]]*\]\([^)]*\)")
+URL_RE = re.compile(r"\b[A-Za-z][\w+.-]*://\S+")
 SETEXT_TRAP_RE = re.compile(r"^(?:-{3,}|\*{3,}|_{3,}|={3,})[ \t]*$")
 FM_INTEREST = (
     "title",
@@ -217,7 +225,49 @@ def _scalar(value: str) -> str:
     return value.strip()
 
 
-def parse_document(path: Path) -> dict[str, Any]:
+def _scan_inline(
+    line: str,
+    lineno: int,
+    links: list[dict[str, Any]],
+    tasks: list[tuple[int, str]],
+) -> None:
+    """Collect tasks and every kind of reference on one line."""
+    task = TASK_RE.match(line)
+    if task:
+        tasks.append((lineno, task.group(1)))
+
+    masked = list(line)
+
+    def blank(start: int, end: int) -> None:
+        masked[start:end] = " " * (end - start)
+
+    for match in WIKI_RE.finditer(line):
+        target = (match.group(1) or "").strip()
+        if target:
+            links.append({"line": lineno, "target": target, "kind": "wiki"})
+        blank(match.start(), match.end())
+    for match in MDLINK_RE.finditer(line):
+        links.append({"line": lineno, "target": match.group(1).strip(), "kind": "rel"})
+        blank(match.start(), match.end())
+
+    # Mentions are matched against the line with every link construct and bare
+    # URL blanked out. Otherwise `[combat.md](combat.md)` is also two mentions
+    # of its own filename, and `[ext](https://example.com/a.md)` - which is
+    # deliberately not a link - becomes a mention of `a.md`.
+    for match in ANY_LINK_RE.finditer(line):
+        blank(match.start(), match.end())
+    for match in URL_RE.finditer(line):
+        blank(match.start(), match.end())
+
+    seen: set[str] = set()
+    for match in MENTION_RE.finditer("".join(masked)):
+        target = match.group(0)
+        if target not in seen:
+            seen.add(target)
+            links.append({"line": lineno, "target": target, "kind": "mention"})
+
+
+def parse_document(path: Path, *, keep_lines: bool = False) -> dict[str, Any]:
     text, digest = _read_text(path)
     lines = text.split("\n")
     if lines and lines[-1] == "":
@@ -283,26 +333,23 @@ def parse_document(path: Path) -> dict[str, Any]:
             tables.append(
                 {"start": lineno - 1, "end": j, "rows": j - i - 1, "header": header}
             )
+            # The scanner jumps the table body so a row of dashes cannot be
+            # mistaken for a second separator, but the rows still hold links -
+            # an index table is usually where a doc's links all live. Tasks
+            # cannot appear here: TASK_RE is line-anchored and a row starts `|`.
+            for k in range(i + 1, j):
+                _scan_inline(lines[k], k + 1, links, tasks)
             i = j
             continue
 
-        task = TASK_RE.match(line)
-        if task:
-            tasks.append((lineno, task.group(1)))
-
-        for match in WIKI_RE.finditer(line):
-            target = (match.group(1) or "").strip()
-            if target:
-                links.append({"line": lineno, "target": target, "kind": "wiki"})
-        for match in MDLINK_RE.finditer(line):
-            links.append({"line": lineno, "target": match.group(1).strip(), "kind": "rel"})
+        _scan_inline(line, lineno, links, tasks)
         i += 1
 
     if fence_char is not None:
         fences.append({"start": fence_open, "end": nlines, "lang": fence_lang or "text", "unclosed": True})
 
     _attach(headings, lines, nlines, fences, tables, tasks, links)
-    return {
+    doc = {
         "path": str(path),
         "digest": digest,
         "lines": nlines,
@@ -316,6 +363,13 @@ def parse_document(path: Path) -> dict[str, Any]:
             "links": len(links),
         },
     }
+    if keep_lines:
+        # Opt-in so an outline over hundreds of files does not carry every
+        # file's text; md_grep is the only caller that needs it.
+        doc["text_lines"] = lines
+        doc["body_start"] = body_start
+        doc["fence_spans"] = [(f["start"], f["end"]) for f in fences]
+    return doc
 
 
 def _owner(headings: list[dict[str, Any]], line: int) -> dict[str, Any] | None:
@@ -598,13 +652,16 @@ def tool_locate(arguments: dict[str, Any]) -> dict[str, Any]:
         except OutlineError:
             continue
         front = doc["front_matter"]
+        # Every front-matter field, not a second hardcoded subset. The routing
+        # field a corpus actually uses is its own choice - `owns`, `tags`,
+        # `component` - and a locate that cannot see it is a locate that cannot
+        # answer "which doc covers this topic".
         meta = []
-        for key in ("title", "name", "summary", "description"):
-            if isinstance(front.get(key), str):
-                meta.append(front[key])
-        for key in ("tags", "aliases"):
-            if isinstance(front.get(key), list):
-                meta.extend(str(v) for v in front[key])
+        for value in front.values():
+            if isinstance(value, str):
+                meta.append(value)
+            elif isinstance(value, list):
+                meta.extend(str(item) for item in value)
         if any(pattern.search(m) for m in meta):
             hits.append({"path": doc["path"], "match": "front-matter", "digest": doc["digest"]})
             lines_out.append(f"{doc['path']}  [{doc['digest']}]  front-matter  {_fm_summary(front, 80)}")
@@ -639,6 +696,91 @@ def tool_locate(arguments: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def tool_grep(arguments: dict[str, Any]) -> dict[str, Any]:
+    """Regex over body prose, reporting the enclosing section for every match.
+
+    The gap this fills: plain grep returns a line with no idea which section
+    owns it, and md_locate knows sections but only searches headings. Finding a
+    claim and finding the thing you can read or edit are the same question.
+    """
+    query = arguments.get("query")
+    if not isinstance(query, str) or not query.strip():
+        raise OutlineError("`query` must be a non-empty string")
+    try:
+        pattern = re.compile(query, re.I)
+    except re.error as exc:
+        raise OutlineError(f"`query` is not a valid regex: {exc}") from None
+    files, total = _collect(arguments.get("path"))
+    limit = arguments.get("limit", 50)
+    if not isinstance(limit, int) or not 1 <= limit <= 500:
+        raise OutlineError("`limit` must be an integer between 1 and 500")
+    section = arguments.get("section")
+    section_re = None
+    if section is not None:
+        if not isinstance(section, str) or not section.strip():
+            raise OutlineError("`section` must be a non-empty string")
+        try:
+            section_re = re.compile(section, re.I)
+        except re.error as exc:
+            raise OutlineError(f"`section` is not a valid regex: {exc}") from None
+
+    hits: list[dict[str, Any]] = []
+    lines_out: list[str] = []
+    truncated = False
+    for path in files:
+        if truncated:
+            break
+        try:
+            doc = parse_document(path, keep_lines=True)
+        except OutlineError:
+            continue
+        headings = doc["headings"]
+        spans = doc["fence_spans"]
+        for idx in range(doc["body_start"], doc["lines"]):
+            line = doc["text_lines"][idx]
+            lineno = idx + 1
+            if not pattern.search(line):
+                continue
+            owner = _owner(headings, lineno)
+            if section_re is not None and (
+                owner is None or not section_re.search(owner["title"])
+            ):
+                continue
+            in_code = any(start <= lineno <= end for start, end in spans)
+            hit = {
+                "path": doc["path"],
+                "line": lineno,
+                "text": line.strip()[:200],
+                "section": owner["title"] if owner else None,
+                "section_range": [owner["line"], owner["end"]] if owner else None,
+                "digest": doc["digest"],
+            }
+            if in_code:
+                hit["in_code"] = True
+            hits.append(hit)
+            where = (
+                f"{owner['line']}-{owner['end']} {'#' * owner['level']} {owner['title']}"
+                if owner
+                else "(no section)"
+            )
+            tag = "  [code]" if in_code else ""
+            lines_out.append(f"{doc['path']}:{lineno}  in {where}{tag}\n    {hit['text']}")
+            if len(hits) >= limit:
+                truncated = True
+                break
+
+    result: dict[str, Any] = {"query": query, "searched": len(files), "matches": len(hits)}
+    if truncated:
+        result["note"] = f"stopped at the limit of {limit} matches"
+    elif total > len(files):
+        result["note"] = f"{total} files matched `path`; searched the first {len(files)}"
+    if arguments.get("format") == "json":
+        result["results"] = hits
+    else:
+        result["results"] = "\n".join(lines_out) if lines_out else "(no matches)"
+    return result
+
+
 def _link_keys(target: str) -> set[str]:
     stem = target.rsplit("/", 1)[-1]
     for suffix in (".md", ".markdown", ".mdx"):
@@ -653,6 +795,13 @@ def tool_backlinks(arguments: dict[str, Any]) -> dict[str, Any]:
         raise OutlineError("`target` must be a non-empty string")
     files, total = _collect(arguments.get("path"))
     wanted = _link_keys(target)
+    kinds = arguments.get("kinds", ["wiki", "rel", "mention"])
+    if not isinstance(kinds, list) or not kinds:
+        raise OutlineError("`kinds` must be a non-empty array")
+    unknown = [k for k in kinds if k not in ("wiki", "rel", "mention")]
+    if unknown:
+        raise OutlineError(f"unknown link kind(s): {', '.join(map(str, unknown))}")
+    kinds_set = set(kinds)
     try:
         target_real = _resolve(target).resolve()
     except OSError:
@@ -671,6 +820,8 @@ def tool_backlinks(arguments: dict[str, Any]) -> dict[str, Any]:
             pass
         for entry in doc["headings"]:
             for link in entry["links"]:
+                if link["kind"] not in kinds_set:
+                    continue
                 keys = _link_keys(link["target"])
                 if keys & wanted or (
                     link["kind"] == "rel"
@@ -751,10 +902,12 @@ TOOLS = [
         "name": "md_locate",
         "description": (
             "Find which markdown file and which section matches a regex, returning "
-            "path:start-end ranges. Searches heading text plus front-matter title, name, "
-            "summary, description, tags, and aliases. Use instead of grep when the goal is "
-            "to locate a section to read or edit, because grep returns matching lines "
-            "without the enclosing section's extent."
+            "path:start-end ranges. Searches heading text plus every front-matter field, "
+            "so a corpus that routes topics through its own key - owns, tags, component - "
+            "is searchable by that key. Use instead of grep when the goal is to locate a "
+            "section to read or edit, because grep returns matching lines without the "
+            "enclosing section's extent. To search body prose rather than headings, use "
+            "md_grep."
         ),
         "inputSchema": {
             "type": "object",
@@ -775,13 +928,51 @@ TOOLS = [
         "annotations": {"readOnlyHint": True},
     },
     {
+        "name": "md_grep",
+        "description": (
+            "Search markdown body text with a regex and get back, for every match, the "
+            "line AND the enclosing section with its line range. This is the tool for "
+            "finding a claim rather than a heading: plain grep returns a line with no "
+            "idea which section owns it, and md_locate knows sections but only searches "
+            "heading text and front matter. Matches inside fenced code are reported and "
+            "tagged rather than hidden. Pass `section` to search within one part of each "
+            "document."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "Case-insensitive regex."},
+                "path": {
+                    "anyOf": [
+                        {"type": "string"},
+                        {"type": "array", "items": {"type": "string"}, "minItems": 1},
+                    ],
+                    "description": "File, directory, glob, or array of them.",
+                },
+                "section": {
+                    "type": "string",
+                    "description": (
+                        "Case-insensitive regex on the enclosing heading; only matches "
+                        "inside a matching section are returned."
+                    ),
+                },
+                "limit": {"type": "integer", "minimum": 1, "maximum": 500, "default": 50},
+                "format": {"type": "string", "enum": ["text", "json"], "default": "text"},
+            },
+            "required": ["query", "path"],
+            "additionalProperties": False,
+        },
+        "annotations": {"readOnlyHint": True},
+    },
+    {
         "name": "md_backlinks",
         "description": (
             "List every markdown reference pointing at a document, reporting the referring "
-            "file, the line, and the enclosing section with its line range. Understands "
-            "Obsidian-style [[wiki-links]] and relative .md links. Use before renaming, "
-            "moving, or deleting a doc to see what breaks, and to find where a topic is "
-            "discussed from elsewhere."
+            "file, the line, and the enclosing section with its line range. Three kinds of "
+            "reference are found: Obsidian [[wiki-links]], relative .md links, and bare or "
+            "backticked filename mentions in prose - so a corpus that cites by name rather "
+            "than by link is covered too. Use before renaming, moving or deleting a doc to "
+            "see what breaks, and to find where a topic is discussed from elsewhere."
         ),
         "inputSchema": {
             "type": "object",
@@ -798,6 +989,14 @@ TOOLS = [
                     "description": "Corpus to scan: directory, glob, or array.",
                 },
                 "format": {"type": "string", "enum": ["text", "json"], "default": "text"},
+                "kinds": {
+                    "type": "array",
+                    "items": {"type": "string", "enum": ["wiki", "rel", "mention"]},
+                    "description": (
+                        "Reference kinds to report. Defaults to all three; pass "
+                        "[\"wiki\", \"rel\"] for links only."
+                    ),
+                },
             },
             "required": ["target", "path"],
             "additionalProperties": False,
@@ -809,6 +1008,7 @@ TOOLS = [
 TOOL_HANDLERS = {
     "md_outline": tool_outline,
     "md_locate": tool_locate,
+    "md_grep": tool_grep,
     "md_backlinks": tool_backlinks,
 }
 

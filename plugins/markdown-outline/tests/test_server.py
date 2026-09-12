@@ -401,12 +401,14 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(reply["result"]["protocolVersion"], "2025-03-26")
         self.assertEqual(reply["result"]["serverInfo"]["name"], "markdown-outline")
 
-    def test_tools_list_exposes_exactly_the_three_read_only_tools(self):
+    def test_tools_list_exposes_exactly_the_read_only_tools(self):
         tools = md.handle_message({"jsonrpc": "2.0", "id": 1, "method": "tools/list"})["result"]["tools"]
         self.assertEqual(
-            sorted(t["name"] for t in tools), ["md_backlinks", "md_locate", "md_outline"]
+            sorted(t["name"] for t in tools),
+            ["md_backlinks", "md_grep", "md_locate", "md_outline"],
         )
         self.assertTrue(all(t["annotations"]["readOnlyHint"] for t in tools))
+        self.assertEqual(sorted(md.TOOL_HANDLERS), sorted(t["name"] for t in tools))
 
     def test_every_tool_schema_is_closed_and_declares_required_inputs(self):
         for tool in md.TOOLS:
@@ -485,6 +487,126 @@ class DirectoryTests(unittest.TestCase):
         self.addCleanup(fx.close)
         result = md.tool_outline({"path": [str(fx.path), str(fx.path)]})
         self.assertEqual(result["files"], 1)
+
+
+class TableInteriorTests(unittest.TestCase):
+    """An index table is usually where a doc's links all live."""
+
+    def test_links_inside_table_rows_are_captured(self):
+        fx = Fixture(
+            "# Index\n\n"
+            "| Doc | Covers |\n"
+            "|---|---|\n"
+            "| [combat.md](combat.md) | hits |\n"
+            "| [bodies.md](bodies.md) | organs |\n"
+        )
+        self.addCleanup(fx.close)
+        doc = fx.parse()
+        targets = sorted(l["target"] for l in by_title(doc, "Index")["links"] if l["kind"] == "rel")
+        self.assertEqual(targets, ["bodies.md", "combat.md"])
+
+    def test_the_table_itself_is_still_one_table(self):
+        fx = Fixture("# T\n\n| A | B |\n|---|---|\n| - | - |\n| 1 | 2 |\n")
+        self.addCleanup(fx.close)
+        tables = by_title(fx.parse(), "T")["tables"]
+        self.assertEqual(len(tables), 1, "a dash-only row must not read as a second separator")
+        self.assertEqual(tables[0]["rows"], 2)
+
+
+class MentionTests(unittest.TestCase):
+    def test_a_backticked_filename_in_prose_is_a_mention(self):
+        fx = Fixture("# T\n\nSee (*Hits* in `combat.md`) for the shape.\n")
+        self.addCleanup(fx.close)
+        links = by_title(fx.parse(), "T")["links"]
+        self.assertEqual([(l["kind"], l["target"]) for l in links], [("mention", "combat.md")])
+
+    def test_a_link_is_not_also_counted_as_a_mention_of_itself(self):
+        fx = Fixture("# T\n\n[combat.md](combat.md)\n")
+        self.addCleanup(fx.close)
+        kinds = [l["kind"] for l in by_title(fx.parse(), "T")["links"]]
+        self.assertEqual(kinds, ["rel"])
+
+    def test_a_md_inside_an_external_url_is_not_a_mention(self):
+        fx = Fixture("# T\n\n[ext](https://example.com/a.md) and https://x.dev/b.md\n")
+        self.addCleanup(fx.close)
+        self.assertEqual(by_title(fx.parse(), "T")["links"], [])
+
+    def test_backlinks_finds_prose_citations_and_kinds_filters_them_out(self):
+        root = tempfile.TemporaryDirectory()
+        self.addCleanup(root.cleanup)
+        base = Path(root.name)
+        (base / "combat.md").write_text("# Combat\n", encoding="utf-8")
+        (base / "defence.md").write_text(
+            "# Defence\n\n## Answers\n\nTyped threats live in `combat.md`.\n", encoding="utf-8"
+        )
+        found = md.tool_backlinks({"target": "combat.md", "path": str(base), "format": "json"})
+        self.assertEqual(found["matches"], 1)
+        hit = found["results"][0]
+        self.assertEqual((hit["kind"], hit["section"], hit["section_range"]), ("mention", "Answers", [3, 5]))
+        links_only = md.tool_backlinks(
+            {"target": "combat.md", "path": str(base), "kinds": ["wiki", "rel"]}
+        )
+        self.assertEqual(links_only["matches"], 0)
+
+    def test_unknown_link_kind_is_rejected(self):
+        with self.assertRaises(md.OutlineError):
+            md.tool_backlinks({"target": "x.md", "path": ".", "kinds": ["bogus"]})
+
+
+class LocateFrontMatterTests(unittest.TestCase):
+    def test_any_front_matter_field_is_searchable_not_a_fixed_subset(self):
+        fx = Fixture("---\nowns: [organ, organ-schema]\n---\n\n# What an organ is\n")
+        self.addCleanup(fx.close)
+        found = md.tool_locate({"query": "organ-schema", "path": str(fx.path), "format": "json"})
+        self.assertEqual(found["matches"], 1)
+        self.assertEqual(found["results"][0]["match"], "front-matter")
+
+
+class GrepTests(unittest.TestCase):
+    def test_a_prose_match_reports_its_enclosing_section_range(self):
+        fx = Fixture(
+            "# Top\n"           # 1
+            "## Recovery\n"     # 2
+            "charges refill\n"  # 3
+            "## Threat\n"       # 4
+            "enmity\n"          # 5
+        )
+        self.addCleanup(fx.close)
+        found = md.tool_grep({"query": "charges", "path": str(fx.path), "format": "json"})
+        self.assertEqual(found["matches"], 1)
+        hit = found["results"][0]
+        self.assertEqual((hit["line"], hit["section"], hit["section_range"]), (3, "Recovery", [2, 3]))
+
+    def test_section_filter_restricts_matches_to_one_part_of_the_doc(self):
+        fx = Fixture("# Top\n## A\nneedle\n## B\nneedle\n")
+        self.addCleanup(fx.close)
+        found = md.tool_grep(
+            {"query": "needle", "path": str(fx.path), "section": "^B$", "format": "json"}
+        )
+        self.assertEqual([h["line"] for h in found["results"]], [5])
+
+    def test_front_matter_is_not_searched_as_body(self):
+        fx = Fixture("---\nowns: [needle]\n---\n\n# T\nbody\n")
+        self.addCleanup(fx.close)
+        self.assertEqual(md.tool_grep({"query": "needle", "path": str(fx.path)})["matches"], 0)
+
+    def test_matches_inside_fenced_code_are_tagged_rather_than_hidden(self):
+        fx = Fixture("# T\n\n```rust\nlet needle = 1;\n```\n")
+        self.addCleanup(fx.close)
+        found = md.tool_grep({"query": "needle", "path": str(fx.path), "format": "json"})
+        self.assertEqual(found["matches"], 1)
+        self.assertTrue(found["results"][0]["in_code"])
+
+    def test_limit_stops_the_scan_and_says_so(self):
+        fx = Fixture("# T\n" + "needle\n" * 10)
+        self.addCleanup(fx.close)
+        found = md.tool_grep({"query": "needle", "path": str(fx.path), "limit": 3})
+        self.assertEqual(found["matches"], 3)
+        self.assertIn("limit", found["note"])
+
+    def test_an_invalid_regex_is_an_error_not_a_crash(self):
+        with self.assertRaises(md.OutlineError):
+            md.tool_grep({"query": "([unclosed", "path": "."})
 
 
 if __name__ == "__main__":
